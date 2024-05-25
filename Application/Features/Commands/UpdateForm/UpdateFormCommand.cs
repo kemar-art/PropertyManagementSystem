@@ -1,9 +1,14 @@
-﻿namespace Application.Features.Queries.GetASingleForm;
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class GetFormDetailsDto
+namespace Application.Features.Commands.UpdateForm;
+
+public class UpdateFormCommand : IRequest<Unit>
 {
-    public int Id { get; set; }
-
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;
@@ -41,6 +46,4 @@ public class GetFormDetailsDto
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
-
-    public DateTime DataCreated { get; set; }
 }
