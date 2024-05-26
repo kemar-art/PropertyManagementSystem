@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Exceptions;
+using AutoMapper;
 using Domain;
 using Domain.Repository_Interface;
 using MediatR;
@@ -19,6 +20,12 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
     public async Task<int> Handle(CreateFormCommand request, CancellationToken cancellationToken)
     {
         //Validate incoming data
+        var validator = new CreateFormCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+        if (validationResult.Errors.Any())
+        {
+            throw new BadRequestException("Error submitting form", validationResult);
+        }
 
         //Convert incoming entity to domain entity
         var formToCreate = _mapper.Map<Form>(request);
