@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Exceptions;
+using AutoMapper;
 using Domain.Repository_Interface;
 using MediatR;
 
@@ -19,6 +20,12 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, G
     {
         //Querying the database
         var getForm = await _formRepository.GetByIdAsync(request.Id);
+
+        //Verify if the record exist
+        if (getForm is null)
+        {
+            throw new NotFoundException(nameof(getForm), request.Id);
+        }
 
         //Mapping the object from the Database to the Dto
         var mapData = _mapper.Map<GetFormDetailsDto>(request);

@@ -1,4 +1,5 @@
-﻿using Domain.Repository_Interface;
+﻿using Application.Exceptions;
+using Domain.Repository_Interface;
 using MediatR;
 
 namespace Application.Features.Commands.DeleteForm
@@ -18,6 +19,10 @@ namespace Application.Features.Commands.DeleteForm
             var formToDelete = await _formRepository.GetByIdAsync(request.Id);
 
             //Verify if the record exist
+            if (formToDelete is null)
+            {
+                throw new NotFoundException(nameof(formToDelete), request.Id);
+            }
 
             //remove the record from the database 
             await _formRepository.DeleteAsync(formToDelete);
