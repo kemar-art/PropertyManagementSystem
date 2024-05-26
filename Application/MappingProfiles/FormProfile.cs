@@ -5,17 +5,16 @@ using Application.Features.Queries.GetASingleForm;
 using AutoMapper;
 using Domain;
 
-namespace Application.MappingProfiles
-{
-    public class FormProfile : Profile
-    {
-        public FormProfile() 
-        { 
-            CreateMap<Form, GetAllFormsDto>().ReverseMap();
-            CreateMap<Form, GetFormDetailsDto>().ReverseMap();
+namespace Application.MappingProfiles;
 
-            CreateMap<CreateFormCommand, Form>().ReverseMap();
-            CreateMap<UpdateFormCommand, Form>().ReverseMap();
-        }
+public class FormProfile : Profile
+{
+    public FormProfile() 
+    { 
+        CreateMap<Form, GetAllFormsDto>().ReverseMap();
+        CreateMap<Form, GetFormDetailsDto>().ReverseMap();
+
+        CreateMap<CreateFormCommand, Form>().ReverseMap();
+        CreateMap<UpdateFormCommand, Form>().ReverseMap();
     }
 }

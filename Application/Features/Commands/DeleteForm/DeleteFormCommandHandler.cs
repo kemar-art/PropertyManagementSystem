@@ -1,12 +1,5 @@
-﻿using AutoMapper;
-using Domain;
-using Domain.Repository_Interface;
+﻿using Domain.Repository_Interface;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Commands.DeleteForm
 {
@@ -14,7 +7,7 @@ namespace Application.Features.Commands.DeleteForm
     {
         private readonly IFormRepository _formRepository;
 
-        public DeleteFormCommandHandler(IMapper mapper, IFormRepository formRepository)
+        public DeleteFormCommandHandler(IFormRepository formRepository)
         {
             _formRepository = formRepository;
         }
