@@ -11,7 +11,7 @@ namespace Application.Features.Commands.CreateForm
     public class CreateFormCommandValidator : AbstractValidator<CreateFormCommand>
     {
         public CreateFormCommandValidator() 
-        { 
+        {
             RuleFor(p => p.FirstName)
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required.")
@@ -38,12 +38,12 @@ namespace Application.Features.Commands.CreateForm
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(10)
+                .MaximumLength(12)
                 .WithMessage("{PropertyName} must not be less than 10 digits.")
-                .MaximumLength(10)
+                .MaximumLength(12)
                 .WithMessage("{PropertyName} must not be exceed 10 digits.")
-                .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"))
-                .WithMessage("{PropertyName} not valid");
+                .Matches(@"^\d{3}-\d{3}-\d{4}$")
+                .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
 
             RuleFor(p => p.InstructionsIssuedBy)
                 .NotEmpty()
@@ -102,12 +102,12 @@ namespace Application.Features.Commands.CreateForm
              .NotEmpty()
              .WithMessage("{PropertyName} is required.")
              .NotNull()
-             .MaximumLength(10)
+             .MaximumLength(12)
              .WithMessage("Phone number must not be less than 10 digits.")
-             .MaximumLength(10)
+             .MaximumLength(12)
              .WithMessage("{PropertyName} must not be exceed 10 digits.")
-             .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"))
-             .WithMessage("Phone number not valid");
+             .Matches(@"^\d{3}-\d{3}-\d{4}$")
+             .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
         }
     }
 }

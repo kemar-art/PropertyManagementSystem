@@ -31,7 +31,7 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, G
         }
 
         //Mapping the object from the Database to the Dto
-        var mapData = _mapper.Map<GetFormDetailsDto>(request);
+        var mapData = _mapper.Map<GetFormDetailsDto>(getForm);
 
         return mapData;
     }

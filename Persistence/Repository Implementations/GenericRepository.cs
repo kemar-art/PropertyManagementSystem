@@ -37,7 +37,7 @@ namespace Persistence.Repository_Implementations
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(p => p.Equals(id));
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public async Task UpdateAsync(T entity)
