@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Application.Contracts.ILogging;
+using Infrastructure.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
-
+            services.AddSingleton(typeof(IAppLogger<>), typeof(AppLogger<>));
             return services;
         }
     }

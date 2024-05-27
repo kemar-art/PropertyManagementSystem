@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Domain.Repository_Interface;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,16 @@ namespace Application.Features.Commands.UpdateForm
 {
     public class UpdateFormCommandValidator : AbstractValidator<UpdateFormCommand>
     {
-        public UpdateFormCommandValidator()
+        private readonly IFormRepository _formRepository;
+
+        public UpdateFormCommandValidator(IFormRepository formRepository)
         {
+            _formRepository = formRepository;
+
+            RuleFor(p => p.Id)
+                .NotNull()
+                .MustAsync(FormIdMustExist);
+
             RuleFor(p => p.FirstName)
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required.")
@@ -108,6 +117,12 @@ namespace Application.Features.Commands.UpdateForm
              .WithMessage("{PropertyName} must not be exceed 10 digits.")
              .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"))
              .WithMessage("Phone number not valid");
+        }
+
+        private async Task<bool> FormIdMustExist(int id, CancellationToken token)
+        {
+            var checkIfFormIdExist = await _formRepository.GetByIdAsync(id);
+            return checkIfFormIdExist != null;
         }
     }
 }

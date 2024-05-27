@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Repository_Interface;
+using Microsoft.EntityFrameworkCore;
 using Persistence.DatabaseContext;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,10 @@ namespace Persistence.Repository_Implementations
         public FormRepository(PMSDatabaseContext dbContext) : base(dbContext)
         {
         }
+
+        //public Task<bool> FormIdMustExist(int id)
+        //{
+        //    return _dbContext.Forms.AnyAsync(p => p.Id == id);
+        //}
     }
 }

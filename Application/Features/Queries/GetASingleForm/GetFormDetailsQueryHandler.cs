@@ -1,4 +1,5 @@
-﻿using Application.Exceptions;
+﻿using Application.Contracts.ILogging;
+using Application.Exceptions;
 using AutoMapper;
 using Domain.Repository_Interface;
 using MediatR;
@@ -9,11 +10,13 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, G
 {
     private readonly IMapper _mapper;
     private readonly IFormRepository _formRepository;
+    private readonly IAppLogger<GetFormDetailsQueryHandler> _appLogger;
 
-    public GetFormDetailsQueryHandler(IMapper mapper, IFormRepository formRepository)
+    public GetFormDetailsQueryHandler(IMapper mapper, IFormRepository formRepository, IAppLogger<GetFormDetailsQueryHandler> appLogger)
     {
         _mapper = mapper;
         _formRepository = formRepository;
+        _appLogger = appLogger;
     }
 
     public async Task<GetFormDetailsDto> Handle(GetFormDetailsQuery request, CancellationToken cancellationToken)
