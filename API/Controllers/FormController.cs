@@ -31,6 +31,8 @@ namespace API.Controllers
 
         // GET api/<FormController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<GetFormDetailsDto>> Get(int id)
         {
             var getForm = await _mediator.Send(new GetFormDetailsQuery(id));

@@ -21,13 +21,13 @@ namespace Application.Features.Commands.DeleteForm
             //Verify if the record exist
             if (formToDelete is null)
             {
-                throw new NotFoundException(nameof(formToDelete), request.Id);
+                throw new NotFoundException(nameof(DeleteFormCommand), request.Id);
             }
 
             //remove the record from the database 
             await _formRepository.DeleteAsync(formToDelete);
 
-            //Return result.
+            //Return result.+
             return Unit.Value;
         }
     }

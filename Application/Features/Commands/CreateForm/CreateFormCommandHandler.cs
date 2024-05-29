@@ -24,7 +24,7 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
         {
-            throw new BadRequestException("Error submitting form", validationResult);
+            throw new BadRequestException("Error submitting form for creation", validationResult);
         }
 
         //Convert incoming entity to domain entity

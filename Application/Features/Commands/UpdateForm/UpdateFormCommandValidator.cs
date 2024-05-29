@@ -19,7 +19,8 @@ namespace Application.Features.Commands.UpdateForm
 
             RuleFor(p => p.Id)
                 .NotNull()
-                .MustAsync(FormIdMustExist);
+                .MustAsync(FormIdMustExist)
+                .WithMessage("The specified condition was not met for {PropertyName} with value {PropertyValue}.");
 
             RuleFor(p => p.FirstName)
                 .NotEmpty()
@@ -43,16 +44,21 @@ namespace Application.Features.Commands.UpdateForm
                 .WithMessage("{PropertyName} is required.")
                 .NotNull();
 
+            //RuleFor(p => p.Address)
+            //   .NotEmpty()
+            //   .WithMessage("{PropertyName} is required.")
+            //   .NotNull();
+
             RuleFor(p => p.PhoneNumber)
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(10)
+                .MaximumLength(12)
                 .WithMessage("{PropertyName} must not be less than 10 digits.")
-                .MaximumLength(10)
+                .MaximumLength(12)
                 .WithMessage("{PropertyName} must not be exceed 10 digits.")
-                .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"))
-                .WithMessage("{PropertyName} not valid");
+                .Matches(@"^\d{3}-\d{3}-\d{4}$")
+                .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
 
             RuleFor(p => p.InstructionsIssuedBy)
                 .NotEmpty()
@@ -108,15 +114,15 @@ namespace Application.Features.Commands.UpdateForm
              .NotNull();
 
             RuleFor(p => p.SecondaryContactPhoneNumber)
-             .NotEmpty()
-             .WithMessage("{PropertyName} is required.")
-             .NotNull()
-             .MaximumLength(10)
-             .WithMessage("Phone number must not be less than 10 digits.")
-             .MaximumLength(10)
-             .WithMessage("{PropertyName} must not be exceed 10 digits.")
-             .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"))
-             .WithMessage("Phone number not valid");
+               .NotEmpty()
+               .WithMessage("{PropertyName} is required.")
+               .NotNull()
+               .MaximumLength(12)
+               .WithMessage("{PropertyName} must not be less than 10 digits.")
+               .MaximumLength(12)
+               .WithMessage("{PropertyName} must not be exceed 10 digits.")
+               .Matches(@"^\d{3}-\d{3}-\d{4}$")
+               .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
         }
 
         private async Task<bool> FormIdMustExist(int id, CancellationToken token)
