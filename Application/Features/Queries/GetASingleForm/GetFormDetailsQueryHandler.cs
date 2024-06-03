@@ -27,7 +27,7 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, G
         //Verify if the record exist
         if (getForm is null)
         {
-            throw new NotFoundException(nameof(getForm), request.Id);
+            throw new NotFoundException(nameof(GetFormDetailsQuery), request.Id);
         }
 
         //Mapping the object from the Database to the Dto

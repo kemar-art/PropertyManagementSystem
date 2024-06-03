@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Exceptions;
+using Application.Features.Commands.CreateForm;
+using Application.Features.Queries.GetASingleForm;
+using AutoMapper;
 using Domain;
 using Domain.Repository_Interface;
 using MediatR;
@@ -19,6 +22,12 @@ public class UpdateFormCommandHandler : IRequestHandler<UpdateFormCommand, Unit>
     public async Task<Unit> Handle(UpdateFormCommand request, CancellationToken cancellationToken)
     {
         //Validate incoming data
+        var validator = new UpdateFormCommandValidator(_formRepository);
+        var validationResult = await validator.ValidateAsync(request);
+        if (validationResult.Errors.Any())
+        {
+            throw new BadRequestException("Error submitting form for update", validationResult);
+        }
 
         //Convert incoming entity to domain entity
         var formToUpdate = _mapper.Map<Form>(request);
