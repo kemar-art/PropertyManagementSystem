@@ -14,7 +14,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(typeof(IAppLogger<>), typeof(AppLogger<>));
+            services.AddScoped(typeof(IAppLogger<>), typeof(AppLogger<>));
             return services;
         }
     }
