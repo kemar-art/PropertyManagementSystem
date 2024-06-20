@@ -1,4 +1,4 @@
-﻿GetCardTypeQueryip57yelyelusing MediatR;
+﻿using MediatR;
 
 namespace Application.Features.Queries.GetASingleForm;
 
