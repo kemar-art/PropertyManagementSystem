@@ -1,4 +1,6 @@
-﻿using Domain.Repository_Interface;
+﻿using Domain;
+using Domain.Repository_Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,10 @@ public static class PersistenceServiceRegistration
         services.AddDbContext<PMSDatabaseContext>(options => {
             options.UseSqlServer(configuration.GetConnectionString("PropertManagmentSystemConnectionString"));
         });
+
+        services.AddIdentityCore<ApplicationUser>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<PMSDatabaseContext>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();

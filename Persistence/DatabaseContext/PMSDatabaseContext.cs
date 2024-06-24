@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Persistence.DatabaseContext;
 
 //Property Management System Database
-public class PMSDatabaseContext : DbContext
+public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
 {
     public PMSDatabaseContext(DbContextOptions<PMSDatabaseContext> options) : base(options)
     {
@@ -17,6 +18,8 @@ public class PMSDatabaseContext : DbContext
     }
 
     public DbSet<Form> Forms { get; set; }
+
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     //{
