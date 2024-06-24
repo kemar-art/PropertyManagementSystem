@@ -1,9 +1,9 @@
-﻿using MediatR;
+﻿namespace Application.Features.Queries.ClientForm.GetAllForms;
 
-namespace Application.Features.Commands.CreateForm;
-
-public class CreateFormCommand : IRequest<int>
+public class GetAllFormsDto
 {
+    public int Id { get; set; }
+
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Features.Commands.UpdateForm;
+namespace Application.Features.Commands.ClientForm.UpdateForm;
 
 public class UpdateFormCommand : IRequest<Unit>
 {

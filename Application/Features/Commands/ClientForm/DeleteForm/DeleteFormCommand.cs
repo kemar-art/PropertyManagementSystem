@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Features.Commands.DeleteForm;
+namespace Application.Features.Commands.ClientForm.DeleteForm;
 
 public class DeleteFormCommand : IRequest<Unit>
 {

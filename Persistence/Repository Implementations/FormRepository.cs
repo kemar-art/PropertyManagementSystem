@@ -8,17 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Repository_Implementations
-{
-    public class FormRepository : GenericRepository<Form>, IFormRepository
-    {
-        public FormRepository(PMSDatabaseContext dbContext) : base(dbContext)
-        {
-        }
+namespace Persistence.Repository_Implementations;
 
-        //public Task<bool> FormIdMustExist(int id)
-        //{
-        //    return _dbContext.Forms.AnyAsync(p => p.Id == id);
-        //}
+public class FormRepository : GenericRepository<Form>, IFormRepository
+{
+    public FormRepository(PMSDatabaseContext dbContext) : base(dbContext)
+    {
     }
+
+    //public Task<bool> FormIdMustExist(int id)
+    //{
+    //    return _dbContext.Forms.AnyAsync(p => p.Id == id);
+    //}
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.UpdateForm
+namespace Application.Features.Commands.ClientForm.UpdateForm
 {
     public class UpdateFormCommandValidator : AbstractValidator<UpdateFormCommand>
     {

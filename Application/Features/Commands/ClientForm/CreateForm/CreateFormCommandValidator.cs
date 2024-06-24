@@ -6,11 +6,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.CreateForm
+namespace Application.Features.Commands.ClientForm.CreateForm
 {
     public class CreateFormCommandValidator : AbstractValidator<CreateFormCommand>
     {
-        public CreateFormCommandValidator() 
+        public CreateFormCommandValidator()
         {
             RuleFor(p => p.FirstName)
                 .NotEmpty()

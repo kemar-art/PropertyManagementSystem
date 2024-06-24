@@ -1,9 +1,9 @@
-﻿namespace Application.Features.Queries.GetASingleForm;
+﻿using MediatR;
 
-public class GetFormDetailsDto
+namespace Application.Features.Commands.ClientForm.CreateForm;
+
+public class CreateFormCommand : IRequest<int>
 {
-    public int Id { get; set; }
-
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;
@@ -41,6 +41,4 @@ public class GetFormDetailsDto
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
-
-    public DateTime DataCreated { get; set; }
 }

@@ -2,7 +2,7 @@
 using Domain.Repository_Interface;
 using MediatR;
 
-namespace Application.Features.Commands.DeleteForm
+namespace Application.Features.Commands.ClientForm.DeleteForm
 {
     public class DeleteFormCommandHandler : IRequestHandler<DeleteFormCommand, Unit>
     {

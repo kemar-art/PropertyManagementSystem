@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Contracts.Repository_Interface;
+using Domain;
 using Domain.Repository_Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Queries.GetAllForms;
+﻿namespace Application.Features.Queries.ClientForm.GetASingleForm;
 
-public class GetAllFormsDto
+public class GetFormDetailsDto
 {
     public int Id { get; set; }
 
@@ -41,4 +41,6 @@ public class GetAllFormsDto
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
+
+    public DateTime DataCreated { get; set; }
 }

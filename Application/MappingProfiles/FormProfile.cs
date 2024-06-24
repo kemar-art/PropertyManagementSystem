@@ -1,7 +1,7 @@
-﻿using Application.Features.Commands.CreateForm;
-using Application.Features.Commands.UpdateForm;
-using Application.Features.Queries.GetAllForms;
-using Application.Features.Queries.GetASingleForm;
+﻿using Application.Features.Commands.ClientForm.CreateForm;
+using Application.Features.Commands.ClientForm.UpdateForm;
+using Application.Features.Queries.ClientForm.GetAllForms;
+using Application.Features.Queries.ClientForm.GetASingleForm;
 using AutoMapper;
 using Domain;
 

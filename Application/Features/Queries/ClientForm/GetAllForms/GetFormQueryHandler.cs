@@ -2,14 +2,14 @@
 using Domain.Repository_Interface;
 using MediatR;
 
-namespace Application.Features.Queries.GetAllForms;
+namespace Application.Features.Queries.ClientForm.GetAllForms;
 
 public class GetFormQueryHandler : IRequestHandler<GetFormQuery, IEnumerable<GetAllFormsDto>>
 {
     private readonly IMapper _mapper;
     private readonly IFormRepository _formRepository;
 
-    public GetFormQueryHandler(IMapper mapper, IFormRepository formRepository) 
+    public GetFormQueryHandler(IMapper mapper, IFormRepository formRepository)
     {
         _mapper = mapper;
         _formRepository = formRepository;
@@ -19,7 +19,7 @@ public class GetFormQueryHandler : IRequestHandler<GetFormQuery, IEnumerable<Get
     {
         var getAllForms = await _formRepository.GetAllAsync();
 
-        var mapData =_mapper.Map<IEnumerable<GetAllFormsDto>>(getAllForms);
+        var mapData = _mapper.Map<IEnumerable<GetAllFormsDto>>(getAllForms);
 
         return mapData;
     }

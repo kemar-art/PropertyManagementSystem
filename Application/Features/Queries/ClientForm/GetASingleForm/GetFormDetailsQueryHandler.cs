@@ -4,7 +4,7 @@ using AutoMapper;
 using Domain.Repository_Interface;
 using MediatR;
 
-namespace Application.Features.Queries.GetASingleForm;
+namespace Application.Features.Queries.ClientForm.GetASingleForm;
 
 public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, GetFormDetailsDto>
 {
@@ -24,7 +24,7 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, G
         //Querying the database
         var getForm = await _formRepository.GetByIdAsync(request.Id);
 
-        //Verify if the record exist
+        //Verify if the record does not exist
         if (getForm is null)
         {
             throw new NotFoundException(nameof(GetFormDetailsQuery), request.Id);
