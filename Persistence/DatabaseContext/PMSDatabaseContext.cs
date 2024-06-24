@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SeedConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,14 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
     public DbSet<Form> Forms { get; set; }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfiguration(new RolesSeedConfiguration());
+        builder.ApplyConfiguration(new UserSeedConfiguration());
+        builder.ApplyConfiguration(new UserRolesSeedConfiguration());
+    }
 
     //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     //{
