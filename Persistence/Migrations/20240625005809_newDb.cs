@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddApplicationUserTableInheriteformIdentityUser : Migration
+    public partial class newDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +60,37 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Forms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InstructionsIssuedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyDirection = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: false),
+                    Folio = table.Column<int>(type: "int", nullable: false),
+                    StrataPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsKeyAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    MortgageInstitution = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Other = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,6 +199,36 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "0b3c24a8-fd98-4dd7-8e8e-13b70a7ccc9c", null, "Administrator", "ADMINISTRATOR" },
+                    { "1ff8b9a5-91cd-478d-942d-baaca93a4bf9", null, "Appraiser", "APPRAISER" },
+                    { "abcf3529-e04c-4fc6-b654-da3f444b3c0c", null, "Client", "CLIENT" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "Datestarted", "Email", "EmailConfirmed", "FirstName", "Gender", "Image", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "68771487-034c-48d1-adb3-6028a510b3d3", new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464), new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(453), new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAELEQEsAk9dkV/VTMNW31U69qya6onVeVf89XsK56sbqrQuv+VPxtiLUw6oIZKkps8w==", null, false, "123282a5-e38e-4a83-8b30-e3b835016e59", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "469d1535-8ad6-4f31-aedf-8cbf4b771844", new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288), new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9280), new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAECN/3SrxsW8SykcVNQ1/Nj0bEz02R5m8Hn9bQ9MQsgkrkaiUjRRqNc/Y1osdjrS0MA==", null, false, "8e29fd00-3be6-4f0c-a1f2-6f842d8b90e5", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "4d62b1ce-0c48-403d-b611-f4068eb3999f", new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6306), new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6300), new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6305), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEKnCOpTWTZz/zScOAcUQmmUpxggahD/7mrbbIkfNf5ewgWur39sPAL8VwP7gfLXwNQ==", null, false, "1841453b-1e70-4e61-a763-85ffc690243c", "", false, "client@localhost.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "1ff8b9a5-91cd-478d-942d-baaca93a4bf9", "4cb8218a-f54a-472f-84db-275ff92a659f" },
+                    { "0b3c24a8-fd98-4dd7-8e8e-13b70a7ccc9c", "588cc79d-bfba-4063-a577-a08a19ff3fba" },
+                    { "abcf3529-e04c-4fc6-b654-da3f444b3c0c", "89d67a78-bd8e-4e72-93dc-602de068282a" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -223,6 +286,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Forms");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

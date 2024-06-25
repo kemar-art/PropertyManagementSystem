@@ -3,22 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
-    {
-        private readonly ILogger<AuthController> _logger;
+    //[Route("api/[controller]")]
+    //[ApiController]
+    //public class AuthController : ControllerBase
+    //{
+    //    private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger)
-        {
-            _logger = logger;
-        }
+    //    public AuthController(ILogger<AuthController> logger)
+    //    {
+    //        _logger = logger;
+    //    }
 
-        [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register(UserDTO userDTO)
-        {
-            if (userDTO == null) { }
-        }
-    }
+    //    [HttpPost]
+    //    [Route("register")]
+    //    //public async Task<IActionResult> Register(UserDTO userDTO)
+    //    //{
+    //    //    if (userDTO == null) { }
+    //    //}
+    //}
 }

@@ -12,8 +12,8 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PMSDatabaseContext))]
-    [Migration("20240624001759_AddApplicationUserTableInheriteformIdentityUser")]
-    partial class AddApplicationUserTableInheriteformIdentityUser
+    [Migration("20240625005809_newDb")]
+    partial class newDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,6 +125,86 @@ namespace Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "469d1535-8ad6-4f31-aedf-8cbf4b771844",
+                            DateEnded = new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288),
+                            DateOfBirth = new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9280),
+                            Datestarted = new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288),
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            Gender = "",
+                            Image = "",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NationalInsuranceScheme = "",
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECN/3SrxsW8SykcVNQ1/Nj0bEz02R5m8Hn9bQ9MQsgkrkaiUjRRqNc/Y1osdjrS0MA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8e29fd00-3be6-4f0c-a1f2-6f842d8b90e5",
+                            TaxRegistrationNumber = "",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "68771487-034c-48d1-adb3-6028a510b3d3",
+                            DateEnded = new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464),
+                            DateOfBirth = new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(453),
+                            Datestarted = new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464),
+                            Email = "appraiser@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "Appraiser",
+                            Gender = "",
+                            Image = "",
+                            LastName = "Appraiser",
+                            LockoutEnabled = false,
+                            NationalInsuranceScheme = "",
+                            NormalizedEmail = "APPRAISER@LOCALHOST.COM",
+                            NormalizedUserName = "APPRAISER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELEQEsAk9dkV/VTMNW31U69qya6onVeVf89XsK56sbqrQuv+VPxtiLUw6oIZKkps8w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "123282a5-e38e-4a83-8b30-e3b835016e59",
+                            TaxRegistrationNumber = "",
+                            TwoFactorEnabled = false,
+                            UserName = "appraiser@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "4d62b1ce-0c48-403d-b611-f4068eb3999f",
+                            DateEnded = new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6306),
+                            DateOfBirth = new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6300),
+                            Datestarted = new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6305),
+                            Email = "client@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "Client",
+                            Gender = "",
+                            Image = "",
+                            LastName = "Client",
+                            LockoutEnabled = false,
+                            NationalInsuranceScheme = "",
+                            NormalizedEmail = "CLIENT@LOCALHOST.COM",
+                            NormalizedUserName = "CLIENT@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKnCOpTWTZz/zScOAcUQmmUpxggahD/7mrbbIkfNf5ewgWur39sPAL8VwP7gfLXwNQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1841453b-1e70-4e61-a763-85ffc690243c",
+                            TaxRegistrationNumber = "",
+                            TwoFactorEnabled = false,
+                            UserName = "client@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Form", b =>
@@ -237,6 +317,26 @@ namespace Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0b3c24a8-fd98-4dd7-8e8e-13b70a7ccc9c",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "1ff8b9a5-91cd-478d-942d-baaca93a4bf9",
+                            Name = "Appraiser",
+                            NormalizedName = "APPRAISER"
+                        },
+                        new
+                        {
+                            Id = "abcf3529-e04c-4fc6-b654-da3f444b3c0c",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -324,6 +424,23 @@ namespace Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "588cc79d-bfba-4063-a577-a08a19ff3fba",
+                            RoleId = "0b3c24a8-fd98-4dd7-8e8e-13b70a7ccc9c"
+                        },
+                        new
+                        {
+                            UserId = "4cb8218a-f54a-472f-84db-275ff92a659f",
+                            RoleId = "1ff8b9a5-91cd-478d-942d-baaca93a4bf9"
+                        },
+                        new
+                        {
+                            UserId = "89d67a78-bd8e-4e72-93dc-602de068282a",
+                            RoleId = "abcf3529-e04c-4fc6-b654-da3f444b3c0c"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -28,7 +28,7 @@ public class GetASingleUserDetailsQueryHandler : IRequestHandler<GetASingleUserD
         //Querying the database
         var getUser = await _userRepository.GetByIdAsync(request.Id);
 
-        //Verify if the record does not exist
+        //Verify if the record exist
         if (getUser is null)
         {
             throw new NotFoundException(nameof(GetASingleUserDetailsQuery), request.Id);

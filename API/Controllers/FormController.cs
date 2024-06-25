@@ -1,10 +1,8 @@
 ﻿using Application.Features.Commands.ClientForm.CreateForm;
+using Application.Features.Commands.ClientForm.DeleteForm;
 using Application.Features.Commands.ClientForm.UpdateForm;
-using Application.Features.Commands.DeleteForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.Features.Queries.ClientForm.GetASingleForm;
-using Application.Features.Queries.GetAllForms;
-using Application.Features.Queries.GetASingleForm;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
