@@ -35,10 +35,10 @@ namespace Application.Features.Commands.User.UpdateUser
             }
 
             //Convert incoming entity to domain entity
-            var userToUpdate = _mapper.Map<ApplicationUser>(request);
+            //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-            await _userRepository.UpdateAsync(userToUpdate);
+            await _userRepository.UpdateUserAsync(request);
 
             //Return result.
             return Unit.Value;
