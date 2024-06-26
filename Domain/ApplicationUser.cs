@@ -17,7 +17,6 @@ namespace Domain
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        //public IFormFile? Image { get; set; }
         public string ImagePath { get; set; } = string.Empty;
 
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
@@ -31,6 +30,8 @@ namespace Domain
         [DataType(DataType.Date)]
         [Display(Name = "End Date")]
         public DateTime DateEnded { get; set; } = DateTime.Now;
+
+        public string RoleId { get; set; }
 
         //public bool IsActive { get; set; } = true;
 

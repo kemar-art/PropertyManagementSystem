@@ -1,16 +1,16 @@
-﻿using Application.Contracts.Repository_Interface;
+﻿using Application.Contracts.Email;
+using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
-using Application.Features.Commands.User.CreateUser;
-using Application.Features.Commands.User.UpdateUser;
-using AutoMapper;
+using Application.Features.Commands.User.AppUsers.CreateUser;
+using Application.Features.Commands.User.AppUsers.UpdateUser;
+using Application.Features.Commands.User.ClientUser;
 using Domain;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Persistence.DatabaseContext;
@@ -31,6 +31,9 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IWebHostEnvironment _hostEnvironment;
     private readonly HttpContext _httpContext;
+    private readonly IUserStore<ApplicationUser> _userStore;
+    private readonly IEmailSender _emailSender;
+    private readonly IUserEmailStore<ApplicationUser> _emailStore;
 
     //private readonly IWebHostEnvironment _hostEnvironment;
     const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
@@ -38,22 +41,24 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
     const string NUMBERS = "1234567890";
     const string SPECIALS = @"`~!@£$%^&*()[]#€?;+\/<>";
 
-    public UserRepository(PMSDatabaseContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, HttpContext httpContext) : base(dbContext)
+    public UserRepository(PMSDatabaseContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, HttpContext httpContext, IUserStore<ApplicationUser> userStore,IEmailSender emailSender) : base(dbContext)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _hostEnvironment = hostEnvironment;
         _httpContext = httpContext;
+        _userStore = userStore;
+        _emailSender = emailSender;
+        _emailStore = (IUserEmailStore<ApplicationUser>)GetEmailStore();
         //_hostEnvironment = hostEnvironment;
     }
 
-    public async Task RegisterAsync(ApplicationUser user)
+    public async Task<string> RegisterAppUserAsync(CreateUserCommand user)
     {
         ApplicationUser applicationUser = new()
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             TaxRegistrationNumber = user.TaxRegistrationNumber,
             NationalInsuranceScheme = user.NationalInsuranceScheme,
@@ -62,6 +67,8 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
             DateOfBirth = user.DateOfBirth,
             Datestarted = user.Datestarted
         };
+        await _userStore.SetUserNameAsync(applicationUser, applicationUser.Email, CancellationToken.None);
+        await _emailStore.SetEmailAsync(applicationUser, applicationUser.Email, CancellationToken.None);
 
         var password = await RandomPasswordGeneratorAsync();
 
@@ -85,10 +92,24 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
                 applicationUser.ImagePath = @$"\images\employees\{newFileName}{extension}";
             }
         }
+
+        await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
+        var userId = await _userManager.GetUserIdAsync(applicationUser);
+        var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+
+        string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+        //string generatedPassword = password;
+        var emailConfirmation = $"{_httpContext.Request.Scheme}://{_httpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
+
+        await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
+        await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
+
+        return applicationUser.Id;
     }
 
 
-    public async Task<Unit> UpdateUserAsync(UpdateUserCommand user)
+    public async Task<Unit> UpdateAppUserAsync(UpdateUserCommand user)
     {
         var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
         if (applicationUser != null)
@@ -131,6 +152,7 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
             }
 
             await _userManager.UpdateAsync(applicationUser);
+            await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
             return Unit.Value;
         }
 
@@ -180,5 +202,19 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
             array[i] = array[j];
             array[j] = temp;
         }
+    }
+
+    private IUserEmailStore<ApplicationUser> GetEmailStore()
+    {
+        if (!_userManager.SupportsUserEmail)
+        {
+            throw new NotSupportedException("The default UI requires a user store with email support.");
+        }
+        return (IUserEmailStore<ApplicationUser>)_userStore;
+    }
+
+    public Task RegisterClientUserAsync(ClientUserCommand user)
+    {
+        throw new NotImplementedException();
     }
 }

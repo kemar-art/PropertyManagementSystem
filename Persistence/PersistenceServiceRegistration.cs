@@ -24,6 +24,13 @@ public static class PersistenceServiceRegistration
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<PMSDatabaseContext>();
 
+        services.Configure<IdentityOptions>(options =>
+        {
+            options.Password.RequiredLength = 8;
+            //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+            //options.Lockout.MaxFailedAccessAttempts = 3;
+        });
+
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

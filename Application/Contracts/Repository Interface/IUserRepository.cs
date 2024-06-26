@@ -1,5 +1,6 @@
-﻿using Application.Features.Commands.User.CreateUser;
-using Application.Features.Commands.User.UpdateUser;
+﻿using Application.Features.Commands.User.AppUsers.CreateUser;
+using Application.Features.Commands.User.AppUsers.UpdateUser;
+using Application.Features.Commands.User.ClientUser;
 using Domain;
 using Domain.Repository_Interface;
 using MediatR;
@@ -16,7 +17,9 @@ namespace Application.Contracts.Repository_Interface
 {
     public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
-        Task RegisterAsync(ApplicationUser user);
-        Task<Unit> UpdateUserAsync(UpdateUserCommand user);
+        Task<string> RegisterAppUserAsync(CreateUserCommand user);
+        Task RegisterClientUserAsync(ClientUserCommand user);
+
+        Task<Unit> UpdateAppUserAsync(UpdateUserCommand user);
     }
 }

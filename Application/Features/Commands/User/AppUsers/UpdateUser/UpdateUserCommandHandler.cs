@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.UpdateUser
+namespace Application.Features.Commands.User.AppUsers.UpdateUser
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
     {
@@ -38,7 +38,7 @@ namespace Application.Features.Commands.User.UpdateUser
             //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-            await _userRepository.UpdateUserAsync(request);
+            await _userRepository.UpdateAppUserAsync(request);
 
             //Return result.
             return Unit.Value;

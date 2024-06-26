@@ -1,16 +1,15 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.CreateUser
+namespace Application.Features.Commands.User.ClientUser
 {
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class ClientUserCommandValidator : AbstractValidator<ClientUserCommand>
     {
-        public CreateUserCommandValidator()
+        public ClientUserCommandValidator()
         {
             RuleFor(p => p.FirstName)
                 .NotEmpty()
@@ -29,11 +28,6 @@ namespace Application.Features.Commands.User.CreateUser
                 .WithMessage("A valid email is required.")
                 .NotNull();
 
-            RuleFor(p => p.Address)
-                .NotEmpty()
-                .WithMessage("{PropertyName} is required.")
-                .NotNull();
-
             RuleFor(p => p.PhoneNumber)
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required.")
@@ -44,17 +38,6 @@ namespace Application.Features.Commands.User.CreateUser
                 .WithMessage("{PropertyName} must not be exceed 10 digits.")
                 .Matches(@"^\d{3}-\d{3}-\d{4}$")
                 .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
-
-            RuleFor(p => p.TaxRegistrationNumber)
-                .NotEmpty()
-                .WithMessage("{PropertyName} is required.")
-                .NotNull();
-
-            RuleFor(p => p.NationalInsuranceScheme)
-                .NotEmpty()
-                .WithMessage("{PropertyName} is required.")
-                .NotNull();
-
 
             RuleFor(p => p.Gender)
                 .NotEmpty()

@@ -1,34 +1,33 @@
-﻿using Application.Exceptions;
-using Application.Features.Commands.ClientForm.CreateForm;
-using Domain.Repository_Interface;
+﻿using Application.Contracts.Repository_Interface;
+using Application.Exceptions;
+using Application.Features.Commands.User.AppUsers.CreateUser;
+using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using Application.Contracts.Repository_Interface;
-using FluentValidation;
 
-namespace Application.Features.Commands.User.CreateUser
+namespace Application.Features.Commands.User.ClientUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+    internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, string>
     {
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(IMapper mapper, IUserRepository userRepository)
+        public ClientUserCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
-            _mapper = mapper;
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(ClientUserCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming data
-            var validator = new CreateUserCommandValidator();
+            var validator = new ClientUserCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
             if (validationResult.Errors.Any())
             {
@@ -39,11 +38,10 @@ namespace Application.Features.Commands.User.CreateUser
             var userToCreate = _mapper.Map<ApplicationUser>(request);
 
             // Add to database 
-            await _userRepository.RegisterAsync(userToCreate);
+            //await _userRepository.RegisterAppUserAsync(userToCreate);
 
             // Return result
             return userToCreate.Id;
         }
-
     }
 }

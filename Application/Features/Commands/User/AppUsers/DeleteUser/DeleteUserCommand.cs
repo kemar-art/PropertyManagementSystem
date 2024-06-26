@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.DeleteUser
+namespace Application.Features.Commands.User.AppUsers.DeleteUser
 {
     public class DeleteUserCommand : IRequest<Unit>
     {

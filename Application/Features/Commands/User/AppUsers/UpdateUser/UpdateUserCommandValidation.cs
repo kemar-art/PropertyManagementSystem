@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.UpdateUser
+namespace Application.Features.Commands.User.AppUsers.UpdateUser
 {
     public class UpdateUserCommandValidation : AbstractValidator<UpdateUserCommand>
     {
