@@ -29,9 +29,4 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new UserSeedConfiguration());
         builder.ApplyConfiguration(new UserRolesSeedConfiguration());
     }
-
-    //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    //{
-    //    return base.SaveChangesAsync(cancellationToken);
-    //}
 }

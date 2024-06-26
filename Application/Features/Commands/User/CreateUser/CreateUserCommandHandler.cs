@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Application.Contracts.Repository_Interface;
+using FluentValidation;
 
 namespace Application.Features.Commands.User.CreateUser
 {
@@ -26,7 +27,7 @@ namespace Application.Features.Commands.User.CreateUser
 
         public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            //Validate incoming data
+            // Validate incoming data
             var validator = new CreateUserCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
             if (validationResult.Errors.Any())
@@ -34,14 +35,15 @@ namespace Application.Features.Commands.User.CreateUser
                 throw new BadRequestException("An error was encountered when creating the user.", validationResult);
             }
 
-            //Convert incoming entity to domain entity
-            var uerToCreate = _mapper.Map<ApplicationUser>(request);
+            // Convert incoming entity to domain entity
+            var userToCreate = _mapper.Map<ApplicationUser>(request);
 
-            //Add to database 
-            await _userRepository.CreateAsync(uerToCreate);
+            // Add to database 
+            await _userRepository.RegisterAsync(userToCreate);
 
-            //Return result.
-            return uerToCreate.Id;
+            // Return result
+            return userToCreate.Id;
         }
+
     }
 }

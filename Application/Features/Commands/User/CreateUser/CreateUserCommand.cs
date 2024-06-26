@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,8 @@ namespace Application.Features.Commands.User.CreateUser
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
+        public IFormFile? Image { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;

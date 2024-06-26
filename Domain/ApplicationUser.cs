@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,8 @@ namespace Domain
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
+        public IFormFile? Image { get; set; }
+        public string ImagePath { get; set; } = string.Empty;
 
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;

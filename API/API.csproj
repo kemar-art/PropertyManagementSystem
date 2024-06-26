@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\employees\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\property\" />
+  </ItemGroup>
+
 </Project>

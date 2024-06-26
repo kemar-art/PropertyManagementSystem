@@ -286,7 +286,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Forms");
+                    b.ToTable("Forms", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

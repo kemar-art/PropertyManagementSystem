@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Features.Commands.User.CreateUser;
+using Domain;
 using Domain.Repository_Interface;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace Application.Contracts.Repository_Interface
 {
     public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
+        Task RegisterAsync(ApplicationUser user);
     }
 }
