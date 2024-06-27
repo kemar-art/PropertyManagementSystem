@@ -12,11 +12,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FormController : ControllerBase
+    public class FormsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public FormController(IMediator mediator)
+        public FormsController(IMediator mediator)
         {
             _mediator = mediator;
         }

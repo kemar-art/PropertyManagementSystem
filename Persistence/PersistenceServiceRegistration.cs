@@ -16,7 +16,8 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<PMSDatabaseContext>(options => {
+        services.AddDbContext<PMSDatabaseContext>(options =>
+        {
             options.UseSqlServer(configuration.GetConnectionString("PropertManagmentSystemConnectionString"));
         });
 
@@ -30,6 +31,8 @@ public static class PersistenceServiceRegistration
             //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
             //options.Lockout.MaxFailedAccessAttempts = 3;
         });
+
+        services.AddHttpContextAccessor();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();

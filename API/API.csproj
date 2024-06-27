@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot1\**" />
+    <Content Remove="wwwroot1\**" />
+    <EmbeddedResource Remove="wwwroot1\**" />
+    <None Remove="wwwroot1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,8 +31,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\employees\" />
-    <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\images\property\" />
   </ItemGroup>
 
 </Project>

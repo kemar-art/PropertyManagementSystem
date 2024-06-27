@@ -20,7 +20,7 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        //public IFormFile? Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string ImagePath { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
 
@@ -31,9 +31,9 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser
         [DataType(DataType.Date), Display(Name = "Start Date")]
         public DateTime Datestarted { get; set; } = DateTime.Now;
 
-        [Display(Name = "Access Privilege")]
-        public string RoleId { get; set; }
-        [Display(Name = "Role")]
-        public SelectList RolesList { get; set; }
+
+        //public string Role { get; set; } = string.Empty;
+
+        //public SelectList RolesList { get; set; }
     }
 }

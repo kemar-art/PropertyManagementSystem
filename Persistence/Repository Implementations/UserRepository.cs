@@ -13,111 +13,114 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Persistence.DatabaseContext;
-using Persistence.SeedConfig;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Mvc;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
+using Persistence.DatabaseContext;
+using Persistence.SeedConfig;
 
-namespace Persistence.Repository_Implementations;
-
-public class UserRepository : GenericRepository<ApplicationUser>, IUserRepository
+namespace Persistence.Repository_Implementations
 {
-    private static readonly System.Random _random = new();
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IWebHostEnvironment _hostEnvironment;
-    private readonly HttpContext _httpContext;
-    private readonly IUserStore<ApplicationUser> _userStore;
-    private readonly IEmailSender _emailSender;
-    private readonly IUserEmailStore<ApplicationUser> _emailStore;
-
-    //private readonly IWebHostEnvironment _hostEnvironment;
-    const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
-    const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const string NUMBERS = "1234567890";
-    const string SPECIALS = @"`~!@£$%^&*()[]#€?;+\/<>";
-
-    public UserRepository(PMSDatabaseContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, HttpContext httpContext, IUserStore<ApplicationUser> userStore,IEmailSender emailSender) : base(dbContext)
+    public class UserRepository : GenericRepository<ApplicationUser>, IUserRepository
     {
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _hostEnvironment = hostEnvironment;
-        _httpContext = httpContext;
-        _userStore = userStore;
-        _emailSender = emailSender;
-        _emailStore = (IUserEmailStore<ApplicationUser>)GetEmailStore();
-        //_hostEnvironment = hostEnvironment;
-    }
+        private static readonly System.Random _random = new();
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IEmailSender _emailSender;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
 
-    public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user)
-    {
-        ApplicationUser applicationUser = new()
+        const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
+        const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string NUMBERS = "1234567890";
+        const string SPECIALS = @"`~!@£$%^&*()[]#€?;+\/<>";
+
+        public UserRepository(
+            PMSDatabaseContext dbContext,
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment hostEnvironment,
+            IHttpContextAccessor httpContextAccessor,
+            IUserStore<ApplicationUser> userStore,
+            IEmailSender emailSender)
+            : base(dbContext)
         {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            TaxRegistrationNumber = user.TaxRegistrationNumber,
-            NationalInsuranceScheme = user.NationalInsuranceScheme,
-            Gender = user.Gender,
-            ImagePath = user.ImagePath,
-            DateOfBirth = user.DateOfBirth,
-            Datestarted = user.Datestarted
-        };
-        await _userStore.SetUserNameAsync(applicationUser, applicationUser.Email, CancellationToken.None);
-        await _emailStore.SetEmailAsync(applicationUser, applicationUser.Email, CancellationToken.None);
-
-        var password = await RandomPasswordGeneratorAsync();
-
-        var result = await _userManager.CreateAsync(applicationUser, password);
-        if (result.Succeeded)
-        {
-            string webRootPath = _hostEnvironment.WebRootPath;
-            var files = _httpContext.Request.Form.Files;
-            if (files.Any())
-            {
-                //Create
-                string newFileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"wwwroot\images\employees");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, newFileName + extension), FileMode.Create))
-                {
-                    files[0].CopyTo(fileStream);
-                }
-
-                applicationUser.ImagePath = @$"\images\employees\{newFileName}{extension}";
-            }
+            _userManager = userManager; //?? throw new ArgumentNullException(nameof(userManager));
+            _hostEnvironment = hostEnvironment; //?? throw new ArgumentNullException(nameof(hostEnvironment));
+            _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));
+            _emailSender = emailSender; //?? throw new ArgumentNullException(nameof(emailSender));
+            _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
         }
 
-        await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
-        var userId = await _userManager.GetUserIdAsync(applicationUser);
-        var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
-
-        string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-
-        //string generatedPassword = password;
-        var emailConfirmation = $"{_httpContext.Request.Scheme}://{_httpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
-
-        await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
-        await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
-
-        return applicationUser.Id;
-    }
-
-
-    public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user)
-    {
-        var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-        if (applicationUser != null)
+        public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image)
         {
+            var applicationUser = new ApplicationUser
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                TaxRegistrationNumber = user.TaxRegistrationNumber,
+                NationalInsuranceScheme = user.NationalInsuranceScheme,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+                Datestarted = user.Datestarted,
+                Role = Roles.Administrator,
+            };
+
+            await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(applicationUser, user.Email, CancellationToken.None);
+
+            var password = await GenerateRandomPasswordAsync();
+            var result = await _userManager.CreateAsync(applicationUser, password);
+
+            if (result.Succeeded)
+            {
+                if (image != null && image.Length > 0)
+                {
+                    string webRootPath = _hostEnvironment.WebRootPath;
+                    string newFileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, "images/employees");
+                    var extension = Path.GetExtension(image.FileName);
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
+                    image.CopyTo(fileStream);
+
+                    applicationUser.ImagePath = Path.Combine("images/employees", $"{newFileName}{extension}");
+                }
+
+                await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
+                //var userId = await _userManager.GetUserIdAsync(applicationUser);
+                //var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+                //string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                //var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
+
+                //await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
+                //await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
+
+                return applicationUser.Id;
+            }
+
+            throw new Exception("User registration failed");
+        }
+
+        public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user)
+        {
+            var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            if (applicationUser == null)
+            {
+                throw new NotFoundException("User", user.Id);
+            }
+
             applicationUser.FirstName = user.FirstName;
             applicationUser.LastName = user.LastName;
             applicationUser.Address = user.Address;
@@ -131,138 +134,110 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
             applicationUser.Datestarted = user.Datestarted;
 
             string webRootPath = _hostEnvironment.WebRootPath;
-            var files = _httpContext.Request.Form.Files;
-            if (files.Count > 0)
+            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
+            if (files.Any())
             {
                 string newFileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"wwwroot\images\employees");
+                var uploads = Path.Combine(webRootPath, "images/employees");
                 var extension = Path.GetExtension(files[0].FileName);
 
-                if (applicationUser.ImagePath != null)
+                if (!Directory.Exists(uploads))
                 {
-                    var oldImage = Path.Combine(webRootPath, applicationUser.ImagePath.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImage))
+                    Directory.CreateDirectory(uploads);
+                }
+
+                if (!string.IsNullOrEmpty(applicationUser.ImagePath))
+                {
+                    var oldImage = Path.Combine(webRootPath, applicationUser.ImagePath);
+                    if (File.Exists(oldImage))
                     {
-                        System.IO.File.Delete(oldImage);
+                        File.Delete(oldImage);
                     }
                 }
 
-                using (var fileStream = new FileStream(Path.Combine(uploads, newFileName + extension), FileMode.Create))
-                {
-                    files[0].CopyTo(fileStream);
-                }
+                using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
+                files[0].CopyTo(fileStream);
 
-                applicationUser.ImagePath = @$"\images\employees\{newFileName}{extension}";
+                applicationUser.ImagePath = Path.Combine("images/employees", $"{newFileName}{extension}");
             }
 
             await _userManager.UpdateAsync(applicationUser);
             await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
+
             return Unit.Value;
         }
 
-        throw new NotFoundException("User", user.Id);
-    }
-
-    public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
-    {
-        ApplicationUser applicationUser = new()
+        public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
         {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            UserName = user.Email,
-            PhoneNumber = user.PhoneNumber,
-            Gender = user.Gender,
-            DateOfBirth = user.DateOfBirth,
-        };
-
-        var result = await _userManager.CreateAsync(applicationUser, user.Password);
-        if (result.Succeeded == false)
-        {
-            if (result.Errors.Any())
+            var applicationUser = new ApplicationUser
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                UserName = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+            };
 
+            var result = await _userManager.CreateAsync(applicationUser, user.Password);
+            if (!result.Succeeded)
+            {
+                throw new Exception("Client user registration failed");
             }
+
+            var role = string.IsNullOrEmpty(user.Role) ? Roles.Client : user.Role;
+            await _userManager.AddToRoleAsync(applicationUser, role);
+
+            return applicationUser.Id;
         }
 
-        if (string.IsNullOrEmpty(user.Role))
-        {
-            await _userManager.AddToRoleAsync(applicationUser, Roles.Client);
-        }
-
-        return applicationUser.Id;
-    }
-
-    public async Task<Unit> LogInUserAsync(LoginUsersCommand user)
-    {
-        var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, lockoutOnFailure: false);
-        if (result.Succeeded)
+        public async Task<Unit> LogInUserAsync(LoginUsersCommand user)
         {
             var findUserByEmail = await _userManager.FindByEmailAsync(user.Email);
-            var passwordValidation = await _userManager.CheckPasswordAsync(findUserByEmail, user.Password);
-            if (findUserByEmail is null || passwordValidation == false) 
+            if (findUserByEmail == null || !await _userManager.CheckPasswordAsync(findUserByEmail, user.Password))
             {
-                throw new NotFoundException("User", user); 
+                throw new NotFoundException("User", user.Email);
             }
 
-            
-
+            return Unit.Value;
         }
 
-        return Unit.Value;
-    }
-
-
-
-    private async Task<string> RandomPasswordGeneratorAsync()
-    {
-        var options = _signInManager.Options.Password;
-        var passwordSize = options.RequiredLength = 8;
-
-        string charSet = "";
-        if (options.RequireLowercase) charSet += LOWER_CASE;
-        if (options.RequireUppercase) charSet += UPPER_CASE;
-        if (options.RequireDigit) charSet += NUMBERS;
-        if (options.RequireNonAlphanumeric) charSet += SPECIALS;
-
-        char[] _password = new char[passwordSize];
-
-        // Ensure at least one character for each requirement
-        _password[0] = LOWER_CASE[_random.Next(LOWER_CASE.Length)];
-        if (options.RequireUppercase) _password[1] = UPPER_CASE[_random.Next(UPPER_CASE.Length)];
-        if (options.RequireDigit) _password[2] = NUMBERS[_random.Next(NUMBERS.Length)];
-        if (options.RequireNonAlphanumeric) _password[3] = SPECIALS[_random.Next(SPECIALS.Length)];
-
-        // Fill the rest of the password with characters from charSet
-        for (int i = 4; i < passwordSize; i++)
+        private async Task<string> GenerateRandomPasswordAsync()
         {
-            _password[i] = charSet[_random.Next(charSet.Length)];
+            var options = _userManager.Options.Password;
+            var passwordSize = options.RequiredLength;
+
+            var charSet = new StringBuilder();
+            if (options.RequireLowercase) charSet.Append(LOWER_CASE);
+            if (options.RequireUppercase) charSet.Append(UPPER_CASE);
+            if (options.RequireDigit) charSet.Append(NUMBERS);
+            if (options.RequireNonAlphanumeric) charSet.Append(SPECIALS);
+
+            var password = new char[passwordSize];
+            password[0] = LOWER_CASE[_random.Next(LOWER_CASE.Length)];
+            if (options.RequireUppercase) password[1] = UPPER_CASE[_random.Next(UPPER_CASE.Length)];
+            if (options.RequireDigit) password[2] = NUMBERS[_random.Next(NUMBERS.Length)];
+            if (options.RequireNonAlphanumeric) password[3] = SPECIALS[_random.Next(SPECIALS.Length)];
+
+            for (int i = 4; i < passwordSize; i++)
+            {
+                password[i] = charSet[_random.Next(charSet.Length)];
+            }
+
+            Shuffle(password);
+
+            return new string(password);
         }
 
-        // Shuffle the password characters to improve randomness
-        Shuffle(_password);
-
-        return new string(_password);
-    }
-
-    private static void Shuffle<T>(T[] array)
-    {
-        int n = array.Length;
-        for (int i = n - 1; i > 0; i--)
+        private static void Shuffle<T>(T[] array)
         {
-            int j = _random.Next(0, i + 1);
-            T temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            int n = array.Length;
+            for (int i = n - 1; i > 0; i--)
+            {
+                int j = _random.Next(i + 1);
+                (array[i], array[j]) = (array[j], array[i]);
+            }
         }
-    }
-
-    private IUserEmailStore<ApplicationUser> GetEmailStore()
-    {
-        if (!_userManager.SupportsUserEmail)
-        {
-            throw new NotSupportedException("The default UI requires a user store with email support.");
-        }
-        return (IUserEmailStore<ApplicationUser>)_userStore;
     }
 }

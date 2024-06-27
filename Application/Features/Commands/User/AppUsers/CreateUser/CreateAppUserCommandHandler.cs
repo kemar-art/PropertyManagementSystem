@@ -30,7 +30,7 @@ public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand,
 
     public async Task<string> Handle(CreateAppUserCommand request, CancellationToken cancellationToken)
     {
-        // Validate incoming data
+        //Validate incoming data
         var validator = new CreateAppUserCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
@@ -42,7 +42,7 @@ public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand,
         //var userToCreate = _mapper.Map<ApplicationUser>(request);
 
         // Add to database 
-        var userToCreate = await _userRepository.RegisterAppUserAsync(request);
+        var userToCreate = await _userRepository.RegisterAppUserAsync(request, request.Image);
 
         // Return result
         return userToCreate;

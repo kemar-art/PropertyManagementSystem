@@ -18,7 +18,7 @@ namespace Domain
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
-
+        //public IFormFile? Image { get; set; }
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
 

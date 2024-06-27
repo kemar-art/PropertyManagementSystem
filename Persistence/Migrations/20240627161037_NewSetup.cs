@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class newDb : Migration
+    public partial class NewSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,10 +38,11 @@ namespace Persistence.Migrations
                     TaxRegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NationalInsuranceScheme = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Datestarted = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -211,12 +212,12 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "Datestarted", "Email", "EmailConfirmed", "FirstName", "Gender", "Image", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "Datestarted", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "68771487-034c-48d1-adb3-6028a510b3d3", new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464), new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(453), new DateTime(2024, 6, 24, 19, 58, 7, 100, DateTimeKind.Local).AddTicks(464), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAELEQEsAk9dkV/VTMNW31U69qya6onVeVf89XsK56sbqrQuv+VPxtiLUw6oIZKkps8w==", null, false, "123282a5-e38e-4a83-8b30-e3b835016e59", "", false, "appraiser@localhost.com" },
-                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "469d1535-8ad6-4f31-aedf-8cbf4b771844", new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288), new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9280), new DateTime(2024, 6, 24, 19, 58, 7, 59, DateTimeKind.Local).AddTicks(9288), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAECN/3SrxsW8SykcVNQ1/Nj0bEz02R5m8Hn9bQ9MQsgkrkaiUjRRqNc/Y1osdjrS0MA==", null, false, "8e29fd00-3be6-4f0c-a1f2-6f842d8b90e5", "", false, "admin@localhost.com" },
-                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "4d62b1ce-0c48-403d-b611-f4068eb3999f", new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6306), new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6300), new DateTime(2024, 6, 24, 19, 58, 7, 139, DateTimeKind.Local).AddTicks(6305), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEKnCOpTWTZz/zScOAcUQmmUpxggahD/7mrbbIkfNf5ewgWur39sPAL8VwP7gfLXwNQ==", null, false, "1841453b-1e70-4e61-a763-85ffc690243c", "", false, "client@localhost.com" }
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "56b162d7-188e-4c9a-974b-2b582c4774ee", new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7752), new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7744), new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7752), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAELMZLrV4l6TYOods3sdqmuhXnYvxbCEvlqCvzkqepwLj+XLjjdNZmGPocr/MsB/X1g==", null, false, "", "3b68bc2f-1050-4443-a872-11c7d5aee335", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "4cc23ca8-2ca0-4ac2-bb1c-95030f5ad38a", new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8887), new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8877), new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8887), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOxD3OjVMmdTRpWe3iwOkTJMxS2M7w/toxvg4Q1vkDYDnU8zCK/Up6naX4Ks1Y3ccw==", null, false, "", "3e28ba4a-d16d-4f46-a594-20f38ef06b94", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "dbc05251-1128-44b3-acab-f7a910831666", new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2297), new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2292), new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2297), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEI88jKxMhvpW0TbWApg6X/ndGe8I+yFmlDdH7yHkJXpLn0Oeqk8X0MZKL9GGQwWNhA==", null, false, "", "0a9a0468-8e16-4a3d-99c8-6b2951bc1d14", "", false, "client@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
