@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Persistence.DatabaseContext;
 using Persistence.SeedConfig;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Persistence.Repository_Implementations
 {
@@ -113,7 +114,7 @@ namespace Persistence.Repository_Implementations
             throw new Exception("User registration failed");
         }
 
-        public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user)
+        public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user, IFormFile image)
         {
             var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
             if (applicationUser == null)
@@ -133,18 +134,14 @@ namespace Persistence.Repository_Implementations
             applicationUser.DateOfBirth = user.DateOfBirth;
             applicationUser.Datestarted = user.Datestarted;
 
-            string webRootPath = _hostEnvironment.WebRootPath;
-            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
-            if (files.Any())
+
+            if (image != null && image.Length > 0)
             {
+                string webRootPath = _hostEnvironment.WebRootPath;
                 string newFileName = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(webRootPath, "images/employees");
-                var extension = Path.GetExtension(files[0].FileName);
+                var extension = Path.GetExtension(image.FileName);
 
-                if (!Directory.Exists(uploads))
-                {
-                    Directory.CreateDirectory(uploads);
-                }
 
                 if (!string.IsNullOrEmpty(applicationUser.ImagePath))
                 {
@@ -156,13 +153,13 @@ namespace Persistence.Repository_Implementations
                 }
 
                 using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
-                files[0].CopyTo(fileStream);
+                image.CopyTo(fileStream);
 
                 applicationUser.ImagePath = Path.Combine("images/employees", $"{newFileName}{extension}");
             }
 
             await _userManager.UpdateAsync(applicationUser);
-            await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
+            //await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
 
             return Unit.Value;
         }

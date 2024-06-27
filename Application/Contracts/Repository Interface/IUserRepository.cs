@@ -15,7 +15,7 @@ namespace Application.Contracts.Repository_Interface
         Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image);
         Task<string> RegisterClientUserAsync(ClientUserCommand user);
 
-        Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user);
+        Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user, IFormFile image);
         Task<Unit> LogInUserAsync(LoginUsersCommand user);
     }
 }

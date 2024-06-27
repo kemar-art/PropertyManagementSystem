@@ -42,7 +42,7 @@ namespace API.Controllers
 
         // POST api/<ApplicationUsersController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromForm]CreateAppUserCommand createAppUser)
+        public async Task<ActionResult> Post([FromForm] CreateAppUserCommand createAppUser)
         {
             //createAppUser.Image = image;
             var createAppUserResponse = await _mediator.Send(createAppUser);
@@ -51,7 +51,7 @@ namespace API.Controllers
 
         // PUT api/<ApplicationUsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(UpdateAppUserCommand updateAppUser)
+        public async Task<ActionResult> Put([FromForm] UpdateAppUserCommand updateAppUser)
         {
             await _mediator.Send(updateAppUser);
             return NoContent();

@@ -38,7 +38,7 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
             //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-           var updatedUser = await _userRepository.UpdateAppUserAsync(request);
+           var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.Image);
 
             //Return result.
             return updatedUser;

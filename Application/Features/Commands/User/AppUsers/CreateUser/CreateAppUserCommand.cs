@@ -21,8 +21,6 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public IFormFile? Image { get; set; }
-        public string ImagePath { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
 
         [DataType(DataType.Date), Display(Name = "D.O.B")]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;

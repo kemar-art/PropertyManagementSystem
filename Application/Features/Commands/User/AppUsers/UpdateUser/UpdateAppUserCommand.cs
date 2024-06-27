@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public string ImagePath { get; set; } = string.Empty;
+        public IFormFile? Image { get; set; }
 
         [DataType(DataType.Date), Display(Name = "D.O.B")]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
@@ -28,10 +29,5 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = "Start Date")]
         public DateTime Datestarted { get; set; } = DateTime.Now;
-
-        [Display(Name = "Access Privilege")]
-        public string RoleId { get; set; }
-        [Display(Name = "Role")]
-        public SelectList RolesList { get; set; }
     }
 }
