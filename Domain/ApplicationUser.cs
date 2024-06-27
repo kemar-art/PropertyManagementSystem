@@ -31,7 +31,7 @@ namespace Domain
         [Display(Name = "End Date")]
         public DateTime DateEnded { get; set; } = DateTime.Now;
 
-        public string RoleId { get; set; }
+        public string Role { get; set; } = string.Empty;
 
         //public bool IsActive { get; set; } = true;
 

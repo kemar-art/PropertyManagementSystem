@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.AppUsers.UpdateUser
 {
-    public class UpdateUserCommandValidation : AbstractValidator<UpdateUserCommand>
+    public class UpdateAppUserCommandValidation : AbstractValidator<UpdateAppUserCommand>
     {
         private readonly IUserRepository _userRepository;
 
-        public UpdateUserCommandValidation(IUserRepository userRepository)
+        public UpdateAppUserCommandValidation(IUserRepository userRepository)
         {
             _userRepository = userRepository;
 

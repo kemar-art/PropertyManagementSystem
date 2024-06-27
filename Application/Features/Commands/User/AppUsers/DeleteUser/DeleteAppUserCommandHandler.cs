@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.AppUsers.DeleteUser
 {
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
+    public class DeleteAppUserCommandHandler : IRequestHandler<DeleteAppUserCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 
-        public DeleteUserCommandHandler(IUserRepository userRepository)
+        public DeleteAppUserCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteAppUserCommand request, CancellationToken cancellationToken)
         {
             //Find the form to be deleted
             var userToDelete = await _userRepository.GetByIdAsync(request.Id);

@@ -3,7 +3,7 @@ using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
 using Application.Features.Commands.User.AppUsers.CreateUser;
 using Application.Features.Commands.User.AppUsers.UpdateUser;
-using Application.Features.Commands.User.ClientUser;
+using Application.Features.Commands.User.ClientUsers;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -13,13 +13,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Persistence.DatabaseContext;
+using Persistence.SeedConfig;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Persistence.Repository_Implementations;
@@ -53,7 +56,7 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
         //_hostEnvironment = hostEnvironment;
     }
 
-    public async Task<string> RegisterAppUserAsync(CreateUserCommand user)
+    public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user)
     {
         ApplicationUser applicationUser = new()
         {
@@ -109,7 +112,7 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
     }
 
 
-    public async Task<Unit> UpdateAppUserAsync(UpdateUserCommand user)
+    public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user)
     {
         var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
         if (applicationUser != null)
@@ -213,8 +216,33 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
         return (IUserEmailStore<ApplicationUser>)_userStore;
     }
 
-    public Task RegisterClientUserAsync(ClientUserCommand user)
+    public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
     {
-        throw new NotImplementedException();
+        ApplicationUser applicationUser = new()
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            UserName = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Gender = user.Gender,
+            DateOfBirth = user.DateOfBirth,
+        };
+
+        var result = await _userManager.CreateAsync(applicationUser, user.Password);
+        if (result.Succeeded == false)
+        {
+            if (result.Errors.Any())
+            {
+
+            }
+        }
+
+        if (string.IsNullOrEmpty(user.Role))
+        {
+            await _userManager.AddToRoleAsync(applicationUser, Roles.Client);
+        }
+
+        return applicationUser.Id;
     }
 }

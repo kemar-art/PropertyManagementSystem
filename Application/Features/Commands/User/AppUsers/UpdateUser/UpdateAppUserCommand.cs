@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Application.Features.Commands.User.AppUsers.UpdateUser
 {
-    public class UpdateUserCommand : IRequest<Unit>
+    public class UpdateAppUserCommand : IRequest<Unit>
     {
         public string Id { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;

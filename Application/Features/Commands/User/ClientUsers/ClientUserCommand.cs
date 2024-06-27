@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Application.Features.Commands.User.ClientUser
+namespace Application.Features.Commands.User.ClientUsers
 {
     public class ClientUserCommand : IRequest<string>
     {
@@ -25,7 +25,7 @@ namespace Application.Features.Commands.User.ClientUser
 
         public DateTime DateRegistered{ get; set; } = DateTime.Now;
 
-        public string RoleId { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
 
     }
 }

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Application.Features.Commands.User.AppUsers.CreateUser
 {
-    public class CreateUserCommand : IRequest<string>
+    public class CreateAppUserCommand : IRequest<string>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

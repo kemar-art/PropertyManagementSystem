@@ -17,21 +17,21 @@ using System.Security.AccessControl;
 
 namespace Application.Features.Commands.User.AppUsers.CreateUser;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand, string>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
 
-    public CreateUserCommandHandler(IMapper mapper, IUserRepository userRepository)
+    public CreateAppUserCommandHandler(IMapper mapper, IUserRepository userRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;
     }
 
-    public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateAppUserCommand request, CancellationToken cancellationToken)
     {
         // Validate incoming data
-        var validator = new CreateUserCommandValidator();
+        var validator = new CreateAppUserCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
         {
@@ -45,7 +45,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
         var userToCreate = await _userRepository.RegisterAppUserAsync(request);
 
         // Return result
-        return userToCreate.Id;
+        return userToCreate;
     }
 
 }
