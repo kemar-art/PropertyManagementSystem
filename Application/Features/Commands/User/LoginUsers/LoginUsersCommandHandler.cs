@@ -12,13 +12,18 @@ namespace Application.Features.Commands.User.LoginUsers
 {
     public class LoginUsersCommandHandler : IRequestHandler<LoginUsersCommand, Unit>
     {
-        public LoginUsersCommandHandler(IUserRepository userRepository, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly IUserRepository _userRepository;
+
+        public LoginUsersCommandHandler(IUserRepository userRepository)
         {
-            
+            _userRepository = userRepository;
         }
-        public Task<Unit> Handle(LoginUsersCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(LoginUsersCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var userToCreate = await _userRepository.LogInUserAsync(request);
+
+            // Return result
+            return userToCreate;
         }
     }
 }
