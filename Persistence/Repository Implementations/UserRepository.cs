@@ -4,6 +4,7 @@ using Application.Exceptions;
 using Application.Features.Commands.User.AppUsers.CreateUser;
 using Application.Features.Commands.User.AppUsers.UpdateUser;
 using Application.Features.Commands.User.ClientUsers;
+using Application.Features.Commands.User.LoginUsers;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -162,6 +163,55 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
         throw new NotFoundException("User", user.Id);
     }
 
+    public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
+    {
+        ApplicationUser applicationUser = new()
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            UserName = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Gender = user.Gender,
+            DateOfBirth = user.DateOfBirth,
+        };
+
+        var result = await _userManager.CreateAsync(applicationUser, user.Password);
+        if (result.Succeeded == false)
+        {
+            if (result.Errors.Any())
+            {
+
+            }
+        }
+
+        if (string.IsNullOrEmpty(user.Role))
+        {
+            await _userManager.AddToRoleAsync(applicationUser, Roles.Client);
+        }
+
+        return applicationUser.Id;
+    }
+
+    public async Task<Unit> LogInUserAsync(LoginUsersCommand user)
+    {
+        var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+            var findUserByEmail = await _userManager.FindByEmailAsync(user.Email);
+            var passwordValidation = await _userManager.CheckPasswordAsync(findUserByEmail, user.Password);
+            if (findUserByEmail is null || passwordValidation == false) 
+            {
+                throw new NotFoundException("User", user); 
+            }
+
+            
+
+        }
+
+        return Unit.Value;
+    }
+
 
 
     private async Task<string> RandomPasswordGeneratorAsync()
@@ -214,35 +264,5 @@ public class UserRepository : GenericRepository<ApplicationUser>, IUserRepositor
             throw new NotSupportedException("The default UI requires a user store with email support.");
         }
         return (IUserEmailStore<ApplicationUser>)_userStore;
-    }
-
-    public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
-    {
-        ApplicationUser applicationUser = new()
-        {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            UserName = user.Email,
-            PhoneNumber = user.PhoneNumber,
-            Gender = user.Gender,
-            DateOfBirth = user.DateOfBirth,
-        };
-
-        var result = await _userManager.CreateAsync(applicationUser, user.Password);
-        if (result.Succeeded == false)
-        {
-            if (result.Errors.Any())
-            {
-
-            }
-        }
-
-        if (string.IsNullOrEmpty(user.Role))
-        {
-            await _userManager.AddToRoleAsync(applicationUser, Roles.Client);
-        }
-
-        return applicationUser.Id;
     }
 }
