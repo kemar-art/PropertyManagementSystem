@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Application.Features.Commands.User.ClientUsers
 {
-    public class ClientUserCommand : IRequest<string>
+    public class ClientUserCommand : IRequest<Unit>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -24,8 +24,6 @@ namespace Application.Features.Commands.User.ClientUsers
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
         public DateTime DateRegistered{ get; set; } = DateTime.Now;
-
-        public string Role { get; set; } = string.Empty;
 
     }
 }

@@ -34,6 +34,8 @@ namespace API.Controllers
 
         // GET api/<ApplicationUsersController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<GetASingleUserDTO>> Get(string id)
         {
             var getASingleUser = await _mediator.Send(new GetASingleUserDetailsQuery(id));
@@ -42,6 +44,9 @@ namespace API.Controllers
 
         // POST api/<ApplicationUsersController>
         [HttpPost]
+        //[Route("create/employee")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Post([FromForm] CreateAppUserCommand createAppUser)
         {
             //createAppUser.Image = image;
@@ -51,6 +56,10 @@ namespace API.Controllers
 
         // PUT api/<ApplicationUsersController>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Put([FromForm] UpdateAppUserCommand updateAppUser)
         {
             await _mediator.Send(updateAppUser);

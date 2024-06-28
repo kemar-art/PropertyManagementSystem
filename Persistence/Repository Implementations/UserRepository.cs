@@ -133,6 +133,7 @@ namespace Persistence.Repository_Implementations
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
             applicationUser.Datestarted = user.Datestarted;
+            applicationUser.Role = Roles.Administrator;
 
 
             if (image != null && image.Length > 0)
@@ -159,12 +160,12 @@ namespace Persistence.Repository_Implementations
             }
 
             await _userManager.UpdateAsync(applicationUser);
-            //await _userManager.AddToRoleAsync(applicationUser, user.RoleId);
+            await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
             return Unit.Value;
         }
 
-        public async Task<string> RegisterClientUserAsync(ClientUserCommand user)
+        public async Task<Unit> RegisterClientUserAsync(ClientUserCommand user)
         {
             var applicationUser = new ApplicationUser
             {
@@ -175,6 +176,7 @@ namespace Persistence.Repository_Implementations
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender,
                 DateOfBirth = user.DateOfBirth,
+                Role = Roles.Client
             };
 
             var result = await _userManager.CreateAsync(applicationUser, user.Password);
@@ -183,10 +185,9 @@ namespace Persistence.Repository_Implementations
                 throw new Exception("Client user registration failed");
             }
 
-            var role = string.IsNullOrEmpty(user.Role) ? Roles.Client : user.Role;
-            await _userManager.AddToRoleAsync(applicationUser, role);
+            await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
-            return applicationUser.Id;
+            return Unit.Value;
         }
 
         public async Task<Unit> LogInUserAsync(LoginUsersCommand user)

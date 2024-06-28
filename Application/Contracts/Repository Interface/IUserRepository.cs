@@ -13,7 +13,7 @@ namespace Application.Contracts.Repository_Interface
     public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
         Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image);
-        Task<string> RegisterClientUserAsync(ClientUserCommand user);
+        Task<Unit> RegisterClientUserAsync(ClientUserCommand user);
 
         Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user, IFormFile image);
         Task<Unit> LogInUserAsync(LoginUsersCommand user);

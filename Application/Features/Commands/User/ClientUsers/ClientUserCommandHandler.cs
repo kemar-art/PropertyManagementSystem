@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers;
 
-internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, string>
+internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, Unit>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, str
         _mapper = mapper;
     }
 
-    public async Task<string> Handle(ClientUserCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(ClientUserCommand request, CancellationToken cancellationToken)
     {
         // Validate incoming data
         var validator = new ClientUserCommandValidator();
