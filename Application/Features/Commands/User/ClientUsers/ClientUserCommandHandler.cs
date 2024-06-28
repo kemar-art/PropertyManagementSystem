@@ -1,5 +1,5 @@
-﻿using Application.Exceptions;
-using Application.Identity;
+﻿using Application.Contracts.Identity;
+using Application.Exceptions;
 using AutoMapper;
 using Domain;
 using FluentValidation;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers;
 
-internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, Unit>
+internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, RegistrationResponse>
 {
     private readonly IAuthService _authService;
 
@@ -21,7 +21,7 @@ internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, Uni
         _authService = authService;
     }
 
-    public async Task<Unit> Handle(ClientUserCommand request, CancellationToken cancellationToken)
+    public async Task<RegistrationResponse> Handle(ClientUserCommand request, CancellationToken cancellationToken)
     {
         // Validate incoming data
         var validator = new ClientUserCommandValidator();

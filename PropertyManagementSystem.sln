@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{E5EF1F2F-E478-462C-A4A6-C1D663343F27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{5ADB5263-D201-49C2-8669-BF04C0538302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{5ADB5263-D201-49C2-8669-BF04C0538302}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

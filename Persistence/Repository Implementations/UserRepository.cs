@@ -58,7 +58,7 @@ namespace Persistence.Repository_Implementations
             _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
         }
 
-        public async Task<string> CreateAppUserAsync(CreateAppUserCommand user, IFormFile image)
+        public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image)
         {
             var applicationUser = new ApplicationUser
             {

@@ -33,7 +33,7 @@ namespace API.Controllers
         [Route("login")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Login(LoginUsersCommand loginUsers)
+        public async Task<IActionResult> Login(LoginUserCommand loginUsers)
         {
             await _mediator.Send(loginUsers);
             return Accepted();

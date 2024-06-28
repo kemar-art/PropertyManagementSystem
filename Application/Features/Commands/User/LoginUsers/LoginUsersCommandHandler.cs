@@ -1,4 +1,5 @@
-﻿using Application.Identity;
+﻿using Application.Contracts.Identity;
+using Application.IdentityModels;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.LoginUsers
 {
-    public class LoginUsersCommandHandler : IRequestHandler<LoginUsersCommand, Unit>
+    public class LoginUsersCommandHandler : IRequestHandler<LoginUserCommand, AuthResponse>
     {
         private readonly IAuthService _authService;
 
@@ -18,12 +19,12 @@ namespace Application.Features.Commands.User.LoginUsers
         {
             _authService = authService;
         }
-        public async Task<Unit> Handle(LoginUsersCommand request, CancellationToken cancellationToken)
+        public async Task<AuthResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var userToCreate = await _authService.LogInUserAsync(request);
+            var userLoggingIn = await _authService.LogInUserAsync(request);
 
             // Return result
-            return userToCreate;
+            return userLoggingIn;
         }
     }
 }

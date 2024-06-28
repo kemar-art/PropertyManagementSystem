@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers
 {
-    public class ClientUserCommand : IRequest<Unit>
+    public class ClientUserCommand : IRequest<RegistrationResponse>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
