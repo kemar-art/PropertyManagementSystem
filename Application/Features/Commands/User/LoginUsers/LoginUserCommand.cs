@@ -1,4 +1,4 @@
-﻿using Application.IdentityModels;
+﻿using Application.AuthSettings;
 using MediatR;
 using System;
 using System.Collections.Generic;

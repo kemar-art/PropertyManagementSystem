@@ -1,6 +1,6 @@
-﻿using Application.Features.Commands.User.ClientUsers;
+﻿using Application.AuthSettings;
+using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
-using Application.IdentityModels;
 using MediatR;
 using System;
 using System.Collections.Generic;

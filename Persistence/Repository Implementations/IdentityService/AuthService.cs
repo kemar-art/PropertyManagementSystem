@@ -1,4 +1,5 @@
-﻿using Application.Contracts.Identity;
+﻿using Application.AuthSettings;
+using Application.Contracts.Identity;
 using Application.Contracts.ILogging;
 using Application.Exceptions;
 using Application.Features.Commands.User.ClientUsers;
@@ -138,7 +139,7 @@ namespace Persistence.Repository_Implementations
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Value.Key));
 
             // Define the signing credentials using the security key and HMAC-SHA256 algorithm
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
 
             // Create the JWT token with the specified issuer, audience, claims, expiration, and signing credentials
             var jwtSecurityToken = new JwtSecurityToken

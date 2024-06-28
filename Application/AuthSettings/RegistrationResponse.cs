@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.ClientUsers
+namespace Application.AuthSettings
 {
     public class RegistrationResponse
     {
-        public string  UserId { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
     }
 }

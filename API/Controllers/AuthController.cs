@@ -25,8 +25,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Register(ClientUserCommand registerUser)
         {
-             await _mediator.Send(registerUser);
-            return Accepted();
+             var response = await _mediator.Send(registerUser);
+            return Accepted(response);
         }
 
         [HttpPost]
@@ -35,8 +35,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login(LoginUserCommand loginUsers)
         {
-            await _mediator.Send(loginUsers);
-            return Accepted();
+            var response = await _mediator.Send(loginUsers);
+            return Accepted(response);
         }
     }
 }

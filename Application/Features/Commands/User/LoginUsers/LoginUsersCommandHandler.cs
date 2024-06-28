@@ -1,5 +1,5 @@
-﻿using Application.Contracts.Identity;
-using Application.IdentityModels;
+﻿using Application.AuthSettings;
+using Application.Contracts.Identity;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

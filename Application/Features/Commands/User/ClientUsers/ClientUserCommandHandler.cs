@@ -1,4 +1,5 @@
-﻿using Application.Contracts.Identity;
+﻿using Application.AuthSettings;
+using Application.Contracts.Identity;
 using Application.Exceptions;
 using AutoMapper;
 using Domain;
