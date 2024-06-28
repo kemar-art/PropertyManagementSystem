@@ -1,5 +1,5 @@
-﻿using Application.Features.Queries.Users.GetAllUsers;
-using Application.Features.Queries.Users.GetASingleUser;
+﻿using Application.Features.Queries.Users.AppUsers.GetAllUsers;
+using Application.Features.Queries.Users.AppUsers.GetASingleUser;
 using AutoMapper;
 using Domain;
 using System;

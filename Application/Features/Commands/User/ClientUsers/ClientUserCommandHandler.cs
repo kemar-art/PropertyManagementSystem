@@ -1,5 +1,5 @@
-﻿using Application.Contracts.Repository_Interface;
-using Application.Exceptions;
+﻿using Application.Exceptions;
+using Application.Identity;
 using AutoMapper;
 using Domain;
 using FluentValidation;
@@ -14,13 +14,11 @@ namespace Application.Features.Commands.User.ClientUsers;
 
 internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, Unit>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
+    private readonly IAuthService _authService;
 
-    public ClientUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+    public ClientUserCommandHandler(IAuthService authService)
     {
-        _userRepository = userRepository;
-        _mapper = mapper;
+        _authService = authService;
     }
 
     public async Task<Unit> Handle(ClientUserCommand request, CancellationToken cancellationToken)
@@ -33,11 +31,8 @@ internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, Uni
             throw new BadRequestException("An error was encountered when creating the user.", validationResult);
         }
 
-        // Convert incoming entity to domain entity
-        //var userToCreate = _mapper.Map<ApplicationUser>(request);
-
         // Add to database 
-        var userToCreate = await _userRepository.RegisterClientUserAsync(request);
+        var userToCreate = await _authService.RegisterClientUserAsync(request);
 
         // Return result
         return userToCreate;

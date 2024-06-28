@@ -1,7 +1,9 @@
 ﻿using Application.Contracts.Email;
 using Application.Contracts.Repository_Interface;
+using Application.Identity;
 using Domain;
 using Domain.Repository_Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
     {
+        //services.Configure<JwtSettings>
+
         services.AddDbContext<PMSDatabaseContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("PropertManagmentSystemConnectionString"));
@@ -32,12 +36,22 @@ public static class PersistenceServiceRegistration
             //options.Lockout.MaxFailedAccessAttempts = 3;
         });
 
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(auth =>
+        {
+
+        });
+
         services.AddHttpContextAccessor();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddSingleton<IEmailSender, EmailSender>();
+        services.AddTransient<IAuthService, AuthService>();
         return services;
     }
 }

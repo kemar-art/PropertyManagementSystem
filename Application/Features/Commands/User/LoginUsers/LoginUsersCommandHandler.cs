@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Repository_Interface;
+﻿using Application.Identity;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -12,15 +12,15 @@ namespace Application.Features.Commands.User.LoginUsers
 {
     public class LoginUsersCommandHandler : IRequestHandler<LoginUsersCommand, Unit>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAuthService _authService;
 
-        public LoginUsersCommandHandler(IUserRepository userRepository)
+        public LoginUsersCommandHandler(IAuthService authService)
         {
-            _userRepository = userRepository;
+            _authService = authService;
         }
         public async Task<Unit> Handle(LoginUsersCommand request, CancellationToken cancellationToken)
         {
-            var userToCreate = await _userRepository.LogInUserAsync(request);
+            var userToCreate = await _authService.LogInUserAsync(request);
 
             // Return result
             return userToCreate;

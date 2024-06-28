@@ -42,7 +42,7 @@ public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand,
         //var userToCreate = _mapper.Map<ApplicationUser>(request);
 
         // Add to database 
-        var userToCreate = await _userRepository.RegisterAppUserAsync(request, request.Image);
+        var userToCreate = await _userRepository.CreateAppUserAsync(request, request.Image);
 
         // Return result
         return userToCreate;

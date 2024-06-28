@@ -58,7 +58,7 @@ namespace Persistence.Repository_Implementations
             _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
         }
 
-        public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image)
+        public async Task<string> CreateAppUserAsync(CreateAppUserCommand user, IFormFile image)
         {
             var applicationUser = new ApplicationUser
             {
@@ -161,42 +161,6 @@ namespace Persistence.Repository_Implementations
 
             await _userManager.UpdateAsync(applicationUser);
             await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
-
-            return Unit.Value;
-        }
-
-        public async Task<Unit> RegisterClientUserAsync(ClientUserCommand user)
-        {
-            var applicationUser = new ApplicationUser
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                UserName = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth,
-                Role = Roles.Client
-            };
-
-            var result = await _userManager.CreateAsync(applicationUser, user.Password);
-            if (!result.Succeeded)
-            {
-                throw new Exception("Client user registration failed");
-            }
-
-            await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
-
-            return Unit.Value;
-        }
-
-        public async Task<Unit> LogInUserAsync(LoginUsersCommand user)
-        {
-            var findUserByEmail = await _userManager.FindByEmailAsync(user.Email);
-            if (findUserByEmail == null || !await _userManager.CheckPasswordAsync(findUserByEmail, user.Password))
-            {
-                throw new NotFoundException("User", user.Email);
-            }
 
             return Unit.Value;
         }

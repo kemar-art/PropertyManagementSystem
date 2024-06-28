@@ -5,6 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Queries.Users.GetASingleUser;
+namespace Application.Features.Queries.Users.AppUsers.GetASingleUser;
 
 public record class GetASingleUserDetailsQuery(string Id) : IRequest<GetASingleUserDTO>;
