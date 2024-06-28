@@ -1,4 +1,5 @@
 ﻿using Application.Features.Commands.User.ClientUsers;
+using Application.Features.Commands.User.LoginUsers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,14 @@ namespace API.Controllers
         {
              await _mediator.Send(registerUser);
             return Ok(registerUser);
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(LoginUsersCommand loginUsers)
+        {
+            await _mediator.Send(loginUsers);
+            return Ok(loginUsers);
         }
     }
 }
