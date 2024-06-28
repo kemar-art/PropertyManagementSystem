@@ -21,20 +21,22 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("register")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Register(ClientUserCommand registerUser)
         {
              await _mediator.Send(registerUser);
-            return Ok(registerUser);
+            return Accepted();
         }
 
         [HttpPost]
         [Route("login")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login(LoginUsersCommand loginUsers)
         {
             await _mediator.Send(loginUsers);
-            return Ok(loginUsers);
+            return Accepted();
         }
     }
 }
