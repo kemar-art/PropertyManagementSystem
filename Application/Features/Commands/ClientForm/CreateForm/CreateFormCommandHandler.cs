@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.StaticDetails;
 using AutoMapper;
 using Domain;
 using Domain.Repository_Interface;
@@ -29,6 +30,8 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
 
         //Convert incoming entity to domain entity
         var formToCreate = _mapper.Map<Form>(request);
+            formToCreate.Status = FormStatus.StatusSubmitted;
+            formToCreate.DataCreated = DateTime.Now; 
 
         //Add to database 
         await _formRepository.CreateAsync(formToCreate);

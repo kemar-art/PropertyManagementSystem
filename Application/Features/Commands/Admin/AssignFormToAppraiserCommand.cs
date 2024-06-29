@@ -11,7 +11,6 @@ namespace Application.Features.Commands.Admin
     {
         public int FormId { get; set; }
         public string AppraiserId { get; set; } = string.Empty;
-        //public string JobAssignerId { get; set; } = string.Empty;
         public string AdminNote { get; set; } = string.Empty;
     }
 }

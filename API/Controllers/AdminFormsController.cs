@@ -1,4 +1,7 @@
 ﻿using Application.Features.Commands.Admin;
+using Application.Features.Queries.ClientForm.GetAllForms;
+using Application.Features.Queries.ClientForm.GetFormsByStatus;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -10,13 +13,20 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = $"{Roles.Administrator}")]
-    public class AssignFormsController : ControllerBase
+    public class AdminFormsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AssignFormsController(IMediator mediator)
+        public AdminFormsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<Form>> GetFormByStatus(string status)
+        {
+            var getAllFormByStatus = await _mediator.Send(new GetFormsByStatusQuery(status));
+            return getAllFormByStatus;
         }
 
         [HttpPut("{id}")]

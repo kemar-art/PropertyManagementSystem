@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.ILogging;
 using Application.Exceptions;
 using Application.Features.Commands.Admin;
+using Application.StaticDetails;
 using Domain;
 using Domain.Repository_Interface;
 using MediatR;
@@ -62,6 +63,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             formToAssigned.AppraiserId = assignFormToAppraiser.AppraiserId;
             formToAssigned.JobAssignerId = userId;
             formToAssigned.AdminNote = assignFormToAppraiser.AdminNote;
+            formToAssigned.Status = FormStatus.StatusAssigned;
 
             try
             {
@@ -79,6 +81,21 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
         _appLogger.LogError($"The form with Id {assignFormToAppraiser.FormId} was not found.");
         throw new NotFoundException("The form was not found with the Id value:", formToAssigned.Id);
+    }
+
+    public async Task<IEnumerable<Form>> GetFormByStatus(string status)
+    {
+        return await _dbContext.Forms
+                                    //.Include(x => x.Region)
+                                    .Where(x => x.Status == status)
+                                    .Include(x => x.Appraiser)
+                                    //.Include(x => x.ServiceRequestFormServiceRequestItem)
+                                    //.ThenInclude(x => x.ServiceRequestItem)
+                                    //.Include(x => x.ServiceRequesFormTypeOfPropertyItem)
+                                    //.ThenInclude(x => x.TypeOfPropertyItem)
+                                    //.Include(x => x.ServiceRequestFormPurposeOfValuationItem)
+                                    //.ThenInclude(x => x.PurposeOfValuationItem)
+                                    .ToListAsync();
     }
 }
 
