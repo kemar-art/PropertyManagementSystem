@@ -1,4 +1,7 @@
-﻿namespace Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain;
 
 public class Form
 {
@@ -32,7 +35,7 @@ public class Form
 
     public string Other { get; set; } = string.Empty;
 
-    //public string Status { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
 
     public string SecondaryContactFirstName { get; set; } = string.Empty;
 
@@ -42,5 +45,67 @@ public class Form
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
+    public string AdminNote { get; set; } = string.Empty;
+
+    public string AppraiserNote { get; set; } = string.Empty;
+
     public DateTime DataCreated { get; set; }
+
+    [ForeignKey("AppraiserId")]
+    public ApplicationUser? Appraiser { get; set; }
+    public string? AppraiserId { get; set; }
+
+    [ForeignKey("JobAssignerId")]
+    public ApplicationUser? JobAssigner { get; set; }
+    public string? JobAssignerId { get; set; }
+
+    public string? Message { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime ValuationRequiredBy { get; set; }
+
+    //Date the client submitted the form
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime DateFormWasFilledOut { get; set; }
+
+    //This is the date the form was assigned to an Evaluator
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime FromAssigned { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    //The date when Evaluator accepted form
+    public DateTime FromAccepted { get; set; }
+
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime FormInProcess { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime RejectedForm { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime MarkFromAsCompleted { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime ReturnFromToAppraiser { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime SubmittedFormForApproval { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime CancelledForm { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
+    public DateTime ApprovedForm { get; set; }
 }

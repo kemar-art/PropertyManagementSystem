@@ -1,6 +1,9 @@
-﻿namespace Domain.Repository_Interface;
+﻿using Application.Features.Commands.Admin;
+using MediatR;
+
+namespace Domain.Repository_Interface;
 
 public interface IFormRepository : IGenericRepository<Form>
 {
-    //Task<bool> FormIdMustExist(int id);
+    Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser);
 }

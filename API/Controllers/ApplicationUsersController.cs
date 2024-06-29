@@ -7,7 +7,9 @@ using Application.Features.Queries.ClientForm.GetASingleForm;
 using Application.Features.Queries.Users.AppUsers.GetAllUsers;
 using Application.Features.Queries.Users.AppUsers.GetASingleUser;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.SeedConfig;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,6 +17,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = $"{Roles.Administrator}")]
     public class ApplicationUsersController : ControllerBase
     {
         private readonly IMediator _mediator;

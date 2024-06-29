@@ -1,6 +1,7 @@
 ﻿using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace API.Controllers
         [Route("register")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Register(ClientUserCommand registerUser)
+        public async Task<IActionResult> Register([FromForm] ClientUserCommand registerUser)
         {
              var response = await _mediator.Send(registerUser);
             return Accepted(response);
@@ -33,7 +34,7 @@ namespace API.Controllers
         [Route("login")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Login(LoginUserCommand loginUsers)
+        public async Task<IActionResult> Login([FromForm] LoginUserCommand loginUsers)
         {
             var response = await _mediator.Send(loginUsers);
             return Accepted(response);

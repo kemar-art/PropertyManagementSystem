@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class NewSetup : Migration
+    public partial class AddNotesPropertyToForm : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,37 +61,6 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Forms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstructionsIssuedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PropertyAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PropertyDirection = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Volume = table.Column<int>(type: "int", nullable: false),
-                    Folio = table.Column<int>(type: "int", nullable: false),
-                    StrataPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsKeyAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    MortgageInstitution = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Other = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondaryContactFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondaryContactLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondaryContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondaryContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Forms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +169,64 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Forms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InstructionsIssuedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyDirection = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: false),
+                    Folio = table.Column<int>(type: "int", nullable: false),
+                    StrataPlan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsKeyAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    MortgageInstitution = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Other = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecondaryContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdminNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppraiserNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppraiserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    JobAssignerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ValuationRequiredBy = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateFormWasFilledOut = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FromAssigned = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FromAccepted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FormInProcess = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RejectedForm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MarkFromAsCompleted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReturnFromToAppraiser = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubmittedFormForApproval = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CancelledForm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApprovedForm = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Forms_AspNetUsers_AppraiserId",
+                        column: x => x.AppraiserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Forms_AspNetUsers_JobAssignerId",
+                        column: x => x.JobAssignerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -215,9 +242,9 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "Datestarted", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "56b162d7-188e-4c9a-974b-2b582c4774ee", new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7752), new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7744), new DateTime(2024, 6, 27, 11, 10, 37, 316, DateTimeKind.Local).AddTicks(7752), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAELMZLrV4l6TYOods3sdqmuhXnYvxbCEvlqCvzkqepwLj+XLjjdNZmGPocr/MsB/X1g==", null, false, "", "3b68bc2f-1050-4443-a872-11c7d5aee335", "", false, "appraiser@localhost.com" },
-                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "4cc23ca8-2ca0-4ac2-bb1c-95030f5ad38a", new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8887), new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8877), new DateTime(2024, 6, 27, 11, 10, 37, 258, DateTimeKind.Local).AddTicks(8887), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOxD3OjVMmdTRpWe3iwOkTJMxS2M7w/toxvg4Q1vkDYDnU8zCK/Up6naX4Ks1Y3ccw==", null, false, "", "3e28ba4a-d16d-4f46-a594-20f38ef06b94", "", false, "admin@localhost.com" },
-                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "dbc05251-1128-44b3-acab-f7a910831666", new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2297), new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2292), new DateTime(2024, 6, 27, 11, 10, 37, 374, DateTimeKind.Local).AddTicks(2297), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEI88jKxMhvpW0TbWApg6X/ndGe8I+yFmlDdH7yHkJXpLn0Oeqk8X0MZKL9GGQwWNhA==", null, false, "", "0a9a0468-8e16-4a3d-99c8-6b2951bc1d14", "", false, "client@localhost.com" }
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "6e1f5f7e-f3c1-40e4-990c-51a6c705ac39", new DateTime(2024, 6, 28, 22, 23, 32, 552, DateTimeKind.Local).AddTicks(8316), new DateTime(2024, 6, 28, 22, 23, 32, 552, DateTimeKind.Local).AddTicks(8304), new DateTime(2024, 6, 28, 22, 23, 32, 552, DateTimeKind.Local).AddTicks(8315), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOeYdfkgsfcTk3LTvEtRPoBjTZgco3MuM9O702f3UCQ7RaiHcxk57EfrHfcbEg2iIg==", null, false, "", "c9162294-9a50-4149-ab82-514f74b5da25", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "e6288e35-84bc-44a2-a73f-1d583b2c0479", new DateTime(2024, 6, 28, 22, 23, 32, 514, DateTimeKind.Local).AddTicks(3959), new DateTime(2024, 6, 28, 22, 23, 32, 514, DateTimeKind.Local).AddTicks(3951), new DateTime(2024, 6, 28, 22, 23, 32, 514, DateTimeKind.Local).AddTicks(3959), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEP1WZAQ8HuxbJzdF+2j3ybj3iNpAr9coTaQybUfqLVHl20k8wufvvAk5q/T3zaB18A==", null, false, "", "e48d1e19-dc5d-4247-b630-e7974c1cb1a3", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "955acfff-7230-4d0a-90f5-c0ff16c5e6b2", new DateTime(2024, 6, 28, 22, 23, 32, 590, DateTimeKind.Local).AddTicks(3475), new DateTime(2024, 6, 28, 22, 23, 32, 590, DateTimeKind.Local).AddTicks(3470), new DateTime(2024, 6, 28, 22, 23, 32, 590, DateTimeKind.Local).AddTicks(3474), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEIYYl0AVctTRfF6x/MKSHUnvGvARvYvLkBCec8JsHTpJ67MGYMs5xEMgo4nY7d/aTw==", null, false, "", "7e555b38-8cea-4e03-a2f2-36b811bb1868", "", false, "client@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -268,6 +295,16 @@ namespace Persistence.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Forms_AppraiserId",
+                table: "Forms",
+                column: "AppraiserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Forms_JobAssignerId",
+                table: "Forms",
+                column: "JobAssignerId");
         }
 
         /// <inheritdoc />
