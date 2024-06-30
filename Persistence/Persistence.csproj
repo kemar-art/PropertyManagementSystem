@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="SeedConfig\CheckBoxes\" />
   </ItemGroup>
 
   <ItemGroup>

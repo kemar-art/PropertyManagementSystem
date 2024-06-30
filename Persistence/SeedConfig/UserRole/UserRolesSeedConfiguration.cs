@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence.SeedConfig;
+namespace Persistence.SeedConfig.UserRole;
 
 public class UserRolesSeedConfiguration : IEntityTypeConfiguration<IdentityUserRole<string>>
 {

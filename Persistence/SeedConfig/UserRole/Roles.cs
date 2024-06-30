@@ -1,4 +1,4 @@
-﻿namespace Persistence.SeedConfig;
+﻿namespace Persistence.SeedConfig.UserRole;
 
 public static class Roles
 {

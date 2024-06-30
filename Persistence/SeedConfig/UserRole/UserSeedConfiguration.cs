@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.AspNetCore.Identity;
 
-namespace Persistence.SeedConfig;
+namespace Persistence.SeedConfig.UserRole;
 
 public class UserSeedConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {

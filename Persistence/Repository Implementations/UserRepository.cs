@@ -21,8 +21,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using Persistence.DatabaseContext;
-using Persistence.SeedConfig;
 using static System.Net.Mime.MediaTypeNames;
+using Persistence.SeedConfig.UserRole;
 
 namespace Persistence.Repository_Implementations
 {
@@ -100,13 +100,13 @@ namespace Persistence.Repository_Implementations
                 }
 
                 await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
-                //var userId = await _userManager.GetUserIdAsync(applicationUser);
-                //var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
-                //string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-                //var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
+                var userId = await _userManager.GetUserIdAsync(applicationUser);
+                var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+                string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
 
-                //await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
-                //await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
+                await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
+                await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
 
                 return applicationUser.Id;
             }

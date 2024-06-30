@@ -10,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Persistence.SeedConfig;
+using Persistence.SeedConfig.UserRole;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

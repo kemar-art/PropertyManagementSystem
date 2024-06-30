@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Persistence.SeedConfig;
+using Persistence.SeedConfig.UserRole;
 
 namespace API.Controllers
 {
