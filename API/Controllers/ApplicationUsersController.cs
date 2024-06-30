@@ -38,6 +38,7 @@ namespace API.Controllers
         // GET api/<ApplicationUsersController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<GetASingleUserDTO>> Get(string id)
         {
@@ -50,6 +51,7 @@ namespace API.Controllers
         //[Route("create/employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult> Post([FromForm] CreateAppUserCommand createAppUser)
         {
             //createAppUser.Image = image;
@@ -60,8 +62,9 @@ namespace API.Controllers
         // PUT api/<ApplicationUsersController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Put([FromForm] UpdateAppUserCommand updateAppUser)
         {

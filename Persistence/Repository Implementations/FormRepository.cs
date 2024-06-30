@@ -97,5 +97,32 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
                                     //.ThenInclude(x => x.PurposeOfValuationItem)
                                     .ToListAsync();
     }
+
+    public async Task<IEnumerable<Form>> GetFormThatWasAssignedToAppraiser()
+    {
+        var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+
+        List<string> statusList = new()
+            {
+                FormStatus.StatusAssigned,
+                FormStatus.StatusAccepted,
+                FormStatus.StatusInProcess,
+                FormStatus.StatusApproved,
+                FormStatus.StatusReturnToAppraiser,
+                FormStatus.StatusSubmitForApproval,
+            };
+
+        return await _dbContext.Forms//.Include(x => x.Region)
+                                     .Where(x => x.AppraiserId == userId && statusList
+                                     .Contains(x.Status))
+                                     .Include(x => x.Appraiser)
+                                     //.Include(x => x.ServiceRequestFormServiceRequestItem)
+                                     //.ThenInclude(x => x.ServiceRequestItem)
+                                     //.Include(x => x.ServiceRequesFormTypeOfPropertyItem)
+                                     //.ThenInclude(x => x.TypeOfPropertyItem)
+                                     //.Include(x => x.ServiceRequestFormPurposeOfValuationItem)
+                                     //.ThenInclude(x => x.PurposeOfValuationItem)
+                                     .ToListAsync();
+    }
 }
 

@@ -7,4 +7,5 @@ public interface IFormRepository : IGenericRepository<Form>
 {
     Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser);
     Task<IEnumerable<Form>> GetFormByStatus(string status);
+    Task<IEnumerable<Form>> GetFormThatWasAssignedToAppraiser();
 }

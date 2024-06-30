@@ -23,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IEnumerable<Form>> GetFormByStatus(string status)
         {
             var getAllFormByStatus = await _mediator.Send(new GetFormsByStatusQuery(status));
@@ -32,6 +33,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

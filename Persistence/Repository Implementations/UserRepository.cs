@@ -70,7 +70,7 @@ namespace Persistence.Repository_Implementations
                 Gender = user.Gender,
                 DateOfBirth = user.DateOfBirth,
                 Datestarted = user.Datestarted,
-                Role = Roles.Administrator,
+                Role = Roles.Appraiser,
             };
 
             await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
