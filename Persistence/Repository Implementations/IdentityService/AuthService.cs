@@ -83,7 +83,7 @@ namespace Persistence.Repository_Implementations
             {
                 // Log user not found
                 _logger.LogWarning("User not found with email: {Email}", loginUser.Email);
-                throw new NotFoundException("User not found with email", loginUser.Email);
+                throw new NotFoundException("User not found", loginUser.Email);
             }
 
             // Check if the password is correct
@@ -92,7 +92,7 @@ namespace Persistence.Repository_Implementations
             {
                 // Log invalid password attempt
                 _logger.LogWarning("Invalid password attempt for user: {Email}", loginUser.Email);
-                throw new UnauthorizedAccessException("Invalid password for user");
+                throw new UnauthorizedAccessException("Invalid credentials was entered for the user");
             }
 
             // Generate the JWT token
