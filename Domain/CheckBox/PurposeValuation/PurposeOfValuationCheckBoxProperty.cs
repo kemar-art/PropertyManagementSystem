@@ -12,6 +12,6 @@ namespace Domain.CheckBox.PurposeValuation
         public string? Title { get; set; }
         public bool IsChecked { get; set; }
 
-        public List<PurposeOfValuationCheckBox>? purposeOfValuationItemCheckBoxes { get; set; }
+        public List<PurposeOfValuationCheckBox>? PurposeOfValuationItemCheckBoxes { get; set; }
     }
 }

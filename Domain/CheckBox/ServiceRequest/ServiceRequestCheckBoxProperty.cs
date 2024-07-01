@@ -12,6 +12,7 @@ namespace Domain.CheckBox.ServiceRequest
         public string? Title { get; set; }
         public bool IsChecked { get; set; }
 
-        public List<ServiceRequestCheckBox>? serviceRequestCheckBoxes { get; set; }
+        public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxes { get; set; }
     }
 }
+

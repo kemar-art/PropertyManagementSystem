@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using Domain.CheckBox;
+using Domain.CheckBox.PurposeValuation;
+using Domain.CheckBox.ServiceRequest;
+using Domain.CheckBox.TypeOfProperty;
+using MediatR;
 
 namespace Application.Features.Commands.ClientForm.CreateForm;
 
@@ -41,4 +45,24 @@ public class CreateFormCommand : IRequest<int>
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
+
+    public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; } = [];
+
+    public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; } = [];
+
+    public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; } = [];
+
+
+
+    public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItem { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxes { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxes { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> SelectedServiceRequestCheckBoxes { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> SelectedTypeOfPropertyCheckBoxes { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> SelectedPurposeOfEvaluationCheckBoxes { get; set; } = [];
 }

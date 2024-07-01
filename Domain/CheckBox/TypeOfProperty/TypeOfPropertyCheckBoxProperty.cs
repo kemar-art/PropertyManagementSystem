@@ -12,6 +12,7 @@ namespace Domain.CheckBox.TypeOfProperty
         public string? Title { get; set; }
         public bool IsChecked { get; set; }
 
-        public List<TypeOfPropertyCheckBox>? typeOfPropertyCheckBoxes { get; set; }
+        public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxes { get; set; }
     }
 }
+

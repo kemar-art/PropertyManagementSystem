@@ -8,16 +8,13 @@ namespace Domain.CheckBox.TypeOfProperty
 {
     public class TypeOfPropertyCheckBox
     {
+        public TypeOfPropertyCheckBox() { }
+
         public Form Form { get; set; }
         public int? FormId { get; set; }
 
-        public TypeOfPropertyCheckBoxProperty typeOfPropertyCheckProperty { get; set; }
+        public TypeOfPropertyCheckBoxProperty TypeOfPropertyCheckProperty { get; set; }
         public int TypeOfPropertyCheckBoxPropertyId { get; set; }
-
-        public TypeOfPropertyCheckBox()
-        {
-
-        }
 
         public TypeOfPropertyCheckBox(int? formId, int typeOfPropertyCheckBoxPropertyId)
         {
@@ -26,3 +23,4 @@ namespace Domain.CheckBox.TypeOfProperty
         }
     }
 }
+

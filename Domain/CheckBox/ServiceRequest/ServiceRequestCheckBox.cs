@@ -8,15 +8,12 @@ namespace Domain.CheckBox.ServiceRequest
 {
     public class ServiceRequestCheckBox
     {
-        public ServiceRequestCheckBox()
-        {
-
-        }
+        public ServiceRequestCheckBox() { }
 
         public Form Form { get; set; }
         public int? FormId { get; set; }
 
-        public ServiceRequestCheckBoxProperty serviceRequestCheckBoxProperty { get; set; }
+        public ServiceRequestCheckBoxProperty ServiceRequestCheckBoxProperty { get; set; }
         public int ServiceRequestCheckBoxPropertyId { get; set; }
 
         public ServiceRequestCheckBox(int? formId, int serviceRequestCheckBoxPropertyId)
@@ -26,3 +23,4 @@ namespace Domain.CheckBox.ServiceRequest
         }
     }
 }
+

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.CheckBox.PurposeValuation;
+using Domain.CheckBox.ServiceRequest;
+using Domain.CheckBox.TypeOfProperty;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain;
@@ -108,4 +111,10 @@ public class Form
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
     public DateTime ApprovedForm { get; set; }
+
+    public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; }
+
+    public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
+
+    public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
 }
