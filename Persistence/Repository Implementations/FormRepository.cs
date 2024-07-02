@@ -27,17 +27,15 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IAppLogger<FormRepository> _appLogger;
     private readonly IMapper _mapper;
-    private readonly IFormRepository _formRepository;
 
     public List<ServiceRequestCheckBox> ServiceRequesChecBoxItems = [];
 
-    public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper, IFormRepository formRepository) : base(dbContext)
+    public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper) : base(dbContext)
     {
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
         _appLogger = appLogger;
         _mapper = mapper;
-        _formRepository = formRepository;
     }
 
     public async Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser)
@@ -98,7 +96,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         formToCreate.Status = FormStatus.StatusSubmitted;
         formToCreate.DataCreated = DateTime.Now;
 
-        await _formRepository.CreateAsync(formToCreate);
+        await CreateAsync(formToCreate);
 
         //Find all the checkboxes that was checked by user (For Service Resquest)
         foreach (var item in createForm.ServiceRequestCheckBoxes)
