@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Features\Commands\Users\**" />
-    <Compile Remove="Features\Queries\NewFolder\**" />
     <EmbeddedResource Remove="Features\Commands\Users\**" />
-    <EmbeddedResource Remove="Features\Queries\NewFolder\**" />
     <None Remove="Features\Commands\Users\**" />
-    <None Remove="Features\Queries\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

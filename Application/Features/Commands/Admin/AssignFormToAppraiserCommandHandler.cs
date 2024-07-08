@@ -20,9 +20,8 @@ namespace Application.Features.Commands.Admin
 
         public async Task<Unit> Handle(AssignFormToAppraiserCommand request, CancellationToken cancellationToken)
         {
-            await _adminRepository.AssignJob(request);
-
-            return Unit.Value;
+            var assignForm = await _adminRepository.AssignJob(request);
+            return assignForm;
         }
     }
 }
