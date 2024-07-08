@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Contracts.Repository_Interface;
+using Domain;
 using Domain.Repository_Interface;
 using MediatR;
 using System;
@@ -11,16 +12,16 @@ namespace Application.Features.Queries.ClientForm.GetFromForAppraiser
 {
     public class GetFromForAppraiserQueryHandler : IRequestHandler<GetFromForAppraiserQuery, IEnumerable<Form>>
     {
-        private readonly IFormRepository _formRepository;
+        private readonly IAppraiserRerpository _appraiserRerpository;
 
-        public GetFromForAppraiserQueryHandler(IFormRepository formRepository)
+        public GetFromForAppraiserQueryHandler(IAppraiserRerpository appraiserRerpository)
         {
-            _formRepository = formRepository;
+            _appraiserRerpository = appraiserRerpository;
         }
 
         public async Task<IEnumerable<Form>> Handle(GetFromForAppraiserQuery request, CancellationToken cancellationToken)
         {
-            var getFromForAppraiser = await _formRepository.GetFormThatWasAssignedToAppraiser();
+            var getFromForAppraiser = await _appraiserRerpository.GetFormThatWasAssignedToAppraiser();
             return getFromForAppraiser;
         }
     }

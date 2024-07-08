@@ -46,23 +46,23 @@ public class CreateFormCommand : IRequest<int>
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
-    public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; } = [];
+    //public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; } = [];
 
-    public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; } = [];
+    //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; } = [];
 
-    public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; } = [];
+    //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; } = [];
 
 
 
-    public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItem { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItem { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxes { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxes { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxes { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxes { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> SelectedServiceRequestCheckBoxes { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> SelectedServiceRequestCheckBoxes { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> SelectedTypeOfPropertyCheckBoxes { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> SelectedTypeOfPropertyCheckBoxes { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> SelectedPurposeOfEvaluationCheckBoxes { get; set; } = [];
+    //public List<CheckBoxIPropertyDTO> SelectedPurposeOfEvaluationCheckBoxes { get; set; } = [];
 }

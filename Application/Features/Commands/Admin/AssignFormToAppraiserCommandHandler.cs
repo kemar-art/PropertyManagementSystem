@@ -1,4 +1,5 @@
-﻿using Domain.Repository_Interface;
+﻿using Application.Contracts.Repository_Interface;
+using Domain.Repository_Interface;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,16 @@ namespace Application.Features.Commands.Admin
 {
     public class AssignFormToAppraiserCommandHandler : IRequestHandler<AssignFormToAppraiserCommand, Unit>
     {
-        private readonly IFormRepository _formRepository;
+        private readonly IAdminRepository _adminRepository;
 
-        public AssignFormToAppraiserCommandHandler(IFormRepository formRepository)
+        public AssignFormToAppraiserCommandHandler(IAdminRepository adminRepository)
         {
-            _formRepository = formRepository;
+            _adminRepository = adminRepository;
         }
 
         public async Task<Unit> Handle(AssignFormToAppraiserCommand request, CancellationToken cancellationToken)
         {
-            await _formRepository.AssignJob(request);
+            await _adminRepository.AssignJob(request);
 
             return Unit.Value;
         }

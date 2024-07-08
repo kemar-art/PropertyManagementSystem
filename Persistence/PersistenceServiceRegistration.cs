@@ -60,7 +60,8 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAdminRepository, AdminRepository>();
+        services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
         services.AddSingleton<IEmailSender, EmailSender>();
         services.AddTransient<IAuthService, AuthService>();
 

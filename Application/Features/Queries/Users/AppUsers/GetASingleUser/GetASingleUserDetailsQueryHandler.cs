@@ -15,9 +15,9 @@ namespace Application.Features.Queries.Users.AppUsers.GetASingleUser;
 public class GetASingleUserDetailsQueryHandler : IRequestHandler<GetASingleUserDetailsQuery, GetASingleUserDTO>
 {
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IAdminRepository _userRepository;
 
-    public GetASingleUserDetailsQueryHandler(IMapper mapper, IUserRepository userRepository)
+    public GetASingleUserDetailsQueryHandler(IMapper mapper, IAdminRepository userRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;

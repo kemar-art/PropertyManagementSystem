@@ -16,9 +16,9 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
     public class UpdateAppUserCommandHandler : IRequestHandler<UpdateAppUserCommand, Unit>
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        private readonly IAdminRepository _userRepository;
 
-        public UpdateAppUserCommandHandler(IMapper mapper, IUserRepository userRepository)
+        public UpdateAppUserCommandHandler(IMapper mapper, IAdminRepository userRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;

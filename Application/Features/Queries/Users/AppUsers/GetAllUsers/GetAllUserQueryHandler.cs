@@ -14,9 +14,9 @@ namespace Application.Features.Queries.Users.AppUsers.GetAllUsers;
 public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<GetAllUsersDTO>>
 {
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IAdminRepository _userRepository;
 
-    public GetAllUserQueryHandler(IMapper mapper, IUserRepository userRepository)
+    public GetAllUserQueryHandler(IMapper mapper, IAdminRepository userRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;

@@ -20,9 +20,9 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser;
 public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand, string>
 {
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IAdminRepository _userRepository;
 
-    public CreateAppUserCommandHandler(IMapper mapper, IUserRepository userRepository)
+    public CreateAppUserCommandHandler(IMapper mapper, IAdminRepository userRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;

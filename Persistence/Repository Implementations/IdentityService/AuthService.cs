@@ -30,9 +30,9 @@ namespace Persistence.Repository_Implementations
 
         public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<JwtSettings> jwtSettings, IAppLogger<AuthService> logger)
         {
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
+            _userManager = userManager /*?? throw new ArgumentNullException(nameof(userManager))*/;
+            _signInManager = signInManager /*?? throw new ArgumentNullException(nameof(signInManager))*/;
+            _jwtSettings = jwtSettings /*?? throw new ArgumentNullException(nameof(jwtSettings))*/;
             _logger = logger;
         }
 
@@ -48,6 +48,8 @@ namespace Persistence.Repository_Implementations
                 LastName = clientUser.LastName,
                 Email = clientUser.Email,
                 UserName = clientUser.Email,
+                NormalizedEmail = clientUser.Email,
+                NormalizedUserName = clientUser.Email,
                 PhoneNumber = clientUser.PhoneNumber,
                 Gender = clientUser.Gender,
                 DateOfBirth = clientUser.DateOfBirth,

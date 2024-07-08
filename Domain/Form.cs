@@ -112,9 +112,9 @@ public class Form
     [DataType(DataType.Date)]
     public DateTime ApprovedForm { get; set; }
 
-    public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; }
+    //public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; }
 
-    public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
+    //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
 
-    public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
+    //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
 }

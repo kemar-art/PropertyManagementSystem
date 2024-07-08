@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.ILogging;
+using Application.Contracts.Repository_Interface;
 using Application.StaticDetails;
 using Domain;
 using Domain.Repository_Interface;
@@ -14,12 +15,12 @@ namespace Application.Features.Queries.ClientForm.GetFormsByStatus
     public class GetFormsByStatusQueryHandler : IRequestHandler<GetFormsByStatusQuery, IEnumerable<Form>>
     {
         private readonly IAppLogger<GetFormsByStatusQueryHandler> _appLogger;
-        private readonly IFormRepository _formRepository;
+        private readonly IAdminRepository _adminRepository;
 
-        public GetFormsByStatusQueryHandler(IAppLogger<GetFormsByStatusQueryHandler> appLogger, IFormRepository formRepository)
+        public GetFormsByStatusQueryHandler(IAppLogger<GetFormsByStatusQueryHandler> appLogger, IAdminRepository adminRepository)
         {
             _appLogger = appLogger;
-            _formRepository = formRepository;
+            _adminRepository = adminRepository;;
         }
 
         public async Task<IEnumerable<Form>> Handle(GetFormsByStatusQuery request, CancellationToken cancellationToken)
@@ -27,11 +28,11 @@ namespace Application.Features.Queries.ClientForm.GetFormsByStatus
             IEnumerable<Form> getFormByStatus = null;
             if (!string.IsNullOrEmpty(request.Status))
             {
-                getFormByStatus = await _formRepository.GetFormByStatus(request.Status);
+                getFormByStatus = await _adminRepository.GetFormByStatusForAdmin(request.Status);
             }
             else
             {
-                getFormByStatus = await _formRepository.GetFormByStatus(FormStatus.StatusSubmitted);
+                getFormByStatus = await _adminRepository.GetFormByStatusForAdmin(FormStatus.StatusSubmitted);
             }
 
             return getFormByStatus;

@@ -23,10 +23,13 @@ using System.IO;
 using Persistence.DatabaseContext;
 using static System.Net.Mime.MediaTypeNames;
 using Persistence.SeedConfig.UserRole;
+using Application.Features.Commands.Admin;
+using Application.StaticDetails;
+using Application.Contracts.ILogging;
 
 namespace Persistence.Repository_Implementations
 {
-    public class UserRepository : GenericRepository<ApplicationUser>, IUserRepository
+    public class AdminRepository : GenericRepository<ApplicationUser>, IAdminRepository
     {
         private static readonly System.Random _random = new();
         private readonly UserManager<ApplicationUser> _userManager;
@@ -34,20 +37,22 @@ namespace Persistence.Repository_Implementations
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IEmailSender _emailSender;
+        private readonly IAppLogger<AdminRepository> _appLogger;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
 
         const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
         const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string NUMBERS = "1234567890";
-        const string SPECIALS = @"`~!@£$%^&*()[]#€?;+\/<>";
+        const string SPECIALS = @"`~!@£$%^&*()[]#€?;+<>";
 
-        public UserRepository(
+        public AdminRepository(
             PMSDatabaseContext dbContext,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment hostEnvironment,
             IHttpContextAccessor httpContextAccessor,
             IUserStore<ApplicationUser> userStore,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IAppLogger<AdminRepository> appLogger)
             : base(dbContext)
         {
             _userManager = userManager; //?? throw new ArgumentNullException(nameof(userManager));
@@ -55,7 +60,75 @@ namespace Persistence.Repository_Implementations
             _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));
             _emailSender = emailSender; //?? throw new ArgumentNullException(nameof(emailSender));
+            _appLogger = appLogger;
             _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
+        }
+
+        public async Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser)
+        {
+            var formToAssigned = await _dbContext.Forms.FirstOrDefaultAsync(f => f.Id == assignFormToAppraiser.FormId);
+            if (formToAssigned != null)
+            {
+                // Fetch the user ID using the correct claim type
+                var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+                if (userId == null)
+                {
+                    _appLogger.LogError("User not found in the claims.");
+                    throw new NotFoundException("User not found.", userId);
+                }
+
+                // Verify that the JobAssignerId exists 
+                var jobAssignerExists = await _userManager.FindByIdAsync(userId);
+                if (jobAssignerExists == null)
+                {
+                    _appLogger.LogError($"The Job Assigner Id {userId} does not exist in the AspNetUsers table.");
+                    throw new NotFoundException("The Job Assigner Id does not exist.", userId);
+                }
+
+                // Verify that the AppraiserId exists 
+                var appraiserExists = await _userManager.FindByIdAsync(assignFormToAppraiser.AppraiserId);
+                if (appraiserExists == null)
+                {
+                    _appLogger.LogError($"The Appraiser Id {assignFormToAppraiser.AppraiserId} does not exist in the AspNetUsers table.");
+                    throw new NotFoundException("The Appraiser Id does not exist in the AspNetUsers table.", userId);
+                }
+
+                formToAssigned.AppraiserId = assignFormToAppraiser.AppraiserId;
+                formToAssigned.JobAssignerId = userId;
+                formToAssigned.AdminNote = assignFormToAppraiser.AdminNote;
+                formToAssigned.Status = FormStatus.StatusAssigned;
+
+                try
+                {
+                    _dbContext.Update(formToAssigned);
+                    await _dbContext.SaveChangesAsync();
+                    _appLogger.LogInformation("Form successfully updated.");
+                    return Unit.Value;
+                }
+                catch (DbUpdateException ex)
+                {
+                    _appLogger.LogError("An error occurred while saving changes.", ex);
+                    throw new Exception("An error occurred while saving changes. Please try again later.", ex);
+                }
+            }
+
+            _appLogger.LogError($"The form with Id {assignFormToAppraiser.FormId} was not found.");
+            throw new NotFoundException("The form was not found with the Id value:", formToAssigned.Id);
+        }
+
+        public async Task<IEnumerable<Form>> GetFormByStatusForAdmin(string status)
+        {
+            return await _dbContext.Forms
+                                        //.Include(x => x.Region)
+                                        .Where(x => x.Status == status)
+                                        .Include(x => x.Appraiser)
+                                        //.Include(x => x.ServiceRequestFormServiceRequestItem)
+                                        //.ThenInclude(x => x.ServiceRequestItem)
+                                        //.Include(x => x.ServiceRequesFormTypeOfPropertyItem)
+                                        //.ThenInclude(x => x.TypeOfPropertyItem)
+                                        //.Include(x => x.ServiceRequestFormPurposeOfValuationItem)
+                                        //.ThenInclude(x => x.PurposeOfValuationItem)
+                                        .ToListAsync();
         }
 
         public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image)
@@ -70,8 +143,9 @@ namespace Persistence.Repository_Implementations
                 Gender = user.Gender,
                 DateOfBirth = user.DateOfBirth,
                 Datestarted = user.Datestarted,
+                EmailConfirmed = true,
                 Role = Roles.Appraiser,
-            };
+            };  
 
             await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(applicationUser, user.Email, CancellationToken.None);

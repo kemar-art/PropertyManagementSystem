@@ -13,9 +13,9 @@ namespace Application.Features.Commands.User.AppUsers.DeleteUser
 {
     public class DeleteAppUserCommandHandler : IRequestHandler<DeleteAppUserCommand, Unit>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAdminRepository _userRepository;
 
-        public DeleteAppUserCommandHandler(IUserRepository userRepository)
+        public DeleteAppUserCommandHandler(IAdminRepository userRepository)
         {
             _userRepository = userRepository;
         }

@@ -11,9 +11,9 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
 {
     public class UpdateAppUserCommandValidation : AbstractValidator<UpdateAppUserCommand>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAdminRepository _userRepository;
 
-        public UpdateAppUserCommandValidation(IUserRepository userRepository)
+        public UpdateAppUserCommandValidation(IAdminRepository userRepository)
         {
             _userRepository = userRepository;
 

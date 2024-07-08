@@ -12,8 +12,8 @@ using Persistence.DatabaseContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(PMSDatabaseContext))]
-    [Migration("20240701021529_addcheckbox")]
-    partial class addcheckbox
+    [Migration("20240703180343_new")]
+    partial class @new
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,10 +136,10 @@ namespace Persistence.Migrations
                             Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "bd4aa7cc-6efa-4f91-aed8-9d9513eaf38a",
-                            DateEnded = new DateTime(2024, 6, 30, 21, 15, 28, 964, DateTimeKind.Local).AddTicks(5527),
-                            DateOfBirth = new DateTime(2024, 6, 30, 21, 15, 28, 964, DateTimeKind.Local).AddTicks(5516),
-                            Datestarted = new DateTime(2024, 6, 30, 21, 15, 28, 964, DateTimeKind.Local).AddTicks(5527),
+                            ConcurrencyStamp = "e124f3bf-9abf-479f-9192-3be8b687fe8f",
+                            DateEnded = new DateTime(2024, 7, 3, 13, 3, 41, 594, DateTimeKind.Local).AddTicks(1654),
+                            DateOfBirth = new DateTime(2024, 7, 3, 13, 3, 41, 594, DateTimeKind.Local).AddTicks(1644),
+                            Datestarted = new DateTime(2024, 7, 3, 13, 3, 41, 594, DateTimeKind.Local).AddTicks(1653),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -150,10 +150,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC0WcPZdQgJL7ZHBMbqsJ7jqK2OAuxz2YUsdGkCep6JDWEfKmVhiOmOZseYJf3mNaw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPaEu351+CCo6mRJTkl8cqH6v4eoVdGkBIH3L/gPojlisRGBCrdoAosyY7VTHtRRjg==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "571dcc03-b882-4b1e-a737-8cdc8dd78697",
+                            SecurityStamp = "efd32fed-3c9f-42df-8270-1f22bca686e4",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
@@ -163,10 +163,10 @@ namespace Persistence.Migrations
                             Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "05d8df58-2c94-4d36-860e-69f04d55f312",
-                            DateEnded = new DateTime(2024, 6, 30, 21, 15, 29, 5, DateTimeKind.Local).AddTicks(8360),
-                            DateOfBirth = new DateTime(2024, 6, 30, 21, 15, 29, 5, DateTimeKind.Local).AddTicks(8352),
-                            Datestarted = new DateTime(2024, 6, 30, 21, 15, 29, 5, DateTimeKind.Local).AddTicks(8360),
+                            ConcurrencyStamp = "1048d917-33cd-4bda-8931-d956eb8f12b2",
+                            DateEnded = new DateTime(2024, 7, 3, 13, 3, 41, 632, DateTimeKind.Local).AddTicks(2816),
+                            DateOfBirth = new DateTime(2024, 7, 3, 13, 3, 41, 632, DateTimeKind.Local).AddTicks(2810),
+                            Datestarted = new DateTime(2024, 7, 3, 13, 3, 41, 632, DateTimeKind.Local).AddTicks(2816),
                             Email = "appraiser@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Appraiser",
@@ -177,10 +177,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "APPRAISER@LOCALHOST.COM",
                             NormalizedUserName = "APPRAISER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELlW1RyjhtwC6kCFayfzPC5VkhHGVTt42m26/07OJpAm7RQiMWzS+og+esE2y+zBHA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAHD6bD53mL2kslK7z/6e2EtWYP2GbOrm0TxgXo9FHRUgTZZuU2lz5af7dBMUUfaDQ==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "a11b61be-f97c-4781-a80f-23f2258ffb76",
+                            SecurityStamp = "6828af87-fd29-411d-b15b-ff94d2a5eea0",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "appraiser@localhost.com"
@@ -190,10 +190,10 @@ namespace Persistence.Migrations
                             Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "a77602e8-b2d2-4632-b861-b3005cbdebe5",
-                            DateEnded = new DateTime(2024, 6, 30, 21, 15, 29, 45, DateTimeKind.Local).AddTicks(3509),
-                            DateOfBirth = new DateTime(2024, 6, 30, 21, 15, 29, 45, DateTimeKind.Local).AddTicks(3502),
-                            Datestarted = new DateTime(2024, 6, 30, 21, 15, 29, 45, DateTimeKind.Local).AddTicks(3509),
+                            ConcurrencyStamp = "afb1f687-022e-4e05-9724-a110d87b13f7",
+                            DateEnded = new DateTime(2024, 7, 3, 13, 3, 41, 671, DateTimeKind.Local).AddTicks(1359),
+                            DateOfBirth = new DateTime(2024, 7, 3, 13, 3, 41, 671, DateTimeKind.Local).AddTicks(1356),
+                            Datestarted = new DateTime(2024, 7, 3, 13, 3, 41, 671, DateTimeKind.Local).AddTicks(1359),
                             Email = "client@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -204,247 +204,13 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "CLIENT@LOCALHOST.COM",
                             NormalizedUserName = "CLIENT@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECOv/oHqhwrxlLwLeQ1ImHsaLgHCs8uRHho3RIKtesnEGD8KqX3zErFruCyGBpp9ag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDqgkRX44G1h4oy57u5J/1kr4YTDkYLmi0LbHLUcdUX5eNqXsr05ntDjfaqo/1s8mw==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "40613276-b1d3-429e-afd9-971ba85c2d71",
+                            SecurityStamp = "c439905d-a769-418f-bc33-a1b467be5104",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "client@localhost.com"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationCheckBox", b =>
-                {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurposeOfValuationCheckBoxPropertyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "PurposeOfValuationCheckBoxPropertyId");
-
-                    b.HasIndex("PurposeOfValuationCheckBoxPropertyId");
-
-                    b.ToTable("PurposeOfValuationCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationCheckBoxProperty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurposeOfValuationCheckBoxProperties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsChecked = false,
-                            Title = "Market Value"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsChecked = false,
-                            Title = "Sale"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsChecked = false,
-                            Title = "Purchase"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsChecked = false,
-                            Title = "Mortgage"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsChecked = false,
-                            Title = "Insurance"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IsChecked = false,
-                            Title = "Probate"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestCheckBox", b =>
-                {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceRequestCheckBoxPropertyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "ServiceRequestCheckBoxPropertyId");
-
-                    b.HasIndex("ServiceRequestCheckBoxPropertyId");
-
-                    b.ToTable("ServiceRequestCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestCheckBoxProperty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceRequestCheckBoxProperties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsChecked = false,
-                            Title = "VALUATION"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsChecked = false,
-                            Title = "LAND SURVEYOR"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsChecked = false,
-                            Title = "LEGAL REPRESENTATION"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsChecked = false,
-                            Title = "SALES/RENTALS"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsChecked = false,
-                            Title = "AUCTION"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IsChecked = false,
-                            Title = "PROPERTY MANAGEMENT"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            IsChecked = false,
-                            Title = "STRUCTURAL SURVEY"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IsChecked = false,
-                            Title = "CONSTRUCTION ESTIMATE"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            IsChecked = false,
-                            Title = "GENERAL CONTRACTOR"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            IsChecked = false,
-                            Title = "OTHER"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyCheckBox", b =>
-                {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfPropertyCheckBoxPropertyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "TypeOfPropertyCheckBoxPropertyId");
-
-                    b.HasIndex("TypeOfPropertyCheckBoxPropertyId");
-
-                    b.ToTable("TypeOfPropertyCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyCheckBoxProperty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeOfPropertyCheckBoxProperties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsChecked = false,
-                            Title = "Commercial"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsChecked = false,
-                            Title = "Residential"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsChecked = false,
-                            Title = "Agricultural"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsChecked = false,
-                            Title = "Industrial"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsChecked = false,
-                            Title = "Vacant Lot"
                         });
                 });
 
@@ -761,63 +527,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationCheckBox", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("PurposeOfValuationCheckBoxItems")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.PurposeValuation.PurposeOfValuationCheckBoxProperty", "PurposeOfValuationCheckBoxProperty")
-                        .WithMany("PurposeOfValuationItemCheckBoxes")
-                        .HasForeignKey("PurposeOfValuationCheckBoxPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("PurposeOfValuationCheckBoxProperty");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestCheckBox", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("ServiceRequestCheckBoxItems")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.ServiceRequest.ServiceRequestCheckBoxProperty", "ServiceRequestCheckBoxProperty")
-                        .WithMany("ServiceRequestCheckBoxes")
-                        .HasForeignKey("ServiceRequestCheckBoxPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("ServiceRequestCheckBoxProperty");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyCheckBox", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("TypeOfPropertyCheckBoxItems")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.TypeOfProperty.TypeOfPropertyCheckBoxProperty", "TypeOfPropertyCheckProperty")
-                        .WithMany("TypeOfPropertyCheckBoxes")
-                        .HasForeignKey("TypeOfPropertyCheckBoxPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("TypeOfPropertyCheckProperty");
-                });
-
             modelBuilder.Entity("Domain.Form", b =>
                 {
                     b.HasOne("Domain.ApplicationUser", "Appraiser")
@@ -882,30 +591,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationCheckBoxProperty", b =>
-                {
-                    b.Navigation("PurposeOfValuationItemCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestCheckBoxProperty", b =>
-                {
-                    b.Navigation("ServiceRequestCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyCheckBoxProperty", b =>
-                {
-                    b.Navigation("TypeOfPropertyCheckBoxes");
-                });
-
-            modelBuilder.Entity("Domain.Form", b =>
-                {
-                    b.Navigation("PurposeOfValuationCheckBoxItems");
-
-                    b.Navigation("ServiceRequestCheckBoxItems");
-
-                    b.Navigation("TypeOfPropertyCheckBoxItems");
                 });
 #pragma warning restore 612, 618
         }
