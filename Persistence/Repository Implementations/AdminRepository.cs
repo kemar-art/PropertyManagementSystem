@@ -21,7 +21,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using Persistence.DatabaseContext;
-using static System.Net.Mime.MediaTypeNames;
 using Persistence.SeedConfig.UserRole;
 using Application.Features.Commands.Admin;
 using Application.StaticDetails;

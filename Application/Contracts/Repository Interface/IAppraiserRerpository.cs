@@ -13,7 +13,7 @@ namespace Application.Contracts.Repository_Interface
     public interface IAppraiserRerpository : IGenericRepository<Form>
     {
         Task<IEnumerable<Form>> GetFormThatWasAssignedToAppraiser();
-        Task<Unit> AcceptTheFormThatWasAssigned(CommonFromCommand acceptFrom);
-        Task<Unit> RejectTheFormThatWasAssigned(CommonFromCommand rejectFrom);
+        Task<Unit> AcceptTheFormThatWasAssigned(int? acceptFromId);
+        Task<Unit> RejectTheFormThatWasAssigned(int? rejectFromId);
     }
 }

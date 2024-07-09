@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Appraiser.AcceptForm
 {
-    public class AcceptFromCommandQueryHandler : IRequestHandler<CommonFromCommand, Unit>
+    public class AcceptFromCommandQueryHandler : IRequestHandler<AcceptFromCommandQuery, Unit>
     {
         private readonly IAppraiserRerpository _appraiserRerpository;
 
@@ -17,9 +17,9 @@ namespace Application.Features.Commands.Appraiser.AcceptForm
             _appraiserRerpository = appraiserRerpository;
         }
 
-        public async Task<Unit> Handle(CommonFromCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AcceptFromCommandQuery request, CancellationToken cancellationToken)
         {
-            var acceptForm = await _appraiserRerpository.AcceptTheFormThatWasAssigned(request);
+            var acceptForm = await _appraiserRerpository.AcceptTheFormThatWasAssigned(request.FormId);
             return acceptForm;
         }
     }
