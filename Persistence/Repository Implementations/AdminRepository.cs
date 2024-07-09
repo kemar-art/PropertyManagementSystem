@@ -238,6 +238,120 @@ namespace Persistence.Repository_Implementations
             return Unit.Value;
         }
 
+        public async Task<Unit> MarkFormHasComplete(int? formId, string? appraiserId)
+        {
+            if (formId == null)
+            {
+                _appLogger.LogWarning("Form ID is null.");
+                throw new ArgumentNullException(nameof(formId), "Form ID cannot be null.");
+            }
+
+            if (string.IsNullOrEmpty(appraiserId))
+            {
+                _appLogger.LogWarning("Appraiser ID is null or empty.");
+                throw new ArgumentNullException(nameof(appraiserId), "Appraiser ID cannot be null or empty.");
+            }
+
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+
+            if (userId == null)
+            {
+                _appLogger.LogWarning("User ID not found in the context.");
+                throw new UnauthorizedAccessException("User ID not found in the context.");
+            }
+
+            _appLogger.LogInformation($"Starting to mark form with ID {formId} as complete for appraiser {appraiserId} by user {userId}.");
+
+            var formFromDb = await _dbContext.Forms.FirstOrDefaultAsync(q => q.Id == formId);
+            if (formFromDb == null)
+            {
+                _appLogger.LogWarning($"Form with ID {formId} not found in the database.");
+                throw new KeyNotFoundException($"Form with ID {formId} not found.");
+            }
+
+            try
+            {
+                if (formFromDb.AppraiserId == appraiserId)
+                {
+                    _appLogger.LogInformation($"Appraiser {appraiserId} is the assigned appraiser for form {formId}. Marking form as complete...");
+
+                    formFromDb.Status = FormStatus.StatusCompleted;
+                    formFromDb.MarkFromAsCompleted = DateTime.Now;
+
+                    _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    _appLogger.LogInformation($"Form with ID {formId} marked as complete successfully by appraiser {appraiserId}.");
+
+                    return Unit.Value;
+                }
+                else
+                {
+                    _appLogger.LogWarning($"Appraiser {appraiserId} is not the assigned appraiser for form {formId}. No changes made.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An error occurred while marking form {formId} as complete for appraiser {appraiserId} by user {userId}.", ex); 
+            }
+
+            throw new BadHttpRequestException("An error occurred while marking this job as complete. Please refresh and try again.");
+        }
+
+        public async Task<Unit> ReturnTheFormToAppraiserForCompletion(int? returnFormToAppraiser)
+        {
+            if (returnFormToAppraiser == null)
+            {
+                _appLogger.LogWarning("Form ID is null.");
+                throw new ArgumentNullException(nameof(returnFormToAppraiser), "Form ID cannot be null.");
+            }
+
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+            if (userId == null)
+            {
+                _appLogger.LogWarning("User ID not found in the context.");
+                throw new UnauthorizedAccessException("User ID not found in the context.");
+            }
+
+            _appLogger.LogInformation($"Starting to return form with ID {returnFormToAppraiser} to appraiser for completion by user {userId}.");
+
+            var formFromDb = await _dbContext.Forms.FirstOrDefaultAsync(q => q.Id == returnFormToAppraiser);
+            if (formFromDb == null)
+            {
+                _appLogger.LogWarning($"Form with ID {returnFormToAppraiser} not found in the database.");
+                throw new KeyNotFoundException($"Form with ID {returnFormToAppraiser} not found.");
+            }
+
+            try
+            {
+                if (formFromDb.AppraiserId == userId)
+                {
+                    _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {returnFormToAppraiser}. Returning form for completion...");
+
+                    formFromDb.Status = FormStatus.StatusReturnToAppraiser;
+                    formFromDb.ReturnFromToAppraiser = DateTime.Now;
+
+                    _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    _appLogger.LogInformation($"Form with ID {returnFormToAppraiser} returned to appraiser for completion successfully by user {userId}.");
+
+                    return Unit.Value;
+                }
+                else
+                {
+                    _appLogger.LogWarning($"User {userId} is not the assigned appraiser for form {returnFormToAppraiser}. No changes made.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An error occurred while returning form {returnFormToAppraiser} to appraiser for completion by user {userId}.", ex);
+            }
+
+            throw new BadHttpRequestException("An error occurred while returning this job for completion. Please refresh and try again.");
+        }
+
+
         private async Task<string> GenerateRandomPasswordAsync()
         {
             var options = _userManager.Options.Password;

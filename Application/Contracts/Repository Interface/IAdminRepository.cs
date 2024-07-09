@@ -17,5 +17,7 @@ namespace Application.Contracts.Repository_Interface
         Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user, IFormFile image);
         Task<IEnumerable<Form>> GetFormByStatusForAdmin(string status);
         Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser);
+        Task<Unit> MarkFormHasComplete(int? formId, string? appraiserId);
+        Task<Unit> ReturnTheFormToAppraiserForCompletion(int? returnFormToAppraiser);
     }
 }

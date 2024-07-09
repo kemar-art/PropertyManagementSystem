@@ -1,4 +1,6 @@
 ﻿using Application.Features.Commands.Admin.AssignForm;
+using Application.Features.Commands.Admin.CompletedForm;
+using Application.Features.Commands.Admin.ReturnForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.Features.Queries.ClientForm.GetFormsByStatus;
 using Domain;
@@ -30,7 +32,7 @@ namespace API.Controllers
             return getAllFormByStatus;
         }
 
-        [HttpPut("assign-form/{id}")]
+        [HttpPut("assign-form/{formId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -40,6 +42,37 @@ namespace API.Controllers
         public async Task<ActionResult> AssignFormToAppraiser([FromForm] AssignFormToAppraiserCommand assignFormToAppraiser)
         {
             await _mediator.Send(assignFormToAppraiser);
+            return NoContent();
+        }
+
+        [HttpPut("complete/{formId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> MarkFormHasCompleteByAdmin(int formId, string appraiserId)
+        {
+            CompleteFromQuery completeFrom = new()
+            {
+                FormId = formId,
+                AppraiserId = appraiserId
+            };
+
+            await _mediator.Send(completeFrom);
+            return NoContent();
+        }
+
+        [HttpPut("retun-to-appraiser/{formId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> ReturnFormToAppiase(int formId)
+        {
+            ReturnFormToAppraiserQuery returnFormToAppraiser = new()
+            {
+                FormId = formId
+            };
+
+            await _mediator.Send(returnFormToAppraiser);
             return NoContent();
         }
     }
