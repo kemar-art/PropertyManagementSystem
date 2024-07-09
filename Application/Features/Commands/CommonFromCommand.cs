@@ -10,6 +10,6 @@ namespace Application.Features.Commands
     public class CommonFromCommand
     {
         public int FormId { get; set; }
-        //public string AppraiserId { get; set; } = string.Empty;
+        public string AppraiserId { get; set; } = string.Empty;
     }
 }

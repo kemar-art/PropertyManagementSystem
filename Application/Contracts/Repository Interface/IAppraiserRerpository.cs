@@ -2,6 +2,7 @@
 using Domain;
 using Domain.Repository_Interface;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Application.Contracts.Repository_Interface
         Task<IEnumerable<Form>> GetFormThatWasAssignedToAppraiser();
         Task<Unit> AcceptTheFormThatWasAssigned(int? acceptFromId);
         Task<Unit> RejectTheFormThatWasAssigned(int? rejectFromId);
+        Task<Unit> MarkTheFormAsInProcessThatWasAssigned(int? inProcessFromId);
+        Task<Unit> SubmitFormForApprovalThatWasAssigned(int? submitFormForApproval,IFormFile frontImage, IFormFile leftimage, IFormFile rightImage, IFormFile backImage);
     }
 }

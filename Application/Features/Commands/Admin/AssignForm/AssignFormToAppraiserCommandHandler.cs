@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.Admin
+namespace Application.Features.Commands.Admin.AssignForm
 {
     public class AssignFormToAppraiserCommandHandler : IRequestHandler<AssignFormToAppraiserCommand, Unit>
     {

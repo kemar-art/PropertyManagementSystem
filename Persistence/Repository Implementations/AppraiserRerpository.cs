@@ -5,15 +5,18 @@ using Application.Features.Commands;
 using Application.StaticDetails;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Persistence.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Persistence.Repository_Implementations
 {
@@ -21,11 +24,13 @@ namespace Persistence.Repository_Implementations
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAppLogger<AppraiserRerpository> _appLogger;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public AppraiserRerpository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, IAppLogger<AppraiserRerpository> appLogger) : base(dbContext)
+        public AppraiserRerpository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, IAppLogger<AppraiserRerpository> appLogger, IWebHostEnvironment hostEnvironment) : base(dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _appLogger = appLogger;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<Unit> AcceptTheFormThatWasAssigned(int? acceptFromId)
@@ -102,6 +107,59 @@ namespace Persistence.Repository_Implementations
                                          .ToListAsync();
         }
 
+        public async Task<Unit> MarkTheFormAsInProcessThatWasAssigned(int? inProcessFromId)
+        {
+            if (inProcessFromId == null)
+            {
+                _appLogger.LogWarning("Form ID is null.");
+                throw new ArgumentNullException(nameof(inProcessFromId), "Form ID cannot be null.");
+            }
+
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+            if (userId == null)
+            {
+                _appLogger.LogWarning("User ID not found in the context.");
+                throw new UnauthorizedAccessException("User ID not found in the context.");
+            }
+
+            _appLogger.LogInformation($"Starting to mark form with ID {inProcessFromId} as in process for user {userId}.");
+
+            var formFromDb = await _dbContext.Forms.FirstOrDefaultAsync(q => q.Id == inProcessFromId);
+            if (formFromDb == null)
+            {
+                _appLogger.LogWarning($"Form with ID {inProcessFromId} not found in the database.");
+                throw new KeyNotFoundException($"Form with ID {inProcessFromId} not found.");
+            }
+
+            try
+            {
+                if (formFromDb.AppraiserId == userId)
+                {
+                    _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {inProcessFromId}. Marking form as in process...");
+
+                    formFromDb.FormInProcess = DateTime.Now;
+                    formFromDb.Status = FormStatus.StatusInProcess;
+
+                    _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    _appLogger.LogInformation($"Form {inProcessFromId} marked as in process successfully by user {userId}.");
+
+                    return Unit.Value;
+                }
+                else
+                {
+                    _appLogger.LogWarning($"User {userId} is not the assigned appraiser for form {inProcessFromId}. No changes made.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An error occurred while marking form {inProcessFromId} as in process for user {userId}.", ex);          
+            }
+
+            throw new BadHttpRequestException("An error occurred while marking this job as in process. Please refresh and try again.");
+        }
+
         public async Task<Unit> RejectTheFormThatWasAssigned(int? rejectFromId)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
@@ -148,6 +206,84 @@ namespace Persistence.Repository_Implementations
             }
 
             throw new BadHttpRequestException("An error occurred while rejecting this job. Please refresh and try again.");
+        }
+
+        public async Task<Unit> SubmitFormForApprovalThatWasAssigned(int? submitFormForApproval, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
+        {
+            if (submitFormForApproval == null)
+            {
+                _appLogger.LogWarning("Form ID is null.");
+                throw new ArgumentNullException(nameof(submitFormForApproval), "Form ID cannot be null.");
+            }
+
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
+            if (userId == null)
+            {
+                _appLogger.LogWarning("User ID not found in the context.");
+                throw new UnauthorizedAccessException("User ID not found in the context.");
+            }
+
+            _appLogger.LogInformation($"Starting to submit form with ID {submitFormForApproval} for approval by user {userId}.");
+
+            var formFromDb = await _dbContext.Forms.FirstOrDefaultAsync(q => q.Id == submitFormForApproval);
+            if (formFromDb == null)
+            {
+                _appLogger.LogWarning($"Form with ID {submitFormForApproval} not found in the database.");
+                throw new KeyNotFoundException($"Form with ID {submitFormForApproval} not found.");
+            }
+
+            try
+            {
+                if (formFromDb.AppraiserId == userId)
+                {
+                    string webRootPath = _hostEnvironment.WebRootPath;
+                    var uploads = Path.Combine(webRootPath, "images/property");
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    formFromDb.Status = FormStatus.StatusSubmitForApproval;
+                    formFromDb.SubmittedFormForApproval = DateTime.Now;
+                    formFromDb.FrontOfProperyImage = await SaveImageAsync(frontImage, uploads);
+                    formFromDb.LeftSideOfPropertImage = await SaveImageAsync(leftImage, uploads);
+                    formFromDb.RightSideOfPropertyImage = await SaveImageAsync(rightImage, uploads);
+                    formFromDb.BackOfPropertyImage = await SaveImageAsync(backImage, uploads);
+
+                    _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    _appLogger.LogInformation($"Form with ID {submitFormForApproval} submitted for approval successfully by user {userId}.");
+
+                    return Unit.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An error occurred while submitting form {submitFormForApproval} for approval by user {userId}.", ex);
+            }
+
+            throw new BadHttpRequestException("An error occurred while submitting this job for approval. Please refresh and try again.");
+        }
+
+        private async Task<string> SaveImageAsync(IFormFile image, string uploadsPath)
+        {
+            if (image == null || image.Length == 0)
+            {
+                return null;
+            }
+
+            string newFileName = Guid.NewGuid().ToString();
+            string extension = Path.GetExtension(image.FileName);
+            string filePath = Path.Combine(uploadsPath, $"{newFileName}{extension}");
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            return Path.Combine("images/property", $"{newFileName}{extension}");
         }
 
     }

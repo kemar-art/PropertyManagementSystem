@@ -117,4 +117,9 @@ public class Form
     //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
 
     //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
+
+    public string FrontOfProperyImage { get; set; } = string.Empty;
+    public string RightSideOfPropertyImage { get; set; } = string.Empty;
+    public string LeftSideOfPropertImage { get; set; } = string.Empty;
+    public string BackOfPropertyImage { get; set; } = string.Empty;
 }

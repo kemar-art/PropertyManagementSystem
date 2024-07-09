@@ -1,4 +1,4 @@
-﻿using Application.Features.Commands.Admin;
+﻿using Application.Features.Commands.Admin.AssignForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.Features.Queries.ClientForm.GetFormsByStatus;
 using Domain;
@@ -30,7 +30,7 @@ namespace API.Controllers
             return getAllFormByStatus;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("assign-form/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

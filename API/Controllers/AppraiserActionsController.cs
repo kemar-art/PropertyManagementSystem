@@ -1,6 +1,8 @@
 ﻿using Application.Features.Commands;
 using Application.Features.Commands.Appraiser.AcceptForm;
+using Application.Features.Commands.Appraiser.InProcess;
 using Application.Features.Commands.Appraiser.RejectForm;
+using Application.Features.Commands.Appraiser.SubmitForApproval;
 using Application.Features.Queries.Appriaser.GetFromForAppraiser;
 using Domain;
 using MediatR;
@@ -64,5 +66,38 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpPut("inprocess/{formId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> MarkFormHasInProccessByAppriaser(int formId)
+        {
+            InProcessFromCommandQuery inProcessFrom = new()
+            {
+                FormId = formId
+            };
+
+            await _mediator.Send(inProcessFrom);
+            return NoContent();
+        }
+
+        [HttpPut("submit-for-approval/{formId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> SubmitFormFromApprovalByAppriaser(int formId, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
+        {
+            SubmitFormForApprovalQuery submitFormForApproval = new()
+            {
+                FormId = formId,
+                FrontOfProperyImage = frontImage,
+                LeftSideOfPropertImage = leftImage,
+                RightSideOfPropertyImage = rightImage,
+                BackOfPropertyImage = backImage
+            };
+
+            await _mediator.Send(submitFormForApproval);
+            return NoContent();
+        }
     }
 }
