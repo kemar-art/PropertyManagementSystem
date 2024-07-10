@@ -60,7 +60,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "LeaveManagementSystem.UI.Services.Base",
+      "namespace": "PMS.UI.Services.Base",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,
@@ -94,7 +94,7 @@
       "templateDirectory": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "Base/ServiceClient.cs",
+      "output": "ServiceClient.cs",
       "newLineBehavior": "Auto"
     }
   }
