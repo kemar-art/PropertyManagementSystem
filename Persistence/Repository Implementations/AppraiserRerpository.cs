@@ -11,12 +11,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Persistence.DatabaseContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Persistence.Repository_Implementations
 {
@@ -246,10 +241,10 @@ namespace Persistence.Repository_Implementations
 
                     formFromDb.Status = FormStatus.StatusSubmitForApproval;
                     formFromDb.SubmittedFormForApproval = DateTime.Now;
-                    formFromDb.FrontOfProperyImage = await SaveImageAsync(frontImage, uploads);
-                    formFromDb.LeftSideOfPropertImage = await SaveImageAsync(leftImage, uploads);
-                    formFromDb.RightSideOfPropertyImage = await SaveImageAsync(rightImage, uploads);
-                    formFromDb.BackOfPropertyImage = await SaveImageAsync(backImage, uploads);
+                    formFromDb.FrontOfProperyImageURL = await SaveImageAsync(frontImage, uploads);
+                    formFromDb.LeftSideOfPropertImageURL = await SaveImageAsync(leftImage, uploads);
+                    formFromDb.RightSideOfPropertyImageURL = await SaveImageAsync(rightImage, uploads);
+                    formFromDb.BackOfPropertyImageURL = await SaveImageAsync(backImage, uploads);
 
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();

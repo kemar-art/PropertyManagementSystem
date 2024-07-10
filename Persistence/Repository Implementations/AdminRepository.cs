@@ -143,7 +143,7 @@ namespace Persistence.Repository_Implementations
                 DateOfBirth = user.DateOfBirth,
                 Datestarted = user.Datestarted,
                 EmailConfirmed = true,
-                Role = Roles.Appraiser,
+                Role = Roles.Administrator,
             };  
 
             await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);

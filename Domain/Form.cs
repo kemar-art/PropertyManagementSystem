@@ -118,8 +118,8 @@ public class Form
 
     //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
 
-    public string FrontOfProperyImage { get; set; } = string.Empty;
-    public string RightSideOfPropertyImage { get; set; } = string.Empty;
-    public string LeftSideOfPropertImage { get; set; } = string.Empty;
-    public string BackOfPropertyImage { get; set; } = string.Empty;
+    public string FrontOfProperyImageURL { get; set; } = string.Empty;
+    public string RightSideOfPropertyImageURL { get; set; } = string.Empty;
+    public string LeftSideOfPropertImageURL { get; set; } = string.Empty;
+    public string BackOfPropertyImageURL { get; set; } = string.Empty;
 }
