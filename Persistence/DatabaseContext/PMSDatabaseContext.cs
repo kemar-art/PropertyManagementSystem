@@ -27,6 +27,8 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+    public DbSet<FormInteractionLog> FormInteractionLogs { get; set; }
+
     //public DbSet<PurposeOfValuationCheckBox> PurposeOfValuationCheckBoxes { get; set; }
     //public DbSet<PurposeOfValuationCheckBoxProperty> PurposeOfValuationCheckBoxProperties { get; set; }
 

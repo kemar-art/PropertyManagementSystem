@@ -241,10 +241,10 @@ namespace Persistence.Repository_Implementations
 
                     formFromDb.Status = FormStatus.StatusSubmitForApproval;
                     formFromDb.SubmittedFormForApproval = DateTime.Now;
-                    formFromDb.FrontOfProperyImageURL = await SaveImageAsync(frontImage, uploads);
-                    formFromDb.LeftSideOfPropertImageURL = await SaveImageAsync(leftImage, uploads);
-                    formFromDb.RightSideOfPropertyImageURL = await SaveImageAsync(rightImage, uploads);
-                    formFromDb.BackOfPropertyImageURL = await SaveImageAsync(backImage, uploads);
+                    formFromDb.FrontOfProperyImageURL = await SavePropertyImage(frontImage, uploads);
+                    formFromDb.LeftSideOfPropertImageURL = await SavePropertyImage(leftImage, uploads);
+                    formFromDb.RightSideOfPropertyImageURL = await SavePropertyImage(rightImage, uploads);
+                    formFromDb.BackOfPropertyImageURL = await SavePropertyImage(backImage, uploads);
 
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();
@@ -262,7 +262,7 @@ namespace Persistence.Repository_Implementations
             throw new BadHttpRequestException("An error occurred while submitting this job for approval. Please refresh and try again.");
         }
 
-        private async Task<string> SaveImageAsync(IFormFile image, string uploadsPath)
+        private async Task<string> SavePropertyImage(IFormFile image, string uploadsPath)
         {
             if (image == null || image.Length == 0)
             {
