@@ -32,7 +32,7 @@ namespace API.Controllers
             return getAllFormByStatus;
         }
 
-        [HttpPut("assign-form/{formId}")]
+        [HttpPut("assign-form/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -45,7 +45,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("complete/{formId}")]
+        [HttpPut("complete/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -61,7 +61,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("retun-to-appraiser/{formId}")]
+        [HttpPut("retun-to-appraiser/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

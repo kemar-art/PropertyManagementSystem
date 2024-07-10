@@ -50,7 +50,7 @@ namespace API.Controllers
         }
 
         // PUT api/<FormController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

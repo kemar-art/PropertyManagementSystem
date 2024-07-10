@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
         // PUT api/<ApplicationUsersController>/5
-        [HttpPut("{id}")]
+        [HttpPut()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

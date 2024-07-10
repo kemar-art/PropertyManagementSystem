@@ -35,7 +35,7 @@ namespace API.Controllers
             return getFormForAppraiser;
         }
 
-        [HttpPut("accept/{formId}")]
+        [HttpPut("accept/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -51,7 +51,7 @@ namespace API.Controllers
         }
 
 
-        [HttpPut("reject/{formId}")]
+        [HttpPut("reject/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -66,7 +66,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("inprocess/{formId}")]
+        [HttpPut("inprocess/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -81,7 +81,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("submit-for-approval/{formId}")]
+        [HttpPut("submit-for-approval/")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
