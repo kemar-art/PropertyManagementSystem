@@ -58,6 +58,18 @@ namespace Persistence.Repository_Implementations
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();
 
+
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
+                    await _dbContext.SaveChangesAsync();
+
                     _appLogger.LogInformation($"Form {acceptFromId} accepted successfully by user {userId}.");
 
                     return Unit.Value;
@@ -138,6 +150,17 @@ namespace Persistence.Repository_Implementations
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();
 
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
+                    await _dbContext.SaveChangesAsync();
+
                     _appLogger.LogInformation($"Form {inProcessFromId} marked as in process successfully by user {userId}.");
 
                     return Unit.Value;
@@ -183,6 +206,17 @@ namespace Persistence.Repository_Implementations
                     formFromDb.Status = FormStatus.StatusRejected;
 
                     _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
                     await _dbContext.SaveChangesAsync();
 
                     _appLogger.LogInformation($"Form {rejectFromId} rejected successfully by user {userId}.");
@@ -247,6 +281,17 @@ namespace Persistence.Repository_Implementations
                     formFromDb.BackOfPropertyImageURL = await SavePropertyImage(backImage, uploads);
 
                     _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
                     await _dbContext.SaveChangesAsync();
 
                     _appLogger.LogInformation($"Form with ID {submitFormForApproval} submitted for approval successfully by user {userId}.");

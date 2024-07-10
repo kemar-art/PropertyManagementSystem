@@ -101,6 +101,18 @@ namespace Persistence.Repository_Implementations
                 {
                     _dbContext.Update(formToAssigned);
                     await _dbContext.SaveChangesAsync();
+
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formToAssigned.Id,
+                        ApplicationUserId = formToAssigned.AppraiserId,
+                        Status = formToAssigned.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formToAssigned.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
+                    await _dbContext.SaveChangesAsync();
+
                     _appLogger.LogInformation("Form successfully updated.");
                     return Unit.Value;
                 }
@@ -281,6 +293,17 @@ namespace Persistence.Repository_Implementations
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();
 
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
+                    await _dbContext.SaveChangesAsync();
+
                     _appLogger.LogInformation($"Form with ID {formId} marked as complete successfully by appraiser {appraiserId}.");
 
                     return Unit.Value;
@@ -332,6 +355,17 @@ namespace Persistence.Repository_Implementations
                     formFromDb.ReturnFromToAppraiser = DateTime.Now;
 
                     _dbContext.Update(formFromDb);
+                    await _dbContext.SaveChangesAsync();
+
+                    FormInteractionLog interactionLog = new()
+                    {
+                        FormId = formFromDb.Id,
+                        ApplicationUserId = formFromDb.AppraiserId,
+                        Status = formFromDb.Status,
+                        LastUpdated = DateTime.Now,
+                        AppraiserNote = formFromDb.AppraiserNote
+                    };
+                    await _dbContext.AddAsync(interactionLog);
                     await _dbContext.SaveChangesAsync();
 
                     _appLogger.LogInformation($"Form with ID {returnFormToAppraiser} returned to appraiser for completion successfully by user {userId}.");
