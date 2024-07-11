@@ -46,25 +46,24 @@ namespace API.Controllers
 
         // POST api/<ApplicationUsersController>
         [HttpPost]
-        //[Route("create/employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult> Post([FromForm] CreateAppUserCommand createAppUser)
+        public async Task<ActionResult> Post([FromBody] CreateAppUserCommand createAppUser)
         {
-            //createAppUser.Image = image;
-            var createAppUserResponse = await _mediator.Send(createAppUser);
-            return CreatedAtAction(nameof(Get), new { id = createAppUserResponse });
+            var response = await _mediator.Send(createAppUser);
+            return CreatedAtAction(nameof(Get), new { id = response });
         }
 
+
         // PUT api/<ApplicationUsersController>/5
-        [HttpPut()]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put([FromForm] UpdateAppUserCommand updateAppUser)
+        public async Task<ActionResult> Put([FromBody] UpdateAppUserCommand updateAppUser)
         {
             await _mediator.Send(updateAppUser);
             return NoContent();

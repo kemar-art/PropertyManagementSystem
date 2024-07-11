@@ -33,12 +33,12 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AssignFormAsync(string adminNote, int? formId, string appraiserId);
+        System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AssignFormAsync(string adminNote, int? formId, string appraiserId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -69,21 +69,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPOSTAsync(string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted);
+        System.Threading.Tasks.Task ApplicationUsersPOSTAsync(CreateAppUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPOSTAsync(string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task ApplicationUsersPOSTAsync(CreateAppUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPUTAsync(string id, string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted);
+        System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateAppUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPUTAsync(string id, string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateAppUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Error</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -150,21 +150,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string gender, string password, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? dateRegistered);
+        System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string gender, string password, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? dateRegistered, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LoginAsync(string email, string password);
+        System.Threading.Tasks.Task LoginAsync(LoginUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LoginAsync(string email, string password, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -177,21 +177,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsPOSTAsync(string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber);
+        System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsPOSTAsync(string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsPUTAsync(int? id, string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber);
+        System.Threading.Tasks.Task FormsPUTAsync(UpdateFormCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsPUTAsync(int? id, string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task FormsPUTAsync(UpdateFormCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Error</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -331,15 +331,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AssignFormAsync(string adminNote, int? formId, string appraiserId)
+        public virtual System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body)
         {
-            return AssignFormAsync(adminNote, formId, appraiserId, System.Threading.CancellationToken.None);
+            return AssignFormAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AssignFormAsync(string adminNote, int? formId, string appraiserId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -347,31 +347,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (adminNote == null)
-                        throw new System.ArgumentNullException("adminNote");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(adminNote, System.Globalization.CultureInfo.InvariantCulture)), "AdminNote");
-                    }
-
-                    if (formId == null)
-                        throw new System.ArgumentNullException("formId");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(formId, System.Globalization.CultureInfo.InvariantCulture)), "FormId");
-                    }
-
-                    if (appraiserId == null)
-                        throw new System.ArgumentNullException("appraiserId");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(appraiserId, System.Globalization.CultureInfo.InvariantCulture)), "AppraiserId");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -741,15 +719,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApplicationUsersPOSTAsync(string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted)
+        public virtual System.Threading.Tasks.Task ApplicationUsersPOSTAsync(CreateAppUserCommand body)
         {
-            return ApplicationUsersPOSTAsync(firstName, lastName, address, email, phoneNumber, taxRegistrationNumber, nationalInsuranceScheme, gender, image, dateOfBirth, datestarted, System.Threading.CancellationToken.None);
+            return ApplicationUsersPOSTAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApplicationUsersPOSTAsync(string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ApplicationUsersPOSTAsync(CreateAppUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -757,90 +735,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (firstName == null)
-                        throw new System.ArgumentNullException("firstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)), "FirstName");
-                    }
-
-                    if (lastName == null)
-                        throw new System.ArgumentNullException("lastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)), "LastName");
-                    }
-
-                    if (address == null)
-                        throw new System.ArgumentNullException("address");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)), "Address");
-                    }
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (phoneNumber == null)
-                        throw new System.ArgumentNullException("phoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(phoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "PhoneNumber");
-                    }
-
-                    if (taxRegistrationNumber == null)
-                        throw new System.ArgumentNullException("taxRegistrationNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(taxRegistrationNumber, System.Globalization.CultureInfo.InvariantCulture)), "TaxRegistrationNumber");
-                    }
-
-                    if (nationalInsuranceScheme == null)
-                        throw new System.ArgumentNullException("nationalInsuranceScheme");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(nationalInsuranceScheme, System.Globalization.CultureInfo.InvariantCulture)), "NationalInsuranceScheme");
-                    }
-
-                    if (gender == null)
-                        throw new System.ArgumentNullException("gender");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(gender, System.Globalization.CultureInfo.InvariantCulture)), "Gender");
-                    }
-
-                    if (image == null)
-                        throw new System.ArgumentNullException("image");
-                    else
-                    {
-                        var content_image_ = new System.Net.Http.StreamContent(image.Data);
-                        if (!string.IsNullOrEmpty(image.ContentType))
-                            content_image_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(image.ContentType);
-                        content_.Add(content_image_, "Image", image.FileName ?? "Image");
-                    }
-
-                    if (dateOfBirth == null)
-                        throw new System.ArgumentNullException("dateOfBirth");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(dateOfBirth, System.Globalization.CultureInfo.InvariantCulture)), "DateOfBirth");
-                    }
-
-                    if (datestarted == null)
-                        throw new System.ArgumentNullException("datestarted");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(datestarted, System.Globalization.CultureInfo.InvariantCulture)), "Datestarted");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
 
@@ -918,15 +815,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApplicationUsersPUTAsync(string id, string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted)
+        public virtual System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateAppUserCommand body)
         {
-            return ApplicationUsersPUTAsync(id, firstName, lastName, address, email, phoneNumber, taxRegistrationNumber, nationalInsuranceScheme, gender, image, dateOfBirth, datestarted, System.Threading.CancellationToken.None);
+            return ApplicationUsersPUTAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApplicationUsersPUTAsync(string id, string firstName, string lastName, string address, string email, string phoneNumber, string taxRegistrationNumber, string nationalInsuranceScheme, string gender, FileParameter image, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? datestarted, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateAppUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -934,97 +831,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (id == null)
-                        throw new System.ArgumentNullException("id");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)), "Id");
-                    }
-
-                    if (firstName == null)
-                        throw new System.ArgumentNullException("firstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)), "FirstName");
-                    }
-
-                    if (lastName == null)
-                        throw new System.ArgumentNullException("lastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)), "LastName");
-                    }
-
-                    if (address == null)
-                        throw new System.ArgumentNullException("address");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)), "Address");
-                    }
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (phoneNumber == null)
-                        throw new System.ArgumentNullException("phoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(phoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "PhoneNumber");
-                    }
-
-                    if (taxRegistrationNumber == null)
-                        throw new System.ArgumentNullException("taxRegistrationNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(taxRegistrationNumber, System.Globalization.CultureInfo.InvariantCulture)), "TaxRegistrationNumber");
-                    }
-
-                    if (nationalInsuranceScheme == null)
-                        throw new System.ArgumentNullException("nationalInsuranceScheme");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(nationalInsuranceScheme, System.Globalization.CultureInfo.InvariantCulture)), "NationalInsuranceScheme");
-                    }
-
-                    if (gender == null)
-                        throw new System.ArgumentNullException("gender");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(gender, System.Globalization.CultureInfo.InvariantCulture)), "Gender");
-                    }
-
-                    if (image == null)
-                        throw new System.ArgumentNullException("image");
-                    else
-                    {
-                        var content_image_ = new System.Net.Http.StreamContent(image.Data);
-                        if (!string.IsNullOrEmpty(image.ContentType))
-                            content_image_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(image.ContentType);
-                        content_.Add(content_image_, "Image", image.FileName ?? "Image");
-                    }
-
-                    if (dateOfBirth == null)
-                        throw new System.ArgumentNullException("dateOfBirth");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(dateOfBirth, System.Globalization.CultureInfo.InvariantCulture)), "DateOfBirth");
-                    }
-
-                    if (datestarted == null)
-                        throw new System.ArgumentNullException("datestarted");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(datestarted, System.Globalization.CultureInfo.InvariantCulture)), "Datestarted");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -1802,15 +1611,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string gender, string password, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? dateRegistered)
+        public virtual System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body)
         {
-            return RegisterAsync(firstName, lastName, email, phoneNumber, gender, password, dateOfBirth, dateRegistered, System.Threading.CancellationToken.None);
+            return RegisterAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string gender, string password, System.DateTimeOffset? dateOfBirth, System.DateTimeOffset? dateRegistered, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1818,66 +1627,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (firstName == null)
-                        throw new System.ArgumentNullException("firstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)), "FirstName");
-                    }
-
-                    if (lastName == null)
-                        throw new System.ArgumentNullException("lastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)), "LastName");
-                    }
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (phoneNumber == null)
-                        throw new System.ArgumentNullException("phoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(phoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "PhoneNumber");
-                    }
-
-                    if (gender == null)
-                        throw new System.ArgumentNullException("gender");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(gender, System.Globalization.CultureInfo.InvariantCulture)), "Gender");
-                    }
-
-                    if (password == null)
-                        throw new System.ArgumentNullException("password");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture)), "Password");
-                    }
-
-                    if (dateOfBirth == null)
-                        throw new System.ArgumentNullException("dateOfBirth");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(dateOfBirth, System.Globalization.CultureInfo.InvariantCulture)), "DateOfBirth");
-                    }
-
-                    if (dateRegistered == null)
-                        throw new System.ArgumentNullException("dateRegistered");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(dateRegistered, System.Globalization.CultureInfo.InvariantCulture)), "DateRegistered");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
 
@@ -1945,15 +1697,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LoginAsync(string email, string password)
+        public virtual System.Threading.Tasks.Task LoginAsync(LoginUserCommand body)
         {
-            return LoginAsync(email, password, System.Threading.CancellationToken.None);
+            return LoginAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LoginAsync(string email, string password, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1961,24 +1713,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (password == null)
-                        throw new System.ArgumentNullException("password");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(password, System.Globalization.CultureInfo.InvariantCulture)), "Password");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
 
@@ -2124,15 +1861,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task FormsPOSTAsync(string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber)
+        public virtual System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body)
         {
-            return FormsPOSTAsync(firstName, lastName, email, address, phoneNumber, instructionsIssuedBy, propertyAddress, propertyDirection, volume, folio, strataPlan, isKeyAvailable, mortgageInstitution, other, status, secondaryContactFirstName, secondaryContactLastName, secondaryContactEmail, secondaryContactPhoneNumber, System.Threading.CancellationToken.None);
+            return FormsPOSTAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task FormsPOSTAsync(string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2140,143 +1877,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (firstName == null)
-                        throw new System.ArgumentNullException("firstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)), "FirstName");
-                    }
-
-                    if (lastName == null)
-                        throw new System.ArgumentNullException("lastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)), "LastName");
-                    }
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (address == null)
-                        throw new System.ArgumentNullException("address");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)), "Address");
-                    }
-
-                    if (phoneNumber == null)
-                        throw new System.ArgumentNullException("phoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(phoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "PhoneNumber");
-                    }
-
-                    if (instructionsIssuedBy == null)
-                        throw new System.ArgumentNullException("instructionsIssuedBy");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(instructionsIssuedBy, System.Globalization.CultureInfo.InvariantCulture)), "InstructionsIssuedBy");
-                    }
-
-                    if (propertyAddress == null)
-                        throw new System.ArgumentNullException("propertyAddress");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(propertyAddress, System.Globalization.CultureInfo.InvariantCulture)), "PropertyAddress");
-                    }
-
-                    if (propertyDirection == null)
-                        throw new System.ArgumentNullException("propertyDirection");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(propertyDirection, System.Globalization.CultureInfo.InvariantCulture)), "PropertyDirection");
-                    }
-
-                    if (volume == null)
-                        throw new System.ArgumentNullException("volume");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(volume, System.Globalization.CultureInfo.InvariantCulture)), "Volume");
-                    }
-
-                    if (folio == null)
-                        throw new System.ArgumentNullException("folio");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(folio, System.Globalization.CultureInfo.InvariantCulture)), "Folio");
-                    }
-
-                    if (strataPlan == null)
-                        throw new System.ArgumentNullException("strataPlan");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(strataPlan, System.Globalization.CultureInfo.InvariantCulture)), "StrataPlan");
-                    }
-
-                    if (isKeyAvailable == null)
-                        throw new System.ArgumentNullException("isKeyAvailable");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(isKeyAvailable, System.Globalization.CultureInfo.InvariantCulture)), "IsKeyAvailable");
-                    }
-
-                    if (mortgageInstitution == null)
-                        throw new System.ArgumentNullException("mortgageInstitution");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(mortgageInstitution, System.Globalization.CultureInfo.InvariantCulture)), "MortgageInstitution");
-                    }
-
-                    if (other == null)
-                        throw new System.ArgumentNullException("other");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(other, System.Globalization.CultureInfo.InvariantCulture)), "Other");
-                    }
-
-                    if (status == null)
-                        throw new System.ArgumentNullException("status");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture)), "Status");
-                    }
-
-                    if (secondaryContactFirstName == null)
-                        throw new System.ArgumentNullException("secondaryContactFirstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactFirstName, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactFirstName");
-                    }
-
-                    if (secondaryContactLastName == null)
-                        throw new System.ArgumentNullException("secondaryContactLastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactLastName, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactLastName");
-                    }
-
-                    if (secondaryContactEmail == null)
-                        throw new System.ArgumentNullException("secondaryContactEmail");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactEmail, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactEmail");
-                    }
-
-                    if (secondaryContactPhoneNumber == null)
-                        throw new System.ArgumentNullException("secondaryContactPhoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactPhoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactPhoneNumber");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
 
@@ -2344,15 +1947,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task FormsPUTAsync(int? id, string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber)
+        public virtual System.Threading.Tasks.Task FormsPUTAsync(UpdateFormCommand body)
         {
-            return FormsPUTAsync(id, firstName, lastName, email, address, phoneNumber, instructionsIssuedBy, propertyAddress, propertyDirection, volume, folio, strataPlan, isKeyAvailable, mortgageInstitution, other, status, secondaryContactFirstName, secondaryContactLastName, secondaryContactEmail, secondaryContactPhoneNumber, System.Threading.CancellationToken.None);
+            return FormsPUTAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task FormsPUTAsync(int? id, string firstName, string lastName, string email, string address, string phoneNumber, string instructionsIssuedBy, string propertyAddress, string propertyDirection, int? volume, int? folio, string strataPlan, bool? isKeyAvailable, string mortgageInstitution, string other, string status, string secondaryContactFirstName, string secondaryContactLastName, string secondaryContactEmail, string secondaryContactPhoneNumber, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task FormsPUTAsync(UpdateFormCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2360,150 +1963,9 @@ namespace PMS.UI.Services.Base
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (id == null)
-                        throw new System.ArgumentNullException("id");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)), "Id");
-                    }
-
-                    if (firstName == null)
-                        throw new System.ArgumentNullException("firstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(firstName, System.Globalization.CultureInfo.InvariantCulture)), "FirstName");
-                    }
-
-                    if (lastName == null)
-                        throw new System.ArgumentNullException("lastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(lastName, System.Globalization.CultureInfo.InvariantCulture)), "LastName");
-                    }
-
-                    if (email == null)
-                        throw new System.ArgumentNullException("email");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(email, System.Globalization.CultureInfo.InvariantCulture)), "Email");
-                    }
-
-                    if (address == null)
-                        throw new System.ArgumentNullException("address");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)), "Address");
-                    }
-
-                    if (phoneNumber == null)
-                        throw new System.ArgumentNullException("phoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(phoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "PhoneNumber");
-                    }
-
-                    if (instructionsIssuedBy == null)
-                        throw new System.ArgumentNullException("instructionsIssuedBy");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(instructionsIssuedBy, System.Globalization.CultureInfo.InvariantCulture)), "InstructionsIssuedBy");
-                    }
-
-                    if (propertyAddress == null)
-                        throw new System.ArgumentNullException("propertyAddress");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(propertyAddress, System.Globalization.CultureInfo.InvariantCulture)), "PropertyAddress");
-                    }
-
-                    if (propertyDirection == null)
-                        throw new System.ArgumentNullException("propertyDirection");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(propertyDirection, System.Globalization.CultureInfo.InvariantCulture)), "PropertyDirection");
-                    }
-
-                    if (volume == null)
-                        throw new System.ArgumentNullException("volume");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(volume, System.Globalization.CultureInfo.InvariantCulture)), "Volume");
-                    }
-
-                    if (folio == null)
-                        throw new System.ArgumentNullException("folio");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(folio, System.Globalization.CultureInfo.InvariantCulture)), "Folio");
-                    }
-
-                    if (strataPlan == null)
-                        throw new System.ArgumentNullException("strataPlan");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(strataPlan, System.Globalization.CultureInfo.InvariantCulture)), "StrataPlan");
-                    }
-
-                    if (isKeyAvailable == null)
-                        throw new System.ArgumentNullException("isKeyAvailable");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(isKeyAvailable, System.Globalization.CultureInfo.InvariantCulture)), "IsKeyAvailable");
-                    }
-
-                    if (mortgageInstitution == null)
-                        throw new System.ArgumentNullException("mortgageInstitution");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(mortgageInstitution, System.Globalization.CultureInfo.InvariantCulture)), "MortgageInstitution");
-                    }
-
-                    if (other == null)
-                        throw new System.ArgumentNullException("other");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(other, System.Globalization.CultureInfo.InvariantCulture)), "Other");
-                    }
-
-                    if (status == null)
-                        throw new System.ArgumentNullException("status");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture)), "Status");
-                    }
-
-                    if (secondaryContactFirstName == null)
-                        throw new System.ArgumentNullException("secondaryContactFirstName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactFirstName, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactFirstName");
-                    }
-
-                    if (secondaryContactLastName == null)
-                        throw new System.ArgumentNullException("secondaryContactLastName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactLastName, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactLastName");
-                    }
-
-                    if (secondaryContactEmail == null)
-                        throw new System.ArgumentNullException("secondaryContactEmail");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactEmail, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactEmail");
-                    }
-
-                    if (secondaryContactPhoneNumber == null)
-                        throw new System.ArgumentNullException("secondaryContactPhoneNumber");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(secondaryContactPhoneNumber, System.Globalization.CultureInfo.InvariantCulture)), "SecondaryContactPhoneNumber");
-                    }
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -2956,6 +2418,156 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AssignFormToAppraiserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("formId")]
+        public int FormId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("appraiserId")]
+        public string AppraiserId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminNote")]
+        public string AdminNote { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string Password { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
+        public System.DateTimeOffset DateRegistered { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateAppUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
+        public string TaxRegistrationNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
+        public string NationalInsuranceScheme { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public byte[] Image { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset Datestarted { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateFormCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("instructionsIssuedBy")]
+        public string InstructionsIssuedBy { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyAddress")]
+        public string PropertyAddress { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyDirection")]
+        public string PropertyDirection { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("volume")]
+        public int Volume { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("folio")]
+        public int Folio { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
+        public string StrataPlan { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
+        public bool IsKeyAvailable { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
+        public string MortgageInstitution { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("other")]
+        public string Other { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string Status { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
+        public string SecondaryContactFirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
+        public string SecondaryContactLastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
+        public string SecondaryContactEmail { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
+        public string SecondaryContactPhoneNumber { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class Form
     {
 
@@ -3207,6 +2819,18 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class LoginUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string Password { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProblemDetails
     {
 
@@ -3233,6 +2857,116 @@ namespace PMS.UI.Services.Base
             get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateAppUserCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
+        public string TaxRegistrationNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
+        public string NationalInsuranceScheme { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public byte[] Image { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset Datestarted { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateFormCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("instructionsIssuedBy")]
+        public string InstructionsIssuedBy { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyAddress")]
+        public string PropertyAddress { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyDirection")]
+        public string PropertyDirection { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("volume")]
+        public int Volume { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("folio")]
+        public int Folio { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
+        public string StrataPlan { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
+        public bool IsKeyAvailable { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
+        public string MortgageInstitution { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("other")]
+        public string Other { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string Status { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
+        public string SecondaryContactFirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
+        public string SecondaryContactLastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
+        public string SecondaryContactEmail { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
+        public string SecondaryContactPhoneNumber { get; set; }
 
     }
 

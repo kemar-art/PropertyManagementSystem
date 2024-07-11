@@ -32,20 +32,22 @@ namespace API.Controllers
             return getAllFormByStatus;
         }
 
-        [HttpPut("assign-form/")]
+        [HttpPut]
+        [Route("assign-form")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> AssignFormToAppraiser([FromForm] AssignFormToAppraiserCommand assignFormToAppraiser)
+        public async Task<ActionResult> AssignFormToAppraiser(AssignFormToAppraiserCommand assignFormToAppraiser)
         {
             await _mediator.Send(assignFormToAppraiser);
             return NoContent();
         }
 
-        [HttpPut("complete/")]
+        [HttpPut]
+        [Route("complete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -61,7 +63,8 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("retun-to-appraiser/")]
+        [HttpPut]
+        [Route("retun-to-appraiser")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

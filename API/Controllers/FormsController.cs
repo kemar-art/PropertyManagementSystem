@@ -23,7 +23,7 @@ namespace API.Controllers
 
         // GET: api/<FormController>
         [HttpGet]
-        public async Task<IEnumerable<GetAllFormsDto>> GetAll()
+        public async Task<IEnumerable<GetAllFormsDto>> Get()
         {
             var getAllForms = await _mediator.Send(new GetFormQuery());
             return getAllForms;
@@ -43,10 +43,10 @@ namespace API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Post([FromForm] CreateFormCommand createForm)
+        public async Task<ActionResult> Post(CreateFormCommand createForm)
         {
             var createFormResponse = await _mediator.Send(createForm);
-            return CreatedAtAction(nameof(GetAll), new { id = createFormResponse });
+            return CreatedAtAction(nameof(Get), new { id = createFormResponse });
         }
 
         // PUT api/<FormController>/5
@@ -55,7 +55,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put([FromForm] UpdateFormCommand updateForm)
+        public async Task<ActionResult> Put(UpdateFormCommand updateForm)
         {
             await _mediator.Send(updateForm);
             return NoContent();
