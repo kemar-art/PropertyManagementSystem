@@ -85,7 +85,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("submit-for-approval")]
+        [Route("submitted")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

@@ -33,7 +33,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("assign-form")]
+        [Route("assign")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -64,7 +64,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("retun-to-appraiser")]
+        [Route("retun")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
