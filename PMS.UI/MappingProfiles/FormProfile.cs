@@ -10,7 +10,7 @@ public class FormProfile : Profile
     public FormProfile() 
     {
         CreateMap<FormVM, GetAllFormsDto>().ReverseMap();
-        CreateMap<FormVM, ProblemDetails>().ReverseMap();
+        CreateMap<FormVM, GetFormDetailsDto>().ReverseMap();
 
         CreateMap<CreateFormCommand, FormVM>().ReverseMap();
         CreateMap<UpdateFormCommand, FormVM>().ReverseMap();

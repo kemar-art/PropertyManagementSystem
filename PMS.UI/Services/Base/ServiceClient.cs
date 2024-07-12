@@ -175,12 +175,12 @@ namespace PMS.UI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<GetAllFormsDto>> FormsAllAsync(System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body, System.Threading.CancellationToken cancellationToken);
 
@@ -193,14 +193,14 @@ namespace PMS.UI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task FormsPUTAsync(UpdateFormCommand body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> FormsGETAsync(int id);
+        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1859,7 +1859,7 @@ namespace PMS.UI.Services.Base
             }
         }
 
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body)
         {
@@ -1867,7 +1867,7 @@ namespace PMS.UI.Services.Base
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>OK</returns>
+        /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task FormsPOSTAsync(CreateFormCommand body, System.Threading.CancellationToken cancellationToken)
         {
@@ -1911,7 +1911,7 @@ namespace PMS.UI.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 201)
                         {
                             return;
                         }
@@ -1926,9 +1926,23 @@ namespace PMS.UI.Services.Base
                             throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
+                        if (status_ == 400)
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                     }
                     finally
@@ -2045,17 +2059,17 @@ namespace PMS.UI.Services.Base
             }
         }
 
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProblemDetails> FormsGETAsync(int id)
+        public virtual System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id)
         {
             return FormsGETAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProblemDetails> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2067,7 +2081,7 @@ namespace PMS.UI.Services.Base
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -2098,6 +2112,16 @@ namespace PMS.UI.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetFormDetailsDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -2114,7 +2138,7 @@ namespace PMS.UI.Services.Base
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return objectResponse_.Object;
+                            throw new ApiException<ProblemDetails>("Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                     }
                     finally
@@ -2815,6 +2839,75 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset DateEnded { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetFormDetailsDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("instructionsIssuedBy")]
+        public string InstructionsIssuedBy { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyAddress")]
+        public string PropertyAddress { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyDirection")]
+        public string PropertyDirection { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("volume")]
+        public int Volume { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("folio")]
+        public int Folio { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
+        public string StrataPlan { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
+        public bool IsKeyAvailable { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
+        public string MortgageInstitution { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("other")]
+        public string Other { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("status")]
+        public string Status { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
+        public string SecondaryContactFirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
+        public string SecondaryContactLastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
+        public string SecondaryContactEmail { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
+        public string SecondaryContactPhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dataCreated")]
+        public System.DateTimeOffset DataCreated { get; set; }
 
     }
 

@@ -9,9 +9,18 @@
     </div>
 }
 
-@if (FormVMs == null)
+@* if (IsLoading)
 {
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+    </div>
     <p>Loading Data...</p>
+} *@
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
 }
 else if (FormVMs.Any())
 {
@@ -47,7 +56,3 @@ else if (FormVMs.Any())
         </tbody>
     </table>
 }
-@* else
-{
-    <p>No forms found.</p>
-} *@

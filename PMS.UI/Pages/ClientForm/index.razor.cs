@@ -16,6 +16,8 @@ namespace PMS.UI.Pages.ClientForm
 
         public string Message { get; set; } = string.Empty;
 
+        private bool IsLoading { get; set; } = true;
+
         protected void FormEdit(int id)
         {
             _NavigationManager.NavigateTo($"/submitted-forms/edit/{id}");
@@ -42,6 +44,7 @@ namespace PMS.UI.Pages.ClientForm
         protected override async Task OnInitializedAsync()
         {
             FormVMs = await _FormRepository.GetAllForms();
+            IsLoading = false;
         }
     }
 }
