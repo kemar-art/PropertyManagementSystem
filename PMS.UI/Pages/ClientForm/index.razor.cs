@@ -14,7 +14,7 @@ namespace PMS.UI.Pages.ClientForm
 
         public IEnumerable<FormVM> FormVMs { get; private set; } = Enumerable.Empty<FormVM>();
 
-        public string Message {  get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
 
         protected void FormEdit(int id)
         {
@@ -29,7 +29,7 @@ namespace PMS.UI.Pages.ClientForm
         protected async Task FormDeletion(int id)
         {
             var response = await _FormRepository.DeleteForm(id);
-            if(response.Success)
+            if (response.Success)
             {
                 StateHasChanged();
             }

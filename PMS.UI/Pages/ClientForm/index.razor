@@ -1,25 +1,19 @@
 ﻿@page "/submitted-forms/"
 
-
 <h3>Client List</h3>
 
-@* <div class="m-2 d-flex justify-content-end">
-    <button @onclick="SubmitForm" class="btn btn-success"></button>
-</div> *@
-
-@if (string.IsNullOrEmpty(Message) == false)
+@if (!string.IsNullOrEmpty(Message))
 {
     <div class="alert alert-danger">
         @Message
     </div>
 }
 
-
 @if (FormVMs == null)
 {
     <p>Loading Data...</p>
 }
-else
+else if (FormVMs.Any())
 {
     <table class="table table-bordered table-striped" style="width: 100%">
         <thead>
@@ -30,13 +24,10 @@ else
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Property Address</th>
-                @* <th>Service Request</th>
-                <th>Property Type</th>
-                <th>Evaluation Purpose</th> *@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody style="hight: 100%">
+        <tbody>
             @foreach (var item in FormVMs)
             {
                 <tr>
@@ -46,62 +37,7 @@ else
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
                     <td>@item.PropertyAddress</td>
-                   @*  <td>
-                        <ul style="list-style-type: none;">
-
-                            @if (user.ServiceRequestFormServiceRequestItem != null)
-                            {
-                                @foreach (var serviceRequestItem in user.ServiceRequestFormServiceRequestItem)
-                                {
-                                    <li>
-                                        @if (serviceRequestItem.ServiceRequestItem.Title != null)
-                                        {
-                                            @serviceRequestItem.ServiceRequestItem.Title
-                                        }
-                                    </li>
-                                }
-                            }
-
-                        </ul>
-                    </td>
-                    <td>
-                        <ul style="list-style-type: none;">
-
-                            @if (user.ServiceRequesFormTypeOfPropertyItem != null)
-                            {
-                                @foreach (var serviceRequestItem in user.ServiceRequesFormTypeOfPropertyItem)
-                                {
-                                    <li>
-                                        @if (serviceRequestItem.TypeOfPropertyItem.Title != null)
-                                        {
-                                            @serviceRequestItem.TypeOfPropertyItem.Title
-                                        }
-                                    </li>
-                                }
-                            }
-
-                        </ul>
-                    </td>
-                    <td>
-                        <ul style="list-style-type: none;">
-
-                            @if (user.ServiceRequestFormPurposeOfValuationItem != null)
-                            {
-                                @foreach (var serviceRequestItem in user.ServiceRequestFormPurposeOfValuationItem)
-                                {
-                                    <li>
-                                        @if (serviceRequestItem.PurposeOfValuationItem.Title != null)
-                                        {
-                                            @serviceRequestItem.PurposeOfValuationItem.Title
-                                        }
-                                    </li>
-                                }
-                            }
-
-                        </ul>
-                    </td> *@
-                    @* Debug.WriteLine("Title: " + serviceRequestItem.ServiceRequestItem.Title); *@
-                    <td class="btn-group" role="group" width="100%" hight="100%">
+                    <td class="btn-group" role="group">
                         <button @onclick="(() => FormEdit(item.Id))" class="btn btn-warning">Edit</button>
                         <button @onclick="(() => FormDetails(item.Id))" class="btn btn-info">Details</button>
                         <button @onclick="(() => FormDeletion(item.Id))" class="btn btn-danger">Delete</button>
@@ -109,6 +45,9 @@ else
                 </tr>
             }
         </tbody>
-
     </table>
 }
+@* else
+{
+    <p>No forms found.</p>
+} *@
