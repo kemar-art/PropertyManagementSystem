@@ -33,12 +33,12 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body);
+        System.Threading.Tasks.Task AssignAsync(AssignFormToAppraiserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task AssignAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -51,12 +51,12 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RetunToAppraiserAsync(int? formId);
+        System.Threading.Tasks.Task RetunAsync(int? formId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RetunToAppraiserAsync(int? formId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RetunAsync(int? formId, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -141,30 +141,30 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SubmitForApprovalAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage);
+        System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SubmitForApprovalAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Accepted</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <returns>Accepted</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LoginAsync(LoginUserCommand body);
+        System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(ClientRegistrationCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(ClientRegistrationCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Accepted</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AuthResponse> LoginAsync(LoginUserCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Accepted</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AuthResponse> LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -331,15 +331,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body)
+        public virtual System.Threading.Tasks.Task AssignAsync(AssignFormToAppraiserCommand body)
         {
-            return AssignFormAsync(body, System.Threading.CancellationToken.None);
+            return AssignAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AssignFormAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AssignAsync(AssignFormToAppraiserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -355,8 +355,8 @@ namespace PMS.UI.Services.Base
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/AdminActions/assign-form"
-                    urlBuilder_.Append("api/AdminActions/assign-form");
+                    // Operation Path: "api/AdminActions/assign"
+                    urlBuilder_.Append("api/AdminActions/assign");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -548,15 +548,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RetunToAppraiserAsync(int? formId)
+        public virtual System.Threading.Tasks.Task RetunAsync(int? formId)
         {
-            return RetunToAppraiserAsync(formId, System.Threading.CancellationToken.None);
+            return RetunAsync(formId, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RetunToAppraiserAsync(int? formId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RetunAsync(int? formId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -569,8 +569,8 @@ namespace PMS.UI.Services.Base
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/AdminActions/retun-to-appraiser"
-                    urlBuilder_.Append("api/AdminActions/retun-to-appraiser");
+                    // Operation Path: "api/AdminActions/retun"
+                    urlBuilder_.Append("api/AdminActions/retun");
                     urlBuilder_.Append('?');
                     if (formId != null)
                     {
@@ -1474,15 +1474,15 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SubmitForApprovalAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage)
+        public virtual System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage)
         {
-            return SubmitForApprovalAsync(formId, frontImage, leftImage, rightImage, backImage, System.Threading.CancellationToken.None);
+            return SubmittedAsync(formId, frontImage, leftImage, rightImage, backImage, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SubmitForApprovalAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1539,8 +1539,8 @@ namespace PMS.UI.Services.Base
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/AppraiserActions/submit-for-approval"
-                    urlBuilder_.Append("api/AppraiserActions/submit-for-approval");
+                    // Operation Path: "api/AppraiserActions/submitted"
+                    urlBuilder_.Append("api/AppraiserActions/submitted");
                     urlBuilder_.Append('?');
                     if (formId != null)
                     {
@@ -1611,7 +1611,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body)
+        public virtual System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(ClientRegistrationCommand body)
         {
             return RegisterAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1619,7 +1619,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RegisterAsync(ClientUserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(ClientRegistrationCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1632,6 +1632,7 @@ namespace PMS.UI.Services.Base
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1663,7 +1664,12 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 202)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<RegistrationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 404)
@@ -1697,7 +1703,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LoginAsync(LoginUserCommand body)
+        public virtual System.Threading.Tasks.Task<AuthResponse> LoginAsync(LoginUserCommand body)
         {
             return LoginAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1705,7 +1711,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AuthResponse> LoginAsync(LoginUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1718,6 +1724,7 @@ namespace PMS.UI.Services.Base
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1749,7 +1756,12 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 202)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<AuthResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 404)
@@ -2428,9 +2440,9 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset DateOfBirth { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset Datestarted { get; set; }
+        public System.DateTimeOffset DateRegistered { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
@@ -2457,7 +2469,25 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ClientUserCommand
+    public partial class AuthResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("userName")]
+        public string UserName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string Token { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientRegistrationCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
@@ -2521,10 +2551,6 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset DateOfBirth { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset Datestarted { get; set; }
 
     }
 
@@ -2950,6 +2976,15 @@ namespace PMS.UI.Services.Base
             get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RegistrationResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public string UserId { get; set; }
 
     }
 

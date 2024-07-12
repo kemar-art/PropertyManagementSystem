@@ -24,10 +24,6 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser
         [DataType(DataType.Date), Display(Name = "D.O.B")]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        [DataType(DataType.Date), Display(Name = "Start Date")]
-        public DateTime Datestarted { get; set; } = DateTime.Now;
-
 
         //public string Role { get; set; } = string.Empty;
 

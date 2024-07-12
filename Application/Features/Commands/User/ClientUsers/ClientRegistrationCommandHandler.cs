@@ -13,19 +13,19 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers;
 
-internal class ClientUserCommandHandler : IRequestHandler<ClientUserCommand, RegistrationResponse>
+internal class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistrationCommand, RegistrationResponse>
 {
     private readonly IAuthService _authService;
 
-    public ClientUserCommandHandler(IAuthService authService)
+    public ClientRegistrationCommandHandler(IAuthService authService)
     {
         _authService = authService;
     }
 
-    public async Task<RegistrationResponse> Handle(ClientUserCommand request, CancellationToken cancellationToken)
+    public async Task<RegistrationResponse> Handle(ClientRegistrationCommand request, CancellationToken cancellationToken)
     {
         // Validate incoming data
-        var validator = new ClientUserCommandValidator();
+        var validator = new ClientRegistrationCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
         {

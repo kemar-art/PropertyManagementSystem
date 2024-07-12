@@ -36,7 +36,7 @@ namespace Persistence.Repository_Implementations
             _logger = logger;
         }
 
-        public async Task<RegistrationResponse> RegisterClientUserAsync(ClientUserCommand clientUser)
+        public async Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand clientUser)
         {
             // Log the start of the registration process
             _logger.LogInformation("Starting user registration for email: {Email}", clientUser.Email);

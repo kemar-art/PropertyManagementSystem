@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers;
 
-public class ClientUserCommandValidator : AbstractValidator<ClientUserCommand>
+public class ClientRegistrationCommandValidator : AbstractValidator<ClientRegistrationCommand>
 {
-    public ClientUserCommandValidator()
+    public ClientRegistrationCommandValidator()
     {
         RuleFor(p => p.FirstName)
             .NotEmpty()

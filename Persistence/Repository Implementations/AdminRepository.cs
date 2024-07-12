@@ -153,7 +153,7 @@ namespace Persistence.Repository_Implementations
                 NationalInsuranceScheme = user.NationalInsuranceScheme,
                 Gender = user.Gender,
                 DateOfBirth = user.DateOfBirth,
-                Datestarted = user.Datestarted,
+                DateRegistered = DateTime.Now,
                 EmailConfirmed = true,
                 Role = Roles.Administrator,
             };  
@@ -217,7 +217,7 @@ namespace Persistence.Repository_Implementations
             applicationUser.Gender = user.Gender;
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
-            applicationUser.Datestarted = user.Datestarted;
+            applicationUser.DateRegistered = user.Datestarted;
             applicationUser.Role = Roles.Administrator;
 
 
@@ -384,7 +384,6 @@ namespace Persistence.Repository_Implementations
 
             throw new BadHttpRequestException("An error occurred while returning this job for completion. Please refresh and try again.");
         }
-
 
         private async Task<string> GenerateRandomPasswordAsync()
         {

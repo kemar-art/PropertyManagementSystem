@@ -12,7 +12,7 @@ namespace PMS.UI.Pages.ClientForm
         [Inject]
         public IFormRepository _FormRepository { get; set; }
 
-        public IEnumerable<FormVM> FormVMs { get; private set; } = Enumerable.Empty<FormVM>();
+        public IEnumerable<FormVM> FormVMs { get; private set; } = [];
 
         public string Message { get; set; } = string.Empty;
 
@@ -33,6 +33,8 @@ namespace PMS.UI.Pages.ClientForm
             var response = await _FormRepository.DeleteForm(id);
             if (response.Success)
             {
+                // Refresh the data after deletion
+                FormVMs = await _FormRepository.GetAllForms(); 
                 StateHasChanged();
             }
             else

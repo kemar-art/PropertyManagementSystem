@@ -24,7 +24,7 @@ namespace Domain
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("Start Date"))]
-        public DateTime Datestarted { get; set; } = DateTime.Now;
+        public DateTime DateRegistered { get; set; } = DateTime.Now;
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
@@ -44,5 +44,6 @@ namespace Domain
         //[ForeignKey("JobTitleId")]
         //public JobTitle? JobTitle { get; set; }
         //public Guid? JobTitleId { get; set; }
+        
     }
 }

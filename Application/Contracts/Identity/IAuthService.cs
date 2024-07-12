@@ -12,7 +12,7 @@ namespace Application.Contracts.Identity
 {
     public interface IAuthService
     {
-        Task<RegistrationResponse> RegisterClientUserAsync(ClientUserCommand user);
+        Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand user);
         Task<AuthResponse> LogInUserAsync(LoginUserCommand user);
     }
 }

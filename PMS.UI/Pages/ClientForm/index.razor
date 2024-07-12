@@ -46,7 +46,7 @@ else if (FormVMs.Any())
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
                     <td>@item.PropertyAddress</td>
-                    <td class="btn-group" role="group">
+                    <td class="btn-group" role="group" style="width: 100%">
                         <button @onclick="(() => FormEdit(item.Id))" class="btn btn-warning">Edit</button>
                         <button @onclick="(() => FormDetails(item.Id))" class="btn btn-info">Details</button>
                         <button @onclick="(() => FormDeletion(item.Id))" class="btn btn-danger">Delete</button>
