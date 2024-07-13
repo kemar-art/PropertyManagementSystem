@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Atuh;
+using PMS.UI.Models.Auth;
 
 namespace PMS.UI.Pages
 {
@@ -23,7 +24,7 @@ namespace PMS.UI.Pages
 
         protected async Task HandleRegister()
         {
-            var result = await AuthenticationService.IsRegister(RegisterVM.FirstName, RegisterVM.LastName, RegisterVM.Email, RegisterVM.Gender, RegisterVM.DateOfBirth, RegisterVM.Password);
+            var result = await AuthenticationService.IsRegister(RegisterVM);
 
             if (result)
             {

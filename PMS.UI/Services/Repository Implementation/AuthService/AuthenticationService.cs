@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using PMS.UI.AuthProviders;
 using PMS.UI.Contracts.Repository_Interface;
+using PMS.UI.Models.Atuh;
+using PMS.UI.Models.Auth;
 using PMS.UI.Services.Base;
 
 namespace PMS.UI.Services.Repository_Implementation.AuthService
@@ -42,16 +44,17 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             }
         }
 
-        public async Task<bool> IsRegister(string firstName, string lastName, string email, string gender, DateTime dateOfBirth, string password)
+        public async Task<bool> IsRegister(RegisterVM registerVM)
         {
             ClientRegistrationCommand registrationRequest = new()
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Gender = gender,
-                DateOfBirth = dateOfBirth,
-                Password = password
+                FirstName = registerVM.FirstName,
+                LastName = registerVM.LastName,
+                Email = registerVM.Email,
+                PhoneNumber = registerVM.PhoneNumber,
+                Gender = registerVM.Gender,
+                DateOfBirth = registerVM.DateOfBirth,
+                Password = registerVM.Password
             };
 
             var response = await _client.RegisterAsync(registrationRequest);
