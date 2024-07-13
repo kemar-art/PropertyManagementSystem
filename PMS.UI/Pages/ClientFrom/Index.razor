@@ -1,0 +1,61 @@
+﻿@page "/submitted-forms/"
+
+<h3>Client List</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">
+        @Message
+    </div>
+}
+
+@* if (IsLoading)
+{
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+    </div>
+    <p>Loading Data...</p>
+} *@
+
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+}
+else if (FormVMs.Any())
+{
+    <table class="table table-bordered table-striped" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Client ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Property Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in FormVMs)
+            {
+                <tr>
+                    <td>@string.Format("{0:D7}", item.Id)</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.PropertyAddress</td>
+                    <td class="btn-group" role="group" style="width: 100%">
+                        <button @onclick="(() => FormEdit(item.Id))" class="btn btn-warning">Edit</button>
+                        <button @onclick="(() => FormDetails(item.Id))" class="btn btn-info">Details</button>
+                        <button @onclick="(() => FormDeletion(item.Id))" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
