@@ -9,7 +9,6 @@ namespace PMS.UI.Services.Repository_Implementation
     public class FormRepository : BaseHttpService, IFormRepository
     {
         private readonly IMapper _mapper;
-
         public FormRepository(IClient client, IMapper mapper, ILocalStorageService localStorage) : base(client, localStorage)
         {
             _mapper = mapper;

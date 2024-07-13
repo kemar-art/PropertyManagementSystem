@@ -53,6 +53,7 @@ namespace Persistence.Repository_Implementations
                 PhoneNumber = clientUser.PhoneNumber,
                 Gender = clientUser.Gender,
                 DateOfBirth = clientUser.DateOfBirth,
+                DateRegistered = DateTime.Now,
                 Role = Roles.Client
             };
 
