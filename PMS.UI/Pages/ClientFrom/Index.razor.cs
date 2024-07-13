@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Form;
 
-namespace PMS.UI.Pages.ClientForm
+namespace PMS.UI.Pages.ClientFrom
 {
     public partial class Index
     {
