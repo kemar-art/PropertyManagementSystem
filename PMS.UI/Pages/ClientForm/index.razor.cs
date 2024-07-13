@@ -34,7 +34,7 @@ namespace PMS.UI.Pages.ClientForm
             if (response.Success)
             {
                 // Refresh the data after deletion
-                FormVMs = await _FormRepository.GetAllForms(); 
+                FormVMs = await _FormRepository.GetAllForms();
                 StateHasChanged();
             }
             else

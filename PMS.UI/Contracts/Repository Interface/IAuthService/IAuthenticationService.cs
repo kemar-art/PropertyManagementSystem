@@ -6,6 +6,6 @@ namespace PMS.UI.Contracts.Repository_Interface
     {
         Task<bool> IsAuthenticated(string email, string password);
         Task<bool> IsRegister(string firstName, string lastName, string email, string gender, DateTime dateOfBirth, string password);
-        TaskLogout();
+        Task Logout();
     }
 }

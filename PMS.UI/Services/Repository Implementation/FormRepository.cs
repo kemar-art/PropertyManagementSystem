@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blazored.LocalStorage;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
@@ -9,7 +10,7 @@ namespace PMS.UI.Services.Repository_Implementation
     {
         private readonly IMapper _mapper;
 
-        public FormRepository(IClient client, IMapper mapper) : base(client)
+        public FormRepository(IClient client, IMapper mapper, ILocalStorageService localStorage) : base(client, localStorage)
         {
             _mapper = mapper;
         }
