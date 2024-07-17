@@ -7,4 +7,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
 
-public record class GetASingleUserDetailsQuery(string Id) : IRequest<GetASingleUserDTO>;
+public record class GetASingleUserDetailsQuery(string userId) : IRequest<GetASingleUserDTO>;

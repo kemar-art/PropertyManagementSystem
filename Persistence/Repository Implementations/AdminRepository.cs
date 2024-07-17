@@ -54,7 +54,7 @@ namespace Persistence.Repository_Implementations
             IAppLogger<AdminRepository> appLogger)
             : base(dbContext)
         {
-            _userManager = userManager; //?? throw new ArgumentNullException(nameof(userManager));
+            _userManager = userManager; 
             _hostEnvironment = hostEnvironment; //?? throw new ArgumentNullException(nameof(hostEnvironment));
             _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));

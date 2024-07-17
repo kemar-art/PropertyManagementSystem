@@ -15,3 +15,74 @@
     </NotAuthorized>
 </AuthorizeView>
 
+@* <AuthorizeView>
+    <Authorized>
+        <div class="auth-container">
+            <h2>Welcome Back!</h2>
+            <button class="btn logout-btn" @onclick="Logout">Logout</button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="auth-container">
+            <h2>Please Log In</h2>
+            <button class="btn login-btn" @onclick="GoToLogin">Login</button>
+            <span class="divider">or</span>
+            <button class="btn register-btn" @onclick="GoToRegister">Register</button>
+        </div>
+    </NotAuthorized>
+</AuthorizeView> *@
+
+@* <div class="container">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-lg-6 mb-3 d-flex align-items-stretch" style="width: 30rem;">
+            <div class="card shadow rounded-7" style="border-radius: 15px;">
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <img src="~/images/logo/mylogo.jpg" alt="Smart Appraisal LOGO" width="180" height="150" />
+                </div>
+                <img src="~/images/logo/homepage.jpg" alt="Real Estate Image" height="150" class="card-img-top" style="object-fit: cover;">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-6 mb-3">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ARMS/Client/Create">
+                                    Request Appraisal
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ARMS/Tracking/Index">
+                                    Track Appraisal
+                                </a>
+                            </div>
+                        </div>
+                        <AuthorizeView>
+                            <Authorized>
+                                <div class="row text-center">
+                                    <div class="col-12">
+                                        <button class="btn logout-btn" @onclick="Logout">Logout</button>
+                                    </div>
+                                </div>
+                            </Authorized>
+                            <NotAuthorized>
+                                <div class="row text-center">
+                                    <div class="col-6 mb-3">
+                                        <button class="btn login-btn" @onclick="GoToLogin">Login</button>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <button class="btn register-btn" @onclick="GoToRegister">Register</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Login">Administrator Login</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Login">Appraiser Login</a>
+                                    </div>
+                                </div>
+                            </NotAuthorized>
+                        </AuthorizeView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ *@

@@ -26,12 +26,12 @@ public class GetASingleUserDetailsQueryHandler : IRequestHandler<GetASingleUserD
     public async Task<GetASingleUserDTO> Handle(GetASingleUserDetailsQuery request, CancellationToken cancellationToken)
     {
         //Querying the database
-        var getUser = await _userRepository.GetByIdAsync(request.Id);
+        var getUser = await _userRepository.GetByIdAsync(request.userId);
 
         //Verify if the record exist
         if (getUser is null)
         {
-            throw new NotFoundException(nameof(GetASingleUserDetailsQuery), request.Id);
+            throw new NotFoundException(nameof(GetASingleUserDetailsQuery), request.userId);
         }
 
         //Mapping the object from the Database to the Dto

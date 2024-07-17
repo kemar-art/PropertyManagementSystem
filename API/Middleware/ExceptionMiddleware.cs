@@ -1,18 +1,23 @@
 ﻿using API.Models;
+using Application.Contracts.ILogging;
 using Application.Exceptions;
 using Azure;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mail;
+using System.Text.Json.Serialization;
 
 namespace API.Middleware
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
+        //private readonly IAppLogger<ExceptionMiddleware> _appLogger;
 
-        public ExceptionMiddleware(RequestDelegate requestDelegate)
+        public ExceptionMiddleware(RequestDelegate requestDelegate/*, IAppLogger<ExceptionMiddleware> appLogger*/)
         {
             _requestDelegate = requestDelegate;
+            //_appLogger = appLogger ?? throw new ArgumentNullException(nameof(_appLogger));
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -68,6 +73,8 @@ namespace API.Middleware
             }
 
             httpContext.Response.StatusCode = (int)statusCode;
+            //var logMessage = JsonConvert.SerializeObject(problem);
+            //_appLogger.LogError(logMessage);
             await httpContext.Response.WriteAsJsonAsync(problem);
         }
     }

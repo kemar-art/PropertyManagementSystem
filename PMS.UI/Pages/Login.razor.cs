@@ -27,7 +27,7 @@ namespace PMS.UI.Pages
 
         protected async Task HandleLogin()
         {
-            if (await AuthenticationService.IsAuthenticated(LoginVM.Email, LoginVM.Password))
+            if (await AuthenticationService.IsAuthenticated(LoginVM))
             {
                 NavigationManager.NavigateTo("/");
             }

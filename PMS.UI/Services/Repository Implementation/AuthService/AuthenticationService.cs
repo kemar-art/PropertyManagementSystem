@@ -17,14 +17,14 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<bool> IsAuthenticated(string email, string password)
+        public async Task<bool> IsAuthenticated(LoginVM loginVM)
         {
             try
             {
                 LoginUserCommand loginUserCommand = new()
                 {
-                    Email = email,
-                    Password = password
+                    Email = loginVM.Email,
+                    Password = loginVM.Password
                 };
 
                 var authenticationResponse = await _client.LoginAsync(loginUserCommand);
