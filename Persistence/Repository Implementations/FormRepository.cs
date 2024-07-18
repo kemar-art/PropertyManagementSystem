@@ -38,11 +38,11 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     public List<FormPurposeOfValuationItem> ServiceRequestFormPurposeOfValuationItem = [];
 
 
-    public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+    public List<CheckBoxPropertyDto> TypeOfPropertyCheckBoxItemDto { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxesVM { get; set; } = [];
+    public List<CheckBoxPropertyDto> ServiceRequestCheckBoxesDto { get; set; } = [];
 
-    public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+    public List<CheckBoxPropertyDto> PurposeOfEvaluationCheckBoxesDto { get; set; } = [];
 
     public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper) : base(dbContext)
     {
@@ -61,7 +61,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         await CreateAsync(formToCreate);
 
         //Find all the checkboxes that was checked by user (For Service Resquest)
-        foreach (var item in ServiceRequestCheckBoxesVM)
+        foreach (var item in ServiceRequestCheckBoxesDto)
         {
             if (item.IsChecked == true)
             {
@@ -75,7 +75,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
 
         //Find all the checkboxes that was checked by user (For Type Of Property)
-        foreach (var item in TypeOfPropertyCheckBoxItemVM)
+        foreach (var item in TypeOfPropertyCheckBoxItemDto)
         {
             if (item.IsChecked == true)
             {
@@ -89,7 +89,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
 
         //Find all the checkboxes that was checked by user (For Purpsoe Of Evaluation)
-        foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+        foreach (var item in PurposeOfEvaluationCheckBoxesDto)
         {
             if (item.IsChecked == true)
             {

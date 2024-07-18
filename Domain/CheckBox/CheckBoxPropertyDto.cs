@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.CheckBox
 {
-    public class CheckBoxIPropertyDTO
+    public class CheckBoxPropertyDto
     {
         public int Id { get; set; }
         public string? Title { get; set; }
