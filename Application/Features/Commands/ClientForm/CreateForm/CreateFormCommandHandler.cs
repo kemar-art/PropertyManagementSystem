@@ -29,14 +29,16 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
         }
 
         //Convert incoming entity to domain entity
-        var formToCreate = _mapper.Map<Form>(request);
-            formToCreate.Status = FormStatus.StatusSubmitted;
-            formToCreate.DataCreated = DateTime.Now; 
+        //var formToCreate = _mapper.Map<Form>(request);
+        //    formToCreate.Status = FormStatus.StatusSubmitted;
+        //    formToCreate.DataCreated = DateTime.Now; 
 
         //Add to database 
-        await _formRepository.CreateAsync(formToCreate);
+        //await _formRepository.CreateAsync(formToCreate);
+
+        var formToCreate = await _formRepository.CreateFrom(request);
 
         //Return result.
-        return formToCreate.Id;
+        return formToCreate;
     }
 }
