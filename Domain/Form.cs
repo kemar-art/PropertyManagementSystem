@@ -54,11 +54,11 @@ public class Form
 
     public DateTime DataCreated { get; set; }
 
-    [ForeignKey("AppraiserId")]
+ 
     public ApplicationUser? Appraiser { get; set; }
     public string? AppraiserId { get; set; }
 
-    [ForeignKey("JobAssignerId")]
+
     public ApplicationUser? JobAssigner { get; set; }
     public string? JobAssignerId { get; set; }
 
@@ -117,6 +117,9 @@ public class Form
     //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
 
     //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
+
+    public Region? Region { get; set; }
+    public Guid? RegionId { get; set; }
 
     public string FrontOfProperyImageURL { get; set; } = string.Empty;
     public string RightSideOfPropertyImageURL { get; set; } = string.Empty;

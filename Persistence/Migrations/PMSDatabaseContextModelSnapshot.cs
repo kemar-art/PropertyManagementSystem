@@ -133,10 +133,10 @@ namespace Persistence.Migrations
                             Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "90980c8f-0ede-4a61-be00-291501a92e58",
-                            DateEnded = new DateTime(2024, 7, 12, 22, 6, 25, 577, DateTimeKind.Local).AddTicks(4985),
-                            DateOfBirth = new DateTime(2024, 7, 12, 22, 6, 25, 577, DateTimeKind.Local).AddTicks(4972),
-                            DateRegistered = new DateTime(2024, 7, 12, 22, 6, 25, 577, DateTimeKind.Local).AddTicks(4984),
+                            ConcurrencyStamp = "31ec8cde-1e81-41a7-b2fe-35943b127c66",
+                            DateEnded = new DateTime(2024, 7, 17, 23, 45, 4, 481, DateTimeKind.Local).AddTicks(912),
+                            DateOfBirth = new DateTime(2024, 7, 17, 23, 45, 4, 481, DateTimeKind.Local).AddTicks(900),
+                            DateRegistered = new DateTime(2024, 7, 17, 23, 45, 4, 481, DateTimeKind.Local).AddTicks(912),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -147,10 +147,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKLBgA77bLogFdm/tYKrwm5wQvWa55s/noDCYOOxC/inbx6u6wUdwNs4EbHPS0YrUw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEC/wqpq8tXbZ8y1d1TQnu5FgaQxI6068Umg9Wzd7sTVjnm4rEwcCljjl8WC+kPE5Vw==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "414ad647-8c80-4383-befd-e46a3a07ac3c",
+                            SecurityStamp = "58531423-aaab-490c-93db-d72bf12fcaff",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
@@ -160,10 +160,10 @@ namespace Persistence.Migrations
                             Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "62036824-2a52-4634-8329-8bd61fda0728",
-                            DateEnded = new DateTime(2024, 7, 12, 22, 6, 25, 617, DateTimeKind.Local).AddTicks(4147),
-                            DateOfBirth = new DateTime(2024, 7, 12, 22, 6, 25, 617, DateTimeKind.Local).AddTicks(4143),
-                            DateRegistered = new DateTime(2024, 7, 12, 22, 6, 25, 617, DateTimeKind.Local).AddTicks(4146),
+                            ConcurrencyStamp = "a1e91b53-9437-46f3-af3c-701e39667f7d",
+                            DateEnded = new DateTime(2024, 7, 17, 23, 45, 4, 520, DateTimeKind.Local).AddTicks(4488),
+                            DateOfBirth = new DateTime(2024, 7, 17, 23, 45, 4, 520, DateTimeKind.Local).AddTicks(4483),
+                            DateRegistered = new DateTime(2024, 7, 17, 23, 45, 4, 520, DateTimeKind.Local).AddTicks(4487),
                             Email = "appraiser@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Appraiser",
@@ -174,10 +174,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "APPRAISER@LOCALHOST.COM",
                             NormalizedUserName = "APPRAISER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELS9gDTV9NIhbUkhLvqCRjwnvg7NWusbEbly/hdwJaNlaxA10sPRSQDKKsg+vICsqw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAJAi15A3T97zluCK7XJNVqEC95LuyQCsxWwlx8YHlBTnDtIQa/xZCGaG+PBUdAXpA==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "aef32c66-8319-452e-907d-b1355c252dfd",
+                            SecurityStamp = "5259e4c2-ac6d-4527-9b2d-5c96a5f11de9",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "appraiser@localhost.com"
@@ -187,10 +187,10 @@ namespace Persistence.Migrations
                             Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "33bd3819-da26-48d7-892f-d1af64f985bb",
-                            DateEnded = new DateTime(2024, 7, 12, 22, 6, 25, 656, DateTimeKind.Local).AddTicks(1143),
-                            DateOfBirth = new DateTime(2024, 7, 12, 22, 6, 25, 656, DateTimeKind.Local).AddTicks(1139),
-                            DateRegistered = new DateTime(2024, 7, 12, 22, 6, 25, 656, DateTimeKind.Local).AddTicks(1142),
+                            ConcurrencyStamp = "475f8841-0226-4ed5-bcae-511fc2c671e6",
+                            DateEnded = new DateTime(2024, 7, 17, 23, 45, 4, 560, DateTimeKind.Local).AddTicks(2022),
+                            DateOfBirth = new DateTime(2024, 7, 17, 23, 45, 4, 560, DateTimeKind.Local).AddTicks(2012),
+                            DateRegistered = new DateTime(2024, 7, 17, 23, 45, 4, 560, DateTimeKind.Local).AddTicks(2022),
                             Email = "client@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -201,10 +201,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "CLIENT@LOCALHOST.COM",
                             NormalizedUserName = "CLIENT@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENlD+fN+UjyhOaGOKRDWv+j59FF1QUCY1cFCyTQIC0MO6721H8fBQuQqz8VIZJeT1Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECGkEgsG/9yp/CGGgZvBTlAG/he7+8hOBiQ5CFUosNdio2Xei4D33IHtgEG7WnXQwA==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "3e0d05ab-5dee-43e5-98df-a1eb57c88d55",
+                            SecurityStamp = "15d8ed58-c517-48cf-884a-6dd32d92552c",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "client@localhost.com"
@@ -318,6 +318,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("RejectedForm")
                         .HasColumnType("datetime2");
 
@@ -367,6 +370,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobAssignerId");
 
+                    b.HasIndex("RegionId");
+
                     b.ToTable("Forms");
                 });
 
@@ -409,6 +414,111 @@ namespace Persistence.Migrations
                     b.HasIndex("FormId");
 
                     b.ToTable("FormInteractionLogs");
+                });
+
+            modelBuilder.Entity("Domain.Region", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CountiesName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParishName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8c8a6b61-43f9-4b7c-ab58-be16c05762b4"),
+                            CountiesName = "Surrey",
+                            ParishName = "Kingston"
+                        },
+                        new
+                        {
+                            Id = new Guid("49ebba81-a529-490c-add9-37046df783f4"),
+                            CountiesName = "Surrey",
+                            ParishName = "St. Andrew"
+                        },
+                        new
+                        {
+                            Id = new Guid("67a014d7-dbc6-40e7-a5b8-8eb12edfd68b"),
+                            CountiesName = "Surrey",
+                            ParishName = "Portland"
+                        },
+                        new
+                        {
+                            Id = new Guid("5d3bb8cd-bdb8-4752-9a53-b656e2543481"),
+                            CountiesName = "Surrey",
+                            ParishName = "St. Thomas"
+                        },
+                        new
+                        {
+                            Id = new Guid("02befa99-5924-4fea-a633-3736e651a2dc"),
+                            CountiesName = "Middlesex",
+                            ParishName = "St. Catherine"
+                        },
+                        new
+                        {
+                            Id = new Guid("05b21946-589d-4195-a632-1f0c554206bb"),
+                            CountiesName = "Middlesex",
+                            ParishName = "St. Mary"
+                        },
+                        new
+                        {
+                            Id = new Guid("cfcfccac-f17b-4ae2-96af-2a4be6b42ba2"),
+                            CountiesName = "Middlesex",
+                            ParishName = "St. Ann"
+                        },
+                        new
+                        {
+                            Id = new Guid("bc5cee4e-a273-4b67-8697-23a489b041fe"),
+                            CountiesName = "Middlesex",
+                            ParishName = "Manchester"
+                        },
+                        new
+                        {
+                            Id = new Guid("1d0844ea-761c-4d00-8446-57cbed7d971a"),
+                            CountiesName = "Middlesex",
+                            ParishName = "Clarendon"
+                        },
+                        new
+                        {
+                            Id = new Guid("5cc3280f-7a72-4fa0-9452-d320bc5dc000"),
+                            CountiesName = "Cornwall",
+                            ParishName = "Hanover"
+                        },
+                        new
+                        {
+                            Id = new Guid("2f020ff7-8b30-48ff-8aff-caf7f18503c2"),
+                            CountiesName = "Cornwall",
+                            ParishName = "Westmoreland"
+                        },
+                        new
+                        {
+                            Id = new Guid("d6b104f3-693f-4c43-8035-21661b61a82b"),
+                            CountiesName = "Cornwall",
+                            ParishName = "St. James"
+                        },
+                        new
+                        {
+                            Id = new Guid("957748c0-ba86-4764-b8c7-a8c0c0bc20c8"),
+                            CountiesName = "Cornwall",
+                            ParishName = "Trelawny"
+                        },
+                        new
+                        {
+                            Id = new Guid("e80ac700-0536-476a-8c7e-467a25a13f55"),
+                            CountiesName = "Cornwall",
+                            ParishName = "St. Elizabeth"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -591,9 +701,15 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("JobAssignerId");
 
+                    b.HasOne("Domain.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId");
+
                     b.Navigation("Appraiser");
 
                     b.Navigation("JobAssigner");
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Domain.FormInteractionLog", b =>

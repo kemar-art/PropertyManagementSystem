@@ -64,6 +64,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
         services.AddSingleton<IEmailSender, EmailSender>();
         services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IRegionRepository, RegionRepository>();
 
         return services;
     }

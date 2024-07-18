@@ -1,8 +1,10 @@
-﻿using Domain.CheckBox;
+﻿using Domain;
+using Domain.CheckBox;
 using Domain.CheckBox.PurposeValuation;
 using Domain.CheckBox.ServiceRequest;
 using Domain.CheckBox.TypeOfProperty;
 using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Commands.ClientForm.CreateForm;
 
@@ -45,6 +47,10 @@ public class CreateFormCommand : IRequest<int>
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
+
+    [ForeignKey("RegionId")]
+    public Region? Region { get; set; }
+    public Guid? RegionId { get; set; }
 
     //public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; } = [];
 

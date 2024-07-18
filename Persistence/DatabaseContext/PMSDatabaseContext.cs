@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence.SeedConfig;
 using Persistence.SeedConfig.CheckBox;
+using Persistence.SeedConfig.Regions;
 using Persistence.SeedConfig.UserRole;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+    public DbSet<Region> Regions { get; set; }
+
     public DbSet<FormInteractionLog> FormInteractionLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -35,6 +38,6 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new RolesSeedConfiguration());
         builder.ApplyConfiguration(new UserSeedConfiguration());
         builder.ApplyConfiguration(new UserRolesSeedConfiguration());
-        
+        builder.ApplyConfiguration(new RegionSeedConfiguration());
     }
 }

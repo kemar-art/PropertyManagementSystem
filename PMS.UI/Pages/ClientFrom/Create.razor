@@ -100,25 +100,27 @@
                                 <div class="form-outline">
                                     <label>Is The Key Available</label>
                                     <div>
-                                        @* <InputRadio class="form-check-input" @bind-Value="FormVM.IsKeyAvailable" Value="Yes" /> Yes
-                                        <InputRadio class="form-check-input" @bind-Value="FormVM.IsKeyAvailable" Value="No" /> No *@
+                                        <InputRadioGroup @bind-Value="FormVM.IsKeyAvailable">
+                                            <InputRadio class="form-check-input" Value="true" /> Yes
+                                            <InputRadio class="form-check-input" Value="false" /> No
+                                        </InputRadioGroup>
                                     </div>
                                     <ValidationMessage For="@(() => FormVM.IsKeyAvailable)" />
                                 </div>
                             </div>
-                            @* <div class="col">
-                            <div class="form-outline">
-                            <label>Parish</label>
-                            <InputSelect class="form-select" @bind-Value="FormVM.RegionId">
-                            <option selected disabled>--Select Parish--</option>
-                            @foreach (var region in RegionList)
-                            {
-                            <option value="@region.Value">@region.Text</option>
-                            }
-                            </InputSelect>
-                            <ValidationMessage For="@(() => FormVM.RegionId)" />
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label>Parish</label>
+                                    <InputSelect class="form-select" @bind-Value="FormVM.RegionId">
+                                        <option selected disabled>--Select Parish--</option>
+                                        @foreach (var region in Regions)
+                                        {
+                                            <option value="@region.Id">@region.ParishName</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => FormVM.RegionId)" />
+                                </div>
                             </div>
-                            </div> *@
                         </div>
                         <div class="form-outline mb-4">
                             <label>Property Address</label>
@@ -195,7 +197,6 @@
 
 
 
-
 @* <div class="container min-vh-100 d-flex justify-content-center align-item-center">
     <div class="col-8">
         <div>
@@ -213,7 +214,7 @@
                             <div class="form-outline">
 
                                 <label class="form-label" >
-                                    First Name 
+                                    First Name
                                 </label>
                                 <span class="form-outline"><ValidationMessage For="@(() => FormVM.FirstName)" class="form-label" /></span>
                                 <InputText class="form-control" @bind-Value="FormVM.FirstName" aria-required="true" />
@@ -295,7 +296,7 @@
                                 <label>Is The Key Available</label>
                                 <div>
                                     @*  <InputRadio class="form-check-input" @bind-Value="FormVM.IsKeyAvailable" Value="Yes" /> Yes
-                                    <InputRadio class="form-check-input" @bind-Value="FormVM.IsKeyAvailable" Value="No" /> No 
+                                    <InputRadio class="form-check-input" @bind-Value="FormVM.IsKeyAvailable" Value="No" /> No
                                 </div>
                                 <ValidationMessage For="@(() => FormVM.IsKeyAvailable)" />
                             </div>
@@ -312,7 +313,7 @@
                         </InputSelect>
                         <ValidationMessage For="@(() => FormVM.RegionId)" />
                         </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-outline mb-4">
                         <label>Property Address</label>

@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using PMS.UI.Services.Base;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace PMS.UI.Models.Form
 {
@@ -44,7 +48,7 @@ namespace PMS.UI.Models.Form
 
         [Required(ErrorMessage = "*")]
         [Display(Name = "Is Key Available")]
-        public string IsKeyAvailable { get; set; } = string.Empty;
+        public bool? IsKeyAvailable { get; set; } 
 
         [Required(ErrorMessage = "*")]
         [Display(Name = "Mortgage Institution")]
@@ -122,5 +126,9 @@ namespace PMS.UI.Models.Form
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
         public DateTime ApprovedForm { get; set; }
+
+        [ForeignKey("RegionId")]
+        public Region? Region { get; set; }
+        public Guid? RegionId { get; set; }
     }
 }
