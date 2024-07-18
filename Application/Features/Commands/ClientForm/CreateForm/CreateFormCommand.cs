@@ -52,23 +52,9 @@ public class CreateFormCommand : IRequest<int>
     public Region? Region { get; set; }
     public Guid? RegionId { get; set; }
 
-    //public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; } = [];
+    public List<FormTypeOfPropertyItem>? ServiceRequesFormTypeOfPropertyItem { get; set; }
 
-    //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; } = [];
+    public List<FormServiceRequestItem>? ServiceRequestFormServiceRequestItem { get; set; }
 
-    //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; } = [];
-
-
-
-    //public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItem { get; set; } = [];
-
-    //public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxes { get; set; } = [];
-
-    //public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxes { get; set; } = [];
-
-    //public List<CheckBoxIPropertyDTO> SelectedServiceRequestCheckBoxes { get; set; } = [];
-
-    //public List<CheckBoxIPropertyDTO> SelectedTypeOfPropertyCheckBoxes { get; set; } = [];
-
-    //public List<CheckBoxIPropertyDTO> SelectedPurposeOfEvaluationCheckBoxes { get; set; } = [];
+    public List<FormPurposeOfValuationItem>? ServiceRequestFormPurposeOfValuationItem { get; set; }
 }

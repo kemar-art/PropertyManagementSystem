@@ -9,75 +9,75 @@ using System.Threading.Tasks;
 
 namespace Persistence.SeedConfig.CheckBox
 {
-    public class ServiceRequestPropertySeedConfiguration : IEntityTypeConfiguration<ServiceRequestCheckBoxProperty>
+    public class ServiceRequestPropertySeedConfiguration : IEntityTypeConfiguration<ServiceRequestItem>
     {
-        public void Configure(EntityTypeBuilder<ServiceRequestCheckBoxProperty> builder)
+        public void Configure(EntityTypeBuilder<ServiceRequestItem> builder)
         {
             builder.HasData(
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 1,
                     Title = "VALUATION",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 2,
                     Title = "LAND SURVEYOR",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 3,
                     Title = "LEGAL REPRESENTATION",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 4,
                     Title = "SALES/RENTALS",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 5,
                     Title = "AUCTION",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 6,
                     Title = "PROPERTY MANAGEMENT",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 7,
                     Title = "STRUCTURAL SURVEY",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 8,
                     Title = "CONSTRUCTION ESTIMATE",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 9,
                     Title = "GENERAL CONTRACTOR",
                     IsChecked = false,
                 },
 
-                new ServiceRequestCheckBoxProperty
+                new ServiceRequestItem
                 {
                     Id = 10,
                     Title = "OTHER",

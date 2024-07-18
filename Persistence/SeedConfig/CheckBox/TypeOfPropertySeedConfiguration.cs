@@ -9,40 +9,40 @@ using System.Threading.Tasks;
 
 namespace Persistence.SeedConfig.CheckBox
 {
-    public class TypeOfPropertySeedConfiguration : IEntityTypeConfiguration<TypeOfPropertyCheckBoxProperty>
+    public class TypeOfPropertySeedConfiguration : IEntityTypeConfiguration<TypeOfPropertyItem>
     {
-        public void Configure(EntityTypeBuilder<TypeOfPropertyCheckBoxProperty> builder)
+        public void Configure(EntityTypeBuilder<TypeOfPropertyItem> builder)
         {
             builder.HasData(
-                new TypeOfPropertyCheckBoxProperty
+                new TypeOfPropertyItem
                 {
                     Id = 1,
                     Title = "Commercial",
                     IsChecked = false,
                 },
 
-                new TypeOfPropertyCheckBoxProperty
+                new TypeOfPropertyItem
                 {
                     Id = 2,
                     Title = "Residential",
                     IsChecked = false,
                 },
 
-                new TypeOfPropertyCheckBoxProperty
+                new TypeOfPropertyItem
                 {
                     Id = 3,
                     Title = "Agricultural",
                     IsChecked = false,
                 },
 
-                new TypeOfPropertyCheckBoxProperty
+                new TypeOfPropertyItem
                 {
                     Id = 4,
                     Title = "Industrial",
                     IsChecked = false,
                 },
 
-                new TypeOfPropertyCheckBoxProperty
+                new TypeOfPropertyItem
                 {
                     Id = 5,
                     Title = "Vacant Lot",

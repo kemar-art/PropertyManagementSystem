@@ -112,12 +112,6 @@ public class Form
     [DataType(DataType.Date)]
     public DateTime ApprovedForm { get; set; }
 
-    //public List<PurposeOfValuationCheckBox>? PurposeOfValuationCheckBoxItems { get; set; }
-
-    //public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxItems { get; set; }
-
-    //public List<TypeOfPropertyCheckBox>? TypeOfPropertyCheckBoxItems { get; set; }
-
     public Region? Region { get; set; }
     public Guid? RegionId { get; set; }
 
@@ -125,4 +119,10 @@ public class Form
     public string RightSideOfPropertyImageURL { get; set; } = string.Empty;
     public string LeftSideOfPropertImageURL { get; set; } = string.Empty;
     public string BackOfPropertyImageURL { get; set; } = string.Empty;
+
+    public List<FormTypeOfPropertyItem>? ServiceRequesFormTypeOfPropertyItem { get; set; }
+
+    public List<FormServiceRequestItem>? ServiceRequestFormServiceRequestItem { get; set; }
+
+    public List<FormPurposeOfValuationItem>? ServiceRequestFormPurposeOfValuationItem { get; set; }
 }

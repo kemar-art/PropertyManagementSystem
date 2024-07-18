@@ -28,7 +28,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     private readonly IAppLogger<FormRepository> _appLogger;
     private readonly IMapper _mapper;
 
-    public List<ServiceRequestCheckBox> ServiceRequesChecBoxItems = [];
+    //public List<ServiceRequestCheckBox> ServiceRequesChecBoxItems = [];
 
     public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper) : base(dbContext)
     {

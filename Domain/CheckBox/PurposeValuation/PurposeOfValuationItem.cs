@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.CheckBox.ServiceRequest
+namespace Domain.CheckBox.PurposeValuation
 {
-    public class ServiceRequestCheckBoxProperty
+    public class PurposeOfValuationItem
     {
         public int Id { get; set; }
         public string? Title { get; set; }
         public bool IsChecked { get; set; }
 
-        public List<ServiceRequestCheckBox>? ServiceRequestCheckBoxes { get; set; }
+        public List<FormPurposeOfValuationItem>? FormPurposeOfValuationItem { get; set; }
     }
 }
-
