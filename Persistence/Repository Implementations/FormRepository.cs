@@ -5,7 +5,10 @@ using Application.Features.Commands.ClientForm.CreateForm;
 using Application.StaticDetails;
 using AutoMapper;
 using Domain;
+using Domain.CheckBox;
+using Domain.CheckBox.PurposeValuation;
 using Domain.CheckBox.ServiceRequest;
+using Domain.CheckBox.TypeOfProperty;
 using Domain.Repository_Interface;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +31,18 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     private readonly IAppLogger<FormRepository> _appLogger;
     private readonly IMapper _mapper;
 
-    //public List<ServiceRequestCheckBox> ServiceRequesChecBoxItems = [];
+    public List<FormTypeOfPropertyItem> ServiceRequesFormTypeOfPropertyItem = [];
+
+    public List<FormServiceRequestItem> ServiceRequestFormServiceRequestItem = [];
+
+    public List<FormPurposeOfValuationItem> ServiceRequestFormPurposeOfValuationItem = [];
+
+
+    public List<CheckBoxIPropertyDTO> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> ServiceRequestCheckBoxesVM { get; set; } = [];
+
+    public List<CheckBoxIPropertyDTO> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
 
     public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper) : base(dbContext)
     {
@@ -46,23 +60,49 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
         await CreateAsync(formToCreate);
 
-        ////Find all the checkboxes that was checked by user (For Service Resquest)
-        //foreach (var item in createForm.ServiceRequestCheckBoxes)
-        //{
-        //    if (item.IsChecked == true)
-        //    {
-        //        ServiceRequesChecBoxItems.Add(new ServiceRequestCheckBox() { FormId = formToCreate.Id, ServiceRequestCheckBoxPropertyId = item.Id });
-        //    }
-        //}
+        //Find all the checkboxes that was checked by user (For Service Resquest)
+        foreach (var item in ServiceRequestCheckBoxesVM)
+        {
+            if (item.IsChecked == true)
+            {
+                ServiceRequestFormServiceRequestItem.Add(new FormServiceRequestItem() { FormId = formToCreate.Id, ServiceRequestItemId = item.Id });
+            }
+        }
+        //Saving all the checkboxes that was checked to database (For Service Resquest)
+        foreach (var item in ServiceRequestFormServiceRequestItem)
+        {
+            _dbContext.ServiceRequestFormServiceRequestItems.Add(item);
+        }
 
-        ////Saving all the checkboxes that was checked to database (For Service Resquest)
-        //foreach (var item in ServiceRequesChecBoxItems)
-        //{
-        //    var serviceRequestCheckBoxProperty = _mapper.Map<ServiceRequestCheckBoxProperty>(item);
-        //    _dbContext.ServiceRequestCheckBoxProperties.Add(serviceRequestCheckBoxProperty);
-        //}
+        //Find all the checkboxes that was checked by user (For Type Of Property)
+        foreach (var item in TypeOfPropertyCheckBoxItemVM)
+        {
+            if (item.IsChecked == true)
+            {
+                ServiceRequesFormTypeOfPropertyItem.Add(new FormTypeOfPropertyItem() { FormId = formToCreate.Id, TypeOfPropertyItemId = item.Id });
+            }
+        }
+        //Saving all the checkboxes that was checked to database (For Type Of Property)
+        foreach (var item in ServiceRequesFormTypeOfPropertyItem)
+        {
+            _dbContext.ServiceRequesFormTypeOfPropertyItems.Add(item);
+        }
 
-        //await _dbContext.SaveChangesAsync();
+        //Find all the checkboxes that was checked by user (For Purpsoe Of Evaluation)
+        foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+        {
+            if (item.IsChecked == true)
+            {
+                ServiceRequestFormPurposeOfValuationItem.Add(new FormPurposeOfValuationItem() { FormId = formToCreate.Id, PurposeOfValuationItemId = item.Id });
+            }
+        }
+        //Saving all the checkboxes that was checked to database (For Purpsoe Of Evaluation)
+        foreach (var item in ServiceRequestFormPurposeOfValuationItem)
+        {
+            _dbContext.ServiceRequestFormPurposeOfValuationItems.Add(item);
+        }
+
+        await _dbContext.SaveChangesAsync();
 
         return formToCreate.Id;
     }
