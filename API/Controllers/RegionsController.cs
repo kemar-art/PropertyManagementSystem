@@ -18,10 +18,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Region>> GetAllRegion()
+        public async Task<ActionResult<IEnumerable<Region>>> GetAllRegion()
         {
             var getAllRegions = await _regionRepository.GetAllAsync();
-            return getAllRegions;
+            return Ok(getAllRegions);
         }
     }
 }
