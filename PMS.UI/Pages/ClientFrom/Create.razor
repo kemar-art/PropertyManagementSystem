@@ -4,195 +4,302 @@
 
 
 
-<div class="container min-vh-100 d-flex justify-content-center align-items-center">
-    <div class="col-8">
-        <div class="form-container">
-            <section>
-                <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit">
-                    <DataAnnotationsValidator />
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+}
+else
+{
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-8">
+            <div class="form-container">
+                <section>
+                    <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
 
-                    <!-- Client Details -->
-                    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                    <fieldset class="border p-2">
-                        <legend class="float-none w-auto p-2 text-dark fs-2">CLIENT INFORMATION</legend>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label">First Name</label>
-                                    <span class="d-flex">
-                                        <ValidationMessage For="@(() => FormVM.FirstName)" />
-                                    </span>
-                                    <InputText class="form-control" @bind-Value="FormVM.FirstName" aria-required="true" />
-                                </div>
+                        <!-- Client Details -->
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <label>
+                                    <strong>SERVICE(S) REQUIRED:</strong>
+                                </label>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label">Last Name</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.LastName" />
-                                    <ValidationMessage For="@(() => FormVM.LastName)" />
+                            <div class="form-group col-md-8">
+                                <div class="row">
+                                    @foreach (var item in ServiceRequestCheckBoxesVM)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-inline">
+                                                <InputCheckbox class="form-check-input"
+                                                               @bind-Value="item.IsChecked"/>
+                                                <label class="form-check-label">
+                                                    @item.Title
+                                                </label>
+                                                <input type="hidden" value="@item.Id" />
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Phone Number</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.PhoneNumber" />
-                                    <ValidationMessage For="@(() => FormVM.PhoneNumber)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Email</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.Email" />
-                                    <ValidationMessage For="@(() => FormVM.Email)" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label>Address</label>
-                            <InputText class="form-control" @bind-Value="FormVM.Address" />
-                            <ValidationMessage For="@(() => FormVM.Address)" />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label>Instructions Issued By</label>
-                            <InputText class="form-control" @bind-Value="FormVM.InstructionsIssuedBy" />
-                        </div>
-                    </fieldset>
 
-                    <!-- Property Details -->
-                    <fieldset class="border p-2">
-                        <legend class="float-none w-auto p-3 text-dark fs-3">PROPERTY INFORMATION</legend>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Strata/Deposit Plan</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.StrataPlan" />
-                                    <ValidationMessage For="@(() => FormVM.StrataPlan)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Valuation Required By</label>
-                                    <InputDate class="form-control datepicker_input border-2" @bind-Value="FormVM.ValuationRequiredBy" />
-                                    <ValidationMessage For="@(() => FormVM.ValuationRequiredBy)" />
-                                </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Mortgage Institution</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.MortgageInstitution" />
-                                    <ValidationMessage For="@(() => FormVM.MortgageInstitution)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Other</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.Other" />
-                                    <ValidationMessage For="@(() => FormVM.Other)" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Is The Key Available</label>
-                                    <div>
-                                        <InputRadioGroup @bind-Value="FormVM.IsKeyAvailable">
-                                            <InputRadio class="form-check-input" Value="true" /> Yes
-                                            <InputRadio class="form-check-input" Value="false" /> No
-                                        </InputRadioGroup>
+                        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-2 text-dark fs-2">CLIENT INFORMATION</legend>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">First Name</label>
+                                        <span class="d-flex">
+                                            <ValidationMessage For="@(() => FormVM.FirstName)" />
+                                        </span>
+                                        <InputText class="form-control" @bind-Value="FormVM.FirstName" aria-required="true" />
                                     </div>
-                                    <ValidationMessage For="@(() => FormVM.IsKeyAvailable)" />
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Last Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.LastName" />
+                                        <ValidationMessage For="@(() => FormVM.LastName)" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Parish</label>
-                                    <InputSelect class="form-select" @bind-Value="FormVM.RegionId">
-                                        <option selected disabled>--Select Parish--</option>
-                                        @foreach (var region in Regions)
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Phone Number</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.PhoneNumber" />
+                                        <ValidationMessage For="@(() => FormVM.PhoneNumber)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Email</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Email" />
+                                        <ValidationMessage For="@(() => FormVM.Email)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Address</label>
+                                <InputText class="form-control" @bind-Value="FormVM.Address" />
+                                <ValidationMessage For="@(() => FormVM.Address)" />
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Instructions Issued By</label>
+                                <InputText class="form-control" @bind-Value="FormVM.InstructionsIssuedBy" />
+                            </div>
+                        </fieldset>
+
+                        <!-- Property Details -->
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-3 text-dark fs-3">PROPERTY INFORMATION</legend>
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <label>
+                                        TYPE OF PROPERTY:
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Type of Property:</label>
+                                    <div class="row">
+                                        @foreach (var checkbox in TypeOfPropertyCheckBoxItemVM)
                                         {
-                                            <option value="@region.Id">@region.ParishName</option>
+                                            <div class="col-md-6">
+                                                <div class="form-check form-check-inline">
+                                                    <InputCheckbox id="@checkbox.Id"
+                                                                   class="form-check-input"
+                                                                   @bind-Value="checkbox.IsChecked" />
+                                                    <label class="form-check-label" for="@checkbox.Id">
+                                                        @checkbox.Title
+                                                    </label>
+                                                    <input type="hidden" value="@checkbox.Id" />
+                                                </div>
+                                            </div>
                                         }
-                                    </InputSelect>
-                                    <ValidationMessage For="@(() => FormVM.RegionId)" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label>Property Address</label>
-                            <InputText class="form-control" @bind-Value="FormVM.PropertyAddress" />
-                            <ValidationMessage For="@(() => FormVM.PropertyAddress)" />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label>Property Direction</label>
-                            <InputTextArea class="form-control" @bind-Value="FormVM.Direction" />
-                            <ValidationMessage For="@(() => FormVM.Direction)" />
-                        </div>
-                    </fieldset>
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <br />
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Volume</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Volume"></InputText>
+                                        <ValidationMessage For="@(() => FormVM.Volume)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Folio</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Folio"></InputText>
+                                        <ValidationMessage For="@(() => FormVM.Folio)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Strata/Deposit Plan</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.StrataPlan" />
+                                        <ValidationMessage For="@(() => FormVM.StrataPlan)" />
+                                    </div>
+                                </div>
+                               @*  <div class="col">
+                                    <div class="form-outline">
+                                        <label>Valuation Required By</label>
+                                        <InputDate class="form-control datepicker_input border-2" @bind-Value="FormVM.ValuationRequiredBy" />
+                                        <ValidationMessage For="@(() => FormVM.ValuationRequiredBy)" />
+                                    </div>
+                                </div> *@
+                            </div>
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <label>
+                                        PURPOSE OF VALUATION:
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <div class="row">
+                                        @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="form-check form-check-inline">
+                                                    <InputCheckbox class="form-check-input"
+                                                                   @bind-Value="item.IsChecked"/>
+                                                    <label class="form-check-label">
+                                                        @item.Title
+                                                    </label>
+                                                    <input type="hidden" value="@item.Id" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
 
-                    <!-- Contact for Inspection -->
-                    <fieldset class="border p-2">
-                        <legend class="float-none w-auto p-2 text-dark fs-3">CONTACT FOR INSPECTION</legend>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label">Secondary Contact First Name</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.SecondaryContactFirstName" />
-                                    <ValidationMessage For="@(() => FormVM.SecondaryContactFirstName)" />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label">Secondary Contact Last Name</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.SecondaryContactLastName" />
-                                    <ValidationMessage For="@(() => FormVM.SecondaryContactLastName)" />
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <br />
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Mortgage Institution</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.MortgageInstitution" />
+                                        <ValidationMessage For="@(() => FormVM.MortgageInstitution)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Other</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Other" />
+                                        <ValidationMessage For="@(() => FormVM.Other)" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Secondary Contact Phone Number</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
-                                    <ValidationMessage For="@(() => FormVM.SecondaryContactPhoneNumber)" />
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Is The Key Available</label>
+                                        <div>
+                                            <InputRadioGroup @bind-Value="FormVM.IsKeyAvailable">
+                                                <InputRadio class="form-check-input" Value="true" /> Yes
+                                                <InputRadio class="form-check-input" Value="false" /> No
+                                            </InputRadioGroup>
+                                        </div>
+                                        <ValidationMessage For="@(() => FormVM.IsKeyAvailable)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Parish</label>
+                                        <InputSelect class="form-select" @bind-Value="FormVM.RegionId">
+                                            <option selected disabled>--Select Parish--</option>
+                                            @foreach (var region in Regions)
+                                            {
+                                                <option value="@region.Id">@region.ParishName</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => FormVM.RegionId)" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label>Email</label>
-                                    <InputText class="form-control" @bind-Value="FormVM.SecondaryContactEmail" />
-                                    <ValidationMessage For="@(() => FormVM.SecondaryContactEmail)" />
-                                </div>
+                            <div class="form-outline mb-4">
+                                <label>Property Address</label>
+                                <InputText class="form-control" @bind-Value="FormVM.PropertyAddress" />
+                                <ValidationMessage For="@(() => FormVM.PropertyAddress)" />
                             </div>
-                        </div>
-                    </fieldset>
+                            <div class="form-outline mb-4">
+                                <label>Property Direction</label>
+                                <InputTextArea class="form-control" @bind-Value="FormVM.Direction" />
+                                <ValidationMessage For="@(() => FormVM.Direction)" />
+                            </div>
+                        </fieldset>
 
-                    <!-- Submit and Home buttons -->
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="form-outline">
-                                <button type="submit" class="w-100 btn btn-primary">
-                                    <i class="fa-solid fa-paper-plane"></i>&nbsp; Submit
-                                </button>
+                        <!-- Contact for Inspection -->
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-2 text-dark fs-3">CONTACT FOR INSPECTION</legend>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Secondary Contact First Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactFirstName" />
+                                        <ValidationMessage For="@(() => FormVM.SecondaryContactFirstName)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Secondary Contact Last Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactLastName" />
+                                        <ValidationMessage For="@(() => FormVM.SecondaryContactLastName)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Secondary Contact Phone Number</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
+                                        <ValidationMessage For="@(() => FormVM.SecondaryContactPhoneNumber)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Email</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactEmail" />
+                                        <ValidationMessage For="@(() => FormVM.SecondaryContactEmail)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Submit and Home buttons -->
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <button type="submit" class="w-100 btn btn-primary">
+                                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Submit
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-outline">
+                                    <a class="btn w-100 form-control btn-dark" href="/Index">
+                                        <i class="fa-solid fa-house"></i>&nbsp; Home
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-outline">
-                                <a class="btn w-100 form-control btn-dark" href="/Index">
-                                    <i class="fa-solid fa-house"></i>&nbsp; Home
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </EditForm>
-            </section>
+                    </EditForm>
+                </section>
+            </div>
         </div>
     </div>
-</div>
+}
+
 
 
 

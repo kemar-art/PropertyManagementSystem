@@ -130,5 +130,11 @@ namespace PMS.UI.Models.Form
         [ForeignKey("RegionId")]
         public Region? Region { get; set; }
         public Guid? RegionId { get; set; }
+
+        public List<FormTypeOfPropertyItem>? ServiceRequesFormTypeOfPropertyItem { get; set; }
+
+        public List<FormServiceRequestItem>? ServiceRequestFormServiceRequestItem { get; set; }
+
+        public List<FormPurposeOfValuationItem>? ServiceRequestFormPurposeOfValuationItem { get; set; }
     }
 }

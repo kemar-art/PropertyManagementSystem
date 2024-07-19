@@ -1,7 +1,9 @@
+using Application.Contracts.Repository_Interface;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Persistence.Repository_Implementations;
 using PMS.UI;
 using PMS.UI.AuthProviders;
 using PMS.UI.Contracts;
@@ -26,6 +28,7 @@ builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
 builder.Services.AddScoped<IFormRepository, FormRepository>();
 builder.Services.AddScoped<IRegionRepositoey, RegionRepositoey>();
+builder.Services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

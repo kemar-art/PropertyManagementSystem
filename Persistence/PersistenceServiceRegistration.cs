@@ -62,10 +62,13 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IFormRepository, FormRepository>();
         services.AddScoped<IAdminRepository, AdminRepository>();
         services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
+        services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
+        services.AddScoped<IRegionRepository, RegionRepository>();
+
         services.AddSingleton<IEmailSender, EmailSender>();
+
         services.AddTransient<IAuthService, AuthService>();
-        services.AddTransient<ICheckBoxRepository, CheckBoxRepository>();
-        services.AddTransient<IRegionRepository, RegionRepository>();
+        
 
         return services;
     }
