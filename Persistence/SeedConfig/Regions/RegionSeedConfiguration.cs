@@ -28,7 +28,7 @@ namespace Persistence.SeedConfig.Regions
                 new Region(new Guid("d6b104f3-693f-4c43-8035-21661b61a82b"), "Cornwall", "St. James"),
                 new Region(new Guid("957748c0-ba86-4764-b8c7-a8c0c0bc20c8"), "Cornwall", "Trelawny"),
                 new Region(new Guid("e80ac700-0536-476a-8c7e-467a25a13f55"), "Cornwall", "St. Elizabeth")
-                );
+            );
         }
     }
 }

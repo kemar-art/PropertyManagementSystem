@@ -2933,10 +2933,10 @@ namespace PMS.UI.Services.Base
         public string PropertyDirection { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("volume")]
-        public int Volume { get; set; }
+        public string Volume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("folio")]
-        public int Folio { get; set; }
+        public string Folio { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
         public string StrataPlan { get; set; }
@@ -2949,9 +2949,6 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("other")]
         public string Other { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string Status { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
         public string SecondaryContactFirstName { get; set; }
@@ -3014,10 +3011,10 @@ namespace PMS.UI.Services.Base
         public string PropertyDirection { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("volume")]
-        public int Volume { get; set; }
+        public string Volume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("folio")]
-        public int Folio { get; set; }
+        public string Folio { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
         public string StrataPlan { get; set; }

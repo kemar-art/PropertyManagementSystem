@@ -26,9 +26,9 @@ public class Form
 
     public string PropertyDirection { get; set; } = string.Empty;
 
-    public int Volume { get; set; }
+    public string Volume { get; set; } = string.Empty;
 
-    public int Folio { get; set; }
+    public string Folio { get; set; } = string.Empty;
 
     public string StrataPlan { get; set; } = string.Empty;
 
