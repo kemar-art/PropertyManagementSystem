@@ -24,13 +24,13 @@ namespace Persistence.Repository_Implementations
 
         public async Task<List<PurposeOfValuationItem>> GetAllPurposeOfValuationItem()
         {
-            var purposeOfValuationList = await _dbContext.PurposeOfValuationItems.ToListAsync();
+            var purposeOfValuationList = await _dbContext.PurposeOfValuationItems.AsNoTracking().ToListAsync();
             return purposeOfValuationList;
         }
 
         public async Task<List<ServiceRequestItem>> GetAllServiceRequestItem()
         {
-            var serviceRequestList = await _dbContext.ServiceRequestItems.ToListAsync();
+            var serviceRequestList = await _dbContext.ServiceRequestItems.AsNoTracking().ToListAsync();
             //if (serviceRequestList.Count == 0)
             //{
             //    throw new NotFoundException(serviceRequestList, )
@@ -40,7 +40,7 @@ namespace Persistence.Repository_Implementations
 
         public async Task<List<TypeOfPropertyItem>> GetAllTypeOfPropertyItem()
         {
-            var typeOfPropertyList = await _dbContext.TypeOfPropertyItems.ToListAsync();
+            var typeOfPropertyList = await _dbContext.TypeOfPropertyItems.AsNoTracking().ToListAsync();
             return typeOfPropertyList;
         }
     }

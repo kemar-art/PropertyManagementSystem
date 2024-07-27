@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Persistence.DatabaseContext;
 using Persistence.EmailService;
 using Persistence.Repository_Implementations;
+using System.Reflection;
 using System.Text;
 
 namespace Persistence;
@@ -68,7 +69,9 @@ public static class PersistenceServiceRegistration
         services.AddSingleton<IEmailSender, EmailSender>();
 
         services.AddTransient<IAuthService, AuthService>();
-        
+
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
         return services;
     }

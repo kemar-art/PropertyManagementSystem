@@ -32,7 +32,7 @@ public class Form
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; }
+    public bool IsKeyAvailable { get; set; } = false;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 

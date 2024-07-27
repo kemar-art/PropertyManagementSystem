@@ -2,6 +2,7 @@
 using Application.Exceptions;
 using Application.Features.Commands.Admin;
 using Application.Features.Commands.ClientForm.CreateForm;
+using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.StaticDetails;
 using AutoMapper;
 using Domain;
@@ -44,7 +45,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
     public List<CheckBoxPropertyDto> PurposeOfEvaluationCheckBoxesDto { get; set; } = [];
 
-    public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger,IMapper mapper) : base(dbContext)
+    public FormRepository(PMSDatabaseContext dbContext, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IAppLogger<FormRepository> appLogger, IMapper mapper) : base(dbContext)
     {
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
@@ -107,4 +108,10 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         return formToCreate.Id;
     }
 }
+
+//    public async Task<IEnumerable<Form>> GetAllFormsToList()
+//    {
+//        return await _dbContext.Forms.AsNoTracking().ToListAsync();
+//    }
+//}
 
