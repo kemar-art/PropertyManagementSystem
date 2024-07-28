@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class @new : Migration
+    public partial class changecheckboxidforminttoguid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,8 +67,7 @@ namespace Persistence.Migrations
                 name: "PurposeOfValuationItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsChecked = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -94,8 +93,7 @@ namespace Persistence.Migrations
                 name: "ServiceRequestItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsChecked = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -108,8 +106,7 @@ namespace Persistence.Migrations
                 name: "TypeOfPropertyItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsChecked = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -270,7 +267,10 @@ namespace Persistence.Migrations
                     FrontOfProperyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RightSideOfPropertyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LeftSideOfPropertImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BackOfPropertyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    BackOfPropertyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeOfPropertySelectedIds = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceRequestItemSelectId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PurposeOfValuationItemSelectedIds = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -323,78 +323,6 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ServiceRequesFormTypeOfPropertyItems",
-                columns: table => new
-                {
-                    FormId = table.Column<int>(type: "int", nullable: false),
-                    TypeOfPropertyItemId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceRequesFormTypeOfPropertyItems", x => new { x.FormId, x.TypeOfPropertyItemId });
-                    table.ForeignKey(
-                        name: "FK_ServiceRequesFormTypeOfPropertyItems_Forms_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Forms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServiceRequesFormTypeOfPropertyItems_TypeOfPropertyItems_TypeOfPropertyItemId",
-                        column: x => x.TypeOfPropertyItemId,
-                        principalTable: "TypeOfPropertyItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceRequestFormPurposeOfValuationItems",
-                columns: table => new
-                {
-                    FormId = table.Column<int>(type: "int", nullable: false),
-                    PurposeOfValuationItemId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceRequestFormPurposeOfValuationItems", x => new { x.FormId, x.PurposeOfValuationItemId });
-                    table.ForeignKey(
-                        name: "FK_ServiceRequestFormPurposeOfValuationItems_Forms_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Forms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServiceRequestFormPurposeOfValuationItems_PurposeOfValuationItems_PurposeOfValuationItemId",
-                        column: x => x.PurposeOfValuationItemId,
-                        principalTable: "PurposeOfValuationItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceRequestFormServiceRequestItems",
-                columns: table => new
-                {
-                    FormId = table.Column<int>(type: "int", nullable: false),
-                    ServiceRequestItemId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceRequestFormServiceRequestItems", x => new { x.FormId, x.ServiceRequestItemId });
-                    table.ForeignKey(
-                        name: "FK_ServiceRequestFormServiceRequestItems_Forms_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Forms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServiceRequestFormServiceRequestItems_ServiceRequestItems_ServiceRequestItemId",
-                        column: x => x.ServiceRequestItemId,
-                        principalTable: "ServiceRequestItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -410,9 +338,9 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "DateRegistered", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "a81c033a-1ef2-4b39-90b6-9e26b10bd2cd", new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9213), new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9207), new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9213), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAED02h49AQw+hNl1u5YatxJszNbY4tIY8RR25j67cIW/oQid98rIrJdvjNQn7fH1kWw==", null, false, "", "bde2e99d-f15d-430e-a517-8337ae5d108a", "", false, "appraiser@localhost.com" },
-                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "4b55e0a7-acca-40f2-9785-95d38292817e", new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6885), new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6876), new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6884), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEK9G/uzUyBgNM50dbJzsosBrz9O1DZPeWZNiTYe0NXQPybeuekrE122NZjz7F2drVQ==", null, false, "", "19f68cc1-35fb-458a-9b47-0c12fe003468", "", false, "admin@localhost.com" },
-                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "eace97ee-b1dd-4fdc-b50f-c975fd149e77", new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4480), new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4469), new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4480), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEKRZTLWpT24PMcaiyRDLIVDRQ10cEXugKSuRu6LpM741gu4A7tjFlaD2Mj4FCUqOqg==", null, false, "", "e1d933c3-532f-4f2e-9f0a-e701dc680774", "", false, "client@localhost.com" }
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "52a99854-8d26-4bca-8cee-03e202f56f03", new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8447), new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8432), new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8447), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAECjm6OoQZMWEeXvK3ICZ3xdVcYT93hyOUmTJZ0F4xNHrzQN2yTp2iHhTz+2Ya4z3cw==", null, false, "", "d01f7a85-3fe3-4256-a951-949e4451e83d", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "f40f88f7-b34f-4d2a-abcf-9baec2530c06", new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9885), new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9872), new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9884), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAELTlfQo9unyEkmJjTqSAirDFQj1CvVoV9dJDOb4jIxticgvRLMmVCb7vEnQs3lAQsQ==", null, false, "", "c67b92c8-93c1-4729-95c9-231b449617f1", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "38648b34-f176-4b9a-8841-89cc9a1f1286", new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4262), new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4247), new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4262), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAELHFF8npeJXn2uNJRKXZTGgsk5sFW+tC8cKLoQ/EABzH0Xn6UMa65oouTY3WASWh2w==", null, false, "", "317957e3-f4ce-4187-a5c8-3a3aef35bf8e", "", false, "client@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -420,12 +348,12 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "IsChecked", "Title" },
                 values: new object[,]
                 {
-                    { 1, false, "Market Value" },
-                    { 2, false, "Sale" },
-                    { 3, false, "Purchase" },
-                    { 4, false, "Mortgage" },
-                    { 5, false, "Insurance" },
-                    { 6, false, "Probate" }
+                    { new Guid("58267416-7f04-4835-a58d-4312388daa00"), false, "Market Value" },
+                    { new Guid("665cbc87-cce3-406a-939f-fcded826144b"), false, "Sale" },
+                    { new Guid("9c969106-3a24-464a-bef2-92bcbfceb831"), false, "Insurance" },
+                    { new Guid("aaab7fca-32b7-477e-9686-1b07a9029c78"), false, "Mortgage" },
+                    { new Guid("d0a14c91-db14-4cb0-bac0-4b3906b98c90"), false, "Purchase" },
+                    { new Guid("f19291ab-2852-42ad-a29b-c3fdc91caf35"), false, "Probate" }
                 });
 
             migrationBuilder.InsertData(
@@ -454,16 +382,16 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "IsChecked", "Title" },
                 values: new object[,]
                 {
-                    { 1, false, "VALUATION" },
-                    { 2, false, "LAND SURVEYOR" },
-                    { 3, false, "LEGAL REPRESENTATION" },
-                    { 4, false, "SALES/RENTALS" },
-                    { 5, false, "AUCTION" },
-                    { 6, false, "PROPERTY MANAGEMENT" },
-                    { 7, false, "STRUCTURAL SURVEY" },
-                    { 8, false, "CONSTRUCTION ESTIMATE" },
-                    { 9, false, "GENERAL CONTRACTOR" },
-                    { 10, false, "OTHER" }
+                    { new Guid("23d13fcf-3e3c-46b1-aad3-02e0fb63dcd7"), false, "PROPERTY MANAGEMENT" },
+                    { new Guid("3f2bd4ce-b418-43f2-8cc6-58096bafbf92"), false, "LAND SURVEYOR" },
+                    { new Guid("75c9ad78-7831-4c87-b83b-4bb51d0ea542"), false, "GENERAL CONTRACTOR" },
+                    { new Guid("7bc822a4-0b9f-4783-94e2-536b4833d4e6"), false, "LEGAL REPRESENTATION" },
+                    { new Guid("8a7f9203-3906-41ea-8345-de258ff9d23a"), false, "VALUATION" },
+                    { new Guid("a316cb71-7ced-4053-8b05-2078555007c2"), false, "OTHER" },
+                    { new Guid("bf8207bc-5c6b-4c01-9559-9b2488b04dcb"), false, "STRUCTURAL SURVEY" },
+                    { new Guid("c464358d-7c96-40b5-9530-8596796bfecc"), false, "SALES/RENTALS" },
+                    { new Guid("d1b9d319-ff21-4a37-842d-a6a0073ef246"), false, "CONSTRUCTION ESTIMATE" },
+                    { new Guid("db1069d2-7ba8-4ead-89d9-c2ad3c4805ca"), false, "AUCTION" }
                 });
 
             migrationBuilder.InsertData(
@@ -471,11 +399,11 @@ namespace Persistence.Migrations
                 columns: new[] { "Id", "IsChecked", "Title" },
                 values: new object[,]
                 {
-                    { 1, false, "Commercial" },
-                    { 2, false, "Residential" },
-                    { 3, false, "Agricultural" },
-                    { 4, false, "Industrial" },
-                    { 5, false, "Vacant Lot" }
+                    { new Guid("0f60350d-072b-43f8-9026-9896cd0b601f"), false, "Vacant Lot" },
+                    { new Guid("61817dfe-5a97-4bc1-8f5a-ca92a7637b97"), false, "Commercial" },
+                    { new Guid("a13c3ef8-1c60-4be9-bc68-947e93f1ed7c"), false, "Industrial" },
+                    { new Guid("ce6a20ec-d833-4cee-8301-365c796e7467"), false, "Residential" },
+                    { new Guid("d5c0a1ba-4cad-4ec7-a4de-39d7b1e0b723"), false, "Agricultural" }
                 });
 
             migrationBuilder.InsertData(
@@ -551,21 +479,6 @@ namespace Persistence.Migrations
                 name: "IX_Forms_RegionId",
                 table: "Forms",
                 column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceRequesFormTypeOfPropertyItems_TypeOfPropertyItemId",
-                table: "ServiceRequesFormTypeOfPropertyItems",
-                column: "TypeOfPropertyItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceRequestFormPurposeOfValuationItems_PurposeOfValuationItemId",
-                table: "ServiceRequestFormPurposeOfValuationItems",
-                column: "PurposeOfValuationItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceRequestFormServiceRequestItems_ServiceRequestItemId",
-                table: "ServiceRequestFormServiceRequestItems",
-                column: "ServiceRequestItemId");
         }
 
         /// <inheritdoc />
@@ -590,28 +503,19 @@ namespace Persistence.Migrations
                 name: "FormInteractionLogs");
 
             migrationBuilder.DropTable(
-                name: "ServiceRequesFormTypeOfPropertyItems");
+                name: "PurposeOfValuationItems");
 
             migrationBuilder.DropTable(
-                name: "ServiceRequestFormPurposeOfValuationItems");
-
-            migrationBuilder.DropTable(
-                name: "ServiceRequestFormServiceRequestItems");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "ServiceRequestItems");
 
             migrationBuilder.DropTable(
                 name: "TypeOfPropertyItems");
 
             migrationBuilder.DropTable(
-                name: "PurposeOfValuationItems");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Forms");
-
-            migrationBuilder.DropTable(
-                name: "ServiceRequestItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

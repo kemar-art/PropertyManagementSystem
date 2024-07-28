@@ -133,10 +133,10 @@ namespace Persistence.Migrations
                             Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "4b55e0a7-acca-40f2-9785-95d38292817e",
-                            DateEnded = new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6885),
-                            DateOfBirth = new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6876),
-                            DateRegistered = new DateTime(2024, 7, 26, 18, 54, 41, 395, DateTimeKind.Local).AddTicks(6884),
+                            ConcurrencyStamp = "f40f88f7-b34f-4d2a-abcf-9baec2530c06",
+                            DateEnded = new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9885),
+                            DateOfBirth = new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9872),
+                            DateRegistered = new DateTime(2024, 7, 28, 16, 55, 36, 690, DateTimeKind.Local).AddTicks(9884),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -147,10 +147,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEK9G/uzUyBgNM50dbJzsosBrz9O1DZPeWZNiTYe0NXQPybeuekrE122NZjz7F2drVQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELTlfQo9unyEkmJjTqSAirDFQj1CvVoV9dJDOb4jIxticgvRLMmVCb7vEnQs3lAQsQ==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "19f68cc1-35fb-458a-9b47-0c12fe003468",
+                            SecurityStamp = "c67b92c8-93c1-4729-95c9-231b449617f1",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
@@ -160,10 +160,10 @@ namespace Persistence.Migrations
                             Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "a81c033a-1ef2-4b39-90b6-9e26b10bd2cd",
-                            DateEnded = new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9213),
-                            DateOfBirth = new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9207),
-                            DateRegistered = new DateTime(2024, 7, 26, 18, 54, 41, 434, DateTimeKind.Local).AddTicks(9213),
+                            ConcurrencyStamp = "52a99854-8d26-4bca-8cee-03e202f56f03",
+                            DateEnded = new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8447),
+                            DateOfBirth = new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8432),
+                            DateRegistered = new DateTime(2024, 7, 28, 16, 55, 36, 731, DateTimeKind.Local).AddTicks(8447),
                             Email = "appraiser@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Appraiser",
@@ -174,10 +174,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "APPRAISER@LOCALHOST.COM",
                             NormalizedUserName = "APPRAISER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAED02h49AQw+hNl1u5YatxJszNbY4tIY8RR25j67cIW/oQid98rIrJdvjNQn7fH1kWw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECjm6OoQZMWEeXvK3ICZ3xdVcYT93hyOUmTJZ0F4xNHrzQN2yTp2iHhTz+2Ya4z3cw==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "bde2e99d-f15d-430e-a517-8337ae5d108a",
+                            SecurityStamp = "d01f7a85-3fe3-4256-a951-949e4451e83d",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "appraiser@localhost.com"
@@ -187,10 +187,10 @@ namespace Persistence.Migrations
                             Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "eace97ee-b1dd-4fdc-b50f-c975fd149e77",
-                            DateEnded = new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4480),
-                            DateOfBirth = new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4469),
-                            DateRegistered = new DateTime(2024, 7, 26, 18, 54, 41, 475, DateTimeKind.Local).AddTicks(4480),
+                            ConcurrencyStamp = "38648b34-f176-4b9a-8841-89cc9a1f1286",
+                            DateEnded = new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4262),
+                            DateOfBirth = new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4247),
+                            DateRegistered = new DateTime(2024, 7, 28, 16, 55, 36, 771, DateTimeKind.Local).AddTicks(4262),
                             Email = "client@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -201,38 +201,21 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "CLIENT@LOCALHOST.COM",
                             NormalizedUserName = "CLIENT@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKRZTLWpT24PMcaiyRDLIVDRQ10cEXugKSuRu6LpM741gu4A7tjFlaD2Mj4FCUqOqg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELHFF8npeJXn2uNJRKXZTGgsk5sFW+tC8cKLoQ/EABzH0Xn6UMa65oouTY3WASWh2w==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "e1d933c3-532f-4f2e-9f0a-e701dc680774",
+                            SecurityStamp = "317957e3-f4ce-4187-a5c8-3a3aef35bf8e",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "client@localhost.com"
                         });
                 });
 
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.FormPurposeOfValuationItem", b =>
+            modelBuilder.Entity("Domain.CheckBoxItems.PurposeOfValuationItem", b =>
                 {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurposeOfValuationItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "PurposeOfValuationItemId");
-
-                    b.HasIndex("PurposeOfValuationItemId");
-
-                    b.ToTable("ServiceRequestFormPurposeOfValuationItems");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationItem", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsChecked")
                         .HasColumnType("bit");
@@ -247,64 +230,47 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("58267416-7f04-4835-a58d-4312388daa00"),
                             IsChecked = false,
                             Title = "Market Value"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("665cbc87-cce3-406a-939f-fcded826144b"),
                             IsChecked = false,
                             Title = "Sale"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("d0a14c91-db14-4cb0-bac0-4b3906b98c90"),
                             IsChecked = false,
                             Title = "Purchase"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("aaab7fca-32b7-477e-9686-1b07a9029c78"),
                             IsChecked = false,
                             Title = "Mortgage"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("9c969106-3a24-464a-bef2-92bcbfceb831"),
                             IsChecked = false,
                             Title = "Insurance"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = new Guid("f19291ab-2852-42ad-a29b-c3fdc91caf35"),
                             IsChecked = false,
                             Title = "Probate"
                         });
                 });
 
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.FormServiceRequestItem", b =>
+            modelBuilder.Entity("Domain.CheckBoxItems.ServiceRequestItem", b =>
                 {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceRequestItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "ServiceRequestItemId");
-
-                    b.HasIndex("ServiceRequestItemId");
-
-                    b.ToTable("ServiceRequestFormServiceRequestItems");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestItem", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsChecked")
                         .HasColumnType("bit");
@@ -319,88 +285,71 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("8a7f9203-3906-41ea-8345-de258ff9d23a"),
                             IsChecked = false,
                             Title = "VALUATION"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("3f2bd4ce-b418-43f2-8cc6-58096bafbf92"),
                             IsChecked = false,
                             Title = "LAND SURVEYOR"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("7bc822a4-0b9f-4783-94e2-536b4833d4e6"),
                             IsChecked = false,
                             Title = "LEGAL REPRESENTATION"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("c464358d-7c96-40b5-9530-8596796bfecc"),
                             IsChecked = false,
                             Title = "SALES/RENTALS"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("db1069d2-7ba8-4ead-89d9-c2ad3c4805ca"),
                             IsChecked = false,
                             Title = "AUCTION"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = new Guid("23d13fcf-3e3c-46b1-aad3-02e0fb63dcd7"),
                             IsChecked = false,
                             Title = "PROPERTY MANAGEMENT"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = new Guid("bf8207bc-5c6b-4c01-9559-9b2488b04dcb"),
                             IsChecked = false,
                             Title = "STRUCTURAL SURVEY"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = new Guid("d1b9d319-ff21-4a37-842d-a6a0073ef246"),
                             IsChecked = false,
                             Title = "CONSTRUCTION ESTIMATE"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = new Guid("75c9ad78-7831-4c87-b83b-4bb51d0ea542"),
                             IsChecked = false,
                             Title = "GENERAL CONTRACTOR"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = new Guid("a316cb71-7ced-4053-8b05-2078555007c2"),
                             IsChecked = false,
                             Title = "OTHER"
                         });
                 });
 
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.FormTypeOfPropertyItem", b =>
+            modelBuilder.Entity("Domain.CheckBoxItems.TypeOfPropertyItem", b =>
                 {
-                    b.Property<int?>("FormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfPropertyItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormId", "TypeOfPropertyItemId");
-
-                    b.HasIndex("TypeOfPropertyItemId");
-
-                    b.ToTable("ServiceRequesFormTypeOfPropertyItems");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyItem", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsChecked")
                         .HasColumnType("bit");
@@ -415,31 +364,31 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("61817dfe-5a97-4bc1-8f5a-ca92a7637b97"),
                             IsChecked = false,
                             Title = "Commercial"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("ce6a20ec-d833-4cee-8301-365c796e7467"),
                             IsChecked = false,
                             Title = "Residential"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("d5c0a1ba-4cad-4ec7-a4de-39d7b1e0b723"),
                             IsChecked = false,
                             Title = "Agricultural"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("a13c3ef8-1c60-4be9-bc68-947e93f1ed7c"),
                             IsChecked = false,
                             Title = "Industrial"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("0f60350d-072b-43f8-9026-9896cd0b601f"),
                             IsChecked = false,
                             Title = "Vacant Lot"
                         });
@@ -553,6 +502,10 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PurposeOfValuationItemSelectedIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("RegionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -582,6 +535,10 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ServiceRequestItemSelectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -592,6 +549,10 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("SubmittedFormForApproval")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("TypeOfPropertySelectedIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ValuationRequiredBy")
                         .HasColumnType("datetime2");
@@ -927,63 +888,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.FormPurposeOfValuationItem", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("ServiceRequestFormPurposeOfValuationItem")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.PurposeValuation.PurposeOfValuationItem", "PurposeOfValuationItem")
-                        .WithMany("FormPurposeOfValuationItem")
-                        .HasForeignKey("PurposeOfValuationItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("PurposeOfValuationItem");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.FormServiceRequestItem", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("ServiceRequestFormServiceRequestItem")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.ServiceRequest.ServiceRequestItem", "ServiceRequestItem")
-                        .WithMany("FormServiceRequestItem")
-                        .HasForeignKey("ServiceRequestItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("ServiceRequestItem");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.FormTypeOfPropertyItem", b =>
-                {
-                    b.HasOne("Domain.Form", "Form")
-                        .WithMany("ServiceRequesFormTypeOfPropertyItem")
-                        .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.CheckBox.TypeOfProperty.TypeOfPropertyItem", "TypeOfPropertyItem")
-                        .WithMany("FormTypeOfPropertyItem")
-                        .HasForeignKey("TypeOfPropertyItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Form");
-
-                    b.Navigation("TypeOfPropertyItem");
-                });
-
             modelBuilder.Entity("Domain.Form", b =>
                 {
                     b.HasOne("Domain.ApplicationUser", "Appraiser")
@@ -1071,30 +975,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.PurposeValuation.PurposeOfValuationItem", b =>
-                {
-                    b.Navigation("FormPurposeOfValuationItem");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.ServiceRequest.ServiceRequestItem", b =>
-                {
-                    b.Navigation("FormServiceRequestItem");
-                });
-
-            modelBuilder.Entity("Domain.CheckBox.TypeOfProperty.TypeOfPropertyItem", b =>
-                {
-                    b.Navigation("FormTypeOfPropertyItem");
-                });
-
-            modelBuilder.Entity("Domain.Form", b =>
-                {
-                    b.Navigation("ServiceRequesFormTypeOfPropertyItem");
-
-                    b.Navigation("ServiceRequestFormPurposeOfValuationItem");
-
-                    b.Navigation("ServiceRequestFormServiceRequestItem");
                 });
 #pragma warning restore 612, 618
         }

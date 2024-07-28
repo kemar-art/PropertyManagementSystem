@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Repository_Interface;
-using Domain.CheckBox.ServiceRequest;
+using Domain.CheckBoxItems;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

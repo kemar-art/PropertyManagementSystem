@@ -1,7 +1,5 @@
 ﻿using Domain;
-using Domain.CheckBox.PurposeValuation;
-using Domain.CheckBox.ServiceRequest;
-using Domain.CheckBox.TypeOfProperty;
+using Domain.CheckBoxItems;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence.SeedConfig;
@@ -33,13 +31,10 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
     public DbSet<FormInteractionLog> FormInteractionLogs { get; set; }
 
     public DbSet<TypeOfPropertyItem> TypeOfPropertyItems { get; set; }
-    public DbSet<FormTypeOfPropertyItem> ServiceRequesFormTypeOfPropertyItems { get; set; }
 
     public DbSet<ServiceRequestItem> ServiceRequestItems { get; set; }
-    public DbSet<FormServiceRequestItem> ServiceRequestFormServiceRequestItems { get; set; }
 
     public DbSet<PurposeOfValuationItem> PurposeOfValuationItems { get; set; }
-    public DbSet<FormPurposeOfValuationItem> ServiceRequestFormPurposeOfValuationItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -51,41 +46,5 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new TypeOfPropertySeedConfiguration());
         builder.ApplyConfiguration(new ServiceRequestPropertySeedConfiguration());
         builder.ApplyConfiguration(new PurposeOfValuationPropertySeedConfiguration());
-
-        //Type Of Property checkboxes Configuration
-        builder.Entity<FormTypeOfPropertyItem>().HasKey(t => new { t.FormId, t.TypeOfPropertyItemId });
-        builder.Entity<FormTypeOfPropertyItem>()
-            .HasOne(sr => sr.Form)
-            .WithMany(st => st.ServiceRequesFormTypeOfPropertyItem)
-            .HasForeignKey(sr => sr.FormId);
-
-        builder.Entity<FormTypeOfPropertyItem>()
-            .HasOne(tp => tp.TypeOfPropertyItem)
-            .WithMany(st => st.FormTypeOfPropertyItem)
-            .HasForeignKey(tp => tp.TypeOfPropertyItemId);
-
-        //Service Request checkboxes Configuration
-        builder.Entity<FormServiceRequestItem>().HasKey(s => new { s.FormId, s.ServiceRequestItemId });
-        builder.Entity<FormServiceRequestItem>()
-            .HasOne(sr => sr.Form)
-            .WithMany(ss => ss.ServiceRequestFormServiceRequestItem)
-            .HasForeignKey(sr => sr.FormId);
-
-        builder.Entity<FormServiceRequestItem>()
-            .HasOne(s => s.ServiceRequestItem)
-            .WithMany(ss => ss.FormServiceRequestItem)
-            .HasForeignKey(s => s.ServiceRequestItemId);
-
-        //Purpose Of Valuation checkboxes Configuration
-        builder.Entity<FormPurposeOfValuationItem>().HasKey(p => new { p.FormId, p.PurposeOfValuationItemId });
-        builder.Entity<FormPurposeOfValuationItem>()
-            .HasOne(sr => sr.Form)
-            .WithMany(sp => sp.ServiceRequestFormPurposeOfValuationItem)
-            .HasForeignKey(sr => sr.FormId);
-
-        builder.Entity<FormPurposeOfValuationItem>()
-            .HasOne(pv => pv.PurposeOfValuationItem)
-            .WithMany(sp => sp.FormPurposeOfValuationItem)
-            .HasForeignKey(pv => pv.PurposeOfValuationItemId);
     }
 }

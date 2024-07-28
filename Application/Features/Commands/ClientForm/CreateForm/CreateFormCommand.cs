@@ -1,8 +1,4 @@
 ﻿using Domain;
-using Domain.CheckBox;
-using Domain.CheckBox.PurposeValuation;
-using Domain.CheckBox.ServiceRequest;
-using Domain.CheckBox.TypeOfProperty;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,9 +46,7 @@ public class CreateFormCommand : IRequest<int>
     public Region? Region { get; set; }
     public Guid? RegionId { get; set; }
 
-    public List<FormTypeOfPropertyItem>? ServiceRequesFormTypeOfPropertyItem { get; set; }
-
-    public List<FormServiceRequestItem>? ServiceRequestFormServiceRequestItem { get; set; }
-
-    public List<FormPurposeOfValuationItem>? ServiceRequestFormPurposeOfValuationItem { get; set; }
+    public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
+    public string ServiceRequestItemSelectId { get; set; } = string.Empty;
+    public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
 }

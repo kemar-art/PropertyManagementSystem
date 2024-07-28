@@ -1,8 +1,5 @@
 ﻿using Application.Contracts.Repository_Interface;
-using Application.Exceptions;
-using Domain.CheckBox.PurposeValuation;
-using Domain.CheckBox.ServiceRequest;
-using Domain.CheckBox.TypeOfProperty;
+using Domain.CheckBoxItems;
 using Microsoft.EntityFrameworkCore;
 using Persistence.DatabaseContext;
 using System;
@@ -31,10 +28,6 @@ namespace Persistence.Repository_Implementations
         public async Task<List<ServiceRequestItem>> GetAllServiceRequestItem()
         {
             var serviceRequestList = await _dbContext.ServiceRequestItems.AsNoTracking().ToListAsync();
-            //if (serviceRequestList.Count == 0)
-            //{
-            //    throw new NotFoundException(serviceRequestList, )
-            //}
             return serviceRequestList;
         }
 

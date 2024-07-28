@@ -35,43 +35,70 @@ namespace PMS.UI.Pages.ClientFrom
 
         protected override async Task OnInitializedAsync()
         {
-            var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-            ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
+            IsLoading = true;
+
+            try
             {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = vm.IsChecked
+                var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
+                ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = vm.IsChecked
+                }).ToList();
 
-            }).ToList();
+                var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
+                PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = vm.IsChecked
+                }).ToList();
 
-            var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
-            PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+                var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
+                TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = vm.IsChecked
+                }).ToList();
+
+                Regions = await _RegionRepositoey.GetAllRegion() ?? new List<Region>();
+            }
+            catch (Exception ex)
             {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = vm.IsChecked
-            }).ToList();
-
-            var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
-            TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                // Handle the exception (e.g., log it, show an error message)
+                Console.WriteLine($"Error loading data: {ex.Message}");
+            }
+            finally
             {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = vm.IsChecked
-            }).ToList();
-
-            Regions = await _RegionRepositoey.GetAllRegion();
+                IsLoading = false;
+            }
+        }
 
 
 
-            IsLoading = false;
-    }
+
+
 
         private async Task HandleValidSubmit()
         {
-            await _FormRepository.CreateForm(FormVM);
+            // Populate the selected IDs as comma-separated strings
+            FormVM.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
+            FormVM.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+            FormVM.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
 
-            //_NavigationManager.NavigateTo("/submitted-successfully/");
+            var response = await _FormRepository.CreateForm(FormVM);
+
+            if (response.Success)
+            {
+                // Handle success (e.g., redirect to a success page)
+            }
+            else
+            {
+                // Handle error
+            }
         }
+
     }
 }

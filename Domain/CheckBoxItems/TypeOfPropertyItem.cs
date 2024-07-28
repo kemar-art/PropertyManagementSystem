@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.CheckBox
+namespace Domain.CheckBoxItems
 {
-    public class CheckBoxPropertyDto
+    public class TypeOfPropertyItem
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string? Title { get; set; }
-        public bool IsChecked { get; set; } = false;
+        public bool IsChecked { get; set; }
     }
 }

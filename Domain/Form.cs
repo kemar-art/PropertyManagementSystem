@@ -1,6 +1,4 @@
-﻿using Domain.CheckBox.PurposeValuation;
-using Domain.CheckBox.ServiceRequest;
-using Domain.CheckBox.TypeOfProperty;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -120,9 +118,8 @@ public class Form
     public string LeftSideOfPropertImageURL { get; set; } = string.Empty;
     public string BackOfPropertyImageURL { get; set; } = string.Empty;
 
-    public List<FormTypeOfPropertyItem>? ServiceRequesFormTypeOfPropertyItem { get; set; }
+    public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
+    public string ServiceRequestItemSelectId { get; set; } = string.Empty; 
+    public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
 
-    public List<FormServiceRequestItem>? ServiceRequestFormServiceRequestItem { get; set; }
-
-    public List<FormPurposeOfValuationItem>? ServiceRequestFormPurposeOfValuationItem { get; set; }
 }

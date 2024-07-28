@@ -13,6 +13,9 @@ public class FormProfile : Profile
         CreateMap<FormVM, GetFormDetailsDto>().ReverseMap();
 
         CreateMap<CreateFormCommand, FormVM>().ReverseMap();
+        //.ForMember(dest => dest.SelectedTypeOfPropertyIds, opt => opt.MapFrom(src => src.SelectedTypeOfPropertyIds))
+        //    .ForMember(dest => dest.SelectedServiceRequestIds, opt => opt.MapFrom(src => src.SelectedServiceRequestIds))
+        //    .ForMember(dest => dest.SelectedPurposeOfValuationIds, opt => opt.MapFrom(src => src.SelectedPurposeOfValuationIds));
         CreateMap<UpdateFormCommand, FormVM>().ReverseMap();
     }
 }

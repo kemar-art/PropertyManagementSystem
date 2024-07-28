@@ -2968,14 +2968,14 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("regionId")]
         public System.Guid? RegionId { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequesFormTypeOfPropertyItem")]
-        public System.Collections.Generic.ICollection<FormTypeOfPropertyItem> ServiceRequesFormTypeOfPropertyItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
+        public string TypeOfPropertySelectedIds { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestFormServiceRequestItem")]
-        public System.Collections.Generic.ICollection<FormServiceRequestItem> ServiceRequestFormServiceRequestItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemSelectId")]
+        public string ServiceRequestItemSelectId { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestFormPurposeOfValuationItem")]
-        public System.Collections.Generic.ICollection<FormPurposeOfValuationItem> ServiceRequestFormPurposeOfValuationItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
+        public string PurposeOfValuationItemSelectedIds { get; set; }
 
     }
 
@@ -3129,68 +3129,14 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("backOfPropertyImageURL")]
         public string BackOfPropertyImageURL { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequesFormTypeOfPropertyItem")]
-        public System.Collections.Generic.ICollection<FormTypeOfPropertyItem> ServiceRequesFormTypeOfPropertyItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
+        public string TypeOfPropertySelectedIds { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestFormServiceRequestItem")]
-        public System.Collections.Generic.ICollection<FormServiceRequestItem> ServiceRequestFormServiceRequestItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemSelectId")]
+        public string ServiceRequestItemSelectId { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestFormPurposeOfValuationItem")]
-        public System.Collections.Generic.ICollection<FormPurposeOfValuationItem> ServiceRequestFormPurposeOfValuationItem { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FormPurposeOfValuationItem
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("form")]
-        public Form Form { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formId")]
-        public int? FormId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItem")]
-        public PurposeOfValuationItem PurposeOfValuationItem { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemId")]
-        public int PurposeOfValuationItemId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FormServiceRequestItem
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("form")]
-        public Form Form { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formId")]
-        public int? FormId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItem")]
-        public ServiceRequestItem ServiceRequestItem { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemId")]
-        public int ServiceRequestItemId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FormTypeOfPropertyItem
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("form")]
-        public Form Form { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formId")]
-        public int? FormId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertyItem")]
-        public TypeOfPropertyItem TypeOfPropertyItem { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertyItemId")]
-        public int TypeOfPropertyItemId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
+        public string PurposeOfValuationItemSelectedIds { get; set; }
 
     }
 
@@ -3382,16 +3328,13 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         public string Title { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isChecked")]
         public bool IsChecked { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formPurposeOfValuationItem")]
-        public System.Collections.Generic.ICollection<FormPurposeOfValuationItem> FormPurposeOfValuationItem { get; set; }
 
     }
 
@@ -3424,16 +3367,13 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         public string Title { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isChecked")]
         public bool IsChecked { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formServiceRequestItem")]
-        public System.Collections.Generic.ICollection<FormServiceRequestItem> FormServiceRequestItem { get; set; }
 
     }
 
@@ -3442,16 +3382,13 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         public string Title { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isChecked")]
         public bool IsChecked { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("formTypeOfPropertyItem")]
-        public System.Collections.Generic.ICollection<FormTypeOfPropertyItem> FormTypeOfPropertyItem { get; set; }
 
     }
 

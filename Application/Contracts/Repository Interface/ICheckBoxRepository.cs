@@ -1,6 +1,4 @@
-﻿using Domain.CheckBox.PurposeValuation;
-using Domain.CheckBox.ServiceRequest;
-using Domain.CheckBox.TypeOfProperty;
+﻿using Domain.CheckBoxItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
