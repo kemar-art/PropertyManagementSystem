@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Admin.ReturnForm
 {
-    public class ReturnFormToAppraiserQuery : CommonFromCommand, IRequest<Unit>
+    public class ReturnFormToAppraiserQuery : CommonFromPropertires, IRequest<Unit>
     {
     }
 }

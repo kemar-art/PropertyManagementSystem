@@ -20,7 +20,7 @@ namespace PMS.UI.Pages.ClientFrom
 
         protected void FormEdit(int id)
         {
-            _NavigationManager.NavigateTo($"/submitted-forms/edit/{id}");
+            _NavigationManager.NavigateTo($"/edit/{id}");
         }
 
         protected void FormDetails(int id)

@@ -39,11 +39,7 @@ namespace PMS.UI.Services.Repository_Implementation
             }
         }
 
-
-
-
-
-            public async Task<Response<Guid>> DeleteForm(int id)
+        public async Task<Response<Guid>> DeleteForm(int id)
         {
             try
             {

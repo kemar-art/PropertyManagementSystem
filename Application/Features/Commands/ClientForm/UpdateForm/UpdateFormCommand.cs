@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Domain;
+using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Commands.ClientForm.UpdateForm;
 
@@ -22,9 +24,9 @@ public class UpdateFormCommand : IRequest<Unit>
 
     public string PropertyDirection { get; set; } = string.Empty;
 
-    public int Volume { get; set; }
+    public string Volume { get; set; } = string.Empty;
 
-    public int Folio { get; set; }
+    public string Folio { get; set; } = string.Empty;
 
     public string StrataPlan { get; set; } = string.Empty;
 
@@ -34,8 +36,6 @@ public class UpdateFormCommand : IRequest<Unit>
 
     public string Other { get; set; } = string.Empty;
 
-    public string Status { get; set; } = string.Empty;
-
     public string SecondaryContactFirstName { get; set; } = string.Empty;
 
     public string SecondaryContactLastName { get; set; } = string.Empty;
@@ -43,4 +43,12 @@ public class UpdateFormCommand : IRequest<Unit>
     public string SecondaryContactEmail { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
+
+    [ForeignKey("RegionId")]
+    public Region? Region { get; set; }
+    public Guid? RegionId { get; set; }
+
+    public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
+    public string ServiceRequestItemSelectId { get; set; } = string.Empty;
+    public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
 }

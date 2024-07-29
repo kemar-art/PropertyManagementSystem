@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Appraiser.AcceptForm
 {
-    public class AcceptFromCommandQuery : CommonFromCommand, IRequest<Unit>
+    public class AcceptFromCommandQuery : CommonFromPropertires, IRequest<Unit>
     {
     }
 }

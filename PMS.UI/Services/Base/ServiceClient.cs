@@ -3244,10 +3244,10 @@ namespace PMS.UI.Services.Base
         public string PropertyDirection { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("volume")]
-        public int Volume { get; set; }
+        public string Volume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("folio")]
-        public int Folio { get; set; }
+        public string Folio { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
         public string StrataPlan { get; set; }
@@ -3276,8 +3276,20 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("dataCreated")]
-        public System.DateTimeOffset DataCreated { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("region")]
+        public Region Region { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
+        public System.Guid? RegionId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
+        public string TypeOfPropertySelectedIds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemSelectId")]
+        public string ServiceRequestItemSelectId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
+        public string PurposeOfValuationItemSelectedIds { get; set; }
 
     }
 
@@ -3468,10 +3480,10 @@ namespace PMS.UI.Services.Base
         public string PropertyDirection { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("volume")]
-        public int Volume { get; set; }
+        public string Volume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("folio")]
-        public int Folio { get; set; }
+        public string Folio { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("strataPlan")]
         public string StrataPlan { get; set; }
@@ -3485,9 +3497,6 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("other")]
         public string Other { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string Status { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
         public string SecondaryContactFirstName { get; set; }
 
@@ -3499,6 +3508,21 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("region")]
+        public Region Region { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
+        public System.Guid? RegionId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
+        public string TypeOfPropertySelectedIds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemSelectId")]
+        public string ServiceRequestItemSelectId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
+        public string PurposeOfValuationItemSelectedIds { get; set; }
 
     }
 

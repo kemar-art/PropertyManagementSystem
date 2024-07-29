@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Appraiser.SubmitForApproval
 {
-    public class SubmitFormForApprovalQuery : CommonFromCommand, IRequest<Unit>
+    public class SubmitFormForApprovalQuery : CommonFromPropertires, IRequest<Unit>
     {
         public IFormFile? FrontOfProperyImage { get; set; }
         public IFormFile? RightSideOfPropertyImage { get; set; }

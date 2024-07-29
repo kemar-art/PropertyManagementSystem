@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Appraiser.RejectForm
 {
-    public class RejectFromCommandQuery : CommonFromCommand, IRequest<Unit>
+    public class RejectFromCommandQuery : CommonFromPropertires, IRequest<Unit>
     {
     }
 }

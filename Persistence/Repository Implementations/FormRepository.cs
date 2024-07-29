@@ -2,6 +2,7 @@
 using Application.Exceptions;
 using Application.Features.Commands.Admin;
 using Application.Features.Commands.ClientForm.CreateForm;
+using Application.Features.Commands.ClientForm.UpdateForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.StaticDetails;
 using AutoMapper;
@@ -40,33 +41,30 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     public async Task<int> CreateFrom(CreateFormCommand createForm)
     {
 
-                 //ServiceRequestCheckBoxesDto = createForm.SelectedServiceRequestIds
-                 //   ?.Select(item => new CheckBoxPropertyDto
-                 //   {
-                 //       Id = item.ServiceRequestItem.Id,
-                 //       Title = item.ServiceRequestItem.Title,
-                 //       IsChecked = item.ServiceRequestItem.IsChecked
-                 //   })
-                 //   .ToList();
-
         var formToCreate = _mapper.Map<Form>(createForm);
         formToCreate.Status = FormStatus.StatusSubmitted;
         formToCreate.DataCreated = DateTime.Now;
 
         await CreateAsync(formToCreate);
 
-        //ServiceRequestCheckBoxesDto = createForm.SelectedServiceRequestIds
-        //Find all the checkboxes that was checked by user (For Service Resquest)
-
-
-
-
-
-
         await _dbContext.SaveChangesAsync();
 
         return formToCreate.Id;
     }
+
+    //public async Task<Unit> UpdateFrom(UpdateFormCommand updateForm)
+    //{
+        
+    //    //Convert incoming entity to domain entity
+    //    var formToUpdate = _mapper.Map<Form>(updateForm);
+
+    //    _dbContext.Entry(formToUpdate).State = EntityState.Modified;
+    //    await _dbContext.SaveChangesAsync();
+
+
+    //    return Unit.Value;
+
+    //}
 }
 
 //    public async Task<IEnumerable<Form>> GetAllFormsToList()

@@ -1,4 +1,7 @@
-﻿namespace Application.Features.Queries.ClientForm.GetASingleForm;
+﻿using Domain;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Application.Features.Queries.ClientForm.GetASingleForm;
 
 public class GetFormDetailsDto
 {
@@ -20,9 +23,9 @@ public class GetFormDetailsDto
 
     public string PropertyDirection { get; set; } = string.Empty;
 
-    public int Volume { get; set; }
+    public string Volume { get; set; } = string.Empty;
 
-    public int Folio { get; set; }
+    public string Folio { get; set; } = string.Empty; 
 
     public string StrataPlan { get; set; } = string.Empty;
 
@@ -42,5 +45,11 @@ public class GetFormDetailsDto
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
-    public DateTime DataCreated { get; set; }
+    [ForeignKey("RegionId")]
+    public Region? Region { get; set; }
+    public Guid? RegionId { get; set; }
+
+    public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
+    public string ServiceRequestItemSelectId { get; set; } = string.Empty;
+    public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
 }

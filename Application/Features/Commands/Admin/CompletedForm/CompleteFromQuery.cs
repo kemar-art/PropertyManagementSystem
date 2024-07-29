@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Admin.CompletedForm
 {
-    public class CompleteFromQuery : CommonFromCommand, IRequest<Unit>
+    public class CompleteFromQuery : CommonFromPropertires, IRequest<Unit>
     {
     }
 }

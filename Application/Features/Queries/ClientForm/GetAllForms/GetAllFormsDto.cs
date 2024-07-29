@@ -20,9 +20,9 @@ public class GetAllFormsDto
 
     public string PropertyDirection { get; set; } = string.Empty;
 
-    public string Volume { get; set; } = string.Empty; // Updated to string
+    public string Volume { get; set; } = string.Empty;
 
-    public string Folio { get; set; } = string.Empty; // Updated to string
+    public string Folio { get; set; } = string.Empty;
 
     public string StrataPlan { get; set; } = string.Empty;
 

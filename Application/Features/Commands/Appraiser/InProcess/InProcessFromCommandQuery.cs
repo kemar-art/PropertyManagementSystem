@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.Appraiser.InProcess
 {
-    public class InProcessFromCommandQuery : CommonFromCommand, IRequest<Unit>
+    public class InProcessFromCommandQuery : CommonFromPropertires, IRequest<Unit>
     {
     }
 }

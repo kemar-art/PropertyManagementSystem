@@ -19,7 +19,7 @@ public class UpdateFormCommandHandler : IRequestHandler<UpdateFormCommand, Unit>
 
     public async Task<Unit> Handle(UpdateFormCommand request, CancellationToken cancellationToken)
     {
-        //Validate incoming data
+        // Validate incoming data
         var validator = new UpdateFormCommandValidator(_formRepository);
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
@@ -27,13 +27,21 @@ public class UpdateFormCommandHandler : IRequestHandler<UpdateFormCommand, Unit>
             throw new BadRequestException("Error submitting form for update", validationResult);
         }
 
-        //Convert incoming entity to domain entity
-        var formToUpdate = _mapper.Map<Form>(request);
+        // Retrieve the existing form from the database
+        var existingForm = await _formRepository.GetByIdAsync(request.Id);
+        if (existingForm == null)
+        {
+            throw new NotFoundException(nameof(Form), request.Id);
+        }
 
-        //Add to database 
-        await _formRepository.UpdateAsync(formToUpdate);
+        // Update the existing form with values from the incoming request
+        _mapper.Map(request, existingForm);
 
-        //Return result.
+        // Update in database
+        await _formRepository.UpdateAsync(existingForm);
+
+        // Return result.
         return Unit.Value;
     }
+
 }
