@@ -92,7 +92,7 @@ namespace PMS.UI.Pages.ClientFrom
 
             if (response.Success)
             {
-                // Handle success (e.g., redirect to a success page)
+                _NavigationManager.NavigateTo("/success/");
             }
             else
             {

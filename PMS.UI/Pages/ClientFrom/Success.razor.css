@@ -1,0 +1,29 @@
+﻿.success-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.success-content {
+    max-width: 600px;
+}
+
+.success-image {
+    width: 100px;
+    height: 100px;
+}
+
+.success-message {
+    color: green;
+    font-size: 2rem; /* Increased font size */
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.tracking-id {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    font-weight: bold;
+}
