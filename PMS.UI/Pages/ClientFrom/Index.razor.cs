@@ -25,7 +25,7 @@ namespace PMS.UI.Pages.ClientFrom
 
         protected void FormDetails(int id)
         {
-            _NavigationManager.NavigateTo($"/submitted-forms/details/{id}");
+            _NavigationManager.NavigateTo($"/details/{id}");
         }
 
         protected async Task FormDeletion(int id)

@@ -1,0 +1,260 @@
+﻿@page "/details/{formId:int}"
+<h3>Edit Form</h3>
+
+
+
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+}
+else
+{
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-8">
+            <div class="form-container">
+                <section>
+                    <EditForm Model="@FormVM">
+                        <!-- Client Details -->
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <label>
+                                    <strong>SERVICE(S) REQUIRED:</strong>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <div class="row">
+                                    @foreach (var item in ServiceRequestCheckBoxesVM)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-inline">
+                                                <InputCheckbox class="form-check-input"
+                                                               @bind-Value="item.IsChecked" disabled />
+                                                <label class="form-check-label">
+                                                    @item.Title
+                                                </label>
+                                                <input type="hidden" value="@item.Id" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-2 text-dark fs-2">CLIENT INFORMATION</legend>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">First Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.FirstName" aria-required="true" disabled />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Last Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.LastName" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Phone Number</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.PhoneNumber" disabled />
+                                        <ValidationMessage For="@(() => FormVM.PhoneNumber)" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Email</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Email" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Address</label>
+                                <InputText class="form-control" @bind-Value="FormVM.Address" disabled />
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Instructions Issued By</label>
+                                <InputText class="form-control" @bind-Value="FormVM.InstructionsIssuedBy" disabled />
+                            </div>
+                        </fieldset>
+                        <!-- Property Details -->
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-3 text-dark fs-3">PROPERTY INFORMATION</legend>
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <label>
+                                        TYPE OF PROPERTY:
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Type of Property:</label>
+                                    <div class="row">
+                                        @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="form-check form-check-inline">
+                                                    <InputCheckbox class="form-check-input"
+                                                                   @bind-Value="item.IsChecked" disabled />
+                                                    <label class="form-check-label">
+                                                        @item.Title
+                                                    </label>
+                                                    <input type="hidden" value="@item.Id" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <br />
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Volume</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Volume" disabled />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Folio</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Folio" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Strata/Deposit Plan</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.StrataPlan" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <label>
+                                        PURPOSE OF VALUATION:
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <div class="row">
+                                        @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="form-check form-check-inline">
+                                                    <InputCheckbox class="form-check-input"
+                                                                   @bind-Value="item.IsChecked" disabled />
+                                                    <label class="form-check-label">
+                                                        @item.Title
+                                                    </label>
+                                                    <input type="hidden" value="@item.Id" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <br />
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Mortgage Institution</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.MortgageInstitution" disabled />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Other</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.Other" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Is The Key Available</label>
+                                        <div>
+                                            <InputRadioGroup @bind-Value="FormVM.IsKeyAvailable" disabled>
+                                                <InputRadio class="form-check-input" Value="true" disabled /> Yes
+                                                <InputRadio class="form-check-input" Value="false" disabled /> No
+                                            </InputRadioGroup>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Parish</label>
+                                        <InputSelect class="form-select" @bind-Value="FormVM.RegionId" disabled>
+                                            <option selected disabled>--Select Parish--</option>
+                                            @foreach (var region in Regions)
+                                            {
+                                                <option value="@region.Id">@region.ParishName</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Property Address</label>
+                                <InputText class="form-control" @bind-Value="FormVM.PropertyAddress" disabled />
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label>Property Direction</label>
+                                <InputTextArea class="form-control" @bind-Value="FormVM.PropertyDirection" disabled />
+                            </div>
+                        </fieldset>
+
+                        <!-- Contact for Inspection -->
+                        <fieldset class="border p-2">
+                            <legend class="float-none w-auto p-2 text-dark fs-3">CONTACT FOR INSPECTION</legend>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Secondary Contact First Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactFirstName" disabled />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label">Secondary Contact Last Name</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactLastName" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Secondary Contact Phone Number</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactPhoneNumber" disabled />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label>Secondary Contact Email</label>
+                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactEmail" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>  
+                    </EditForm>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="form-outline">
+                                <a class="btn w-100 form-control btn-dark" href="/submitted-forms">
+                                    <i class="fa-solid fa-house"></i>&nbsp; Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+}
