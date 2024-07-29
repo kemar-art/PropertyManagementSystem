@@ -1,9 +1,11 @@
-﻿.swal2-confirm.red-btn {
-    background-color: #e74c3c; /* Red background */
-    border-color: #e74c3c; /* Red border */
+﻿/* In your CSS file */
+.swal2-confirm.btn-success {
+    background-color: #2ecc71 !important; /* Green background */
+    border-color: #2ecc71 !important; /* Green border */
+    margin-right: 10px; /* Add space between buttons */
 }
 
-.swal2-cancel.green-btn {
-    background-color: #2ecc71; /* Green background */
-    border-color: #2ecc71; /* Green border */
+.swal2-cancel.btn-danger {
+    background-color: #e74c3c !important; /* Red background */
+    border-color: #e74c3c !important; /* Red border */
 }

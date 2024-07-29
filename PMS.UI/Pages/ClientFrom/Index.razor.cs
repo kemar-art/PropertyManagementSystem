@@ -1,7 +1,11 @@
+using Application.Contracts.Repository_Interface;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
+using PMS.UI.Contracts.Repository_Interface;
+using PMS.UI.Models;
 using PMS.UI.Models.Form;
+using PMS.UI.Services.Base;
 
 namespace PMS.UI.Pages.ClientFrom
 {
@@ -40,15 +44,10 @@ namespace PMS.UI.Pages.ClientFrom
                 Text = "You won't be able to revert this!",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true,
-                ConfirmButtonText = "Yes, delete it!",
-                CancelButtonText = "No, cancel!",
-                CustomClass = new SweetAlertCustomClass
-                {
-                    ConfirmButton = "red-btn",
-                    CancelButton = "green-btn"
-                }
+                ConfirmButtonColor = "#d33",
+                CancelButtonColor = "#008000",
+                ConfirmButtonText = "Yes, delete it!"
             });
-
             if (result.IsConfirmed)
             {
                 var response = await _FormRepository.DeleteForm(id);
@@ -71,5 +70,7 @@ namespace PMS.UI.Pages.ClientFrom
             FormVMs = await _FormRepository.GetAllForms();
             IsLoading = false;
         }
+
+
     }
 }
