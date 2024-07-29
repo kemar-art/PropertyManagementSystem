@@ -1,5 +1,6 @@
 using Application.Contracts.Repository_Interface;
 using Blazored.LocalStorage;
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IFormRepository, FormRepository>();
 builder.Services.AddScoped<IRegionRepositoey, RegionRepositoey>();
 builder.Services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+builder.Services.AddSweetAlert2();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

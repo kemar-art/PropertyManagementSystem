@@ -1,3 +1,4 @@
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Form;
@@ -11,6 +12,9 @@ namespace PMS.UI.Pages.ClientFrom
 
         [Inject]
         public IFormRepository _FormRepository { get; set; }
+
+        [Inject]
+        public SweetAlertService Swal { get; set; }
 
         public IEnumerable<FormVM> FormVMs { get; private set; } = [];
 
@@ -30,18 +34,37 @@ namespace PMS.UI.Pages.ClientFrom
 
         protected async Task FormDeletion(int id)
         {
-            var response = await _FormRepository.DeleteForm(id);
-            if (response.Success)
+            var result = await Swal.FireAsync(new SweetAlertOptions
             {
-                // Refresh the data after deletion
-                FormVMs = await _FormRepository.GetAllForms();
-                StateHasChanged();
-            }
-            else
+                Title = "Are you sure?",
+                Text = "You won't be able to revert this!",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes, delete it!",
+                CancelButtonText = "No, cancel!",
+                CustomClass = new SweetAlertCustomClass
+                {
+                    ConfirmButton = "red-btn",
+                    CancelButton = "green-btn"
+                }
+            });
+
+            if (result.IsConfirmed)
             {
-                Message = response.Message;
+                var response = await _FormRepository.DeleteForm(id);
+                if (response.Success)
+                {
+                    // Refresh the data after deletion
+                    FormVMs = await _FormRepository.GetAllForms();
+                    StateHasChanged();
+                }
+                else
+                {
+                    Message = response.Message;
+                }
             }
         }
+
 
         protected override async Task OnInitializedAsync()
         {

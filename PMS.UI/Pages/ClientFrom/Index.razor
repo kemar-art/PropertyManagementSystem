@@ -2,20 +2,14 @@
 
 <h3>Client List</h3>
 
+
+
 @if (!string.IsNullOrEmpty(Message))
 {
     <div class="alert alert-danger">
         @Message
     </div>
 }
-
-@* if (IsLoading)
-{
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
-    </div>
-    <p>Loading Data...</p>
-} *@
 
 @if (IsLoading)
 {
