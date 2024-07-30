@@ -6,12 +6,23 @@
         <h1 class="success-message">Form Submitted Successfully!</h1>
         @if (FormVM != null)
         {
+            var firstName = Uri.EscapeDataString(FormVM.FirstName);
+            var lastName = Uri.EscapeDataString(FormVM.LastName);
+            var email = Uri.EscapeDataString(FormVM.Email);
+            var phoneNumber = Uri.EscapeDataString(FormVM.PhoneNumber);
+            var registrationUrl = $"/register?firstName={firstName}&lastName={lastName}&email={email}&phoneNumber={phoneNumber}";
             <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", FormVM.CustomerId)</span></p>
+            <p>
+                <strong>
+                    If you do not have an account, you will not be able to track your form status.<br>
+                    <NavLink href="@registrationUrl">Create an account</NavLink>
+                </strong>
+            </p>
         }
         else
         {
             <p class="tracking-id">Loading tracking ID...</p>
         }
-        <p><strong>If you do not have an account, you will not be able to track your form status.<br> <NavLink href="/register/">Create an account</NavLink></strong></p>
     </div>
 </div>
+

@@ -14,5 +14,6 @@ namespace Application.Contracts.Identity
     {
         Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand user);
         Task<AuthResponse> LogInUserAsync(LoginUserCommand user);
+        Task<bool> IsEmailRegisteredExist(string email);
     }
 }

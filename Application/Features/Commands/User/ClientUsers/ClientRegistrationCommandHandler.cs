@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers;
 
-internal class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistrationCommand, RegistrationResponse>
+public class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistrationCommand, RegistrationResponse>
 {
     private readonly IAuthService _authService;
 
@@ -30,6 +30,12 @@ internal class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistra
         if (validationResult.Errors.Any())
         {
             throw new BadRequestException("An error was encountered when creating the user.", validationResult);
+        }
+
+        var emailExists = await _authService.IsEmailRegisteredExist(request.Email);
+        if (emailExists)
+        {
+            throw new BadRequestException("Email already in use.");
         }
 
         // Add to database 

@@ -8,6 +8,7 @@ namespace PMS.UI.Contracts.Repository_Interface
     {
         Task<bool> IsAuthenticated(LoginVM loginVM);
         Task<bool> IsRegister(RegisterVM registerVM);
+        Task<bool> IsEmailRegisteredExist(string email);
         Task Logout();
     }
 }

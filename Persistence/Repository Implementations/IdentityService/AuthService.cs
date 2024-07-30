@@ -158,5 +158,15 @@ namespace Persistence.Repository_Implementations
             return jwtSecurityToken;
         }
 
+        public async Task<bool> IsEmailRegisteredExist(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentException("Email cannot be null or empty", nameof(email));
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            return user != null;
+        }
     }
 }

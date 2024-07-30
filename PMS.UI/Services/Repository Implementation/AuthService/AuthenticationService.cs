@@ -44,6 +44,11 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             }
         }
 
+        public async Task<bool> IsEmailRegisteredExist(string email)
+        {
+            return await _client.EmailcheckAsync(email);
+        }
+
         public async Task<bool> IsRegister(RegisterVM registerVM)
         {
             ClientRegistrationCommand registrationRequest = new()
