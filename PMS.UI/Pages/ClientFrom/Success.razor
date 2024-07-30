@@ -1,10 +1,17 @@
-﻿@page "/success/{Id:int}"
+﻿@page "/success/{formId:guid}"
 
 <div class="container success-page">
     <div class="success-content">
-        <img src="success-image.png" alt="Success" class="success-image">
+        <img src="/images/success-image.png" alt="Success" class="success-image">
         <h1 class="success-message">Form Submitted Successfully!</h1>
-        <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", FormVM.CustomerId)</span></p>
-        <p>If you do not have an account, you will not be able to track your form status.<br> <a href="create-account.html">Create an account</a></p>
+        @if (FormVM != null)
+        {
+            <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", FormVM.CustomerId)</span></p>
+        }
+        else
+        {
+            <p class="tracking-id">Loading tracking ID...</p>
+        }
+        <p><strong>If you do not have an account, you will not be able to track your form status.<br> <NavLink href="/register/">Create an account</NavLink></strong></p>
     </div>
 </div>

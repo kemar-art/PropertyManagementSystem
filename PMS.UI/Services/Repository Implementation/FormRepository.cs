@@ -23,21 +23,21 @@ namespace PMS.UI.Services.Repository_Implementation
             {
                 var createFormCommand = _mapper.Map<CreateFormCommand>(form);
 
-                // Capture the payload in a variable
-                var payload = JsonConvert.SerializeObject(createFormCommand);
+                // Capture the payload for debugging (if needed)
+                // var payload = JsonConvert.SerializeObject(createFormCommand);
+                // Console.WriteLine("Payload: " + payload);
 
-                // Print out the payload
-                Console.WriteLine("Payload: " + payload);
+                // Assuming your API returns the form ID
+                var formId = await _client.FormsPOSTAsync(createFormCommand);
 
-                await _client.FormsPOSTAsync(createFormCommand);
-
-                return new Response<Guid> { Success = true };
+                return new Response<Guid> { Success = true, Data = formId };
             }
             catch (ApiException ex)
             {
                 return ConvertApiExceptions<Guid>(ex);
             }
         }
+
 
         public async Task<Response<Guid>> DeleteForm(Guid id)
         {
@@ -81,35 +81,3 @@ namespace PMS.UI.Services.Repository_Implementation
         }
     }
 }
-
-
-//public async Task<Response<Guid>> CreateForm(FormVM form)
-//{
-//    try
-//    {
-//        var createFormCommand = _mapper.Map<CreateFormCommand>(form);
-//        createFormCommand.SelectedTypeOfPropertyIds = createFormCommand.ServiceRequesFormTypeOfPropertyItem;
-//        createFormCommand.ServiceRequesFormTypeOfPropertyItem = null;
-
-//        createFormCommand.SelectedServiceRequestIds = createFormCommand.ServiceRequestFormServiceRequestItem;
-//        createFormCommand.ServiceRequestFormServiceRequestItem = null;
-
-//        createFormCommand.SelectedPurposeOfValuationIds = createFormCommand.ServiceRequestFormPurposeOfValuationItem;
-//        createFormCommand.ServiceRequestFormPurposeOfValuationItem = null;
-
-
-
-//        // Assuming SelectedTypeOfPropertyIds should contain items of type FormTypeOfPropertyItem
-//        //createFormCommand.SelectedTypeOfPropertyIds = createFormCommand.ServiceRequesFormTypeOfPropertyItem.Cast<FormTypeOfPropertyItem>().ToList();
-//        //createFormCommand.SelectedServiceRequestIds = createFormCommand.ServiceRequestFormServiceRequestItem.Cast<FormServiceRequestItem>().ToList();
-//        //createFormCommand.SelectedPurposeOfValuationIds = createFormCommand.ServiceRequestFormPurposeOfValuationItem.Cast<FormPurposeOfValuationItem>().ToList();
-
-//        await _client.FormsPOSTAsync(createFormCommand);
-
-//        return new Response<Guid> { Success = true };
-//    }
-//    catch (ApiException ex)
-//    {
-//        return ConvertApiExceptions<Guid>(ex);
-//    }
-//}

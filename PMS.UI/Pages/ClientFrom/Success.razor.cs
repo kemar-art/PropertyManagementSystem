@@ -11,7 +11,7 @@ namespace PMS.UI.Pages.ClientFrom
         private IFormRepository _FormRepository { get; set; }
 
         [Inject]
-        NavigationManager _NavigationManager { get; set; }
+        private NavigationManager _NavigationManager { get; set; }
 
         [Inject]
         private IMapper _Mapper { get; set; }
@@ -19,22 +19,20 @@ namespace PMS.UI.Pages.ClientFrom
         public FormVM FormVM { get; set; }
 
         [Parameter]
-        public Guid Id { get; set; }
+        public Guid FormId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            //if (Id == 0)
-            //{
-            //    // Handle the case where ID is not provided
-            //    _NavigationManager.NavigateTo("/error"); // Redirect to an error page or show an error message
-            //    return;
-            //}
+            if (FormId == Guid.Empty)
+            {
+                _NavigationManager.NavigateTo("/error");
+                return;
+            }
 
-            var getFormThatWasSubmitted = await _FormRepository.GetASingleFormDetails(Id);
+            var getFormThatWasSubmitted = await _FormRepository.GetASingleFormDetails(FormId);
             if (getFormThatWasSubmitted == null)
             {
-                // Handle the case where the form was not found
-                _NavigationManager.NavigateTo("/error"); // Redirect to an error page or show an error message
+                _NavigationManager.NavigateTo("/error");
                 return;
             }
 

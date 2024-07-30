@@ -46,10 +46,10 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Post(CreateFormCommand createForm)
+        public async Task<ActionResult<Guid>> Post(CreateFormCommand createForm)
         {
-            var createFormResponse = await _mediator.Send(createForm);
-            return CreatedAtAction(nameof(Get), new { id = createFormResponse });
+            var formId = await _mediator.Send(createForm);
+            return CreatedAtAction(nameof(Get), new { id = formId }, formId);
         }
 
         // PUT api/<FormController>/5

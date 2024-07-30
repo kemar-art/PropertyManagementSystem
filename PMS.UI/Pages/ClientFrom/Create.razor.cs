@@ -92,7 +92,7 @@ namespace PMS.UI.Pages.ClientFrom
 
             if (response.Success)
             {
-                _NavigationManager.NavigateTo("/success/");
+                _NavigationManager.NavigateTo($"/success/{response.Data}");
             }
             else
             {

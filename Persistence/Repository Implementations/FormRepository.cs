@@ -52,6 +52,13 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         return formToCreate.Id;
     }
 
+    public async Task<IEnumerable<Form>> GetAllFroms()
+    {
+        return await _dbContext.Forms.AsNoTracking()
+                                     .OrderBy(x => x.CustomerId)
+                                     .ToListAsync();
+    }
+
     public async Task<Unit> UpdateFrom(Form updateForm)
     {
         // Attach the entity to the context and mark it as modified
@@ -66,9 +73,4 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
     }
 }
 
-//    public async Task<IEnumerable<Form>> GetAllFormsToList()
-//    {
-//        return await _dbContext.Forms.AsNoTracking().ToListAsync();
-//    }
-//}
 
