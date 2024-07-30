@@ -26,17 +26,17 @@ namespace PMS.UI.Pages.ClientFrom
 
         private bool IsLoading { get; set; } = true;
 
-        protected void FormEdit(int id)
+        protected void FormEdit(Guid id)
         {
             _NavigationManager.NavigateTo($"/edit/{id}");
         }
 
-        protected void FormDetails(int id)
+        protected void FormDetails(Guid id)
         {
             _NavigationManager.NavigateTo($"/details/{id}");
         }
 
-        protected async Task FormDeletion(int id)
+        protected async Task FormDeletion(Guid id)
         {
             var result = await Swal.FireAsync(new SweetAlertOptions
             {
@@ -67,9 +67,24 @@ namespace PMS.UI.Pages.ClientFrom
 
         protected override async Task OnInitializedAsync()
         {
-            FormVMs = await _FormRepository.GetAllForms();
-            IsLoading = false;
+            IsLoading = true; // Ensure the loading overlay is displayed
+            try
+            {
+                FormVMs = await _FormRepository.GetAllForms();
+               
+            }
+            catch (Exception ex)
+            {
+                //This is to be logged this most not be seen by the user on developer
+                Message = $"An error occurred: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false; // Hide the loading overlay
+            }
+
         }
+
 
 
     }

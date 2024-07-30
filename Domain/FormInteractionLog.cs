@@ -14,7 +14,7 @@ public class FormInteractionLog
 
     [ForeignKey("FormId")]
     public Form? Form { get; set; }
-    public int FormId { get; set; }
+    public Guid FormId { get; set; }
 
     [ForeignKey("ApplicationUserId")]
     public ApplicationUser? ApplicationUser { get; set; }

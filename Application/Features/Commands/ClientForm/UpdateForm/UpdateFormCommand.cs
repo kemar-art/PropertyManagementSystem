@@ -6,7 +6,7 @@ namespace Application.Features.Commands.ClientForm.UpdateForm;
 
 public class UpdateFormCommand : IRequest<Unit>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string FirstName { get; set; } = string.Empty;
 

@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Commands.ClientForm.CreateForm;
 
-public class CreateFormCommand : IRequest<int>
+public class CreateFormCommand : IRequest<Guid>
 {
+
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;

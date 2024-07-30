@@ -125,7 +125,7 @@ namespace Application.Features.Commands.ClientForm.UpdateForm
                .WithMessage("{PropertyName} is not valid. Expected format: 123-456-7890.");
         }
 
-        private async Task<bool> FormIdMustExist(int id, CancellationToken token)
+        private async Task<bool> FormIdMustExist(Guid id, CancellationToken token)
         {
             var checkIfFormIdExist = await _formRepository.GetByIdAsync(id);
             return checkIfFormIdExist != null;

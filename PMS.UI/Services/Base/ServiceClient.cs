@@ -43,21 +43,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteAsync(int? formId, string appraiserId);
+        System.Threading.Tasks.Task CompleteAsync(System.Guid? formId, string appraiserId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CompleteAsync(int? formId, string appraiserId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CompleteAsync(System.Guid? formId, string appraiserId, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RetunAsync(int? formId);
+        System.Threading.Tasks.Task RetunAsync(System.Guid? formId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RetunAsync(int? formId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RetunAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -115,39 +115,39 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AcceptAsync(int? formId);
+        System.Threading.Tasks.Task AcceptAsync(System.Guid? formId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AcceptAsync(int? formId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task AcceptAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RejectAsync(int? formId);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RejectAsync(int? formId, System.Threading.CancellationToken cancellationToken);
-
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task InprocessAsync(int? formId);
+        System.Threading.Tasks.Task RejectAsync(System.Guid? formId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task InprocessAsync(int? formId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task RejectAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage);
+        System.Threading.Tasks.Task InprocessAsync(System.Guid? formId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task InprocessAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task SubmittedAsync(System.Guid? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task SubmittedAsync(System.Guid? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Accepted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -196,21 +196,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id);
+        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsDELETEAsync(int id);
+        System.Threading.Tasks.Task FormsDELETEAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FormsDELETEAsync(int id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task FormsDELETEAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -492,7 +492,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task CompleteAsync(int? formId, string appraiserId)
+        public virtual System.Threading.Tasks.Task CompleteAsync(System.Guid? formId, string appraiserId)
         {
             return CompleteAsync(formId, appraiserId, System.Threading.CancellationToken.None);
         }
@@ -500,7 +500,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CompleteAsync(int? formId, string appraiserId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task CompleteAsync(System.Guid? formId, string appraiserId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -589,7 +589,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RetunAsync(int? formId)
+        public virtual System.Threading.Tasks.Task RetunAsync(System.Guid? formId)
         {
             return RetunAsync(formId, System.Threading.CancellationToken.None);
         }
@@ -597,7 +597,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RetunAsync(int? formId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RetunAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1236,7 +1236,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task AcceptAsync(int? formId)
+        public virtual System.Threading.Tasks.Task AcceptAsync(System.Guid? formId)
         {
             return AcceptAsync(formId, System.Threading.CancellationToken.None);
         }
@@ -1244,7 +1244,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task AcceptAsync(int? formId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task AcceptAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1329,7 +1329,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task RejectAsync(int? formId)
+        public virtual System.Threading.Tasks.Task RejectAsync(System.Guid? formId)
         {
             return RejectAsync(formId, System.Threading.CancellationToken.None);
         }
@@ -1337,7 +1337,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task RejectAsync(int? formId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task RejectAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1422,7 +1422,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task InprocessAsync(int? formId)
+        public virtual System.Threading.Tasks.Task InprocessAsync(System.Guid? formId)
         {
             return InprocessAsync(formId, System.Threading.CancellationToken.None);
         }
@@ -1430,7 +1430,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task InprocessAsync(int? formId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task InprocessAsync(System.Guid? formId, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1515,7 +1515,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage)
+        public virtual System.Threading.Tasks.Task SubmittedAsync(System.Guid? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage)
         {
             return SubmittedAsync(formId, frontImage, leftImage, rightImage, backImage, System.Threading.CancellationToken.None);
         }
@@ -1523,7 +1523,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SubmittedAsync(int? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task SubmittedAsync(System.Guid? formId, FileParameter frontImage, FileParameter leftImage, FileParameter rightImage, FileParameter backImage, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2114,7 +2114,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id)
+        public virtual System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(System.Guid id)
         {
             return FormsGETAsync(id, System.Threading.CancellationToken.None);
         }
@@ -2122,7 +2122,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetFormDetailsDto> FormsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2210,7 +2210,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task FormsDELETEAsync(int id)
+        public virtual System.Threading.Tasks.Task FormsDELETEAsync(System.Guid id)
         {
             return FormsDELETEAsync(id, System.Threading.CancellationToken.None);
         }
@@ -2218,7 +2218,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task FormsDELETEAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task FormsDELETEAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2811,7 +2811,7 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("formId")]
-        public int FormId { get; set; }
+        public System.Guid FormId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("appraiserId")]
         public string AppraiserId { get; set; }
@@ -2984,7 +2984,10 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public int CustomerId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
         public string FirstName { get; set; }
@@ -3145,7 +3148,10 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public int CustomerId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
         public string FirstName { get; set; }
@@ -3217,7 +3223,10 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public int CustomerId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
         public string FirstName { get; set; }
@@ -3453,7 +3462,7 @@ namespace PMS.UI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
         public string FirstName { get; set; }

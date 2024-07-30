@@ -15,6 +15,6 @@ public class FormProfile : Profile
         CreateMap<Form, GetFormDetailsDto>().ReverseMap();
 
         CreateMap<CreateFormCommand, Form>().ReverseMap();
-        CreateMap<UpdateFormCommand, Form>().ReverseMap();
+        CreateMap<UpdateFormCommand, Form>();
     }
 }

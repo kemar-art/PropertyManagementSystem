@@ -8,7 +8,9 @@ namespace PMS.UI.Models.Form
 {
     public class FormVM
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        public int CustomerId { get; set; }
 
         public string FirstName { get; set; } = string.Empty;
 

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Commands.ClientForm.CreateForm;
 
-public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
+public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, Guid>
 {
     private readonly IMapper _mapper;
     private readonly IFormRepository _formRepository;
@@ -18,7 +18,7 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, int>
         _formRepository = formRepository;
     }
 
-    public async Task<int> Handle(CreateFormCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateFormCommand request, CancellationToken cancellationToken)
     {
         //Validate incoming data
         var validator = new CreateFormCommandValidator();

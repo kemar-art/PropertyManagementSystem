@@ -38,7 +38,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         _mapper = mapper;
     }
 
-    public async Task<int> CreateFrom(CreateFormCommand createForm)
+    public async Task<Guid> CreateFrom(CreateFormCommand createForm)
     {
 
         var formToCreate = _mapper.Map<Form>(createForm);
@@ -52,19 +52,18 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         return formToCreate.Id;
     }
 
-    //public async Task<Unit> UpdateFrom(UpdateFormCommand updateForm)
-    //{
-        
-    //    //Convert incoming entity to domain entity
-    //    var formToUpdate = _mapper.Map<Form>(updateForm);
+    public async Task<Unit> UpdateFrom(Form updateForm)
+    {
+        // Attach the entity to the context and mark it as modified
+        _dbContext.Entry(updateForm).State = EntityState.Modified;
 
-    //    _dbContext.Entry(formToUpdate).State = EntityState.Modified;
-    //    await _dbContext.SaveChangesAsync();
+        // Ensure that the identity column is not marked as modified
+        _dbContext.Entry(updateForm).Property(f => f.CustomerId).IsModified = false;
 
+        await _dbContext.SaveChangesAsync();
 
-    //    return Unit.Value;
-
-    //}
+        return Unit.Value;
+    }
 }
 
 //    public async Task<IEnumerable<Form>> GetAllFormsToList()

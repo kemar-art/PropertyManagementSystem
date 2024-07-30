@@ -28,7 +28,7 @@ namespace Persistence.Repository_Implementations
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task<Unit> AcceptTheFormThatWasAssigned(int? acceptFromId)
+        public async Task<Unit> AcceptTheFormThatWasAssigned(Guid? acceptFromId)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
             if (userId == null)
@@ -114,7 +114,7 @@ namespace Persistence.Repository_Implementations
                                          .ToListAsync();
         }
 
-        public async Task<Unit> MarkTheFormAsInProcessThatWasAssigned(int? inProcessFromId)
+        public async Task<Unit> MarkTheFormAsInProcessThatWasAssigned(Guid? inProcessFromId)
         {
             if (inProcessFromId == null)
             {
@@ -178,7 +178,7 @@ namespace Persistence.Repository_Implementations
             throw new BadHttpRequestException("An error occurred while marking this job as in process. Please refresh and try again.");
         }
 
-        public async Task<Unit> RejectTheFormThatWasAssigned(int? rejectFromId)
+        public async Task<Unit> RejectTheFormThatWasAssigned(Guid? rejectFromId)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst("uid")?.Value;
             if (userId == null)
@@ -237,7 +237,7 @@ namespace Persistence.Repository_Implementations
             throw new BadHttpRequestException("An error occurred while rejecting this job. Please refresh and try again.");
         }
 
-        public async Task<Unit> SubmitFormForApprovalThatWasAssigned(int? submitFormForApproval, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
+        public async Task<Unit> SubmitFormForApprovalThatWasAssigned(Guid? submitFormForApproval, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
         {
             if (submitFormForApproval == null)
             {

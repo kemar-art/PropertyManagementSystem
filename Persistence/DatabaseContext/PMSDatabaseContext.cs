@@ -9,6 +9,7 @@ using Persistence.SeedConfig.UserRole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,5 +47,9 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new TypeOfPropertySeedConfiguration());
         builder.ApplyConfiguration(new ServiceRequestPropertySeedConfiguration());
         builder.ApplyConfiguration(new PurposeOfValuationPropertySeedConfiguration());
+
+        builder.Entity<Form>()
+       .Property(f => f.CustomerId)
+       .ValueGeneratedOnAdd();
     }
 }

@@ -12,7 +12,7 @@ namespace PMS.UI.Pages.ClientFrom
     public partial class Details
     {
         [Parameter]
-        public int FormId { get; set; }
+        public Guid FormId { get; set; }
 
         [Inject]
         NavigationManager _NavigationManager { get; set; }

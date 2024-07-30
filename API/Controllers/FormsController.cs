@@ -34,7 +34,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<GetFormDetailsDto>> Get(int id)
+        public async Task<ActionResult<GetFormDetailsDto>> Get(Guid id)
         {
             var getForm = await _mediator.Send(new GetFormDetailsQuery(id));
             return Ok(getForm);
@@ -69,7 +69,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
             var deleteCommad = new DeleteFormCommand { Id = id };
             await _mediator.Send(deleteCommad);

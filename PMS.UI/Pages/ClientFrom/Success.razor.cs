@@ -19,16 +19,16 @@ namespace PMS.UI.Pages.ClientFrom
         public FormVM FormVM { get; set; }
 
         [Parameter]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            if (Id == 0)
-            {
-                // Handle the case where ID is not provided
-                _NavigationManager.NavigateTo("/error"); // Redirect to an error page or show an error message
-                return;
-            }
+            //if (Id == 0)
+            //{
+            //    // Handle the case where ID is not provided
+            //    _NavigationManager.NavigateTo("/error"); // Redirect to an error page or show an error message
+            //    return;
+            //}
 
             var getFormThatWasSubmitted = await _FormRepository.GetASingleFormDetails(Id);
             if (getFormThatWasSubmitted == null)

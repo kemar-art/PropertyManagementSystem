@@ -14,9 +14,9 @@ namespace Application.Contracts.Repository_Interface
     public interface IAppraiserRerpository : IGenericRepository<Form>
     {
         Task<IEnumerable<Form>> GetFormThatWasAssignedToAppraiser();
-        Task<Unit> AcceptTheFormThatWasAssigned(int? acceptFromId);
-        Task<Unit> RejectTheFormThatWasAssigned(int? rejectFromId);
-        Task<Unit> MarkTheFormAsInProcessThatWasAssigned(int? inProcessFromId);
-        Task<Unit> SubmitFormForApprovalThatWasAssigned(int? submitFormForApproval,IFormFile frontImage, IFormFile leftimage, IFormFile rightImage, IFormFile backImage);
+        Task<Unit> AcceptTheFormThatWasAssigned(Guid? acceptFromId);
+        Task<Unit> RejectTheFormThatWasAssigned(Guid? rejectFromId);
+        Task<Unit> MarkTheFormAsInProcessThatWasAssigned(Guid? inProcessFromId);
+        Task<Unit> SubmitFormForApprovalThatWasAssigned(Guid? submitFormForApproval,IFormFile frontImage, IFormFile leftimage, IFormFile rightImage, IFormFile backImage);
     }
 }

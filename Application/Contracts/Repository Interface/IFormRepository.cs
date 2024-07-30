@@ -8,6 +8,6 @@ namespace Domain.Repository_Interface;
 
 public interface IFormRepository : IGenericRepository<Form>
 {
-    Task<int> CreateFrom(CreateFormCommand createForm);
-    //Task<Unit> UpdateFrom(UpdateFormCommand updateForm);  
+    Task<Guid> CreateFrom(CreateFormCommand createForm);
+    Task<Unit> UpdateFrom(Form updateForm);  
 }

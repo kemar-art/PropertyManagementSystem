@@ -39,7 +39,7 @@ namespace PMS.UI.Services.Repository_Implementation
             }
         }
 
-        public async Task<Response<Guid>> DeleteForm(int id)
+        public async Task<Response<Guid>> DeleteForm(Guid id)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace PMS.UI.Services.Repository_Implementation
             return _mapper.Map<IEnumerable<FormVM>>(getAllForms);
         }
 
-        public async Task<FormVM> GetASingleFormDetails(int id)
+        public async Task<FormVM> GetASingleFormDetails(Guid id)
         {
             var getASingleForm = await _client.FormsGETAsync(id);
             return _mapper.Map<FormVM>(getASingleForm);

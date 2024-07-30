@@ -40,7 +40,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> AcceptFormByAppriaser(int formId)
+        public async Task<ActionResult> AcceptFormByAppriaser(Guid formId)
         {
             AcceptFromCommandQuery acceptFromCommand = new()
             {
@@ -57,7 +57,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> RejectFormByAppriaser(int formId)
+        public async Task<ActionResult> RejectFormByAppriaser(Guid formId)
         {
             RejectFromCommandQuery rejectFromCommand = new()
             {
@@ -73,7 +73,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> MarkFormHasInProccessByAppriaser(int formId)
+        public async Task<ActionResult> MarkFormHasInProccessByAppriaser(Guid formId)
         {
             InProcessFromCommandQuery inProcessFrom = new()
             {
@@ -89,7 +89,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> SubmitFormFromApprovalByAppriaser(int formId, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
+        public async Task<ActionResult> SubmitFormFromApprovalByAppriaser(Guid formId, IFormFile frontImage, IFormFile leftImage, IFormFile rightImage, IFormFile backImage)
         {
             SubmitFormForApprovalQuery submitFormForApproval = new()
             {

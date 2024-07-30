@@ -9,7 +9,7 @@ namespace Application.Features.Commands
 {
     public class CommonFromPropertires
     {
-        public int FormId { get; set; }
+        public Guid FormId { get; set; }
         public string AppraiserId { get; set; } = string.Empty;
     }
 }

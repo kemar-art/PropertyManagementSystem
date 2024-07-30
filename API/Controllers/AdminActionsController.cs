@@ -51,7 +51,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> MarkFormHasCompleteByAdmin(int formId, string appraiserId)
+        public async Task<ActionResult> MarkFormHasCompleteByAdmin(Guid formId, string appraiserId)
         {
             CompleteFromQuery completeFrom = new()
             {
@@ -68,7 +68,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> ReturnFormToAppiase(int formId)
+        public async Task<ActionResult> ReturnFormToAppiase(Guid formId)
         {
             ReturnFormToAppraiserQuery returnFormToAppraiser = new()
             {

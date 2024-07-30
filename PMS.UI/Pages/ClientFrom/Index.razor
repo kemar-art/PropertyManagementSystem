@@ -35,7 +35,7 @@ else if (FormVMs.Any())
             @foreach (var item in FormVMs)
             {
                 <tr>
-                    <td>@string.Format("{0:D7}", item.Id)</td>
+                    <td>@string.Format("{0:D7}", item.CustomerId)</td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
                     <td>@item.Email</td>
@@ -50,4 +50,10 @@ else if (FormVMs.Any())
             }
         </tbody>
     </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        No records found.
+    </div>
 }

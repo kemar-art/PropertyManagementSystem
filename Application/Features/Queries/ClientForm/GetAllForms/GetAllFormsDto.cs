@@ -2,7 +2,9 @@
 
 public class GetAllFormsDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+
+    public int CustomerId { get; set; }
 
     public string FirstName { get; set; } = string.Empty;
 

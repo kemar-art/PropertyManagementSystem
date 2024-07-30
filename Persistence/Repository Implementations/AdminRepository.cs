@@ -250,7 +250,7 @@ namespace Persistence.Repository_Implementations
             return Unit.Value;
         }
 
-        public async Task<Unit> MarkFormHasComplete(int? formId, string? appraiserId)
+        public async Task<Unit> MarkFormHasComplete(Guid? formId, string? appraiserId)
         {
             if (formId == null)
             {
@@ -321,7 +321,7 @@ namespace Persistence.Repository_Implementations
             throw new BadHttpRequestException("An error occurred while marking this job as complete. Please refresh and try again.");
         }
 
-        public async Task<Unit> ReturnTheFormToAppraiserForCompletion(int? returnFormToAppraiser)
+        public async Task<Unit> ReturnTheFormToAppraiserForCompletion(Guid? returnFormToAppraiser)
         {
             if (returnFormToAppraiser == null)
             {

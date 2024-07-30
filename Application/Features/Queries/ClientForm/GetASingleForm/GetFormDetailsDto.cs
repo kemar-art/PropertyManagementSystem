@@ -5,7 +5,8 @@ namespace Application.Features.Queries.ClientForm.GetASingleForm;
 
 public class GetFormDetailsDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public int CustomerId { get; set; }
 
     public string FirstName { get; set; } = string.Empty;
 
