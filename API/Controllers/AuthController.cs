@@ -28,10 +28,10 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> EmailCheck(string email)
         {
 
-            if (string.IsNullOrEmpty(email))
-            {
-                return BadRequest(new { errors = new { email = new[] { "The email field is required." } } });
-            }
+            //if (string.IsNullOrEmpty(email))
+            //{
+            //    return BadRequest(new { errors = new { email = new[] { "" } } });
+            //}
 
 
             var emailExists = await _authService.IsEmailRegisteredExist(email);
