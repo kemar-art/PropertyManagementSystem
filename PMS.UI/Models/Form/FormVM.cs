@@ -34,7 +34,7 @@ namespace PMS.UI.Models.Form
 
         public string StrataPlan { get; set; } = string.Empty;
 
-        public bool IsKeyAvailable { get; set; } = false;
+        public bool? IsKeyAvailable { get; set; }
 
         public string MortgageInstitution { get; set; } = string.Empty;
 

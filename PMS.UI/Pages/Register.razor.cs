@@ -11,18 +11,18 @@ namespace PMS.UI.Pages
         public RegisterVM RegisterVM { get; set; } = new();
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        public NavigationManager _NavigationManager { get; set; }
 
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         public bool EmailExists { get; set; }
 
         [Inject]
-        private IAuthenticationService AuthenticationService { get; set; }
+        private IAuthenticationService _AuthenticationService { get; set; }
 
         protected override void OnInitialized()
         {
-            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+            var uri = _NavigationManager.ToAbsoluteUri(_NavigationManager.Uri);
             var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
             if (queryParams.TryGetValue("firstName", out var firstName))
@@ -47,7 +47,7 @@ namespace PMS.UI.Pages
         {
             if (!string.IsNullOrEmpty(RegisterVM.Email))
             {
-                EmailExists = await AuthenticationService.IsEmailRegisteredExist(RegisterVM.Email);
+                EmailExists = await _AuthenticationService.IsEmailRegisteredExist(RegisterVM.Email);
             }
         }
 
@@ -61,11 +61,11 @@ namespace PMS.UI.Pages
                 return;
             }
 
-            var result = await AuthenticationService.IsRegister(RegisterVM);
+            var result = await _AuthenticationService.IsRegister(RegisterVM);
 
             if (result)
             {
-                NavigationManager.NavigateTo("/");
+                _NavigationManager.NavigateTo("/");
             }
             else
             {
