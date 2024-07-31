@@ -10,6 +10,11 @@ namespace PMS.UI.Pages
     {
         public RegisterVM RegisterVM { get; set; } = new();
 
+        public string Male = "Male";
+        public string Female = "Female";
+
+        public string Gender { get; set; } = string.Empty;
+
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
 

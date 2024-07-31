@@ -1,0 +1,9 @@
+﻿.radzen-radio-button-list .rz-radiobutton {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+    .radzen-radio-button-list .rz-radiobutton label {
+        margin-left: 900rem; /* Adjust the margin as needed */
+    }

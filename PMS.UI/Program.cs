@@ -12,6 +12,7 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Services.Base;
 using PMS.UI.Services.Repository_Implementation;
 using PMS.UI.Services.Repository_Implementation.AuthService;
+using Radzen;
 using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -33,6 +34,7 @@ builder.Services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSweetAlert2();
+builder.Services.AddRadzenComponents();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
