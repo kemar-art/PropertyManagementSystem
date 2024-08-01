@@ -12,7 +12,7 @@ namespace PMS.UI.Pages
 
         public string Male = "Male";
         public string Female = "Female";
-
+        private List<string> genders = ["Male", "Female"];
         public string Gender { get; set; } = string.Empty;
 
         [Inject]

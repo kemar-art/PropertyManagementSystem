@@ -39,23 +39,15 @@
                 <InputText id="PhoneNumber" class="form-control" @bind-Value="@RegisterVM.PhoneNumber"></InputText>
                 <ValidationMessage For="@(() => RegisterVM.PhoneNumber)" />
             </div>
-            <div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <RadzenLabel class="control-label">Gender</RadzenLabel>
-                    </div>
-                    <div class="col">
-                        <RadzenRadioButtonList @bind-Value="@RegisterVM.Gender" TValue="string">
-                            <Items>
-                                <RadzenRadioButtonListItem Text="Male" Value="Male" />
-                                <RadzenRadioButtonListItem Text="Female" Value="Female" />
-                            </Items>
-                        </RadzenRadioButtonList>
-                        <ValidationMessage For="@(() => RegisterVM.Gender)" />
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="control-label ">Gender</label>
+                <InputRadioGroup @bind-Value="RegisterVM.Gender">
+                    @foreach (var gender in genders)
+                    {
+                        <InputRadio Value="gender" class="form-check-input " /> @gender
+                    }
+                </InputRadioGroup>
             </div>
-
             <div class="form-group">
                 <label for="DateOfBirth" class="control-label">D.O.B</label>
                 <InputDate id="DateOfBirth" class="form-control" @bind-Value="@RegisterVM.DateOfBirth"></InputDate>
