@@ -4,3 +4,73 @@
     background-color: #fff;
     padding: 20px;
 }
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    padding-bottom: 3rem;
+    padding-top: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-8 {
+    width: 66.67%;
+}
+
+.form-container {
+    width: 100%;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.form-outline {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    margin-bottom: 0.5rem;
+}
+
+.form-check-inline {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.form-check-label {
+    margin-left: 0.5rem;
+}
+
+.fieldset {
+    border: 1px solid #ced4da;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.legend {
+    width: auto;
+    padding: 0.5rem 1rem;
+    color: #495057;
+    font-size: 1.25rem;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.btn-block {
+    width: 100%;
+}
+

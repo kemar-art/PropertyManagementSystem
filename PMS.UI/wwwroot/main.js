@@ -1,6 +1,16 @@
 (function () {
     "use strict";
 
+    // Define the mobileNavToggle function at the top level
+    function mobileNavToggle() {
+        document.querySelector('body').classList.toggle('mobile-nav-active');
+        const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+        if (mobileNavToggleBtn) {
+            mobileNavToggleBtn.classList.toggle('bi-list');
+            mobileNavToggleBtn.classList.toggle('bi-x');
+        }
+    }
+
     /**
      * Apply .scrolled class to the body as the page is scrolled down
      */
@@ -15,17 +25,9 @@
     document.addEventListener('scroll', toggleScrolled);
     window.addEventListener('load', toggleScrolled);
 
-    /**
-     * Mobile nav toggle
-     */
     const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
     if (mobileNavToggleBtn) { // Ensure mobileNavToggleBtn exists
-        function mobileNavToogle() {
-            document.querySelector('body').classList.toggle('mobile-nav-active');
-            mobileNavToggleBtn.classList.toggle('bi-list');
-            mobileNavToggleBtn.classList.toggle('bi-x');
-        }
-        mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+        mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
     }
 
     /**
@@ -34,7 +36,7 @@
     document.querySelectorAll('#navmenu a').forEach(navmenu => {
         navmenu.addEventListener('click', () => {
             if (document.querySelector('.mobile-nav-active')) {
-                mobileNavToogle();
+                mobileNavToggle();
             }
         });
     });
@@ -54,13 +56,12 @@
     /**
      * Preloader
      */
-    //const preloader = document.querySelector('#preloader');
-    //if (preloader) {
-    //    window.addEventListener('load', () => {
-    //        preloader.remove();
-    //    });
-    //}
-
+    const preloader = document.querySelector('#preloader');
+    if (preloader) {
+        window.addEventListener('load', () => {
+            preloader.remove();
+        });
+    }
 
     /**
      * Scroll top button
