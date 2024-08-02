@@ -21,15 +21,15 @@ namespace PMS.UI.Pages
             await ((ApiAuthenticationStateProvider)AuthenticationStateProvider).GetAuthenticationStateAsync();
         }
 
-        protected void GoToLogin()
-        {
-            NavigationManager.NavigateTo("login/");
-        }
+        //protected void GoToLogin()
+        //{
+        //    NavigationManager.NavigateTo("login/");
+        //}
 
-        protected void GoToRegister()
-        {
-            NavigationManager.NavigateTo("register/");
-        }
+        //protected void GoToRegister()
+        //{
+        //    NavigationManager.NavigateTo("register/");
+        //}
 
         protected async void Logout()
         {
