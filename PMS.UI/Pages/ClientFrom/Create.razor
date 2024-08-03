@@ -1,6 +1,7 @@
 ﻿@layout EmptyLayout
 @page "/create/"
 @using PMS.UI.StaticDetails
+@inject IJSRuntime JS
 @* <h3>Create</h3> *@
 
 
@@ -9,164 +10,337 @@
 @if (IsLoading)
 {
     <div class="loading-overlay">
-       @*  <div class="spinner"></div> *@
+        @*  <div class="spinner"></div> *@
         <div id="preloader"></div>
     </div>
 }
 else
 {
-    <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
-        <DataAnnotationsValidator />
-        <MudGrid>
-            <MudItem xs="12">
-                <MudPaper Class="pa-4">
-                        <!-- Client Details -->
-                        <MudItem xs="12">
-                            <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
-                            <MudGrid>
-                                @foreach (var item in ServiceRequestCheckBoxesVM)
-                                {
-                                    <MudItem xs="6">
-                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
-                                    </MudItem>
-                                }
-                            </MudGrid>
-                        </MudItem>
+   @*  <div class="content">
+        <div class="form-container">
+            <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-                        <MudDivider />
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudPaper Class="pa-4 lifted">
 
-                        <!-- Client Information -->
-                        <MudPaper Class="pa-4 mt-4">
-                            <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
-                            <MudGrid>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Color="Color.Secondary" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)"  />
-                                </MudItem>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
-                                </MudItem>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)"  />
-                                </MudItem>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.Email" For="@(() => FormVM.Email)" />
-                                </MudItem>
-                                <MudItem xs="12">
-                                <MudTextField T="string" Label="Address" @bind-Value="FormVM.Address" For="@(() => FormVM.Address)" />
-                                </MudItem>
-                                <MudItem xs="12">
-                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="FormVM.InstructionsIssuedBy" For="@(() => FormVM.InstructionsIssuedBy)" />
-                                </MudItem>
-                            </MudGrid>
-                        </MudPaper>
-
-                        <!-- Property Details -->
-                        <MudPaper Class="pa-4 mt-4">
-                            <MudText Typo="Typo.h6">PROPERTY INFORMATION</MudText>
-                            <MudGrid>
+                            <!-- Step 1: Client Details -->
+                            @if (currentStep == 1)
+                            {
                                 <MudItem xs="12">
                                     <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
                                     <MudGrid>
-                                        @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                        @foreach (var item in ServiceRequestCheckBoxesVM)
                                         {
                                             <MudItem xs="6">
                                                 <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
-                                                <input type="hidden" value="@item.Id" />
                                             </MudItem>
                                         }
                                     </MudGrid>
                                 </MudItem>
 
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
-                                </MudItem>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Folio" @bind-Value="FormVM.Folio" For="@(() => FormVM.Folio)" />
-                                </MudItem>
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
-                                </MudItem>
                                 <MudDivider />
-                                <MudItem xs="12">
-                                    <MudText Typo="Typo.subtitle1">PURPOSE OF VALUATION:</MudText>
+
+                                <MudPaper Class="pa-4 mt-4 lifted">
+                                    <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
                                     <MudGrid>
-                                        @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
-                                        {
-                                            <MudItem xs="6">
-                                                <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
-                                                <input type="hidden" value="@item.Id" />
-                                            </MudItem>
-                                        }
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Color="Color.Secondary" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Email" @bind-Value="FormVM.Email" For="@(() => FormVM.Email)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Address" @bind-Value="FormVM.Address" For="@(() => FormVM.Address)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Instructions Issued By" @bind-Value="FormVM.InstructionsIssuedBy" For="@(() => FormVM.InstructionsIssuedBy)" />
+                                        </MudItem>
                                     </MudGrid>
+                                </MudPaper>
+                            }
 
-                                </MudItem>
-                                <MudDivider />
-                                <MudItem xs="6">
-                                <MudTextField T="string" Label="Mortgage Institution" @bind-Value="FormVM.MortgageInstitution" For="@(() => FormVM.MortgageInstitution)" />
-                                </MudItem>
-                                <MudItem xs="6">
-                                    <MudTextField T="string" Label="Other" @bind-Value="FormVM.Other" />
-                                </MudItem>
-                                <MudItem xs="6">
-                                    <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
-                                <MudRadioGroup T="string"  @bind-Value="FormVM.IsKeyAvailable" For="@(() => FormVM.IsKeyAvailable)">
-                                    <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
-                                    <MudRadio Value="KeyAvailability.No">No</MudRadio>
-                                    </MudRadioGroup>
-                                </MudItem>
-                                <MudItem xs="6">
-                                    <MudSelect T="Guid" Label="Parish" @bind-Value="FormVM.RegionId" >
-                                        <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
-                                        @foreach (var region in Regions)
-                                        {
-                                            <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                <MudItem xs="12">
-                                <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />
-                                </MudItem>
-                                <MudItem xs="12">
-                                    <MudTextField T="string" Label="Property Direction" @bind-Value="FormVM.PropertyDirection" TextArea="true" />
-                                </MudItem>
-                            </MudGrid>
+                            <!-- Step 2: Property Details -->
+                            @if (currentStep == 2)
+                            {
+                                <MudPaper Class="pa-4 mt-4 lifted">
+                                    <MudText Typo="Typo.h6">PROPERTY INFORMATION</MudText>
+                                    <MudGrid>
+                                        <MudItem xs="12">
+                                            <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
+                                            <MudGrid>
+                                                @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                                {
+                                                    <MudItem xs="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                        </MudItem>
+
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Folio" @bind-Value="FormVM.Folio" For="@(() => FormVM.Folio)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
+                                        </MudItem>
+                                        <MudDivider />
+                                        <MudItem xs="12">
+                                            <MudText Typo="Typo.subtitle1">PURPOSE OF VALUATION:</MudText>
+                                            <MudGrid>
+                                                @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                                {
+                                                    <MudItem xs="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                        </MudItem>
+                                        <MudDivider />
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Mortgage Institution" @bind-Value="FormVM.MortgageInstitution" For="@(() => FormVM.MortgageInstitution)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Other" @bind-Value="FormVM.Other" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
+                                            <MudRadioGroup T="string" @bind-Value="FormVM.IsKeyAvailable" For="@(() => FormVM.IsKeyAvailable)">
+                                                <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
+                                                <MudRadio Value="KeyAvailability.No">No</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudSelect T="Guid" Label="Parish" @bind-Value="FormVM.RegionId">
+                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                @foreach (var region in Regions)
+                                                {
+                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Direction" @bind-Value="FormVM.PropertyDirection" TextArea="true" />
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudPaper>
+                            }
+
+                            <!-- Step 3: Contact for Inspection -->
+                            @if (currentStep == 3)
+                            {
+                                <MudPaper Class="pa-4 mt-4 lifted">
+                                    <MudText Typo="Typo.h6">CONTACT FOR INSPECTION</MudText>
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Secondary Contact First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Secondary Contact Last Name" @bind-Value="FormVM.SecondaryContactLastName" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Secondary Contact Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudPaper>
+                            }
+
+                            <!-- Navigation Buttons -->
+                            <MudItem xs="12" class="mt-4">
+                                <MudButton Variant="Variant.Text" @onclick="PreviousStep" Disabled="@((currentStep == 1))">Back</MudButton>
+                                @if (currentStep < 3)
+                                {
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NextStep">Next</MudButton>
+                                }
+                                else
+                                {
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Submit</MudButton>
+                                }
+                            </MudItem>
+
                         </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
+        </div>
+    </div> *@
 
-                        <!-- Contact for Inspection -->
-                    <MudPaper Class="pa-4 mt-4">
-                        <MudText Typo="Typo.h6">CONTACT FOR INSPECTION</MudText>
-                        <MudGrid>
-                            <MudItem xs="6">
-                                <MudTextField T="string" Label="Secondary Contact First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudTextField T="string" Label="Secondary Contact Last Name" @bind-Value="FormVM.SecondaryContactLastName"  />
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudTextField T="string" Label="Secondary Contact Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />
-                            </MudItem>
-                        </MudGrid>
-                    </MudPaper>
 
-                        <!-- Submit Button -->
-                    <MudButton ButtonType="ButtonType.Submit"  Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
-                        <MudIcon Icon="Icons.Material.Filled.Send" /> Submit
-                    </MudButton>
-                       @*  <button type="submit" class="w-100 btn btn-primary">
-                            <i class="fa-solid fa-paper-plane"></i>&nbsp; Submit
-                        </button> *@
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
+
+
+
+
+    <div class="content">
+        <div class="form-container">
+            <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudPaper Class="pa-4 lifted">
+                            <!-- Client Details -->
+                            <MudItem xs="12">
+                                <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
+                                <MudGrid>
+                                    @foreach (var item in ServiceRequestCheckBoxesVM)
+                                    {
+                                        <MudItem xs="6">
+                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                        </MudItem>
+                                    }
+                                </MudGrid>
+                            </MudItem>
+
+                            <MudDivider />
+
+                            <!-- Client Information -->
+                            <MudPaper Class="pa-4 mt-4 lifted">
+                                <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Color="Color.Secondary" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Email" @bind-Value="FormVM.Email" For="@(() => FormVM.Email)" />
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Address" @bind-Value="FormVM.Address" For="@(() => FormVM.Address)" />
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Instructions Issued By" @bind-Value="FormVM.InstructionsIssuedBy" For="@(() => FormVM.InstructionsIssuedBy)" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
+
+                            <!-- Property Details -->
+                            <MudPaper Class="pa-4 mt-4 lifted">
+                                <MudText Typo="Typo.h6">PROPERTY INFORMATION</MudText>
+                                <MudGrid>
+                                    <MudItem xs="12">
+                                        <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
+                                        <MudGrid>
+                                            @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                            {
+                                                <MudItem xs="6">
+                                                    <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                    <input type="hidden" value="@item.Id" />
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+                                    </MudItem>
+
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Folio" @bind-Value="FormVM.Folio" For="@(() => FormVM.Folio)" />
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
+                                    </MudItem>
+                                    <MudDivider />
+                                    <MudItem xs="12">
+                                        <MudText Typo="Typo.subtitle1">PURPOSE OF VALUATION:</MudText>
+                                        <MudGrid>
+                                            @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                            {
+                                                <MudItem xs="6">
+                                                    <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                    <input type="hidden" value="@item.Id" />
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+                                    </MudItem>
+                                    <MudDivider />
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Mortgage Institution" @bind-Value="FormVM.MortgageInstitution" For="@(() => FormVM.MortgageInstitution)" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Other" @bind-Value="FormVM.Other" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
+                                        <MudRadioGroup T="string" @bind-Value="FormVM.IsKeyAvailable" For="@(() => FormVM.IsKeyAvailable)">
+                                            <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
+                                            <MudRadio Value="KeyAvailability.No">No</MudRadio>
+                                        </MudRadioGroup>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudSelect T="Guid" Label="Parish" @bind-Value="FormVM.RegionId">
+                                            <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                            @foreach (var region in Regions)
+                                            {
+                                                <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />
+                                    </MudItem>
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Property Direction" @bind-Value="FormVM.PropertyDirection" TextArea="true" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
+
+                            <!-- Contact for Inspection -->
+                            <MudPaper Class="pa-4 mt-4 lifted">
+                                <MudText Typo="Typo.h6">CONTACT FOR INSPECTION</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Secondary Contact First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Secondary Contact Last Name" @bind-Value="FormVM.SecondaryContactLastName" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Secondary Contact Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudPaper>
+
+                            <!-- Submit Button -->
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Submit</MudButton>
+
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
+        </div>
+    </div>
 }
 
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 
-<Footer/>
+<Footer />
 
+@* style="background-color: #f82249" *@

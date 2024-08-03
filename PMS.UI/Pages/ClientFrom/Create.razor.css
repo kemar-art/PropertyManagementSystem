@@ -1,4 +1,98 @@
-﻿.text-field-container {
-    display: flex;
-    align-items: center;
+﻿:root {
+    --header-height: 100px; /* Adjust this value to match the height of your header */
+    --footer-spacing: 40px; /* Adjust this value to set space between the form-container and footer */
 }
+
+.lifted {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+}
+
+    .lifted:hover {
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-top: calc(var(--header-height) + 20px); /* Adjust space above the form-container */
+    overflow-y: auto;
+}
+
+
+/*.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+}*/
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-top: 100px; /* Adjust this value to match the height of the header */
+    overflow-y: auto;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: var(--footer-spacing); /* Space below the form-container */
+}
+
+/*.form-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}*/
+
+.footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+    .footer .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+        .footer .container .col {
+            flex: 1;
+            padding: 10px;
+        }
+
+            .footer .container .col ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .footer .container .col ul li {
+                    margin: 5px 0;
+                }
+
+                    .footer .container .col ul li a {
+                        color: #fff;
+                        text-decoration: none;
+                    }

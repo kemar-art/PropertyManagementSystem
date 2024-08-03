@@ -12,40 +12,53 @@ namespace PMS.UI.Models.Form
 
         public int CustomerId { get; set; }
 
+        [Required]
         public string FirstName { get; set; } = string.Empty;
 
+        [Required]
         public string LastName { get; set; } = string.Empty;
 
+        [Required]
         public string Email { get; set; } = string.Empty;
 
+        [Required]
         public string Address { get; set; } = string.Empty;
 
+        [Required]
         public string PhoneNumber { get; set; } = string.Empty;
 
         public string InstructionsIssuedBy { get; set; } = string.Empty;
 
+        [Required]
         public string PropertyAddress { get; set; } = string.Empty;
 
         public string PropertyDirection { get; set; } = string.Empty;
 
+        [Required]
         public string Volume { get; set; } = string.Empty;
 
+        [Required]
         public string Folio { get; set; } = string.Empty;
 
+        [Required]
         public string StrataPlan { get; set; } = string.Empty;
 
+        [Required]
         public string IsKeyAvailable { get; set; } = string.Empty;
 
         public string MortgageInstitution { get; set; } = string.Empty;
 
         public string Other { get; set; } = string.Empty;
 
+        [Required]
         public string SecondaryContactFirstName { get; set; } = string.Empty;
 
+        [Required]
         public string SecondaryContactLastName { get; set; } = string.Empty;
 
         public string SecondaryContactEmail { get; set; } = string.Empty;
 
+        [Required]
         public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
         [ForeignKey("RegionId")]
