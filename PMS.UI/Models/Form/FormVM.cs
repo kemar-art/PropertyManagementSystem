@@ -12,10 +12,10 @@ namespace PMS.UI.Models.Form
 
         public int CustomerId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Last Name is required.")]
         public string LastName { get; set; } = string.Empty;
 
         [Required]

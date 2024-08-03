@@ -1,7 +1,6 @@
 ﻿@layout EmptyLayout
 @page "/create/"
 @using PMS.UI.StaticDetails
-@inject IJSRuntime JS
 @* <h3>Create</h3> *@
 
 
@@ -16,11 +15,11 @@
 }
 else
 {
-   @*  <div class="content">
+    <div class="content">
         <div class="form-container">
             <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
                 <DataAnnotationsValidator />
-                <ValidationSummary />
+                @* <ValidationSummary /> *@
 
                 <MudGrid>
                     <MudItem xs="12">
@@ -47,10 +46,12 @@ else
                                     <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
                                     <MudGrid>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Color="Color.Secondary" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                            <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                            <ValidationMessage For="@(() => FormVM.FirstName)" />
                                         </MudItem>
                                         <MudItem xs="6">
                                             <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
+                                            <ValidationMessage For="@(() => FormVM.LastName)" />
                                         </MudItem>
                                         <MudItem xs="6">
                                             <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)" />
@@ -169,7 +170,7 @@ else
                                 <MudButton Variant="Variant.Text" @onclick="PreviousStep" Disabled="@((currentStep == 1))">Back</MudButton>
                                 @if (currentStep < 3)
                                 {
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NextStep">Next</MudButton>
+                                    <MudButton  Variant="Variant.Filled" Color="Color.Primary" @onclick="NextStep">Next</MudButton>
                                 }
                                 else
                                 {
@@ -182,14 +183,13 @@ else
                 </MudGrid>
             </EditForm>
         </div>
-    </div> *@
+    </div>
 
 
 
 
 
-
-    <div class="content">
+    @* <div class="content">
         <div class="form-container">
             <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator />
@@ -334,7 +334,7 @@ else
                 </MudGrid>
             </EditForm>
         </div>
-    </div>
+    </div> *@
 }
 
 <!-- Scroll Top -->
