@@ -26,11 +26,11 @@ public class GetFormDetailsDto
 
     public string Volume { get; set; } = string.Empty;
 
-    public string Folio { get; set; } = string.Empty; 
+    public string Folio { get; set; } = string.Empty;
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; }
+    public string IsKeyAvailable { get; set; } = string.Empty;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 

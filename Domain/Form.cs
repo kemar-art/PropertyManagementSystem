@@ -34,7 +34,7 @@ public class Form
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; } = false;
+    public string IsKeyAvailable { get; set; } = string.Empty;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 
@@ -42,11 +42,7 @@ public class Form
 
     public string Status { get; set; } = string.Empty;
 
-    public string SecondaryContactFirstName { get; set; } = string.Empty;
-
-    public string SecondaryContactLastName { get; set; } = string.Empty;
-
-    public string SecondaryContactEmail { get; set; } = string.Empty;
+    public string SecondaryContactName { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 

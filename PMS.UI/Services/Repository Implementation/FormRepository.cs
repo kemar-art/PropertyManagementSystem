@@ -24,8 +24,8 @@ namespace PMS.UI.Services.Repository_Implementation
                 var createFormCommand = _mapper.Map<CreateFormCommand>(form);
 
                 // Capture the payload for debugging (if needed)
-                // var payload = JsonConvert.SerializeObject(createFormCommand);
-                // Console.WriteLine("Payload: " + payload);
+                //var payload = JsonConvert.SerializeObject(createFormCommand);
+                //Console.WriteLine("Payload: " + payload);
 
                 // Assuming your API returns the form ID
                 var formId = await _client.FormsPOSTAsync(createFormCommand);

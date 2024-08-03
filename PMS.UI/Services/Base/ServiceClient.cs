@@ -3041,7 +3041,7 @@ namespace PMS.UI.Services.Base
         public string StrataPlan { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
-        public bool IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
         public string MortgageInstitution { get; set; }
@@ -3122,7 +3122,7 @@ namespace PMS.UI.Services.Base
         public string StrataPlan { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
-        public bool IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
         public string MortgageInstitution { get; set; }
@@ -3133,14 +3133,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
-        public string SecondaryContactFirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
-        public string SecondaryContactLastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
-        public string SecondaryContactEmail { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactName")]
+        public string SecondaryContactName { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
@@ -3286,7 +3280,7 @@ namespace PMS.UI.Services.Base
         public string StrataPlan { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
-        public bool IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
         public string MortgageInstitution { get; set; }
@@ -3361,7 +3355,7 @@ namespace PMS.UI.Services.Base
         public string StrataPlan { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
-        public bool IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
         public string MortgageInstitution { get; set; }
@@ -3597,7 +3591,7 @@ namespace PMS.UI.Services.Base
         public string StrataPlan { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("isKeyAvailable")]
-        public bool IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("mortgageInstitution")]
         public string MortgageInstitution { get; set; }

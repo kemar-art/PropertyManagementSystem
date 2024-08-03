@@ -6,7 +6,6 @@ namespace Application.Features.Commands.ClientForm.CreateForm;
 
 public class CreateFormCommand : IRequest<Guid>
 {
-
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;
@@ -29,7 +28,7 @@ public class CreateFormCommand : IRequest<Guid>
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; }
+    public string IsKeyAvailable { get; set; } = string.Empty;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 

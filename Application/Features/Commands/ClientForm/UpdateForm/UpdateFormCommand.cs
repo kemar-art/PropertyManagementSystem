@@ -30,7 +30,7 @@ public class UpdateFormCommand : IRequest<Unit>
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; }
+    public string IsKeyAvailable { get; set; } = string.Empty;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 

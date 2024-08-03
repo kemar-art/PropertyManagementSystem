@@ -101,17 +101,17 @@ namespace Application.Features.Commands.ClientForm.UpdateForm
              .WithMessage("{PropertyName} is required.")
              .NotNull();
 
-            RuleFor(p => p.SecondaryContactLastName)
-             .NotEmpty()
-             .WithMessage("{PropertyName} is required.")
-             .NotNull();
+            //RuleFor(p => p.SecondaryContactLastName)
+            // .NotEmpty()
+            // .WithMessage("{PropertyName} is required.")
+            // .NotNull();
 
-            RuleFor(p => p.SecondaryContactEmail)
-             .NotEmpty()
-             .WithMessage("{PropertyName} is required.")
-             .EmailAddress()
-             .WithMessage("A valid email is required.")
-             .NotNull();
+            //RuleFor(p => p.SecondaryContactEmail)
+            // .NotEmpty()
+            // .WithMessage("{PropertyName} is required.")
+            // .EmailAddress()
+            // .WithMessage("A valid email is required.")
+            // .NotNull();
 
             RuleFor(p => p.SecondaryContactPhoneNumber)
                .NotEmpty()

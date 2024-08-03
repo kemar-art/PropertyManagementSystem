@@ -4,6 +4,7 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using Persistence.Repository_Implementations;
 using PMS.UI;
 using PMS.UI.AuthProviders;
@@ -12,7 +13,6 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Services.Base;
 using PMS.UI.Services.Repository_Implementation;
 using PMS.UI.Services.Repository_Implementation.AuthService;
-using Radzen;
 using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -34,7 +34,9 @@ builder.Services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSweetAlert2();
-builder.Services.AddRadzenComponents();
+builder.Services.AddMudServices();
+
+
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

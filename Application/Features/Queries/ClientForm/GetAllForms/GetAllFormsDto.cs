@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Queries.ClientForm.GetAllForms;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Application.Features.Queries.ClientForm.GetAllForms;
 
 public class GetAllFormsDto
 {
@@ -28,7 +30,7 @@ public class GetAllFormsDto
 
     public string StrataPlan { get; set; } = string.Empty;
 
-    public bool IsKeyAvailable { get; set; }
+    public string IsKeyAvailable { get; set; } = string.Empty;
 
     public string MortgageInstitution { get; set; } = string.Empty;
 

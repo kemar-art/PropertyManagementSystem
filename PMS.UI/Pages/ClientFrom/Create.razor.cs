@@ -1,5 +1,6 @@
 using Application.Contracts.Repository_Interface;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models;
@@ -10,6 +11,9 @@ namespace PMS.UI.Pages.ClientFrom
 {
     public partial class Create
     {
+        private string Yes;
+        private string No;
+
         [Inject]
         NavigationManager _NavigationManager { get; set; }
 
@@ -21,17 +25,18 @@ namespace PMS.UI.Pages.ClientFrom
 
         [Inject]
         ICheckBoxRepository _CheckBoxRepository { get; set; }
+
         private bool IsLoading { get; set; } = true;
 
-        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = new();
 
-        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
 
-        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
 
         public FormVM FormVM { get; set; } = new();
 
-        IEnumerable<Region> Regions { get; set; } = [];
+        IEnumerable<Region> Regions { get; set; } = new List<Region>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -76,29 +81,33 @@ namespace PMS.UI.Pages.ClientFrom
             }
         }
 
-
-
-
-
-
-        private async Task HandleValidSubmit()
+        private async Task OnValidSubmit()
         {
             // Populate the selected IDs as comma-separated strings
             FormVM.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
             FormVM.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
             FormVM.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
 
-            var response = await _FormRepository.CreateForm(FormVM);
+            try
+            {
+                var response = await _FormRepository.CreateForm(FormVM);
 
-            if (response.Success)
-            {
-                _NavigationManager.NavigateTo($"/success/{response.Data}");
+                if (response.Success)
+                {
+                    _NavigationManager.NavigateTo($"/success/{response.Data}");
+                }
+                else
+                {
+                    // Handle error
+                    Console.WriteLine("Error: " + response.ErrorMessage);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Handle error
+                // Handle unexpected errors
+                Console.WriteLine("Unexpected error: " + ex.Message);
             }
         }
-
     }
+
 }

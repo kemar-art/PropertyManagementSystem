@@ -40,17 +40,29 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
     public async Task<Guid> CreateFrom(CreateFormCommand createForm)
     {
-
         var formToCreate = _mapper.Map<Form>(createForm);
         formToCreate.Status = FormStatus.StatusSubmitted;
         formToCreate.DataCreated = DateTime.Now;
 
         await CreateAsync(formToCreate);
 
-        await _dbContext.SaveChangesAsync();
+        try
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            var innerException = ex.InnerException?.Message;
+            // Log the inner exception
+            _appLogger.LogError(innerException);
+
+            // Optionally, you can rethrow the exception or handle it accordingly
+            throw new Exception("An error occurred while saving the entity changes. See the inner exception for details.", ex);
+        }
 
         return formToCreate.Id;
     }
+
 
     public async Task<IEnumerable<Form>> GetAllFroms()
     {

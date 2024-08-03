@@ -1,9 +1,10 @@
-﻿@layout HomeLayout
+﻿@layout EmptyLayout
 @page "/create/"
+@using PMS.UI.StaticDetails
 @* <h3>Create</h3> *@
 
 
-<CustomNavMenu />
+<CustomHeader />
 
 @if (IsLoading)
 {
@@ -14,299 +15,158 @@
 }
 else
 {
-    <div class="container min-vh-100 d-flex pb-3 pt-5 justify-content-center align-items-center" style="margin-top: 80px;">
-        <div class="col-8">
-            <div class="form-container">
-                <section>
-                    <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit">
-                        <DataAnnotationsValidator />
-
+    <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12">
+                <MudPaper Class="pa-4">
                         <!-- Client Details -->
-                        <div class="row">
-                            <div class="form-group col-md">
-                                <label>
-                                    <strong>SERVICE(S) REQUIRED:</strong>
-                                </label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <div class="row">
-                                    @foreach (var item in ServiceRequestCheckBoxesVM)
-                                    {
-                                        <div class="col-md-6">
-                                            <div class="form-check form-check-inline">
-                                                <InputCheckbox class="form-check-input"
-                                                               @bind-Value="item.IsChecked" />
-                                                <label class="form-check-label">
-                                                    @item.Title
-                                                </label>
-                                                <input type="hidden" value="@item.Id" />
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
+                            <MudGrid>
+                                @foreach (var item in ServiceRequestCheckBoxesVM)
+                                {
+                                    <MudItem xs="6">
+                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                    </MudItem>
+                                }
+                            </MudGrid>
+                        </MudItem>
 
-                            </div>
-                        </div>
-                        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                        <fieldset class="border p-2">
-                            <legend class="float-none w-auto p-2 text-dark fs-2">CLIENT INFORMATION</legend>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label class="form-label">First Name</label>
-                                        <span class="d-flex">
-                                            <ValidationMessage For="@(() => FormVM.FirstName)" />
-                                        </span>
-                                        <InputText class="form-control" @bind-Value="FormVM.FirstName" aria-required="true" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label class="form-label">Last Name</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.LastName" />
-                                        <ValidationMessage For="@(() => FormVM.LastName)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Phone Number</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.PhoneNumber" />
-                                        <ValidationMessage For="@(() => FormVM.PhoneNumber)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Email</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.Email" />
-                                        <ValidationMessage For="@(() => FormVM.Email)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label>Address</label>
-                                <InputText class="form-control" @bind-Value="FormVM.Address" />
-                                <ValidationMessage For="@(() => FormVM.Address)" />
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label>Instructions Issued By</label>
-                                <InputText class="form-control" @bind-Value="FormVM.InstructionsIssuedBy" />
-                            </div>
-                        </fieldset>
+                        <MudDivider />
+
+                        <!-- Client Information -->
+                        <MudPaper Class="pa-4 mt-4">
+                            <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
+                            <MudGrid>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Color="Color.Secondary" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)"  />
+                                </MudItem>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
+                                </MudItem>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)"  />
+                                </MudItem>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.Email" For="@(() => FormVM.Email)" />
+                                </MudItem>
+                                <MudItem xs="12">
+                                <MudTextField T="string" Label="Address" @bind-Value="FormVM.Address" For="@(() => FormVM.Address)" />
+                                </MudItem>
+                                <MudItem xs="12">
+                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="FormVM.InstructionsIssuedBy" For="@(() => FormVM.InstructionsIssuedBy)" />
+                                </MudItem>
+                            </MudGrid>
+                        </MudPaper>
 
                         <!-- Property Details -->
-                        <fieldset class="border p-2">
-                            <legend class="float-none w-auto p-3 text-dark fs-3">PROPERTY INFORMATION</legend>
-                            <div class="row">
-                                <div class="form-group col-md">
-                                    <label>
-                                        TYPE OF PROPERTY:
-                                    </label>
-                                </div>
-                                <div class="form-group col-md-8">
-                                    <label>Type of Property:</label>
-                                    <div class="row">
+                        <MudPaper Class="pa-4 mt-4">
+                            <MudText Typo="Typo.h6">PROPERTY INFORMATION</MudText>
+                            <MudGrid>
+                                <MudItem xs="12">
+                                    <MudText Typo="Typo.subtitle1">TYPE OF PROPERTY:</MudText>
+                                    <MudGrid>
                                         @foreach (var item in TypeOfPropertyCheckBoxItemVM)
                                         {
-                                            <div class="col-md-6">
-                                                <div class="form-check form-check-inline">
-                                                    <InputCheckbox class="form-check-input"
-                                                                   @bind-Value="item.IsChecked" />
-                                                    <label class="form-check-label">
-                                                        @item.Title
-                                                    </label>
-                                                    <input type="hidden" value="@item.Id" />
-                                                </div>
-                                            </div>
+                                            <MudItem xs="6">
+                                                <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                <input type="hidden" value="@item.Id" />
+                                            </MudItem>
                                         }
+                                    </MudGrid>
+                                </MudItem>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                            <br />
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Volume</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.Volume"></InputText>
-                                        <ValidationMessage For="@(() => FormVM.Volume)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Folio</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.Folio"></InputText>
-                                        <ValidationMessage For="@(() => FormVM.Folio)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Strata/Deposit Plan</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.StrataPlan" />
-                                        <ValidationMessage For="@(() => FormVM.StrataPlan)" />
-                                    </div>
-                                </div>
-                               @*  <div class="col">
-                                    <div class="form-outline">
-                                        <label>Valuation Required By</label>
-                                        <InputDate class="form-control datepicker_input border-2" @bind-Value="FormVM.ValuationRequiredBy" />
-                                        <ValidationMessage For="@(() => FormVM.ValuationRequiredBy)" />
-                                    </div>
-                                </div> *@
-                            </div>
-                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                            <div class="row">
-                                <div class="form-group col-md">
-                                    <label>
-                                        PURPOSE OF VALUATION:
-                                    </label>
-                                </div>
-                                <div class="form-group col-md-8">
-                                    <div class="row">
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
+                                </MudItem>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Folio" @bind-Value="FormVM.Folio" For="@(() => FormVM.Folio)" />
+                                </MudItem>
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
+                                </MudItem>
+                                <MudDivider />
+                                <MudItem xs="12">
+                                    <MudText Typo="Typo.subtitle1">PURPOSE OF VALUATION:</MudText>
+                                    <MudGrid>
                                         @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
                                         {
-                                            <div class="col-md-6">
-                                                <div class="form-check form-check-inline">
-                                                    <InputCheckbox class="form-check-input"
-                                                                   @bind-Value="item.IsChecked" />
-                                                    <label class="form-check-label">
-                                                        @item.Title
-                                                    </label>
-                                                    <input type="hidden" value="@item.Id" />
-                                                </div>
-                                            </div>
+                                            <MudItem xs="6">
+                                                <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                <input type="hidden" value="@item.Id" />
+                                            </MudItem>
                                         }
+                                    </MudGrid>
 
-                                    </div>
-
-                                </div>
-                            </div>
-                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                            <br />
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Mortgage Institution</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.MortgageInstitution" />
-                                        <ValidationMessage For="@(() => FormVM.MortgageInstitution)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Other</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.Other" />
-                                        <ValidationMessage For="@(() => FormVM.Other)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Is The Key Available</label>
-                                        <div>
-                                            <InputRadioGroup @bind-Value="FormVM.IsKeyAvailable">
-                                                <InputRadio class="form-check-input" Value="true" /> Yes
-                                                <InputRadio class="form-check-input" Value="false" /> No
-                                            </InputRadioGroup>
-                                        </div>
-                                        <ValidationMessage For="@(() => FormVM.IsKeyAvailable)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Parish</label>
-                                        <InputSelect class="form-select" @bind-Value="FormVM.RegionId">
-                                            <option selected disabled>--Select Parish--</option>
-                                            @foreach (var region in Regions)
-                                            {
-                                                <option value="@region.Id">@region.ParishName</option>
-                                            }
-                                        </InputSelect>
-                                        <ValidationMessage For="@(() => FormVM.RegionId)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label>Property Address</label>
-                                <InputText class="form-control" @bind-Value="FormVM.PropertyAddress" />
-                                <ValidationMessage For="@(() => FormVM.PropertyAddress)" />
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label>Property Direction</label>
-                                <InputTextArea class="form-control" @bind-Value="FormVM.PropertyDirection" />
-                                <ValidationMessage For="@(() => FormVM.PropertyDirection)" />
-                            </div>
-                        </fieldset>
+                                </MudItem>
+                                <MudDivider />
+                                <MudItem xs="6">
+                                <MudTextField T="string" Label="Mortgage Institution" @bind-Value="FormVM.MortgageInstitution" For="@(() => FormVM.MortgageInstitution)" />
+                                </MudItem>
+                                <MudItem xs="6">
+                                    <MudTextField T="string" Label="Other" @bind-Value="FormVM.Other" />
+                                </MudItem>
+                                <MudItem xs="6">
+                                    <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
+                                <MudRadioGroup T="string"  @bind-Value="FormVM.IsKeyAvailable" For="@(() => FormVM.IsKeyAvailable)">
+                                    <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
+                                    <MudRadio Value="KeyAvailability.No">No</MudRadio>
+                                    </MudRadioGroup>
+                                </MudItem>
+                                <MudItem xs="6">
+                                    <MudSelect T="Guid" Label="Parish" @bind-Value="FormVM.RegionId" >
+                                        <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                        @foreach (var region in Regions)
+                                        {
+                                            <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+                                <MudItem xs="12">
+                                <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudTextField T="string" Label="Property Direction" @bind-Value="FormVM.PropertyDirection" TextArea="true" />
+                                </MudItem>
+                            </MudGrid>
+                        </MudPaper>
 
                         <!-- Contact for Inspection -->
-                        <fieldset class="border p-2">
-                            <legend class="float-none w-auto p-2 text-dark fs-3">CONTACT FOR INSPECTION</legend>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label class="form-label">Secondary Contact First Name</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactFirstName" />
-                                        <ValidationMessage For="@(() => FormVM.SecondaryContactFirstName)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label class="form-label">Secondary Contact Last Name</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactLastName" />
-                                        <ValidationMessage For="@(() => FormVM.SecondaryContactLastName)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Secondary Contact Phone Number</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
-                                        <ValidationMessage For="@(() => FormVM.SecondaryContactPhoneNumber)" />
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-outline">
-                                        <label>Email</label>
-                                        <InputText class="form-control" @bind-Value="FormVM.SecondaryContactEmail" />
-                                        <ValidationMessage For="@(() => FormVM.SecondaryContactEmail)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
+                    <MudPaper Class="pa-4 mt-4">
+                        <MudText Typo="Typo.h6">CONTACT FOR INSPECTION</MudText>
+                        <MudGrid>
+                            <MudItem xs="6">
+                                <MudTextField T="string" Label="Secondary Contact First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField T="string" Label="Secondary Contact Last Name" @bind-Value="FormVM.SecondaryContactLastName"  />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField T="string" Label="Secondary Contact Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
 
-                        <!-- Submit and Home buttons -->
-                        <div class="row mb-0 mt-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <button type="submit" class="w-100 btn btn-primary">
-                                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Submit
-                                    </button>
-                                </div>
-                            </div>
-                            @* <div class="col">
-                                <div class="form-outline">
-                                    <a class="btn w-100 form-control btn-dark" href="/Index">
-                                        <i class="fa-solid fa-house"></i>&nbsp; Home
-                                    </a>
-                                </div>
-                            </div> *@
-                        </div>
-                    </EditForm>
-                </section>
-            </div>
-        </div>
-    </div>
+                        <!-- Submit Button -->
+                    <MudButton ButtonType="ButtonType.Submit"  Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+                        <MudIcon Icon="Icons.Material.Filled.Send" /> Submit
+                    </MudButton>
+                       @*  <button type="submit" class="w-100 btn btn-primary">
+                            <i class="fa-solid fa-paper-plane"></i>&nbsp; Submit
+                        </button> *@
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
 }
 
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 
-<CustomFooter />
+<Footer/>
 
-@* <script src="/main.js"></script> *@

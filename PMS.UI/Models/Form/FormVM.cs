@@ -34,7 +34,7 @@ namespace PMS.UI.Models.Form
 
         public string StrataPlan { get; set; } = string.Empty;
 
-        public bool? IsKeyAvailable { get; set; }
+        public string IsKeyAvailable { get; set; } = string.Empty;
 
         public string MortgageInstitution { get; set; } = string.Empty;
 
@@ -50,7 +50,7 @@ namespace PMS.UI.Models.Form
 
         [ForeignKey("RegionId")]
         public Region? Region { get; set; }
-        public Guid? RegionId { get; set; }
+        public Guid RegionId { get; set; }
 
         public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
         public string ServiceRequestItemSelectId { get; set; } = string.Empty;
