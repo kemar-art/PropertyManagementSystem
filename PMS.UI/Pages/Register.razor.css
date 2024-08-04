@@ -1,13 +1,11 @@
-﻿.form-container {
-        background-color: red;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+﻿@media (max-width: 767.98px) { /* Mobile devices */
+    .pt-5 {
+        padding-top: 4.7em !important; /* Adjust based on navbar height */
     }
-    .form-content {
-        width: 90%; /* Adjusted width */
-        max-width: 1000px; /* Optional: set a maximum width */
-        box-sizing: border-box; /* Ensure padding and border are included in the width */
-        padding: 20px; /* Optional: Add some padding for better spacing */
+}
+
+@media (min-width: 768px) { /* Desktop devices */
+    .pt-5 {
+        padding-top: 7em !important; /* Adjust based on navbar height */
     }
+}

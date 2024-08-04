@@ -2890,7 +2890,7 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset DateOfBirth { get; set; }
+        public System.DateTimeOffset? DateOfBirth { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
