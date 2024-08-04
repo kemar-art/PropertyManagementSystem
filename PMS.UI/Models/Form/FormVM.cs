@@ -12,10 +12,10 @@ namespace PMS.UI.Models.Form
 
         public int CustomerId { get; set; }
 
-        [Required(ErrorMessage = "First Name is required.")]
+        [Required/*(ErrorMessage = "First Name is required.")*/]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Last Name is required.")]
+        [Required/*(ErrorMessage = "Last Name is required.")*/]
         public string LastName { get; set; } = string.Empty;
 
         [Required]
@@ -51,14 +51,18 @@ namespace PMS.UI.Models.Form
         public string Other { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "First Name")]
         public string SecondaryContactFirstName { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Last Name")]
         public string SecondaryContactLastName { get; set; } = string.Empty;
 
         public string SecondaryContactEmail { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Phone Number")]
+        [Phone]
         public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
         [ForeignKey("RegionId")]

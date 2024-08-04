@@ -83,7 +83,7 @@ namespace PMS.UI.Pages.ClientFrom
         bool isValid = true;
         private async Task<bool> ValidateStepAsync()
         {
-             
+
 
             if (currentStep == 1)
             {
