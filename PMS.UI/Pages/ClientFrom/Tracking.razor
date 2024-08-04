@@ -1,0 +1,54 @@
+﻿@layout EmptyLayout
+@page "/track-form-status/"
+@inject ISnackbar Snackbar
+@using PMS.UI.StaticDetails
+@* <h3>Create</h3> *@
+
+<CustomHeader />
+
+    @if (IsLoading)
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+else
+{
+
+       
+
+    <div class="container py-4 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+            <div class="col col-xl-8">
+                <div class="form-container">
+                    <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                        <div class="col-12 text-center">
+                            <img src="~/images/logo/mylogo.jpg" alt="APPRAISAL 365 LOGO" width="35%" />
+                        </div>
+                        <h2 class="text-center">Enter your Client ID below to check the status of your appraisal</h2>
+                        <p class="text-center"><a asp-page="/Index">Click Here To Go Back</a></p>
+
+                            <div class="input-box">
+                                <i class="uil uil-search"></i>
+                                <input type="text" asp-for="SearchString" placeholder="Search here..." />
+                                <button type="submit" value="Search" class="button">Search</button>
+                            </div>
+
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <Footer />
+
+@* style="background-color: #f82249" *@
