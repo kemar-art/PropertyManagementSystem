@@ -20,7 +20,7 @@ namespace Domain
         public string ImagePath { get; set; } = string.Empty;
         //public IFormFile? Image { get; set; }
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("Start Date"))]

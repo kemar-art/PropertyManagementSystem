@@ -1,16 +1,13 @@
-﻿.radio-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.radio-item {
-    margin-bottom: 10px;
-}
-
-    .radio-item input {
-        margin-right: 10px;
+﻿.form-container {
+        background-color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
-
-.label-spacing {
-    margin-bottom: 10px;
-}
+    .form-content {
+        width: 90%; /* Adjusted width */
+        max-width: 1000px; /* Optional: set a maximum width */
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
+        padding: 20px; /* Optional: Add some padding for better spacing */
+    }

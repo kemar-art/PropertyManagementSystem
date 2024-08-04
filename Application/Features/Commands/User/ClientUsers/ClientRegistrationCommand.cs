@@ -21,7 +21,7 @@ namespace Application.Features.Commands.User.ClientUsers
         public string Password { get; set; } = string.Empty;
 
         [DataType(DataType.Date), Display(Name = "D.O.B")]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
     }
 }

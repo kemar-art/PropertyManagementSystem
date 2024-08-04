@@ -136,7 +136,7 @@ namespace PMS.UI.Pages.ClientFrom
             }
         }
 
-        private async Task OnValidSubmit()
+        private async Task HandleValidSubmit()
         {
             // Populate the selected IDs as comma-separated strings
             FormVM.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
@@ -162,12 +162,6 @@ namespace PMS.UI.Pages.ClientFrom
                 // Handle unexpected errors
                 Console.WriteLine("Unexpected error: " + ex.Message);
             }
-        }
-
-        private Task HandleValidSubmit()
-        {
-            // Call OnValidSubmit to handle form submission
-            return OnValidSubmit();
         }
 
         private Task HandleInvalidSubmit()

@@ -8,26 +8,31 @@
     </div>
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="@LoginVM" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+<EditForm Model="@LoginVM" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-            <div class="form-group">
-                <label class="control-label">Email</label>
-                <InputText id="userName" class="form-control" @bind-Value="@LoginVM.Email"></InputText>
-                <ValidationMessage For="@(() => LoginVM.Email)" />
+    <MudGrid>
+        <MudItem xs="12">
+            <div class="d-flex justify-center">
+                <MudIcon Ic Color="Color.Primary" Size="Size.Large" Style="width: 100px; height: 100px;" />
             </div>
-            <div class="form-group">
-                <label class="control-label">Password</label>
-                <InputText type="password" id="password" class="form-control" @bind-Value="@LoginVM.Password"></InputText>
-                <ValidationMessage For="@(() => LoginVM.Password)" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-        </EditForm>
-    </div>
-</div>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.h4">Login</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField T="string" Label="Email" Variant="Variant.Outlined"
+                          @bind-Value="LoginVM.Email" For="@(() => LoginVM.Email)" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField Label="Password" Variant="Variant.Outlined"
+                          @bind-Value="LoginVM.Password" For="@(() => LoginVM.Password)"
+                          InputType="InputType.Password" Adornment="Adornment.End" AdornmentIcon="@LoginVM.Password"  />
+        </MudItem>
+        <MudItem xs="12" Class="d-flex justify-center">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>
+        </MudItem>
+    </MudGrid>
+</EditForm>
 

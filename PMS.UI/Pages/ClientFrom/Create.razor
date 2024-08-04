@@ -7,7 +7,6 @@
 <div class="wrapper">
     <CustomHeader />
 
-
     @if (IsLoading)
     {
         <div class="loading-overlay">
@@ -25,7 +24,6 @@
                     <MudGrid>
                         <MudItem xs="12">
                             <MudPaper Class="pa-4 lifted">
-
                                 <!-- Step 1: Client Details -->
                                 @if (currentStep == 1)
                                 {
@@ -33,12 +31,10 @@
                                         <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
-                                                <ValidationMessage For="@(() => FormVM.FirstName)" />
+                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" /> 
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
-                                                <ValidationMessage For="@(() => FormVM.LastName)" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)" />
@@ -68,7 +64,7 @@
                                                     @foreach (var item in ServiceRequestCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                            <MudCheckBox  @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
                                                         </MudItem>
                                                     }
                                                 </MudGrid>

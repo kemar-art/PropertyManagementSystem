@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
+using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Auth;
 using System.Threading.Tasks;
@@ -10,16 +11,10 @@ namespace PMS.UI.Pages
     {
         public RegisterVM RegisterVM { get; set; } = new();
 
-        public string Male = "Male";
-        public string Female = "Female";
-        private List<string> genders = ["Male", "Female"];
-        public string Gender { get; set; } = string.Empty;
-
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
 
         public string Message { get; set; } = string.Empty;
-
         public bool EmailExists { get; set; }
 
         [Inject]
@@ -48,6 +43,26 @@ namespace PMS.UI.Pages
             }
         }
 
+        private bool _passwordVisibility;
+        private InputType _passwordInput = InputType.Password;
+        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+        private void TogglePasswordVisibility()
+        {
+            if (_passwordVisibility)
+            {
+                _passwordVisibility = false;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+                _passwordInput = InputType.Password;
+            }
+            else
+            {
+                _passwordVisibility = true;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+                _passwordInput = InputType.Text;
+            }
+        }
+
         private async Task CheckEmailExistence()
         {
             if (!string.IsNullOrEmpty(RegisterVM.Email))
@@ -56,7 +71,7 @@ namespace PMS.UI.Pages
             }
         }
 
-        protected async Task HandleRegister()
+        protected async Task OnValidSubmit()
         {
             await CheckEmailExistence();
 
@@ -78,6 +93,9 @@ namespace PMS.UI.Pages
             }
         }
     }
+
+
+
 }
 
 

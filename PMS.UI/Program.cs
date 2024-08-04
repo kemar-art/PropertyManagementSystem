@@ -37,7 +37,6 @@ builder.Services.AddSweetAlert2();
 builder.Services.AddMudServices();
 
 
-
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 await builder.Build().RunAsync();

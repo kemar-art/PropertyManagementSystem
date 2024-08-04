@@ -9,6 +9,10 @@ public static class ApplicationServiceRegistration
     { 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());    
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddLocalization(options =>
+        {
+            options.ResourcesPath = "Resources";
+        });
 
         return services;
     }

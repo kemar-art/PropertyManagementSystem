@@ -24,6 +24,6 @@ namespace PMS.UI.Models.Auth
 
         [DataType(DataType.Date), Display(Name = "D.O.B")]
         [Required]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
     }
 }
