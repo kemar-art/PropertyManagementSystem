@@ -72,5 +72,9 @@ namespace PMS.UI.Models.Form
         public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
         public string ServiceRequestItemSelectId { get; set; } = string.Empty;
         public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
+
+        public bool Exists { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
     }
 }

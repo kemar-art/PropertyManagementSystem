@@ -13,6 +13,7 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Services.Base;
 using PMS.UI.Services.Repository_Implementation;
 using PMS.UI.Services.Repository_Implementation.AuthService;
+
 using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

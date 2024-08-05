@@ -65,6 +65,21 @@ namespace PMS.UI.Services.Repository_Implementation
             return _mapper.Map<FormVM>(getASingleForm);
         }
 
+        public async Task<string> TrackForm(int formId)
+        {
+            var response = await _client.TrackFormStatusAsync(formId);
+
+            if (response.Exists)
+            {
+                
+                return response.Status;
+            }
+
+            // Handle error response or throw an exception
+            throw new Exception("Failed to retrieve form status.");
+        }
+
+
         public async Task<Response<Guid>> UpdateForm(FormVM form)
         {
             try

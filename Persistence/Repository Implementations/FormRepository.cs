@@ -71,6 +71,25 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
                                      .ToListAsync();
     }
 
+    public async Task<TrackFormResult> TrackForm(int formId)
+    {
+        var form = await _dbContext.Forms.FirstOrDefaultAsync(x => x.CustomerId == formId);
+
+        if (form != null)
+        {
+            return new TrackFormResult
+            {
+                Exists = true,
+                Message = "Form found.",
+                Status = form.Status
+            };
+        }
+        else
+        {
+            return new TrackFormResult { Exists = false, Message = "Form not found." };
+        }
+    }
+
     public async Task<Unit> UpdateFrom(Form updateForm)
     {
         // Attach the entity to the context and mark it as modified
@@ -83,6 +102,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
         return Unit.Value;
     }
+
 }
 
 

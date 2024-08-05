@@ -1,6 +1,5 @@
 ﻿@layout EmptyLayout
 @page "/track-form-status/"
-@inject ISnackbar Snackbar
 @using PMS.UI.StaticDetails
 @* <h3>Create</h3> *@
 <div class="wrapper">
@@ -22,12 +21,12 @@
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-12">
                     <div class="form-container">
-                        <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                        <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
                             <h5><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></h5>
 
                             <div class="input-box">
                                 <i class="uil uil-search"></i>
-                                <input type="text" asp-for="SearchString" placeholder="Search here..." />
+                                <InputText type="text" @bind-Value="SearchString" placeholder="Search here..." />
                                 <button type="submit" value="Search" class="button">Search</button>
                             </div>
 

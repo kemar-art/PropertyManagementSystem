@@ -35,8 +35,8 @@
                                         <MudItem xs="12">
                                             <MudText Typo="Typo.subtitle1">Gender</MudText>
                                             <MudRadioGroup T="string" @bind-Value="RegisterVM.Gender" For="@(() => RegisterVM.Gender)">
-                                                <MudRadio Value="YourGender.Male">Male</MudRadio>
-                                                <MudRadio Value="YourGender.Female">Female</MudRadio>
+                                                <MudRadio Value="UserGender.Male">Male</MudRadio>
+                                                <MudRadio Value="UserGender.Female">Female</MudRadio>
                                             </MudRadioGroup>
                                         </MudItem>
                                         <MudDatePicker Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
