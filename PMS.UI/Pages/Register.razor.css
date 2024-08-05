@@ -1,4 +1,18 @@
-﻿@media (max-width: 767.98px) { /* Mobile devices */
+﻿.wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+@media (max-width: 767.98px) { /* Mobile devices */
     .pt-5 {
         padding-top: 4.7em !important; /* Adjust based on navbar height */
     }
@@ -6,6 +20,6 @@
 
 @media (min-width: 768px) { /* Desktop devices */
     .pt-5 {
-        padding-top: 7em !important; /* Adjust based on navbar height */
+        padding-top: 9em !important; /* Adjust based on navbar height */
     }
 }

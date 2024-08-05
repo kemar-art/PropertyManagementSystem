@@ -3,52 +3,53 @@
 @using PMS.UI.StaticDetails
 
 @* <h3>Register</h3> *@
-
-@if (!string.IsNullOrEmpty(Message))
-{
-    <div class="alert alert-danger">
-        @Message
-    </div>
-}
-<CustomHeader />
-<div class="container py-4 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
-        <div class="col col-xl-4">
-            <div class="form-container">
-                <EditForm Model="@RegisterVM" OnValidSubmit="OnValidSubmit">
-                    <DataAnnotationsValidator />
-                    <MudGrid>
-                        <MudItem xs="12" sm="12">
-                            <MudCard>
-                                <MudCardContent>
-                                    <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="RegisterVM.FirstName" For="@(() => RegisterVM.FirstName)" />
-                                    <MudTextField Label="Last Name" Class="mt-3" @bind-Value="RegisterVM.LastName" For="@(() => RegisterVM.LastName)" />
-                                    <MudTextField Label="Email" Class="mt-3" @bind-Value="RegisterVM.Email" For="@(() => RegisterVM.Email)" @onblur="CheckEmailExistence" />
-                                    @if (EmailExists && !string.IsNullOrEmpty(RegisterVM.Email))
-                                    {
-                                        <div class="text-danger">Email already exists.</div>
-                                    }
-                                    <MudTextField Label="Phone Number" Class="mt-3" @bind-Value="RegisterVM.PhoneNumber" For="@(() => RegisterVM.PhoneNumber)" />
-                                    <MudItem xs="8">
-                                        <MudText Typo="Typo.subtitle1">Gender</MudText>
-                                        <MudRadioGroup T="string" @bind-Value="RegisterVM.Gender" For="@(() => RegisterVM.Gender)">
-                                            <MudRadio Value="YourGender.Male">Male</MudRadio>
-                                            <MudRadio Value="YourGender.Female">Female</MudRadio>
-                                        </MudRadioGroup>
-                                    </MudItem>
-                                    <MudDatePicker Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
-                                    <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3" @bind-Value="RegisterVM.Password" InputType="InputType.Password" For="@(() => RegisterVM.Password)" />
-                                    <MudTextField Label="Repeat Password" HelperText="Repeat the password" Class="mt-3" @bind-Value="RegisterVM.ConfirmPassword" InputType="InputType.Password" For="@(() => RegisterVM.ConfirmPassword)" />
-                                </MudCardContent>
-                                <MudCardActions>
-                                    <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
-                                </MudCardActions>
-                            </MudCard>
-                        </MudItem>
-                    </MudGrid>
-                </EditForm>
+<div class="wrapper">
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="alert alert-danger">
+            @Message
+        </div>
+    }
+    <CustomHeader />
+    <div class="container py-4 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+            <div class="col col-xl-4">
+                <div class="form-container">
+                    <EditForm Model="@RegisterVM" OnValidSubmit="OnValidSubmit">
+                        <DataAnnotationsValidator />
+                        <MudGrid>
+                            <MudItem xs="12" sm="12">
+                                <MudCard>
+                                    <MudCardContent>
+                                        <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="RegisterVM.FirstName" For="@(() => RegisterVM.FirstName)" />
+                                        <MudTextField Label="Last Name" Class="mt-3" @bind-Value="RegisterVM.LastName" For="@(() => RegisterVM.LastName)" />
+                                        <MudTextField Label="Email" Class="mt-3" @bind-Value="RegisterVM.Email" For="@(() => RegisterVM.Email)" @onblur="CheckEmailExistence" />
+                                        @if (EmailExists && !string.IsNullOrEmpty(RegisterVM.Email))
+                                        {
+                                            <div class="text-danger">Email already exists.</div>
+                                        }
+                                        <MudTextField Label="Phone Number" Class="mt-3" @bind-Value="RegisterVM.PhoneNumber" For="@(() => RegisterVM.PhoneNumber)" />
+                                        <MudItem xs="12">
+                                            <MudText Typo="Typo.subtitle1">Gender</MudText>
+                                            <MudRadioGroup T="string" @bind-Value="RegisterVM.Gender" For="@(() => RegisterVM.Gender)">
+                                                <MudRadio Value="YourGender.Male">Male</MudRadio>
+                                                <MudRadio Value="YourGender.Female">Female</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudItem>
+                                        <MudDatePicker Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
+                                        <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3" @bind-Value="RegisterVM.Password" InputType="InputType.Password" For="@(() => RegisterVM.Password)" />
+                                        <MudTextField Label="Repeat Password" HelperText="Repeat the password" Class="mt-3" @bind-Value="RegisterVM.ConfirmPassword" InputType="InputType.Password" For="@(() => RegisterVM.ConfirmPassword)" />
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+                    </EditForm>
+                </div>
             </div>
         </div>
     </div>
+    <Footer />
 </div>
-<Footer />
