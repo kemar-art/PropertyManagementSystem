@@ -3,31 +3,27 @@
 @inject ISnackbar Snackbar
 @using PMS.UI.StaticDetails
 @* <h3>Create</h3> *@
-
-<CustomHeader />
+<div class="wrapper">
+    <CustomHeader />
 
     @if (IsLoading)
-{
-    <div class="loading-overlay">
-        @*  <div class="spinner"></div> *@
-        <div id="preloader"></div>
-    </div>
-}
-else
-{
+    {
+        <div class="loading-overlay">
+            @*  <div class="spinner"></div> *@
+            <div id="preloader"></div>
+        </div>
+    }
+    else
+    {
 
-       
 
-    <div class="container py-4 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
-            <div class="col col-xl-8">
-                <div class="form-container">
-                    <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-                        <div class="col-12 text-center">
-                            <img src="~/images/logo/mylogo.jpg" alt="APPRAISAL 365 LOGO" width="35%" />
-                        </div>
-                        <h2 class="text-center">Enter your Client ID below to check the status of your appraisal</h2>
-                        <p class="text-center"><a asp-page="/Index">Click Here To Go Back</a></p>
+
+        <div class="container py-4 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+                <div class="col col-xl-12">
+                    <div class="form-container">
+                        <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                            <h5><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></h5>
 
                             <div class="input-box">
                                 <i class="uil uil-search"></i>
@@ -35,14 +31,14 @@ else
                                 <button type="submit" value="Search" class="button">Search</button>
                             </div>
 
-                    </EditForm>
+                        </EditForm>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-}
+    }
 
 
     <!-- Scroll Top -->
@@ -50,5 +46,7 @@ else
 
 
     <Footer />
+</div>
+
 
 @* style="background-color: #f82249" *@
