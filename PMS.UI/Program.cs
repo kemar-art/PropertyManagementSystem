@@ -1,4 +1,3 @@
-using Application.Contracts.Repository_Interface;
 using Blazored.LocalStorage;
 using Blazorise;
 using CurrieTechnologies.Razor.SweetAlert2;
@@ -18,18 +17,16 @@ using System.Reflection;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using PMS.UI.Handlers;
+using Application.Contracts.Repository_Interface;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Register the JwtAuthorizationMessageHandler
-builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
+builder.Services.AddScoped<JwtAuthorizationMessageHandler>();
 
-builder.Services.AddHttpClient<IClient, Client>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7091");
-}).AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
+builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7091"))
+    .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

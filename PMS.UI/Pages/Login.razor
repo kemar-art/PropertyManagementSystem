@@ -7,12 +7,6 @@
 
 <div class="wrapper">
     <CustomHeader />
-    @if (!string.IsNullOrEmpty(Message))
-    {
-        <div class="alert alert-danger">
-            @Message
-        </div>
-    }
     @if (IsLoading)
     {
         <div class="loading-overlay">
@@ -26,6 +20,12 @@
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-6">
                     <div class="form-container">
+                        @if (!string.IsNullOrEmpty(Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Message
+                            </div>
+                        }
                         <MudGrid>
                             <MudItem xs="12" sm="12">
                                 <MudPaper Class="pa-4">

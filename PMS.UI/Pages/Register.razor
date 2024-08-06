@@ -35,7 +35,7 @@
                                             </MudItem>
                                             <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="RegisterVM.FirstName" For="@(() => RegisterVM.FirstName)" />
                                             <MudTextField Label="Last Name" Class="mt-3" @bind-Value="RegisterVM.LastName" For="@(() => RegisterVM.LastName)" />
-                                            <MudTextField Label="Email" Class="mt-3" @bind-Value="RegisterVM.Email" For="@(() => RegisterVM.Email)" @onblur="CheckEmailExistence" />
+                                            <MudTextField Label="Email" Class="mt-3" @bind-Value="RegisterVM.Email" For="@(() => RegisterVM.Email)" Disabled="@IsEmailDisabled" />
                                             @if (EmailExists && !string.IsNullOrEmpty(RegisterVM.Email))
                                             {
                                                 <div class="text-danger">Email already exists.</div>

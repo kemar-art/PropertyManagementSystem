@@ -16,6 +16,7 @@ namespace PMS.UI.Pages
 
         public string Message { get; set; } = string.Empty;
         public bool EmailExists { get; set; }
+        public bool IsEmailDisabled { get; set; } = true;
 
         [Inject]
         private IAuthenticationService _AuthenticationService { get; set; }
@@ -39,6 +40,11 @@ namespace PMS.UI.Pages
             if (queryParams.TryGetValue("email", out var email))
             {
                 RegisterVM.Email = email;
+                IsEmailDisabled = true;
+            }
+            else
+            {
+                IsEmailDisabled = false;
             }
             if (queryParams.TryGetValue("phoneNumber", out var phoneNumber))
             {
@@ -78,7 +84,6 @@ namespace PMS.UI.Pages
 
         protected async Task OnValidSubmit()
         {
-            
             await CheckEmailExistence();
 
             if (EmailExists)
@@ -86,7 +91,7 @@ namespace PMS.UI.Pages
                 Message = "Email already exists.";
                 return;
             }
-            
+
             IsLoading = true;
             var result = await _AuthenticationService.IsRegister(RegisterVM);
 
@@ -98,7 +103,7 @@ namespace PMS.UI.Pages
             {
                 Message = "Something went wrong, please try again.";
             }
-            IsLoading = true;
+            IsLoading = false;
         }
     }
 

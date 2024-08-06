@@ -34,20 +34,6 @@ namespace API.Controllers
                 return BadRequest("Invalid form ID.");
             }
 
-            //This 
-            var userEmail = _httpContextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
-
-            if (string.IsNullOrEmpty(userEmail))
-            {
-                // Log the missing email claim
-                Console.WriteLine("User email claim not found.");
-                return BadRequest("User email claim not found.");
-            }
-            else
-            {
-                Console.WriteLine($"User email: {userEmail}");
-            }
-
             var result = await _formRepository.TrackForm(formId);
 
             if (!result.Exists)
