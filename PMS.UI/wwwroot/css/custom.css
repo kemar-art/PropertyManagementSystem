@@ -1,0 +1,49 @@
+﻿
+/*.custom-stepper {
+    --step-size: 300px;  
+    --step-spacing: 90px;  
+}
+
+    .custom-stepper .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.2rem;  
+        position: relative;  
+        margin: 0 var(--step-spacing); 
+    }
+
+        .custom-stepper .step .marker {
+            width: var(--step-size);  Width of the step marker 
+            height: var(--step-size);  Height of the step marker 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;  Circular marker 
+            background-color: #007bff;  Marker background color 
+            color: #fff;  Marker text color 
+            font-size: 1.5rem;  Marker text size 
+            margin-bottom: 10px;  Space between marker and caption 
+            z-index: 1;  Ensure markers are above connectors 
+        }
+
+        .custom-stepper .step .caption {
+            font-size: 1rem;  Font size for captions 
+            text-align: center;  Center align captions 
+        }
+
+        .custom-stepper .step::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: calc(var(--step-size) / 2);
+            height: 2px;  Thickness of the connector line 
+            width: calc(100% + var(--step-spacing));  Length of the connector 
+            background-color: #007bff;  Connector color 
+            z-index: 0;  Place the connector behind the markers 
+        }
+
+        .custom-stepper .step:first-child::before {
+            content: none;  Remove the connector line from the first step 
+        }
+*/

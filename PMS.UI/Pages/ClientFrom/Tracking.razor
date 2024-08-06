@@ -1,6 +1,7 @@
 ﻿@layout EmptyLayout
 @page "/track-form-status/"
 @using PMS.UI.StaticDetails
+@using Blazorise
 @* <h3>Create</h3> *@
 <div class="wrapper">
     <CustomHeader />
@@ -14,7 +15,7 @@
     }
     else
     {
-
+        
 
 
         <div class="container py-4 h-100">
@@ -36,9 +37,59 @@
             </div>
         </div>
 
+        @if (!string.IsNullOrEmpty(FormVM.Status))
+        {
+            <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
+                <Items>
+                    <Step Name="@FormStatus.StatusSubmitted" Color="@(selectedStep == FormStatus.StatusSubmitted ? Color.Success : Color.Secondary)">
+                        <Marker>
+                            <Icon Name="IconName.Send" />
+                        </Marker>
+                        <Caption>Submitted</Caption>
+                    </Step>
+                    <Step Name="@FormStatus.StatusAssigned" Color="@(selectedStep == FormStatus.StatusAssigned ? Color.Success : Color.Secondary)">
+                        <Marker>
+                            <Icon Name="IconName.UserCheck" />
+                        </Marker>
+                        <Caption>Assigned</Caption>
+                    </Step>
+                    <Step Name="@FormStatus.StatusInProcess" Color="@(selectedStep == FormStatus.StatusInProcess ? Color.Success : Color.Secondary)">
+                        <Marker>
+                            <Icon Name="IconName.SliderHorizontal" />
+                        </Marker>
+                        <Caption>In Process</Caption>
+                    </Step>
+                    <Step Name="@FormStatus.StatusCompleted" Color="@(selectedStep == FormStatus.StatusCompleted ? Color.Success : Color.Secondary)">
+                        <Marker>
+                            <Icon Name="IconName.Flag" />
+                        </Marker>
+                        <Caption>Completed</Caption>
+                    </Step>
+                </Items>
+                <Content>
+                    <StepPanel Name="@FormStatus.StatusSubmitted">
+                        <!-- Content for step 1 -->
+                    </StepPanel>
+                    <StepPanel Name="@FormStatus.StatusAssigned">
+                        <!-- Content for step 2 -->
+                    </StepPanel>
+                    <StepPanel Name="@FormStatus.StatusInProcess">
+                        <!-- Content for step 3 -->
+                    </StepPanel>
+                    <StepPanel Name="@FormStatus.StatusCompleted">
+                        <!-- Content for finish -->
+                    </StepPanel>
+                </Content>
+            </Steps>
+        }
+
+
+
+
+
+
 
     }
-
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

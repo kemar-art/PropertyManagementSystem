@@ -1,5 +1,6 @@
 using Application.Contracts.Repository_Interface;
 using Blazored.LocalStorage;
+using Blazorise;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,8 +14,9 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Services.Base;
 using PMS.UI.Services.Repository_Implementation;
 using PMS.UI.Services.Repository_Implementation.AuthService;
-
 using System.Reflection;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -36,6 +38,14 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSweetAlert2();
 builder.Services.AddMudServices();
+
+builder.Services
+    .AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddBootstrap5Providers()
+    .AddFontAwesomeIcons();
 
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
