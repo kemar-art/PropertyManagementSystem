@@ -1,4 +1,4 @@
-﻿@layout EmptyLayout
+﻿@layout MudBlazorLayout
 @page "/create/"
 @inject ISnackbar Snackbar
 @using PMS.UI.StaticDetails
@@ -20,7 +20,7 @@
             <div class="form-container">
                 <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
                     <DataAnnotationsValidator />
-                    <ValidationSummary />
+                    @* <ValidationSummary /> *@
                     <MudGrid>
                         <MudItem xs="12">
                             <MudPaper Class="pa-4 lifted">

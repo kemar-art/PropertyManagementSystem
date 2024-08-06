@@ -20,8 +20,11 @@ namespace PMS.UI.Pages
         [Inject]
         private IAuthenticationService _AuthenticationService { get; set; }
 
+        private bool IsLoading { get; set; } = true;
+
         protected override void OnInitialized()
         {
+            IsLoading = true;
             var uri = _NavigationManager.ToAbsoluteUri(_NavigationManager.Uri);
             var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
@@ -41,6 +44,8 @@ namespace PMS.UI.Pages
             {
                 RegisterVM.PhoneNumber = phoneNumber;
             }
+
+            IsLoading = false;
         }
 
         private bool _passwordVisibility;
@@ -73,6 +78,7 @@ namespace PMS.UI.Pages
 
         protected async Task OnValidSubmit()
         {
+            
             await CheckEmailExistence();
 
             if (EmailExists)
@@ -80,17 +86,19 @@ namespace PMS.UI.Pages
                 Message = "Email already exists.";
                 return;
             }
-
+            
+            IsLoading = true;
             var result = await _AuthenticationService.IsRegister(RegisterVM);
 
             if (result)
             {
-                _NavigationManager.NavigateTo("/");
+                _NavigationManager.NavigateTo("/login");
             }
             else
             {
                 Message = "Something went wrong, please try again.";
             }
+            IsLoading = true;
         }
     }
 

@@ -1,4 +1,8 @@
-﻿.input-box {
+﻿.stepper-container {
+    margin-top: 20px; /* Add some margin to ensure spacing */
+}
+
+.input-box {
     position: relative;
     height: 76px;
     max-width: 900px;
