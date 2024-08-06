@@ -17,17 +17,24 @@ using PMS.UI.Services.Repository_Implementation.AuthService;
 using System.Reflection;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using PMS.UI.Handlers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+// Register the JwtAuthorizationMessageHandler
+builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
 
-builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7091"));
+builder.Services.AddHttpClient<IClient, Client>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7091");
+}).AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
+
+builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
@@ -46,7 +53,6 @@ builder.Services
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
-
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

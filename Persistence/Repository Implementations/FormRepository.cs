@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.DatabaseContext;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -73,7 +74,25 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
     public async Task<TrackFormResult> TrackForm(int formId)
     {
-        var form = await _dbContext.Forms.FirstOrDefaultAsync(x => x.CustomerId == formId);
+        // Check if HttpContext is available
+        if (_httpContextAccessor.HttpContext == null)
+        {
+            // Log or handle the missing HttpContext
+            throw new InvalidOperationException("HttpContext is not available.");
+        }
+
+        // Retrieve the user email claim
+        var userEmail = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+
+        // Log the retrieved email or the lack of it
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            // Log the missing email claim
+            throw new InvalidOperationException("User email claim not found.");
+        }
+
+        // Query the database for the form with the provided formId and user email
+        var form = await _dbContext.Forms.FirstOrDefaultAsync(x => x.CustomerId == formId && x.Email == userEmail);
 
         if (form != null)
         {
@@ -89,6 +108,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             return new TrackFormResult { Exists = false, Message = "Form not found." };
         }
     }
+
 
     public async Task<Unit> UpdateFrom(Form updateForm)
     {
