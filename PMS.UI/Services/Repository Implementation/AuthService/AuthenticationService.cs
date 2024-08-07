@@ -31,7 +31,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 if (authenticationResponse.Token != string.Empty)
                 {
                     await _localStorage.SetItemAsync("token", authenticationResponse.Token);
-                    await ((ApiAuthenticationStateProvider)_authenticationStateProvider).loggedIn();
+                    await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
                     return true;
                 }
 
@@ -73,7 +73,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
 
         public async Task Logout()
         {
-            await ((ApiAuthenticationStateProvider)_authenticationStateProvider).loggedOut();
+            await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
         }
     }
 }
