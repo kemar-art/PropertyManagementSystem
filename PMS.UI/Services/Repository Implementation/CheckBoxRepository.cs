@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Repository_Interface;
 using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using PMS.UI.Services.Base;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Persistence.Repository_Implementations
 {
     public class CheckBoxRepository : BaseHttpService, ICheckBoxRepository
     {
-        public CheckBoxRepository(IClient client, ILocalStorageService localStorage) : base(client, localStorage)
+        public CheckBoxRepository(IClient client, ILocalStorageService localStorage, ISessionStorageService sessionStorage) : base(client, localStorage, sessionStorage)
         {
         }
 

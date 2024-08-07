@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Employee;
 using PMS.UI.Services.Base;
@@ -10,7 +11,7 @@ namespace PMS.UI.Services.Repository_Implementation
     {
         private readonly IMapper _mapper;
 
-        public AdminRepository(IClient client, ILocalStorageService localStorage, IMapper mapper) : base(client, localStorage)
+        public AdminRepository(IClient client, ILocalStorageService localStorage, ISessionStorageService sessionStorage, IMapper mapper) : base(client, localStorage, sessionStorage)
         {
             _mapper = mapper;
             //this is to be added to all out going calls to API

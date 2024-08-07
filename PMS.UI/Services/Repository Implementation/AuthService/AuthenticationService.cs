@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using PMS.UI.AuthProviders;
 using PMS.UI.Contracts.Repository_Interface;
@@ -13,7 +14,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
     {
         private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public AuthenticationService(IClient client, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider) : base(client, localStorage)
+        public AuthenticationService(IClient client, ILocalStorageService localStorage, ISessionStorageService sessionStorage, AuthenticationStateProvider authenticationStateProvider) : base(client, localStorage, sessionStorage)
         {
             _authenticationStateProvider = authenticationStateProvider;
         }
@@ -29,9 +30,17 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 };
 
                 var authenticationResponse = await _client.LoginAsync(loginUserCommand);
-                if (authenticationResponse.Token != string.Empty)
+                if (!string.IsNullOrEmpty(authenticationResponse.Token))
                 {
-                    await _localStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
+                    if (loginVM.RememberMe)
+                    {
+                        await _localStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
+                    }
+                    else
+                    {
+                        await _sessionStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
+                    }
+
                     await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
                     return true;
                 }
@@ -40,10 +49,10 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
+
 
         public async Task<bool> IsEmailRegisteredExist(string email)
         {

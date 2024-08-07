@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using Newtonsoft.Json;
 using PMS.UI.Contracts;
 using PMS.UI.Models;
@@ -11,7 +12,7 @@ namespace PMS.UI.Services.Repository_Implementation
     public class FormRepository : BaseHttpService, IFormRepository
     {
         private readonly IMapper _mapper;
-        public FormRepository(IClient client, IMapper mapper, ILocalStorageService localStorage) : base(client, localStorage)
+        public FormRepository(IClient client, IMapper mapper, ILocalStorageService localStorage, ISessionStorageService sessionStorage) : base(client, localStorage, sessionStorage)
         {
             _mapper = mapper;
         }

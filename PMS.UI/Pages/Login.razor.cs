@@ -51,11 +51,15 @@ namespace PMS.UI.Pages
         protected async Task HandleLogin()
         {
             IsLoading = true;
-            if (await AuthenticationService.IsAuthenticated(LoginVM))
+            var isAuthenticated = await AuthenticationService.IsAuthenticated(LoginVM);
+            if (isAuthenticated)
             {
                 NavigationManager.NavigateTo("/");
             }
-            Message = "Username/password combination unknown";
+            else
+            {
+                Message = "Username/password combination unknown";
+            }
             IsLoading = false;
         }
     }

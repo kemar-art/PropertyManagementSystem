@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using PMS.UI.StaticDetails;
 using System.Net.Http.Headers;
 
@@ -8,10 +9,13 @@ namespace PMS.UI.Services.Base
     {
         protected IClient _client;
         protected readonly ILocalStorageService _localStorage;
-        public BaseHttpService(IClient client, ILocalStorageService localStorage)
+        protected readonly ISessionStorageService _sessionStorage;
+
+        public BaseHttpService(IClient client, ILocalStorageService localStorage, ISessionStorageService sessionStorage)
         {
             _client = client;
             _localStorage = localStorage;
+            _sessionStorage = sessionStorage;
         }
 
         protected Response<Guid> ConvertApiExceptions<Guid>(ApiException ex)

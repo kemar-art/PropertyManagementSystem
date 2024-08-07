@@ -18,6 +18,7 @@ using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using PMS.UI.Handlers;
 using Application.Contracts.Repository_Interface;
+using Blazored.SessionStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -29,6 +30,7 @@ builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = n
     .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
