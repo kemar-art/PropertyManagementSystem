@@ -26,18 +26,22 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 LoginUserCommand loginUserCommand = new()
                 {
                     Email = loginVM.Email,
-                    Password = loginVM.Password
+                    Password = loginVM.Password,
                 };
 
                 var authenticationResponse = await _client.LoginAsync(loginUserCommand);
+
                 if (!string.IsNullOrEmpty(authenticationResponse.Token))
                 {
                     if (loginVM.RememberMe)
                     {
+                        // Store token in local storage and clear it from session storage
                         await _localStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
+                        //await _sessionStorage.RemoveItemAsync(AuthToken.Token);
                     }
                     else
                     {
+                        // Store token in session storage and clear it from local storage
                         await _sessionStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
                     }
 
@@ -47,11 +51,15 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
 
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // Log the exception for debugging
+                Console.WriteLine($"Exception: {ex.Message}");
                 return false;
             }
         }
+
+
 
 
         public async Task<bool> IsEmailRegisteredExist(string email)

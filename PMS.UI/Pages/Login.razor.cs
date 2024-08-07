@@ -1,3 +1,5 @@
+using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
@@ -14,11 +16,17 @@ namespace PMS.UI.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-        public string Message { get; set; }
+
+        [Inject]
+        private ILocalStorageService _localStorage { get; set; }
+
+        [Inject]
+        private ISessionStorageService _sessionStorage { get; set; }
 
         [Inject]
         private IAuthenticationService AuthenticationService { get; set; }
 
+        public string Message { get; set; }
         private bool IsLoading { get; set; } = true;
 
         protected override void OnInitialized()
@@ -51,15 +59,18 @@ namespace PMS.UI.Pages
         protected async Task HandleLogin()
         {
             IsLoading = true;
+
             var isAuthenticated = await AuthenticationService.IsAuthenticated(LoginVM);
             if (isAuthenticated)
             {
+                // Navigate to the home page or any other page
                 NavigationManager.NavigateTo("/");
             }
             else
             {
                 Message = "Username/password combination unknown";
             }
+
             IsLoading = false;
         }
     }

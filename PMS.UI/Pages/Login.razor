@@ -44,12 +44,13 @@
                                             <MudItem xs="12">
                                                 <MudTextField Label="Password" Variant="Variant.Outlined"
                                                               @bind-Value="LoginVM.Password" For="@(() => LoginVM.Password)"
-                                                              Adornment="Adornment.End" InputType="@_passwordInput" 
-                                                              OnAdornmentClick="TogglePasswordVisibility" 
+                                                              Adornment="Adornment.End" InputType="@_passwordInput"
+                                                              OnAdornmentClick="TogglePasswordVisibility"
                                                               AdornmentIcon="@_passwordInputIcon" />
                                             </MudItem>
                                             <MudItem xs="12" Class="d-flex justify-space-between align-center">
-                                                <MudSwitch T="bool" Label="Remember me?" @bind-Value="LoginVM.RememberMe" Color="Color.Primary" Class="ml-n1" /> <MudLink Href="#">Forgot password?</MudLink>
+                                                <MudSwitch T="bool" Label="Remember me?" @bind-Value="LoginVM.RememberMe" Color="Color.Primary" Class="ml-n1" />
+                                                <MudLink Href="#">Forgot password?</MudLink>
                                             </MudItem>
                                             <MudItem xs="12" Class="d-flex justify-center">
                                                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>
@@ -59,6 +60,7 @@
                                 </MudPaper>
                             </MudItem>
                         </MudGrid>
+
                     </div>
                 </div>
             </div>

@@ -2,6 +2,6 @@
 {
     public static class AuthToken
     {
-        public const string Token = "API_Authentication_Token";
+        public const string Token = "token";
     }
 }
