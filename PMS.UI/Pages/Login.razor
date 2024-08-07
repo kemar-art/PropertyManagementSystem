@@ -44,7 +44,9 @@
                                             <MudItem xs="12">
                                                 <MudTextField Label="Password" Variant="Variant.Outlined"
                                                               @bind-Value="LoginVM.Password" For="@(() => LoginVM.Password)"
-                                                              InputType="InputType.Password" Adornment="Adornment.End" AdornmentIcon="@LoginVM.Password" />
+                                                              Adornment="Adornment.End" InputType="@_passwordInput" 
+                                                              OnAdornmentClick="TogglePasswordVisibility" 
+                                                              AdornmentIcon="@_passwordInputIcon" />
                                             </MudItem>
                                             <MudItem xs="12" Class="d-flex justify-center">
                                                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>

@@ -5,6 +5,7 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.Auth;
 using PMS.UI.Services.Base;
+using PMS.UI.StaticDetails;
 
 namespace PMS.UI.Services.Repository_Implementation.AuthService
 {
@@ -30,7 +31,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 var authenticationResponse = await _client.LoginAsync(loginUserCommand);
                 if (authenticationResponse.Token != string.Empty)
                 {
-                    await _localStorage.SetItemAsync("token", authenticationResponse.Token);
+                    await _localStorage.SetItemAsync(AuthToken.Token, authenticationResponse.Token);
                     await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
                     return true;
                 }

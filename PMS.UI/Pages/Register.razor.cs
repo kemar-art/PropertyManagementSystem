@@ -54,23 +54,39 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
-        private bool _passwordVisibility;
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-
         private void TogglePasswordVisibility()
         {
-            if (_passwordVisibility)
+            if (_passwordInput == InputType.Password)
             {
-                _passwordVisibility = false;
-                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-                _passwordInput = InputType.Password;
+                _passwordInput = InputType.Text;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+
+                
             }
             else
             {
-                _passwordVisibility = true;
-                _passwordInputIcon = Icons.Material.Filled.Visibility;
-                _passwordInput = InputType.Text;
+                _passwordInput = InputType.Password;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
+        }
+
+        private InputType _passwordConfirmationInput = InputType.Password;
+        private string _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
+        private void TogglePasswordConfirmationVisibility()
+        {
+            if (_passwordConfirmationInput == InputType.Password)
+            {
+
+                _passwordConfirmationInput = InputType.Text;
+                _passwordConfirmationInputIcon = Icons.Material.Filled.Visibility;
+            }
+            else
+            {
+
+                _passwordConfirmationInput = InputType.Password;
+                _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
             }
         }
 

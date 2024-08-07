@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using PMS.UI.StaticDetails;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -19,18 +20,18 @@ namespace PMS.UI.AuthProviders
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            var isTokenPresent = await localStorage.ContainKeyAsync("token");
+            var isTokenPresent = await localStorage.ContainKeyAsync(AuthToken.Token);
             if (isTokenPresent == false)
             {
                 return new AuthenticationState(user);
             }
 
-            var savedToken = await localStorage.GetItemAsync<string>("token");
+            var savedToken = await localStorage.GetItemAsync<string>(AuthToken.Token);
             var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(savedToken);
 
             if (tokenContent.ValidTo < DateTime.Now)
             {
-                await localStorage.RemoveItemAsync("token");
+                await localStorage.RemoveItemAsync(AuthToken.Token);
                 return new AuthenticationState(user);
             }
 
@@ -51,7 +52,7 @@ namespace PMS.UI.AuthProviders
 
         public async Task LoggedOut()
         {
-            await localStorage.RemoveItemAsync("token");
+            await localStorage.RemoveItemAsync(AuthToken.Token);
             var nobody = new ClaimsPrincipal(new ClaimsIdentity());
             var authState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authState);
@@ -59,7 +60,7 @@ namespace PMS.UI.AuthProviders
 
         private async Task<List<Claim>> GetClaims()
         {
-            var savedToken = await localStorage.GetItemAsync<string>("token");
+            var savedToken = await localStorage.GetItemAsync<string>(AuthToken.Token);
             var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(savedToken);
             var claims = tokenContent.Claims.ToList();
             claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));

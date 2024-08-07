@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using PMS.UI.StaticDetails;
 using System.Net.Http.Headers;
 
 namespace PMS.UI.Services.Base
@@ -31,9 +32,9 @@ namespace PMS.UI.Services.Base
 
         protected async Task AddBearerToken()
         {
-            if (await _localStorage.ContainKeyAsync("token"))
+            if (await _localStorage.ContainKeyAsync(AuthToken.Token))
                 _client.HttpClient.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", await _localStorage.GetItemAsync<string>("token"));
+                    new AuthenticationHeaderValue("Bearer", await _localStorage.GetItemAsync<string>(AuthToken.Token));
         }
 
     }

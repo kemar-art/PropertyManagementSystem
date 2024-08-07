@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using PMS.UI.StaticDetails;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace PMS.UI.Handlers
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var token = await _localStorageService.GetItemAsync<string>("token");
+            var token = await _localStorageService.GetItemAsync<string>(AuthToken.Token);
             if (!string.IsNullOrEmpty(token))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
