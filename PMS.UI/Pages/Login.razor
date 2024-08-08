@@ -26,9 +26,13 @@
                                 @Message
                             </div>
                         }
-                        <MudGrid>
+                       @*  <MudGrid>
                             <MudItem xs="12" sm="12">
-                                <MudPaper Class="pa-4">
+                                
+                            </MudItem>
+                        </MudGrid> *@
+
+                        <MudPaper Class="pa-4">
                                     <EditForm Model="@LoginVM" OnValidSubmit="HandleLogin">
                                         <DataAnnotationsValidator />
                                         @* <ValidationSummary /> *@
@@ -58,8 +62,6 @@
                                         </MudGrid>
                                     </EditForm>
                                 </MudPaper>
-                            </MudItem>
-                        </MudGrid>
 
                     </div>
                 </div>

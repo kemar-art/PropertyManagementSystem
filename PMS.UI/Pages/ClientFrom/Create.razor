@@ -28,7 +28,8 @@
                                 @if (currentStep == 1)
                                 {
                                     <MudPaper Class="pa-4 mt-4 lifted">
-                                        <MudText Typo="Typo.h6">CLIENT INFORMATION</MudText>
+                                        <MudText Typo="Typo.h4" Class="text-center">CLIENT INFORMATION</MudText>
+                                        <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" /> 
@@ -56,7 +57,8 @@
                                 @if (currentStep == 2)
                                 {
                                     <MudPaper Class="pa-4 mt-4 lifted">
-                                        <MudText Typo="Typo.h6">PROPERTY INFORMATION</MudText>
+                                        <MudText Typo="Typo.h4" Class="text-center pb-2">PROPERTY INFORMATION</MudText>
+                                        <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
@@ -64,23 +66,25 @@
                                                     @foreach (var item in ServiceRequestCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox  @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                            <MudCheckBox  @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
                                                         </MudItem>
                                                     }
                                                 </MudGrid>
                                             </MudItem>
+                                            <MudDivider />
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
                                                 <MudGrid>
                                                     @foreach (var item in TypeOfPropertyCheckBoxItemVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
                                                             <input type="hidden" value="@item.Id" />
                                                         </MudItem>
                                                     }
                                                 </MudGrid>
                                             </MudItem>
+                                            <MudDivider />
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
                                             </MudItem>
@@ -90,14 +94,13 @@
                                             <MudItem xs="12">
                                                 <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
                                             </MudItem>
-                                            <MudDivider />
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
                                                 <MudGrid>
                                                     @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Color="Color.Secondary" Label="@item.Title" />
+                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
                                                             <input type="hidden" value="@item.Id" />
                                                         </MudItem>
                                                     }
@@ -140,7 +143,8 @@
                                 @if (currentStep == 3)
                                 {
                                     <MudPaper Class="pa-4 mt-4 lifted">
-                                        <MudText Typo="Typo.h6">CONTACT FOR INSPECTION</MudText>
+                                        <MudText Typo="Typo.h4" Class="text-center pb-2">CONTACT FOR INSPECTION</MudText>
+                                        <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
@@ -162,21 +166,21 @@
                                 <MudItem xs="12" class="mt-4">
                                     <div class="row">
                                         <div class="col">
-                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Secondary" @onclick="PreviousStep" Disabled="@((currentStep == 1))">Back</MudButton>
+                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" @onclick="PreviousStep" Disabled="@((currentStep == 1))"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
                                         </div>
 
 
                                         @if (currentStep < 3)
                                         {
                                             <div class="col">
-                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" @onclick="NextStep">Next</MudButton>
+                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" @onclick="NextStep">Next &nbsp;<i class="fa-solid fa-forward-step"></i></MudButton>
                                             </div>
 
                                         }
                                         else
                                         {
                                             <div class="col">
-                                                <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit</MudButton>
+                                                <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit &nbsp; <i class="fa-regular fa-paper-plane"></i></MudButton>
                                             </div>
 
                                         }

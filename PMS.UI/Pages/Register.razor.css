@@ -12,6 +12,14 @@
     overflow-y: auto;
 }
 
+.form-container {
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    margin-bottom: var(--footer-spacing);  Space below the form-container 
+}
+
 @media (max-width: 767.98px) { /* Mobile devices */
     .pt-5 {
         padding-top: 4.7em !important; /* Adjust based on navbar height */
