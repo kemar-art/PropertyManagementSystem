@@ -7,6 +7,7 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
+using System;
 
 namespace PMS.UI.Pages.ClientFrom
 {
@@ -27,11 +28,11 @@ namespace PMS.UI.Pages.ClientFrom
         private bool IsLoading { get; set; } = true;
         private int currentStep = 1;
 
-        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
-        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
-        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = new();
+        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
+        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
         public FormVM FormVM { get; set; } = new();
-        IEnumerable<Region> Regions { get; set; } = [];
+        IEnumerable<Region> Regions { get; set; }
 
         private EditContext EditContext;
 
@@ -80,52 +81,72 @@ namespace PMS.UI.Pages.ClientFrom
                 IsLoading = false;
             }
         }
-        bool isValid = true;
-        private async Task<bool> ValidateStepAsync()
-        {
-
-
-            if (currentStep == 1)
-            {
-                // Check for required fields in step 1
-                isValid = !string.IsNullOrEmpty(FormVM.FirstName) && !string.IsNullOrEmpty(FormVM.LastName);
-            }
-            else if (currentStep == 2)
-            {
-                // Check for required fields in step 2
-                isValid = !string.IsNullOrEmpty(FormVM.Volume) && !string.IsNullOrEmpty(FormVM.Folio);
-            }
-            else if (currentStep == 3)
-            {
-                // Check for required fields in step 3
-                isValid = !string.IsNullOrEmpty(FormVM.SecondaryContactFirstName);
-            }
-
-            return isValid;
-        }
-
 
         private bool _showValidation = false;
-
 
         private async Task NextStep()
         {
             _showValidation = true; // Show validation errors
 
-            if (await ValidateStepAsync())
+            // Define a list of field identifiers for the current step
+            var fieldsToValidate = new List<FieldIdentifier>();
+
+            if (currentStep == 1)
             {
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.FirstName)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.LastName)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.PhoneNumber)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Email)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Address)));
+            }
+            else if (currentStep == 2)
+            {
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Volume)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Folio)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.IsKeyAvailable)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.RegionId)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.PropertyAddress)));
+            }
+            else if (currentStep == 3)
+            {
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactFirstName)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactLastName)));
+                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactPhoneNumber)));
+            }
+
+            // Trigger the validation
+            EditContext.Validate();
+
+            // Check if all fields in the current step are valid
+            var isValid = true;
+            foreach (var field in fieldsToValidate)
+            {
+                if (EditContext.GetValidationMessages(field).Any())
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            if (isValid)
+            {
+                // Proceed to the next step only if validation passes
                 if (currentStep < 3)
                 {
                     currentStep++;
-                    _showValidation = false; // Reset validation flag after moving to the next step
+                    _showValidation = false;
+                    isValid = false;
+                    // Reset validation flag after moving to the next step
                 }
             }
             else
             {
-                // Optionally, you can display a message to the user about validation errors
-                Console.WriteLine("Please fill in all required fields.");
+                // Handle validation failure
+                Console.WriteLine("Validation failed, staying on the current step.");
             }
         }
+
+
 
 
         private void PreviousStep()
@@ -171,6 +192,7 @@ namespace PMS.UI.Pages.ClientFrom
             return Task.CompletedTask;
         }
     }
+
 
 
 

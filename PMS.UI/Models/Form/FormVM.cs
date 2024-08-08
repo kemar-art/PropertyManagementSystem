@@ -13,23 +13,30 @@ namespace PMS.UI.Models.Form
         public int CustomerId { get; set; }
 
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Email")]
         public string Email { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Address")]
         public string Address { get; set; } = string.Empty;
 
         [Required]
+        [Phone]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; } = string.Empty;
 
         public string InstructionsIssuedBy { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Property Address")]
         public string PropertyAddress { get; set; } = string.Empty;
 
         public string PropertyDirection { get; set; } = string.Empty;
@@ -41,9 +48,11 @@ namespace PMS.UI.Models.Form
         public string Folio { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Strata Plan")]
         public string StrataPlan { get; set; } = string.Empty;
 
         [Required]
+        [Display(Name = "Key")]
         public string IsKeyAvailable { get; set; } = string.Empty;
 
         public string MortgageInstitution { get; set; } = string.Empty;

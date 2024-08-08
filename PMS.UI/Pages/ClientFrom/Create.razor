@@ -18,7 +18,8 @@
     {
         <div class="content">
             <div class="form-container">
-                <EditForm Model="@FormVM" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                <EditForm EditContext="EditContext" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+
                     <DataAnnotationsValidator />
                     @* <ValidationSummary /> *@
                     <MudGrid>
@@ -33,6 +34,7 @@
                                         <MudGrid>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" /> 
+                                                    <span></span>
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
