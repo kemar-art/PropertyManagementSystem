@@ -24,56 +24,60 @@
                     <div class="form-container">
                         @if (!string.IsNullOrEmpty(FormVM.Status))
                         {
-
-                                    <div class="stepper-container">
-                                        <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
-                                            <Items>
-                                                <Step Name="@FormStatus.StatusSubmitted" Color="@(selectedStep == FormStatus.StatusSubmitted ? Color.Success : Color.Secondary)">
-                                                    <Marker>
-                                                        <Icon Name="IconName.Send" />
-                                                    </Marker>
-                                                    <Caption>Submitted</Caption>
-                                                </Step>
-                                                <Step Name="@FormStatus.StatusAssigned" Color="@(selectedStep == FormStatus.StatusAssigned ? Color.Success : Color.Secondary)">
-                                                    <Marker>
-                                                        <Icon Name="IconName.UserCheck" />
-                                                    </Marker>
-                                                    <Caption>Assigned</Caption>
-                                                </Step>
-                                                <Step Name="@FormStatus.StatusInProcess" Color="@(selectedStep == FormStatus.StatusInProcess ? Color.Success : Color.Secondary)">
-                                                    <Marker>
-                                                        <Icon Name="IconName.SliderHorizontal" />
-                                                    </Marker>
-                                                    <Caption>In Process</Caption>
-                                                </Step>
-                                                <Step Name="@FormStatus.StatusCompleted" Color="@(selectedStep == FormStatus.StatusCompleted ? Color.Success : Color.Secondary)">
-                                                    <Marker>
-                                                        <Icon Name="IconName.Flag" />
-                                                    </Marker>
-                                                    <Caption>Completed</Caption>
-                                                </Step>
-                                            </Items>
-                                            <Content>
-                                                <StepPanel Name="@FormStatus.StatusSubmitted">
-                                                    <!-- Content for step 1 -->
-                                                </StepPanel>
-                                                <StepPanel Name="@FormStatus.StatusAssigned">
-                                                    <!-- Content for step 2 -->
-                                                </StepPanel>
-                                                <StepPanel Name="@FormStatus.StatusInProcess">
-                                                    <!-- Content for step 3 -->
-                                                </StepPanel>
-                                                <StepPanel Name="@FormStatus.StatusCompleted">
-                                                    <!-- Content for finish -->
-                                                </StepPanel>
-                                            </Content>
-                                        </Steps>
-                                    </div>
-
+                            <div class="stepper-container">
+                                <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
+                                    <Items>
+                                        <Step Name="@FormStatus.StatusSubmitted" Color="@(selectedStep == FormStatus.StatusSubmitted ? Color.Success : Color.Secondary)">
+                                            <Marker>
+                                                <Icon Name="IconName.Send" />
+                                            </Marker>
+                                            <Caption>Submitted</Caption>
+                                        </Step>
+                                        <Step Name="@FormStatus.StatusAssigned" Color="@(selectedStep == FormStatus.StatusAssigned ? Color.Success : Color.Secondary)">
+                                            <Marker>
+                                                <Icon Name="IconName.UserCheck" />
+                                            </Marker>
+                                            <Caption>Assigned</Caption>
+                                        </Step>
+                                        <Step Name="@FormStatus.StatusInProcess" Color="@(selectedStep == FormStatus.StatusInProcess ? Color.Success : Color.Secondary)">
+                                            <Marker>
+                                                <Icon Name="IconName.SliderHorizontal" />
+                                            </Marker>
+                                            <Caption>In Process</Caption>
+                                        </Step>
+                                        <Step Name="@FormStatus.StatusCompleted" Color="@(selectedStep == FormStatus.StatusCompleted ? Color.Success : Color.Secondary)">
+                                            <Marker>
+                                                <Icon Name="IconName.Flag" />
+                                            </Marker>
+                                            <Caption>Completed</Caption>
+                                        </Step>
+                                    </Items>
+                                    <Content>
+                                        <StepPanel Name="@FormStatus.StatusSubmitted">
+                                            <!-- Content for step 1 -->
+                                        </StepPanel>
+                                        <StepPanel Name="@FormStatus.StatusAssigned">
+                                            <!-- Content for step 2 -->
+                                        </StepPanel>
+                                        <StepPanel Name="@FormStatus.StatusInProcess">
+                                            <!-- Content for step 3 -->
+                                        </StepPanel>
+                                        <StepPanel Name="@FormStatus.StatusCompleted">
+                                            <!-- Content for finish -->
+                                        </StepPanel>
+                                    </Content>
+                                </Steps>
+                            </div>
+                        }
+                        else
+                        {
+                            <h2 class="text-center text-danger pt-2"><strong>@Message</strong></h2>
                         }
                         <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
-                            <p><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></p>
-
+                            @if (string.IsNullOrEmpty(FormVM?.Status) && string.IsNullOrEmpty(Message))
+                            {
+                                <p><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></p>
+                            }
                             <div class="input-box">
                                 <i class="uil uil-search"></i>
                                 <input type="text" @bind="SearchString" placeholder="Search here..." class="input-field" />
@@ -83,11 +87,11 @@
                     </div>
                 </div>
             </div>
-            
         </div>
 
 
-       
+
+
 
 
 

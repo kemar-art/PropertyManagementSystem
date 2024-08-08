@@ -16,18 +16,14 @@ namespace PMS.UI.Pages.ClientFrom
     public partial class Tracking
     {
         [Inject]
-        NavigationManager _NavigationManager { get; set; }
-
-        [Inject]
         IFormRepository _FormRepository { get; set; }
-
-
         private bool IsLoading { get; set; } = true;
 
         public string SearchString { get; set; } = string.Empty;
 
-        public FormVM FormVM { get; set; }
+        public string Message { get; set; } = string.Empty;
 
+        public FormVM FormVM { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -46,10 +42,11 @@ namespace PMS.UI.Pages.ClientFrom
             return context.NextStepName == FormVM.Status;
         }
 
-
         private async Task OnValidSubmit()
         {
             IsLoading = true;
+            Message = string.Empty;
+            selectedStep = string.Empty;
 
             try
             {
@@ -64,19 +61,28 @@ namespace PMS.UI.Pages.ClientFrom
                 {
                     // Call the repository method to track the form
                     FormVM.Status = await _FormRepository.TrackForm(searchId);
-                    await OnSelectedStepChanged(FormVM.Status);
 
+                    if (string.IsNullOrEmpty(FormVM.Status))
+                    {
+                        Message = "No record was found.";
+                    }
+                    else
+                    {
+                        await OnSelectedStepChanged(FormVM.Status);
+                    }
                 }
                 else
                 {
                     // Handle invalid search ID format
-                    FormVM.Status = "Invalid search ID format.";
+                    Message = "No tracking ID was entered.";
+                    FormVM.Status = string.Empty;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle any exceptions that occur
-                FormVM.Status = $"An error occurred: {ex.Message}";
+                Message = "No record was found.";
+                FormVM.Status = string.Empty;
             }
             finally
             {
@@ -92,4 +98,5 @@ namespace PMS.UI.Pages.ClientFrom
             return Task.CompletedTask;
         }
     }
+
 }
