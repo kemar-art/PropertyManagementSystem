@@ -50,7 +50,7 @@
                                                     <MudRadio Value="UserGender.Female">Female</MudRadio>
                                                 </MudRadioGroup>
                                             </MudItem>
-                                            <MudDatePicker Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
+                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
                                             <MudTextField Label="Password" HelperText="Choose a strong password"
                                                           Class="mt-3" @bind-Value="RegisterVM.Password"
                                                           Adornment="Adornment.End" InputType="@_passwordInput"
