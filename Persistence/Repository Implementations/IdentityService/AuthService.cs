@@ -1,4 +1,5 @@
 ﻿using Application.AuthSettings;
+using Application.Contracts.Email;
 using Application.Contracts.Identity;
 using Application.Contracts.ILogging;
 using Application.Exceptions;
@@ -6,8 +7,12 @@ using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
 using Application.IdentityModels;
 using Domain;
+using Domain.Common;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.SeedConfig.UserRole;
@@ -27,13 +32,22 @@ namespace Persistence.Repository_Implementations
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IOptions<JwtSettings> _jwtSettings;
         private readonly IAppLogger<AuthService> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEmailSender _emailSender;
 
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<JwtSettings> jwtSettings, IAppLogger<AuthService> logger)
+        public AuthService(UserManager<ApplicationUser> userManager, 
+                            SignInManager<ApplicationUser> signInManager, 
+                            IOptions<JwtSettings> jwtSettings, 
+                            IAppLogger<AuthService> logger, 
+                            IHttpContextAccessor  httpContextAccessor, 
+                            IEmailSender emailSender)
         {
             _userManager = userManager /*?? throw new ArgumentNullException(nameof(userManager))*/;
             _signInManager = signInManager /*?? throw new ArgumentNullException(nameof(signInManager))*/;
             _jwtSettings = jwtSettings /*?? throw new ArgumentNullException(nameof(jwtSettings))*/;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
+            _emailSender = emailSender;
         }
 
         public async Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand clientUser)
@@ -167,6 +181,38 @@ namespace Persistence.Repository_Implementations
 
             var user = await _userManager.FindByEmailAsync(email);
             return user != null;
+        }
+
+        public async Task<AppResponse> ExternalPasswordReset(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    if (confirmationToken != null)
+                    {
+                        string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                        var passwordResetEmailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/ex-password-reset?userId={user.Id}&code={code}";
+
+                        // Send email logic here
+                        await _emailSender.ExternalPasswordResetEmailAsync(user.Email, passwordResetEmailConfirmation);
+
+                        return new AppResponse
+                        {
+                            Exists = true,
+                            Message = "A password reset link has been sent to your email."
+                        };
+                    }
+                }
+            }
+
+            return new AppResponse
+            {
+                Exists = false,
+                Message = "A password reset link has been sent to your email."
+            };
         }
     }
 }

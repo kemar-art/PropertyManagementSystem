@@ -15,5 +15,7 @@ namespace Application.Contracts.Email
         Task JobAlretEmail(string to, string acceptUrl, string rejectUrl);
 
         Task PasswordResetEmailAsync(string to, string from);
+
+        Task ExternalPasswordResetEmailAsync(string to, string from);
     }
 }

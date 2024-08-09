@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Email;
+using FluentValidation;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ namespace Persistence.EmailService
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration["MailSettings:Mail"]));
             email.To.Add(MailboxAddress.Parse(to));
-            email.Subject = "Verification Email from SMART APPRAISAL GROUP";
+            email.Subject = "Verification Email from [THE COMPANY NAME]";
 
             BodyBuilder bodyBuilder = new();
 
@@ -47,7 +48,7 @@ namespace Persistence.EmailService
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration["MailSettings:Mail"]));
             email.To.Add(MailboxAddress.Parse(to));
-            email.Subject = "Job Alert Email from SMART APPRAISAL GROUP";
+            email.Subject = "Job Alert Email from [THE COMPANY NAME]";
 
             BodyBuilder bodyBuilder = new();
 
@@ -76,7 +77,7 @@ namespace Persistence.EmailService
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration["MailSettings:Mail"]));
             email.To.Add(MailboxAddress.Parse(to));
-            email.Subject = "Password Email from SMART APPRAISAL GROUP";
+            email.Subject = "Password Email from [THE COMPANY NAME]";
 
             BodyBuilder bodyBuilder = new BodyBuilder();
 
@@ -103,12 +104,12 @@ namespace Persistence.EmailService
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration["MailSettings:Mail"]));
             email.To.Add(MailboxAddress.Parse(to));
-            email.Subject = "Password Reset Email from SMART APPRAISAL GROUP";
+            email.Subject = "Password Reset Email from [THE COMPANY NAME]";
 
             BodyBuilder bodyBuilder = new BodyBuilder();
 
             //read the template
-            string htmlBody = await File.ReadAllTextAsync("emailpasswordreset.html");
+            string htmlBody = await File.ReadAllTextAsync("emailpasswordreset1.html");
 
             htmlBody = htmlBody.Replace("{{body}}", body);
 
@@ -124,5 +125,35 @@ namespace Persistence.EmailService
                 smtp.Disconnect(true);
             }
         }
+
+        public async Task ExternalPasswordResetEmailAsync(string to, string body)
+        {
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(_configuration["MailSettings:Mail"]));
+            email.To.Add(MailboxAddress.Parse(to));
+            email.Subject = "Password Reset Email from [THE COMPANY NAME]";
+
+            BodyBuilder bodyBuilder = new BodyBuilder();
+
+            //read the template
+            string htmlBody = await File.ReadAllTextAsync("externalemailpasswordreset.html");
+
+            htmlBody = htmlBody.Replace("{{body}}", body);
+
+            bodyBuilder.HtmlBody = htmlBody;
+
+            email.Body = bodyBuilder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect(_configuration["MailSettings:Host"], Convert.ToInt32(_configuration["MailSettings:Port"]), SecureSocketOptions.StartTls); ;
+                smtp.Authenticate(_configuration["MailSettings:Mail"], _configuration["MailSettings:Password"]);
+                await smtp.SendAsync(email);
+                smtp.Disconnect(true);
+            }
+        }
+
+       
+
     }
 }

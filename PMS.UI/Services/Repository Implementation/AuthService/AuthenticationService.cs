@@ -19,6 +19,22 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             _authenticationStateProvider = authenticationStateProvider;
         }
 
+        public async Task<AppResponse> ExternalPasswordReset(ExternalPasswordResetEmailVM passwordResetVM)
+        {
+            ExtrnalPasswordRestCommand extrnalPasswordRest = new()
+            {
+                Email = passwordResetVM.Email,
+            };
+
+            var response = await _client.ExternalrestAsync(extrnalPasswordRest);
+            if (response.Exists)
+            {
+                return response;
+            }
+
+            return response;
+        }
+
         public async Task<bool> IsAuthenticated(LoginVM loginVM)
         {
             try

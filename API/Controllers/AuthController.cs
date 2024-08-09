@@ -2,6 +2,8 @@
 using Application.Contracts.Identity;
 using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
+using Application.Features.Commands.User.PasswordRest.ExternalRest;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -62,6 +64,15 @@ namespace API.Controllers
             return Accepted(response);
         }
 
+        [HttpPost]
+        [Route("externalrest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<AppResponse>> ExternalPasswordReset(ExtrnalPasswordRestCommand email)
+        {
+            var response = await _mediator.Send(email);
+            return Ok(response);
+        }
 
     }
 }
