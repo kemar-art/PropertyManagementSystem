@@ -8,6 +8,8 @@ using PMS.UI.Models;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
 using System;
+using System.Reflection;
+using System.Security.AccessControl;
 
 namespace PMS.UI.Pages.ClientFrom
 {
@@ -34,6 +36,8 @@ namespace PMS.UI.Pages.ClientFrom
         public FormVM FormVM { get; set; } = new();
         IEnumerable<Region> Regions { get; set; }
 
+
+        private ValidationMessageStore _validationMessageStore;
         private EditContext EditContext;
 
         protected override async Task OnInitializedAsync()
@@ -70,6 +74,7 @@ namespace PMS.UI.Pages.ClientFrom
 
                 // Initialize EditContext
                 EditContext = new EditContext(FormVM);
+                _validationMessageStore = new ValidationMessageStore(EditContext);
             }
             catch (Exception ex)
             {
@@ -82,12 +87,29 @@ namespace PMS.UI.Pages.ClientFrom
             }
         }
 
+        private bool ValidateServiceRequestCheckBoxes()
+        {
+            // Check if at least one checkbox is checked
+            return ServiceRequestCheckBoxesVM.Any(c => c.IsChecked);
+        }
+
+        private void SetServiceRequestValidationMessage(string message)
+        {
+            FormVM.ServiceRequestValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.ServiceRequestValidationMessage)));
+        }
+
+
+
         private bool _showValidation = false;
 
         private async Task NextStep()
         {
             // Show validation errors
             _showValidation = true;
+
+            // Clear previous validation messages
+            FormVM.ServiceRequestValidationMessage = string.Empty;
 
             // Track if the form is valid
             var isValid = true;
@@ -110,6 +132,16 @@ namespace PMS.UI.Pages.ClientFrom
                 fieldsToValidate.Add(nameof(FormVM.IsKeyAvailable));
                 fieldsToValidate.Add(nameof(FormVM.RegionId));
                 fieldsToValidate.Add(nameof(FormVM.PropertyAddress));
+                fieldsToValidate.Add(nameof(FormVM.StrataPlan));
+                fieldsToValidate.Add(nameof(FormVM.MortgageInstitution));
+
+
+                //Validate the checkboxes for service requests
+                if (!ValidateServiceRequestCheckBoxes())
+                {
+                    isValid = false;
+                    SetServiceRequestValidationMessage("At least one service request must be selected.");
+                }
             }
             else if (currentStep == 3)
             {
@@ -147,6 +179,9 @@ namespace PMS.UI.Pages.ClientFrom
                 Console.WriteLine("Validation failed, staying on the current step.");
             }
         }
+
+
+
 
 
         private void PreviousStep()
@@ -193,106 +228,5 @@ namespace PMS.UI.Pages.ClientFrom
         }
     }
 
-
-
-
-
-    //public partial class Create
-    //{
-    //    [Inject]
-    //    NavigationManager _NavigationManager { get; set; }
-
-    //    [Inject]
-    //    IFormRepository _FormRepository { get; set; }
-
-    //    [Inject]
-    //    IRegionRepositoey _RegionRepositoey { get; set; }
-
-    //    [Inject]
-    //    ICheckBoxRepository _CheckBoxRepository { get; set; }
-
-    //    private bool IsLoading { get; set; } = true;
-
-    //    public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = new();
-
-    //    public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
-
-    //    public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
-
-    //    public FormVM FormVM { get; set; } = new();
-
-    //    IEnumerable<Region> Regions { get; set; } = new List<Region>();
-
-    //    protected override async Task OnInitializedAsync()
-    //    {
-    //        IsLoading = true;
-
-    //        try
-    //        {
-    //            var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-    //            ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
-    //            {
-    //                Id = vm.Id,
-    //                Title = vm.Title,
-    //                IsChecked = vm.IsChecked
-    //            }).ToList();
-
-    //            var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
-    //            PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
-    //            {
-    //                Id = vm.Id,
-    //                Title = vm.Title,
-    //                IsChecked = vm.IsChecked
-    //            }).ToList();
-
-    //            var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
-    //            TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
-    //            {
-    //                Id = vm.Id,
-    //                Title = vm.Title,
-    //                IsChecked = vm.IsChecked
-    //            }).ToList();
-
-    //            Regions = await _RegionRepositoey.GetAllRegion() ?? new List<Region>();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            // Handle the exception (e.g., log it, show an error message)
-    //            Console.WriteLine($"Error loading data: {ex.Message}");
-    //        }
-    //        finally
-    //        {
-    //            IsLoading = false;
-    //        }
-    //    }
-
-    //    private async Task OnValidSubmit()
-    //    {
-    //        // Populate the selected IDs as comma-separated strings
-    //        FormVM.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
-    //        FormVM.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
-    //        FormVM.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
-
-    //        try
-    //        {
-    //            var response = await _FormRepository.CreateForm(FormVM);
-
-    //            if (response.Success)
-    //            {
-    //                _NavigationManager.NavigateTo($"/success/{response.Data}");
-    //            }
-    //            else
-    //            {
-    //                // Handle error
-    //                Console.WriteLine("Error: " + response.ErrorMessage);
-    //            }
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            // Handle unexpected errors
-    //            Console.WriteLine("Unexpected error: " + ex.Message);
-    //        }
-    //    }
-    //}
 
 }

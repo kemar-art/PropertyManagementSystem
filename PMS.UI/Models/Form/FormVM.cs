@@ -80,6 +80,7 @@ namespace PMS.UI.Models.Form
         public Region? Region { get; set; }
         public Guid RegionId { get; set; }
 
+
         public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
         public string ServiceRequestItemSelectId { get; set; } = string.Empty;
         public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
@@ -87,6 +88,8 @@ namespace PMS.UI.Models.Form
         public bool Exists { get; set; }
         public string Status { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
+
+        public string ServiceRequestValidationMessage { get; set; } = string.Empty;
     }
 }
 

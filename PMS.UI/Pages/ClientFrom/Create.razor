@@ -64,13 +64,20 @@
                                         <MudGrid>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
+                                                @if (!string.IsNullOrEmpty(FormVM.ServiceRequestValidationMessage))
+                                                {
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.ServiceRequestValidationMessage</MudText>
+                                                }
                                                 <MudGrid>
+                                                    
                                                     @foreach (var item in ServiceRequestCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
                                                             <MudCheckBox  @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
+                                                            
+
                                                         </MudItem>
-                                                    }
+                                                    } 
                                                 </MudGrid>
                                             </MudItem>
                                             <MudDivider />
