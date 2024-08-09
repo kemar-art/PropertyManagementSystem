@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -55,6 +57,8 @@ namespace PMS.UI.Models.Form
         [Display(Name = "Key")]
         public string IsKeyAvailable { get; set; } = string.Empty;
 
+        [Required]
+        [Display(Name = "Mortgage Institution")]
         public string MortgageInstitution { get; set; } = string.Empty;
 
         public string Other { get; set; } = string.Empty;
@@ -70,8 +74,6 @@ namespace PMS.UI.Models.Form
         public string SecondaryContactEmail { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Phone Number")]
-        [Phone]
         public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
         [ForeignKey("RegionId")]
@@ -87,3 +89,4 @@ namespace PMS.UI.Models.Form
         public string Message { get; set; } = string.Empty;
     }
 }
+

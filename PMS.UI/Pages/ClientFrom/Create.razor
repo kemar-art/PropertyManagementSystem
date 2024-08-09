@@ -149,13 +149,13 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.SecondaryContactFirstName" />
+                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.SecondaryContactFirstName" For="@(() => FormVM.SecondaryContactFirstName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.SecondaryContactLastName" />
+                                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.SecondaryContactLastName" For="@(() => FormVM.SecondaryContactLastName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" />
+                                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" For="@(() => FormVM.SecondaryContactPhoneNumber)" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />

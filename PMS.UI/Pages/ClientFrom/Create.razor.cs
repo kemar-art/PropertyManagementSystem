@@ -86,45 +86,49 @@ namespace PMS.UI.Pages.ClientFrom
 
         private async Task NextStep()
         {
-            _showValidation = true; // Show validation errors
+            // Show validation errors
+            _showValidation = true;
 
-            // Define a list of field identifiers for the current step
-            var fieldsToValidate = new List<FieldIdentifier>();
+            // Track if the form is valid
+            var isValid = true;
+
+            // Determine the fields to validate based on the current step
+            var fieldsToValidate = new List<string>();
 
             if (currentStep == 1)
             {
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.FirstName)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.LastName)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.PhoneNumber)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Email)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Address)));
+                fieldsToValidate.Add(nameof(FormVM.FirstName));
+                fieldsToValidate.Add(nameof(FormVM.LastName));
+                fieldsToValidate.Add(nameof(FormVM.PhoneNumber));
+                fieldsToValidate.Add(nameof(FormVM.Email));
+                fieldsToValidate.Add(nameof(FormVM.Address));
             }
             else if (currentStep == 2)
             {
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Volume)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.Folio)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.IsKeyAvailable)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.RegionId)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.PropertyAddress)));
+                fieldsToValidate.Add(nameof(FormVM.Volume));
+                fieldsToValidate.Add(nameof(FormVM.Folio));
+                fieldsToValidate.Add(nameof(FormVM.IsKeyAvailable));
+                fieldsToValidate.Add(nameof(FormVM.RegionId));
+                fieldsToValidate.Add(nameof(FormVM.PropertyAddress));
             }
             else if (currentStep == 3)
             {
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactFirstName)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactLastName)));
-                fieldsToValidate.Add(new FieldIdentifier(FormVM, nameof(FormVM.SecondaryContactPhoneNumber)));
+                fieldsToValidate.Add(nameof(FormVM.SecondaryContactFirstName));
+                fieldsToValidate.Add(nameof(FormVM.SecondaryContactLastName));
+                fieldsToValidate.Add(nameof(FormVM.SecondaryContactPhoneNumber));
             }
 
-            // Trigger the validation
-            EditContext.Validate();
-
-            // Check if all fields in the current step are valid
-            var isValid = true;
+            // Validate each field
             foreach (var field in fieldsToValidate)
             {
-                if (EditContext.GetValidationMessages(field).Any())
+                var fieldIdentifier = new FieldIdentifier(FormVM, field);
+                EditContext.NotifyFieldChanged(fieldIdentifier); // Notify that a field has changed
+                var validationMessages = EditContext.GetValidationMessages(fieldIdentifier);
+
+                // If any field has validation messages, mark the form as invalid
+                if (validationMessages.Any())
                 {
                     isValid = false;
-                    break;
                 }
             }
 
@@ -134,9 +138,7 @@ namespace PMS.UI.Pages.ClientFrom
                 if (currentStep < 3)
                 {
                     currentStep++;
-                    _showValidation = false;
-                    isValid = false;
-                    // Reset validation flag after moving to the next step
+                    _showValidation = false; // Reset validation flag after moving to the next step
                 }
             }
             else
@@ -145,8 +147,6 @@ namespace PMS.UI.Pages.ClientFrom
                 Console.WriteLine("Validation failed, staying on the current step.");
             }
         }
-
-
 
 
         private void PreviousStep()
