@@ -33,8 +33,8 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" /> 
-                                                    <span></span>
+                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                                <span></span>
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
@@ -69,25 +69,29 @@
                                                     <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.ServiceRequestValidationMessage</MudText>
                                                 }
                                                 <MudGrid>
-                                                    
+
                                                     @foreach (var item in ServiceRequestCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox  @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
-                                                            
+                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
+
 
                                                         </MudItem>
-                                                    } 
+                                                    }
                                                 </MudGrid>
                                             </MudItem>
                                             <MudDivider />
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
+                                                @if (!string.IsNullOrEmpty(FormVM.TypeOfPropertyValidationMessage))
+                                                {
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.TypeOfPropertyValidationMessage</MudText>
+                                                }
                                                 <MudGrid>
                                                     @foreach (var item in TypeOfPropertyCheckBoxItemVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
+                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
                                                             <input type="hidden" value="@item.Id" />
                                                         </MudItem>
                                                     }
@@ -105,11 +109,15 @@
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
+                                                @if (!string.IsNullOrEmpty(FormVM.PurposeOfEvaluationValidationMessage))
+                                                {
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.PurposeOfEvaluationValidationMessage</MudText>
+                                                }
                                                 <MudGrid>
                                                     @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
                                                     {
                                                         <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium"  Label="@item.Title" />
+                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
                                                             <input type="hidden" value="@item.Id" />
                                                         </MudItem>
                                                     }
@@ -134,9 +142,12 @@
                                                     <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                     @foreach (var region in Regions)
                                                     {
-                                                        <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                        <MudSelectItem  T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                        
                                                     }
+                                                    
                                                 </MudSelect>
+                                                <ValidationMessage For="@(() => FormVM.RegionId)" />
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />

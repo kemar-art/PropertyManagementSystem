@@ -1,4 +1,5 @@
 using Application.Contracts.Repository_Interface;
+using Blazorise.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
@@ -92,11 +93,33 @@ namespace PMS.UI.Pages.ClientFrom
             // Check if at least one checkbox is checked
             return ServiceRequestCheckBoxesVM.Any(c => c.IsChecked);
         }
-
         private void SetServiceRequestValidationMessage(string message)
         {
             FormVM.ServiceRequestValidationMessage = message;
             EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.ServiceRequestValidationMessage)));
+        }
+
+        private bool ValidateTypeOfPropertyCheckBoxes()
+        {
+            // Check if at least one checkbox is checked
+            return TypeOfPropertyCheckBoxItemVM.Any(c => c.IsChecked);
+        }
+        private void TypeOfPropertyValidationMessage(string message)
+        {
+            FormVM.TypeOfPropertyValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.TypeOfPropertyValidationMessage)));
+        }
+
+
+        private bool ValidatePurposeOfEvaluationCheckBoxes()
+        {
+            // Check if at least one checkbox is checked
+            return PurposeOfEvaluationCheckBoxesVM.Any(c => c.IsChecked);
+        }
+        private void PurposeOfEvaluationValidationMessage(string message)
+        {
+            FormVM.PurposeOfEvaluationValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.PurposeOfEvaluationValidationMessage)));
         }
 
 
@@ -110,6 +133,9 @@ namespace PMS.UI.Pages.ClientFrom
 
             // Clear previous validation messages
             FormVM.ServiceRequestValidationMessage = string.Empty;
+            FormVM.TypeOfPropertyValidationMessage = string.Empty;
+            FormVM.PurposeOfEvaluationValidationMessage = string.Empty;
+            _validationMessageStore.Clear();
 
             // Track if the form is valid
             var isValid = true;
@@ -130,17 +156,39 @@ namespace PMS.UI.Pages.ClientFrom
                 fieldsToValidate.Add(nameof(FormVM.Volume));
                 fieldsToValidate.Add(nameof(FormVM.Folio));
                 fieldsToValidate.Add(nameof(FormVM.IsKeyAvailable));
-                fieldsToValidate.Add(nameof(FormVM.RegionId));
+                fieldsToValidate.Add(nameof(FormVM.RegionId)); // Add RegionId to the fields to validate
                 fieldsToValidate.Add(nameof(FormVM.PropertyAddress));
                 fieldsToValidate.Add(nameof(FormVM.StrataPlan));
                 fieldsToValidate.Add(nameof(FormVM.MortgageInstitution));
 
+                // Validate RegionId
+                var regionField = new FieldIdentifier(FormVM, nameof(FormVM.RegionId));
+                _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
 
-                //Validate the checkboxes for service requests
+                if (FormVM.RegionId == Guid.Empty)
+                {
+                    isValid = false;
+                    _validationMessageStore.Add(regionField, "Please select a parish.");
+                    EditContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
+                }
+
+                // Validate the checkboxes for service requests
                 if (!ValidateServiceRequestCheckBoxes())
                 {
                     isValid = false;
                     SetServiceRequestValidationMessage("At least one service request must be selected.");
+                }
+
+                if (!ValidateTypeOfPropertyCheckBoxes())
+                {
+                    isValid = false;
+                    TypeOfPropertyValidationMessage("At least one type of property must be selected.");
+                }
+
+                if (!ValidatePurposeOfEvaluationCheckBoxes())
+                {
+                    isValid = false;
+                    PurposeOfEvaluationValidationMessage("At least one purpose of evaluation must be selected.");
                 }
             }
             else if (currentStep == 3)
@@ -179,7 +227,6 @@ namespace PMS.UI.Pages.ClientFrom
                 Console.WriteLine("Validation failed, staying on the current step.");
             }
         }
-
 
 
 

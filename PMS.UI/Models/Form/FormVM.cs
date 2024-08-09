@@ -90,6 +90,8 @@ namespace PMS.UI.Models.Form
         public string Message { get; set; } = string.Empty;
 
         public string ServiceRequestValidationMessage { get; set; } = string.Empty;
+        public string TypeOfPropertyValidationMessage { get; set; } = string.Empty;
+        public string PurposeOfEvaluationValidationMessage { get; set; } = string.Empty;
     }
 }
 
