@@ -34,14 +34,14 @@ namespace PMS.UI.Pages.ClientFrom
 
         public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
 
-        public FormVM FormVM { get; set; } = new();
+        public FormVM _detailModel { get; set; } = new();
 
         IEnumerable<Region> Regions { get; set; } = [];
 
         protected override async Task OnInitializedAsync()
         {
             var form = await _FormRepository.GetASingleFormDetails(FormId);
-            FormVM = form;
+            _detailModel = form;
 
             var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
             ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()

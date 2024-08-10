@@ -34,7 +34,7 @@ namespace PMS.UI.Pages.ClientFrom
         public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = new();
         public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
         public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
-        public FormVM FormVM { get; set; } = new();
+        public FormVM _createModel { get; set; } = new();
         IEnumerable<Region> Regions { get; set; }
 
 
@@ -74,7 +74,7 @@ namespace PMS.UI.Pages.ClientFrom
                 Regions = await _RegionRepositoey.GetAllRegion() ?? new List<Region>();
 
                 // Initialize EditContext
-                EditContext = new EditContext(FormVM);
+                EditContext = new EditContext(_createModel);
                 _validationMessageStore = new ValidationMessageStore(EditContext);
             }
             catch (Exception ex)
@@ -95,8 +95,8 @@ namespace PMS.UI.Pages.ClientFrom
         }
         private void SetServiceRequestValidationMessage(string message)
         {
-            FormVM.ServiceRequestValidationMessage = message;
-            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.ServiceRequestValidationMessage)));
+            _createModel.ServiceRequestValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.ServiceRequestValidationMessage)));
         }
 
         private bool ValidateTypeOfPropertyCheckBoxes()
@@ -106,8 +106,8 @@ namespace PMS.UI.Pages.ClientFrom
         }
         private void TypeOfPropertyValidationMessage(string message)
         {
-            FormVM.TypeOfPropertyValidationMessage = message;
-            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.TypeOfPropertyValidationMessage)));
+            _createModel.TypeOfPropertyValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.TypeOfPropertyValidationMessage)));
         }
 
 
@@ -118,8 +118,8 @@ namespace PMS.UI.Pages.ClientFrom
         }
         private void PurposeOfEvaluationValidationMessage(string message)
         {
-            FormVM.PurposeOfEvaluationValidationMessage = message;
-            EditContext.NotifyFieldChanged(new FieldIdentifier(FormVM, nameof(FormVM.PurposeOfEvaluationValidationMessage)));
+            _createModel.PurposeOfEvaluationValidationMessage = message;
+            EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.PurposeOfEvaluationValidationMessage)));
         }
 
 
@@ -132,9 +132,9 @@ namespace PMS.UI.Pages.ClientFrom
             _showValidation = true;
 
             // Clear previous validation messages
-            FormVM.ServiceRequestValidationMessage = string.Empty;
-            FormVM.TypeOfPropertyValidationMessage = string.Empty;
-            FormVM.PurposeOfEvaluationValidationMessage = string.Empty;
+            _createModel.ServiceRequestValidationMessage = string.Empty;
+            _createModel.TypeOfPropertyValidationMessage = string.Empty;
+            _createModel.PurposeOfEvaluationValidationMessage = string.Empty;
             _validationMessageStore.Clear();
 
             // Track if the form is valid
@@ -145,27 +145,27 @@ namespace PMS.UI.Pages.ClientFrom
 
             if (currentStep == 1)
             {
-                fieldsToValidate.Add(nameof(FormVM.FirstName));
-                fieldsToValidate.Add(nameof(FormVM.LastName));
-                fieldsToValidate.Add(nameof(FormVM.PhoneNumber));
-                fieldsToValidate.Add(nameof(FormVM.Email));
-                fieldsToValidate.Add(nameof(FormVM.Address));
+                fieldsToValidate.Add(nameof(_createModel.FirstName));
+                fieldsToValidate.Add(nameof(_createModel.LastName));
+                fieldsToValidate.Add(nameof(_createModel.PhoneNumber));
+                fieldsToValidate.Add(nameof(_createModel.Email));
+                fieldsToValidate.Add(nameof(_createModel.Address));
             }
             else if (currentStep == 2)
             {
-                fieldsToValidate.Add(nameof(FormVM.Volume));
-                fieldsToValidate.Add(nameof(FormVM.Folio));
-                fieldsToValidate.Add(nameof(FormVM.IsKeyAvailable));
-                fieldsToValidate.Add(nameof(FormVM.RegionId)); // Add RegionId to the fields to validate
-                fieldsToValidate.Add(nameof(FormVM.PropertyAddress));
-                fieldsToValidate.Add(nameof(FormVM.StrataPlan));
-                fieldsToValidate.Add(nameof(FormVM.MortgageInstitution));
+                fieldsToValidate.Add(nameof(_createModel.Volume));
+                fieldsToValidate.Add(nameof(_createModel.Folio));
+                fieldsToValidate.Add(nameof(_createModel.IsKeyAvailable));
+                fieldsToValidate.Add(nameof(_createModel.RegionId)); // Add RegionId to the fields to validate
+                fieldsToValidate.Add(nameof(_createModel.PropertyAddress));
+                fieldsToValidate.Add(nameof(_createModel.StrataPlan));
+                fieldsToValidate.Add(nameof(_createModel.MortgageInstitution));
 
                 // Validate RegionId
-                var regionField = new FieldIdentifier(FormVM, nameof(FormVM.RegionId));
+                var regionField = new FieldIdentifier(_createModel, nameof(_createModel.RegionId));
                 _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
 
-                if (FormVM.RegionId == Guid.Empty)
+                if (_createModel.RegionId == Guid.Empty)
                 {
                     isValid = false;
                     _validationMessageStore.Add(regionField, "Please select a parish.");
@@ -193,15 +193,15 @@ namespace PMS.UI.Pages.ClientFrom
             }
             else if (currentStep == 3)
             {
-                fieldsToValidate.Add(nameof(FormVM.SecondaryContactFirstName));
-                fieldsToValidate.Add(nameof(FormVM.SecondaryContactLastName));
-                fieldsToValidate.Add(nameof(FormVM.SecondaryContactPhoneNumber));
+                fieldsToValidate.Add(nameof(_createModel.SecondaryContactFirstName));
+                fieldsToValidate.Add(nameof(_createModel.SecondaryContactLastName));
+                fieldsToValidate.Add(nameof(_createModel.SecondaryContactPhoneNumber));
             }
 
             // Validate each field
             foreach (var field in fieldsToValidate)
             {
-                var fieldIdentifier = new FieldIdentifier(FormVM, field);
+                var fieldIdentifier = new FieldIdentifier(_createModel, field);
                 EditContext.NotifyFieldChanged(fieldIdentifier); // Notify that a field has changed
                 var validationMessages = EditContext.GetValidationMessages(fieldIdentifier);
 
@@ -242,13 +242,13 @@ namespace PMS.UI.Pages.ClientFrom
         private async Task HandleValidSubmit()
         {
             // Populate the selected IDs as comma-separated strings
-            FormVM.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
-            FormVM.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
-            FormVM.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+            _createModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
+            _createModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+            _createModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
 
             try
             {
-                var response = await _FormRepository.CreateForm(FormVM);
+                var response = await _FormRepository.CreateForm(_createModel);
 
                 if (response.Success)
                 {

@@ -22,7 +22,7 @@
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-12">
                     <div class="form-container">
-                        @if (!string.IsNullOrEmpty(FormVM.Status))
+                        @if (!string.IsNullOrEmpty(_trackingModel.Status))
                         {
                             <div class="stepper-container">
                                 <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
@@ -73,8 +73,8 @@
                         {
                             <h2 class="text-center text-danger pt-2"><strong>@Message</strong></h2>
                         }
-                        <EditForm Model="@FormVM" OnValidSubmit="OnValidSubmit">
-                            @if (string.IsNullOrEmpty(FormVM?.Status) && string.IsNullOrEmpty(Message))
+                        <EditForm Model="@_trackingModel" OnValidSubmit="OnValidSubmit">
+                            @if (string.IsNullOrEmpty(_trackingModel?.Status) && string.IsNullOrEmpty(Message))
                             {
                                 <p><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></p>
                             }

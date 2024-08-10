@@ -20,7 +20,7 @@ namespace PMS.UI.Pages.ClientFrom
         [Inject]
         public SweetAlertService Swal { get; set; }
 
-        public IEnumerable<FormVM> FormVMs { get; private set; } = [];
+        public IEnumerable<FormVM> _indexModel { get; private set; } = [];
 
         public string Message { get; set; } = string.Empty;
 
@@ -54,7 +54,7 @@ namespace PMS.UI.Pages.ClientFrom
                 if (response.Success)
                 {
                     // Refresh the data after deletion
-                    FormVMs = await _FormRepository.GetAllForms();
+                    _indexModel = await _FormRepository.GetAllForms();
                     StateHasChanged();
                 }
                 else
@@ -70,7 +70,7 @@ namespace PMS.UI.Pages.ClientFrom
             IsLoading = true; // Ensure the loading overlay is displayed
             try
             {
-                FormVMs = await _FormRepository.GetAllForms();
+                _indexModel = await _FormRepository.GetAllForms();
                
             }
             catch (Exception ex)

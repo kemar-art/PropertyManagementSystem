@@ -33,23 +33,23 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.FirstName" For="@(() => FormVM.FirstName)" />
+                                                <MudTextField T="string" Label="First Name" @bind-Value="_createModel.FirstName" For="@(() => _createModel.FirstName)" />
                                                 <span></span>
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.LastName" For="@(() => FormVM.LastName)" />
+                                                <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.LastName" For="@(() => _createModel.LastName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.PhoneNumber" For="@(() => FormVM.PhoneNumber)" />
+                                                <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.PhoneNumber" For="@(() => _createModel.PhoneNumber)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.Email" For="@(() => FormVM.Email)" />
+                                                <MudTextField T="string" Label="Email" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Address" @bind-Value="FormVM.Address" For="@(() => FormVM.Address)" />
+                                                <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="FormVM.InstructionsIssuedBy" For="@(() => FormVM.InstructionsIssuedBy)" />
+                                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="_createModel.InstructionsIssuedBy" For="@(() => _createModel.InstructionsIssuedBy)" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
@@ -64,9 +64,9 @@
                                         <MudGrid>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
-                                                @if (!string.IsNullOrEmpty(FormVM.ServiceRequestValidationMessage))
+                                                @if (!string.IsNullOrEmpty(_createModel.ServiceRequestValidationMessage))
                                                 {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.ServiceRequestValidationMessage</MudText>
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.ServiceRequestValidationMessage</MudText>
                                                 }
                                                 <MudGrid>
 
@@ -83,9 +83,9 @@
                                             <MudDivider />
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
-                                                @if (!string.IsNullOrEmpty(FormVM.TypeOfPropertyValidationMessage))
+                                                @if (!string.IsNullOrEmpty(_createModel.TypeOfPropertyValidationMessage))
                                                 {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.TypeOfPropertyValidationMessage</MudText>
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.TypeOfPropertyValidationMessage</MudText>
                                                 }
                                                 <MudGrid>
                                                     @foreach (var item in TypeOfPropertyCheckBoxItemVM)
@@ -99,19 +99,19 @@
                                             </MudItem>
                                             <MudDivider />
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Volume" @bind-Value="FormVM.Volume" For="@(() => FormVM.Volume)" />
+                                                <MudTextField T="string" Label="Volume" @bind-Value="_createModel.Volume" For="@(() => _createModel.Volume)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Folio" @bind-Value="FormVM.Folio" For="@(() => FormVM.Folio)" />
+                                                <MudTextField T="string" Label="Folio" @bind-Value="_createModel.Folio" For="@(() => _createModel.Folio)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="FormVM.StrataPlan" For="@(() => FormVM.StrataPlan)" />
+                                                <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="_createModel.StrataPlan" For="@(() => _createModel.StrataPlan)" />
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
-                                                @if (!string.IsNullOrEmpty(FormVM.PurposeOfEvaluationValidationMessage))
+                                                @if (!string.IsNullOrEmpty(_createModel.PurposeOfEvaluationValidationMessage))
                                                 {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@FormVM.PurposeOfEvaluationValidationMessage</MudText>
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.PurposeOfEvaluationValidationMessage</MudText>
                                                 }
                                                 <MudGrid>
                                                     @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
@@ -125,20 +125,20 @@
                                             </MudItem>
                                             <MudDivider />
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Mortgage Institution" @bind-Value="FormVM.MortgageInstitution" For="@(() => FormVM.MortgageInstitution)" />
+                                                <MudTextField T="string" Label="Mortgage Institution" @bind-Value="_createModel.MortgageInstitution" For="@(() => _createModel.MortgageInstitution)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Other" @bind-Value="FormVM.Other" />
+                                                <MudTextField T="string" Label="Other" @bind-Value="_createModel.Other" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
-                                                <MudRadioGroup T="string" @bind-Value="FormVM.IsKeyAvailable" For="@(() => FormVM.IsKeyAvailable)">
+                                                <MudRadioGroup T="string" @bind-Value="_createModel.IsKeyAvailable" For="@(() => _createModel.IsKeyAvailable)">
                                                     <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
                                                     <MudRadio Value="KeyAvailability.No">No</MudRadio>
                                                 </MudRadioGroup>
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudSelect T="Guid" Label="Parish" @bind-Value="FormVM.RegionId">
+                                                <MudSelect T="Guid" Label="Parish" @bind-Value="_createModel.RegionId">
                                                     <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                     @foreach (var region in Regions)
                                                     {
@@ -147,13 +147,13 @@
                                                     }
                                                     
                                                 </MudSelect>
-                                                <ValidationMessage For="@(() => FormVM.RegionId)" />
+                                                <ValidationMessage For="@(() => _createModel.RegionId)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Property Address" @bind-Value="FormVM.PropertyAddress" For="@(() => FormVM.PropertyAddress)" />
+                                                <MudTextField T="string" Label="Property Address" @bind-Value="_createModel.PropertyAddress" For="@(() => _createModel.PropertyAddress)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Property Direction" @bind-Value="FormVM.PropertyDirection" TextArea="true" />
+                                                <MudTextField T="string" Label="Property Direction" @bind-Value="_createModel.PropertyDirection" TextArea="true" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
@@ -167,16 +167,16 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="FormVM.SecondaryContactFirstName" For="@(() => FormVM.SecondaryContactFirstName)" />
+                                                <MudTextField T="string" Label="First Name" @bind-Value="_createModel.SecondaryContactFirstName" For="@(() => _createModel.SecondaryContactFirstName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Last Name" @bind-Value="FormVM.SecondaryContactLastName" For="@(() => FormVM.SecondaryContactLastName)" />
+                                                <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.SecondaryContactLastName" For="@(() => _createModel.SecondaryContactLastName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Phone Number" @bind-Value="FormVM.SecondaryContactPhoneNumber" For="@(() => FormVM.SecondaryContactPhoneNumber)" />
+                                                <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.SecondaryContactPhoneNumber" For="@(() => _createModel.SecondaryContactPhoneNumber)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Email" @bind-Value="FormVM.SecondaryContactEmail" />
+                                                <MudTextField T="string" Label="Email" @bind-Value="_createModel.SecondaryContactEmail" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>

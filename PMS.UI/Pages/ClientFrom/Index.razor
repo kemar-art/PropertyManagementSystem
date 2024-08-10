@@ -17,7 +17,7 @@
         <div class="spinner"></div>
     </div>
 }
-else if (FormVMs.Any())
+else if (_indexModel.Any())
 {
     <table class="table table-bordered table-striped" style="width: 100%">
         <thead>
@@ -32,7 +32,7 @@ else if (FormVMs.Any())
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in FormVMs)
+            @foreach (var item in _indexModel)
             {
                 <tr>
                     <td>@string.Format("{0:D7}", item.CustomerId)</td>

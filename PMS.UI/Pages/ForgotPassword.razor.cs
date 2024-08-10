@@ -12,7 +12,7 @@ namespace PMS.UI.Pages
 {
     public partial class ForgotPassword
     {
-        public ForgetPassword _externalPasswordReset { get; set; }
+        public ForgetPassword _forgetPasswordModel { get; set; }
 
         [Inject]
         public IAuthenticationService _AuthenticationService { get; set; }
@@ -27,7 +27,7 @@ namespace PMS.UI.Pages
         protected override void OnInitialized()
         {
             IsLoading = true;
-            _externalPasswordReset = new ForgetPassword();
+            _forgetPasswordModel = new ForgetPassword();
             IsLoading = false;
         }
 
@@ -36,7 +36,7 @@ namespace PMS.UI.Pages
         {
             IsLoading = true;
 
-            var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_externalPasswordReset);
+            var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_forgetPasswordModel);
             if (sendEmailToResetPassword.Exists)
             {
                 // Navigate to the home page or any other page

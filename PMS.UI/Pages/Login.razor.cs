@@ -12,7 +12,7 @@ namespace PMS.UI.Pages
 {
     public partial class Login
     {
-        public LoginVM LoginVM { get; set; }
+        public LoginVM _loginModel { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -32,7 +32,7 @@ namespace PMS.UI.Pages
         protected override void OnInitialized()
         {
             IsLoading = true;
-            LoginVM = new LoginVM();
+            _loginModel = new LoginVM();
             IsLoading = false;
         }
 
@@ -60,7 +60,7 @@ namespace PMS.UI.Pages
         {
             IsLoading = true;
 
-            var isAuthenticated = await AuthenticationService.IsAuthenticated(LoginVM);
+            var isAuthenticated = await AuthenticationService.IsAuthenticated(_loginModel);
             if (isAuthenticated)
             {
                 // Navigate to the home page or any other page

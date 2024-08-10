@@ -33,7 +33,7 @@
                         </MudGrid> *@
 
                         <MudPaper Class="pa-4">
-                                    <EditForm Model="@LoginVM" OnValidSubmit="HandleLogin">
+                                    <EditForm Model="@_loginModel" OnValidSubmit="HandleLogin">
                                         <DataAnnotationsValidator />
                                         @* <ValidationSummary /> *@
 
@@ -43,17 +43,17 @@
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudTextField T="string" Label="Email" Variant="Variant.Outlined"
-                                                              @bind-Value="LoginVM.Email" For="@(() => LoginVM.Email)" />
+                                                              @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudTextField Label="Password" Variant="Variant.Outlined"
-                                                              @bind-Value="LoginVM.Password" For="@(() => LoginVM.Password)"
+                                                              @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"
                                                               Adornment="Adornment.End" InputType="@_passwordInput"
                                                               OnAdornmentClick="TogglePasswordVisibility"
                                                               AdornmentIcon="@_passwordInputIcon" />
                                             </MudItem>
                                             <MudItem xs="12" Class="d-flex justify-space-between align-center">
-                                                <MudSwitch T="bool" Label="Remember me?" @bind-Value="LoginVM.RememberMe" Color="Color.Primary" Class="ml-n1" />
+                                                <MudSwitch T="bool" Label="Remember me?" @bind-Value="_loginModel.RememberMe" Color="Color.Primary" Class="ml-n1" />
                                         <MudLink Href="/forget-password">Forgot password?</MudLink>
                                             </MudItem>
                                             <MudItem xs="12" Class="d-flex justify-center">

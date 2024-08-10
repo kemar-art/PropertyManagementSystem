@@ -26,7 +26,7 @@
                     <div class="form-container">
                        @*  <MudPaper Class="pa-4">
                         </MudPaper> *@
-                        <EditForm Model="@RegisterVM" OnValidSubmit="OnValidSubmit">
+                        <EditForm Model="@_registerModel" OnValidSubmit="OnValidSubmit">
                             <DataAnnotationsValidator />
                             <MudGrid>
                                 <MudItem xs="12" sm="12">
@@ -35,24 +35,24 @@
                                             <MudItem xs="12">
                                                 <MudText Typo="Typo.h4">Register</MudText>
                                             </MudItem>
-                                            <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="RegisterVM.FirstName" For="@(() => RegisterVM.FirstName)" />
-                                            <MudTextField Label="Last Name" Class="mt-3" @bind-Value="RegisterVM.LastName" For="@(() => RegisterVM.LastName)" />
-                                            <MudTextField Label="Email" Class="mt-3" @bind-Value="RegisterVM.Email" For="@(() => RegisterVM.Email)" Disabled="@IsEmailDisabled" />
-                                            @if (EmailExists && !string.IsNullOrEmpty(RegisterVM.Email))
+                                            <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="_registerModel.FirstName" For="@(() => _registerModel.FirstName)" />
+                                            <MudTextField Label="Last Name" Class="mt-3" @bind-Value="_registerModel.LastName" For="@(() => _registerModel.LastName)" />
+                                            <MudTextField Label="Email" Class="mt-3" @bind-Value="_registerModel.Email" For="@(() => _registerModel.Email)" Disabled="@IsEmailDisabled" />
+                                            @if (EmailExists && !string.IsNullOrEmpty(_registerModel.Email))
                                             {
                                                 <div class="text-danger">Email already exists.</div>
                                             }
-                                            <MudTextField Label="Phone Number" Class="mt-3" @bind-Value="RegisterVM.PhoneNumber" For="@(() => RegisterVM.PhoneNumber)" />
+                                            <MudTextField Label="Phone Number" Class="mt-3" @bind-Value="_registerModel.PhoneNumber" For="@(() => _registerModel.PhoneNumber)" />
                                             <MudItem xs="12">
                                                 <MudText Typo="Typo.subtitle1">Gender</MudText>
-                                                <MudRadioGroup T="string" @bind-Value="RegisterVM.Gender" For="@(() => RegisterVM.Gender)">
+                                                <MudRadioGroup T="string" @bind-Value="_registerModel.Gender" For="@(() => _registerModel.Gender)">
                                                     <MudRadio Value="UserGender.Male">Male</MudRadio>
                                                     <MudRadio Value="UserGender.Female">Female</MudRadio>
                                                 </MudRadioGroup>
                                             </MudItem>
-                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="RegisterVM.DateOfBirth" Rounded="true" For="@(() => RegisterVM.DateOfBirth)" />
+                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_registerModel.DateOfBirth" Rounded="true" For="@(() => _registerModel.DateOfBirth)" />
                                             <MudTextField Label="Password" HelperText="Choose a strong password"
-                                                          Class="mt-3" @bind-Value="RegisterVM.Password"
+                                                          Class="mt-3" @bind-Value="_registerModel.Password"
                                                           Adornment="Adornment.End" InputType="@_passwordInput"
                                                           OnAdornmentClick="TogglePasswordVisibility"
                                                           AdornmentIcon="@_passwordInputIcon"
@@ -60,8 +60,8 @@
 
                                             <MudTextField Label="Repeat Password" HelperText="Repeat the password"
                                                           Class="mt-3 confirm-password"
-                                                          @bind-Value="RegisterVM.ConfirmPassword"
-                                                          For="@(() => RegisterVM.ConfirmPassword)"
+                                                          @bind-Value="_registerModel.ConfirmPassword"
+                                                          For="@(() => _registerModel.ConfirmPassword)"
                                                           Adornment="Adornment.End" InputType="@_passwordConfirmationInput"
                                                           OnAdornmentClick="TogglePasswordConfirmationVisibility"
                                                           AdornmentIcon="@_passwordConfirmationInputIcon" />

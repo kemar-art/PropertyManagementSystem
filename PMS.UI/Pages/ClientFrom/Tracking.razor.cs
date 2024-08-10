@@ -23,13 +23,13 @@ namespace PMS.UI.Pages.ClientFrom
 
         public string Message { get; set; } = string.Empty;
 
-        public FormVM FormVM { get; set; }
+        public FormVM _trackingModel { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
 
-            FormVM = new FormVM();
+            _trackingModel = new FormVM();
 
             IsLoading = false;
         }
@@ -39,7 +39,7 @@ namespace PMS.UI.Pages.ClientFrom
         private bool NavigationAllowed(StepNavigationContext context)
         {
             // Only allow navigation to the current step based on FormVM.Status
-            return context.NextStepName == FormVM.Status;
+            return context.NextStepName == _trackingModel.Status;
         }
 
         private async Task OnValidSubmit()
@@ -51,38 +51,38 @@ namespace PMS.UI.Pages.ClientFrom
             try
             {
                 // Initialize FormVM if it is null
-                if (FormVM == null)
+                if (_trackingModel == null)
                 {
-                    FormVM = new FormVM();
+                    _trackingModel = new FormVM();
                 }
 
                 // Check if the SearchString is valid
                 if (int.TryParse(SearchString, out int searchId))
                 {
                     // Call the repository method to track the form
-                    FormVM.Status = await _FormRepository.TrackForm(searchId);
+                    _trackingModel.Status = await _FormRepository.TrackForm(searchId);
 
-                    if (string.IsNullOrEmpty(FormVM.Status))
+                    if (string.IsNullOrEmpty(_trackingModel.Status))
                     {
                         Message = "No record was found.";
                     }
                     else
                     {
-                        await OnSelectedStepChanged(FormVM.Status);
+                        await OnSelectedStepChanged(_trackingModel.Status);
                     }
                 }
                 else
                 {
                     // Handle invalid search ID format
                     Message = "No tracking ID was entered.";
-                    FormVM.Status = string.Empty;
+                    _trackingModel.Status = string.Empty;
                 }
             }
             catch (Exception)
             {
                 // Handle any exceptions that occur
                 Message = "No record was found.";
-                FormVM.Status = string.Empty;
+                _trackingModel.Status = string.Empty;
             }
             finally
             {

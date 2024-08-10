@@ -16,7 +16,7 @@ namespace PMS.UI.Pages.ClientFrom
         [Inject]
         private IMapper _Mapper { get; set; }
 
-        public FormVM FormVM { get; set; }
+        public FormVM _successModel { get; set; }
 
         [Parameter]
         public Guid FormId { get; set; }
@@ -36,7 +36,7 @@ namespace PMS.UI.Pages.ClientFrom
                 return;
             }
 
-            FormVM = _Mapper.Map<FormVM>(getFormThatWasSubmitted);
+            _successModel = _Mapper.Map<FormVM>(getFormThatWasSubmitted);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace PMS.UI.Pages
 {
     public partial class Register
     {
-        public RegisterVM RegisterVM { get; set; } = new();
+        public RegisterVM _registerModel { get; set; } = new();
 
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
@@ -31,15 +31,15 @@ namespace PMS.UI.Pages
 
             if (queryParams.TryGetValue("firstName", out var firstName))
             {
-                RegisterVM.FirstName = firstName;
+                _registerModel.FirstName = firstName;
             }
             if (queryParams.TryGetValue("lastName", out var lastName))
             {
-                RegisterVM.LastName = lastName;
+                _registerModel.LastName = lastName;
             }
             if (queryParams.TryGetValue("email", out var email))
             {
-                RegisterVM.Email = email;
+                _registerModel.Email = email;
                 IsEmailDisabled = true;
             }
             else
@@ -48,7 +48,7 @@ namespace PMS.UI.Pages
             }
             if (queryParams.TryGetValue("phoneNumber", out var phoneNumber))
             {
-                RegisterVM.PhoneNumber = phoneNumber;
+                _registerModel.PhoneNumber = phoneNumber;
             }
 
             IsLoading = false;
@@ -92,9 +92,9 @@ namespace PMS.UI.Pages
 
         private async Task CheckEmailExistence()
         {
-            if (!string.IsNullOrEmpty(RegisterVM.Email))
+            if (!string.IsNullOrEmpty(_registerModel.Email))
             {
-                EmailExists = await _AuthenticationService.IsEmailRegisteredExist(RegisterVM.Email);
+                EmailExists = await _AuthenticationService.IsEmailRegisteredExist(_registerModel.Email);
             }
         }
 
@@ -109,7 +109,7 @@ namespace PMS.UI.Pages
             }
 
             IsLoading = true;
-            var result = await _AuthenticationService.IsRegister(RegisterVM);
+            var result = await _AuthenticationService.IsRegister(_registerModel);
 
             if (result)
             {
