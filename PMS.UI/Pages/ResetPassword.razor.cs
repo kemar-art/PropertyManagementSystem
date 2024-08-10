@@ -35,7 +35,7 @@ namespace PMS.UI.Pages
             }
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
             {
-                Code = code;
+                _passwordReset.ResetToken = code;
             }
 
             IsLoading = false;
@@ -83,7 +83,7 @@ namespace PMS.UI.Pages
             {
                 Email = _passwordReset.Email,
                 Password = _passwordReset.Password,
-                ResetToken = Code,
+                ResetToken = _passwordReset.ResetToken,
             };
 
             // Prepare the request to reset the password
