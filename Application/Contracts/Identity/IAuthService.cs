@@ -1,6 +1,7 @@
 ﻿using Application.AuthSettings;
 using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
+using Application.Features.Commands.User.UserPassword.ResetPassword;
 using Domain.Common;
 using MediatR;
 using System;
@@ -16,6 +17,7 @@ namespace Application.Contracts.Identity
         Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand user);
         Task<AuthResponse> LogInUserAsync(LoginUserCommand user);
         Task<bool> IsEmailRegisteredExist(string email);
-        Task<AppResponse> ExternalPasswordReset(string email);
+        Task<AppResponse> ForgetPassword(string email);
+        Task<AppResponse> PasswordReset(ResetPasswordCommand resetPassword);
     }
 }

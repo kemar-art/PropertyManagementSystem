@@ -1,4 +1,5 @@
-﻿using Application.Contracts.Email;
+﻿using Application.AppURLSettings;
+using Application.Contracts.Email;
 using Application.Contracts.Identity;
 using Application.Contracts.Repository_Interface;
 using Application.IdentityModels;
@@ -22,27 +23,33 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
     {
+        // Configure JWT settings
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
+        // Configure URLSetttings 
+        services.Configure<UrlSettings>(configuration.GetSection("UrlSettings"));
+
+        // Configure database context
         services.AddDbContext<PMSDatabaseContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("PropertManagmentSystemConnectionString"));
         });
 
+        // Configure Identity
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
-            options.Password.RequiredLength = 8;
-            //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //options.Lockout.MaxFailedAccessAttempts = 3;
+            //options.Password.RequiredLength = 8;
         })
         .AddEntityFrameworkStores<PMSDatabaseContext>()
         .AddDefaultTokenProviders();
 
+        // Configure JWT Authentication
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(auth =>
+        })
+        .AddJwtBearer(auth =>
         {
             auth.TokenValidationParameters = new TokenValidationParameters
             {
@@ -50,15 +57,17 @@ public static class PersistenceServiceRegistration
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
+                ClockSkew = TimeSpan.Zero, // Optional, for strict validation
                 ValidIssuer = configuration["JwtSettings:Issuer"],
                 ValidAudience = configuration["JwtSettings:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
             };
         });
 
+        // Register HttpContextAccessor
         services.AddHttpContextAccessor();
 
+        // Register repositories
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
         services.AddScoped<IAdminRepository, AdminRepository>();
@@ -66,14 +75,17 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
         services.AddScoped<IRegionRepository, RegionRepository>();
 
+        // Register EmailSender as a singleton
         services.AddSingleton<IEmailSender, EmailSender>();
 
+        // Register AuthService as a transient service
         services.AddTransient<IAuthService, AuthService>();
 
+        // Configure AutoMapper
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
 
         return services;
     }
 }
+
 

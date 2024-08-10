@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.PasswordRest.ExternalRest
+namespace Application.Features.Commands.User.UserPassword.ForgetPassword
 {
-    public class ExtrnalPasswordRestCommand : IRequest<AppResponse>
+    public class ForgetPasswordRestCommand : IRequest<AppResponse>
     {
         public string Email { get; set; } = string.Empty;
     }

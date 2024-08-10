@@ -1,5 +1,7 @@
 using API.Middleware;
+using API.Models;
 using Application;
+using Application.AppURLSettings;
 using Infrastructure;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -23,8 +25,8 @@ builder.Services.AddCors(options =>
     .AllowAnyOrigin()
     .AllowAnyHeader()
     .AllowAnyMethod());
-    
 });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

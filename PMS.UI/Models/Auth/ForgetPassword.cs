@@ -2,7 +2,7 @@
 
 namespace PMS.UI.Models.Auth
 {
-    public class ExternalPasswordResetEmailVM
+    public class ForgetPassword
     {
         public string Email { get; set; } = string.Empty;
 

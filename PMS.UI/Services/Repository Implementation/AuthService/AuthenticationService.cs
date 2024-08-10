@@ -19,14 +19,14 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<AppResponse> ExternalPasswordReset(ExternalPasswordResetEmailVM passwordResetVM)
+        public async Task<AppResponse> ForgetPassword(ForgetPassword passwordResetVM)
         {
-            ExtrnalPasswordRestCommand extrnalPasswordRest = new()
+            ForgetPasswordRestCommand extrnalPasswordRest = new()
             {
                 Email = passwordResetVM.Email,
             };
 
-            var response = await _client.ExternalrestAsync(extrnalPasswordRest);
+            var response = await _client.ForgetpasswordAsync(extrnalPasswordRest);
             if (response.Exists)
             {
                 return response;
@@ -108,6 +108,24 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
         public async Task Logout()
         {
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
+        }
+
+        public async Task<AppResponse> ResetPassword(PasswordReset resetPassword)
+        {
+            ResetPasswordCommand resetPasswordCommand = new()
+            {
+                Email = resetPassword.Email,
+                Password = resetPassword.Password,
+                ResetToken = resetPassword.ResetToken,
+            };
+
+            var response = await _client.ResetpasswordAsync(resetPasswordCommand);
+            if (response.Exists)
+            {
+                return response;
+            }
+
+            return response;
         }
     }
 }

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PMS.UI.Pages
 {
-    public partial class PasswordReset
+    public partial class ForgotPassword
     {
-        public ExternalPasswordResetEmailVM _externalPasswordReset { get; set; }
+        public ForgetPassword _externalPasswordReset { get; set; }
 
         [Inject]
         public IAuthenticationService _AuthenticationService { get; set; }
@@ -27,7 +27,7 @@ namespace PMS.UI.Pages
         protected override void OnInitialized()
         {
             IsLoading = true;
-            _externalPasswordReset = new ExternalPasswordResetEmailVM();
+            _externalPasswordReset = new ForgetPassword();
             IsLoading = false;
         }
 
@@ -36,17 +36,17 @@ namespace PMS.UI.Pages
         {
             IsLoading = true;
 
-            var sendEmailToResetPassword = await _AuthenticationService.ExternalPasswordReset(_externalPasswordReset);
+            var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_externalPasswordReset);
             if (sendEmailToResetPassword.Exists)
             {
                 // Navigate to the home page or any other page
                 Message = sendEmailToResetPassword.Message;
-                _NavigationManager.NavigateTo("/password-reset");
+                _NavigationManager.NavigateTo("/forget-password");
             }
             else
             {
                 Message = sendEmailToResetPassword.Message;
-                _NavigationManager.NavigateTo("/password-reset");
+                _NavigationManager.NavigateTo("/forget-password");
             }
 
             IsLoading = false;

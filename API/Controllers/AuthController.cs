@@ -2,7 +2,8 @@
 using Application.Contracts.Identity;
 using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
-using Application.Features.Commands.User.PasswordRest.ExternalRest;
+using Application.Features.Commands.User.UserPassword.ForgetPassword;
+using Application.Features.Commands.User.UserPassword.ResetPassword;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -64,15 +65,27 @@ namespace API.Controllers
             return Accepted(response);
         }
 
+        
         [HttpPost]
-        [Route("externalrest")]
+        [Route("forgetpassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppResponse>> ExternalPasswordReset(ExtrnalPasswordRestCommand email)
+        public async Task<ActionResult<AppResponse>> ForgetPassword(ForgetPasswordRestCommand email)
         {
             var response = await _mediator.Send(email);
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("resetpassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<AppResponse>> ResetPassword(ResetPasswordCommand resetPassword)
+        {
+            var response = await _mediator.Send(resetPassword);
+            return Ok(response);
+        }
+
 
     }
 }
