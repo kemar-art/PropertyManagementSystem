@@ -15,7 +15,7 @@ namespace PMS.UI.Pages
         [Inject]
         IAuthenticationService _AuthenticationService { get; set; }
 
-        public PasswordReset _passwordReset { get; set; } = new PasswordReset();
+        public PasswordReset _resetPassword { get; set; } = new PasswordReset();
 
         public string UserId { get; set; } = string.Empty;
 
@@ -35,7 +35,7 @@ namespace PMS.UI.Pages
             }
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
             {
-                _passwordReset.ResetToken = code;
+                _resetPassword.ResetToken = code;
             }
 
             IsLoading = false;
@@ -81,9 +81,9 @@ namespace PMS.UI.Pages
 
             PasswordReset passwordReset = new()
             {
-                Email = _passwordReset.Email,
-                Password = _passwordReset.Password,
-                ResetToken = _passwordReset.ResetToken,
+                Email = _resetPassword.Email,
+                Password = _resetPassword.Password,
+                ResetToken = _resetPassword.ResetToken,
             };
 
             // Prepare the request to reset the password

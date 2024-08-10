@@ -1,5 +1,4 @@
-﻿
-<header id="header" style="background-color: rgba(1, 8, 33, 0.82);" class="header d-flex align-items-center fixed-top">
+﻿<header id="header" style="background-color: rgba(1, 8, 33, 0.82);" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
         <a href="/" class="logo d-flex align-items-center me-auto">
@@ -60,8 +59,12 @@
                             </ul>
                         </li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a>@context.User?.Identity?.Name</a></li>
                         <li><a href="/logout" class="mobile-device">Logout</a></li>
                         <li><a href="/logout" class="cta-btn d-none d-sm-block">Logout</a></li>
+                        <NavLink class="nav-link">
+                            <span class="oi oi-person" aria-hidden="true"></span>@context.User?.Identity?.Name
+                        </NavLink>
                     </Authorized>
                     <NotAuthorized>
                         <li class="dropdown">

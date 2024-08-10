@@ -60,8 +60,36 @@
                             </ul>
                         </li>
                         <li><a href="#contact">Contact</a></li>
+                        <li class="dropdown">
+                            <a class="text-white"><span>@context.User?.Identity?.Name</span></a>
+                            <ul>
+                                <li class="logout-item">
+                                    <i class="fa-solid fa-power-off"></i>
+                                    <a href="/logout">logout</a>
+                                </li>
+                                <li class="logout-item">
+                                    <i class="fa-solid fa-user"></i>
+                                    <a href="#">profile</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown mobile-device">
+                            <a><span>@context.User?.Identity?.Name</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li class="logout-item">
+                                    <i class="fa-solid fa-power-off"></i>
+                                    <a href="/logout">logout</a>
+                                </li>
+                                <li class="logout-item">
+                                    <i class="fa-solid fa-user"></i>
+                                    <a href="#">profile</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @* <li><a href="#contact">Contact</a></li>
+                        <li><a></a></li>
                         <li><a href="/logout" class="mobile-device">Logout</a></li>
-                        <li><a href="/logout" class="cta-btn d-none d-sm-block">Logout</a></li>
+                        <li><a href="/logout" class="cta-btn d-none d-sm-block">Logout</a></li> *@
                     </Authorized>
                     <NotAuthorized>
                         <li class="dropdown">
