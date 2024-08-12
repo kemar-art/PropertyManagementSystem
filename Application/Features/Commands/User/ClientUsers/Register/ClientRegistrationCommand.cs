@@ -1,5 +1,6 @@
 ﻿using Application.AuthSettings;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.ClientUsers
+namespace Application.Features.Commands.User.ClientUsers.Register
 {
     public class ClientRegistrationCommand : IRequest<RegistrationResponse>
     {
@@ -15,7 +16,6 @@ namespace Application.Features.Commands.User.ClientUsers
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-
         public string Gender { get; set; } = string.Empty;
 
         public string Password { get; set; } = string.Empty;

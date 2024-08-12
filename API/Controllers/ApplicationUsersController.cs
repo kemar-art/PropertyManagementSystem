@@ -2,6 +2,7 @@
 using Application.Features.Commands.User.AppUsers.CreateUser;
 using Application.Features.Commands.User.AppUsers.DeleteUser;
 using Application.Features.Commands.User.AppUsers.UpdateUser;
+using Application.Features.Commands.User.ClientUsers.Update;
 using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
 using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
 using MediatR;
@@ -35,13 +36,14 @@ namespace API.Controllers
 
         // GET api/<ApplicationUsersController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GetASingleUserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<GetASingleUserDTO>> Get(string id)
         {
             var getASingleUser = await _mediator.Send(new GetASingleUserDetailsQuery(id));
-            return getASingleUser;
+            return Ok(getASingleUser);
         }
 
         // POST api/<ApplicationUsersController>
@@ -64,6 +66,19 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Put([FromBody] UpdateAppUserCommand updateAppUser)
+        {
+            await _mediator.Send(updateAppUser);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("updateclient")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> UpdateClient([FromBody] ClientUpdateCommand updateAppUser)
         {
             await _mediator.Send(updateAppUser);
             return NoContent();

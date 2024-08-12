@@ -7,7 +7,7 @@ using PMS.UI.Models;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
 
-namespace PMS.UI.Pages.ClientFrom
+namespace PMS.UI.Pages.Client
 {
     public partial class Index
     {
@@ -71,7 +71,7 @@ namespace PMS.UI.Pages.ClientFrom
             try
             {
                 _indexModel = await _FormRepository.GetAllForms();
-               
+
             }
             catch (Exception ex)
             {

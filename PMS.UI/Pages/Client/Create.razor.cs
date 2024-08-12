@@ -12,7 +12,7 @@ using System;
 using System.Reflection;
 using System.Security.AccessControl;
 
-namespace PMS.UI.Pages.ClientFrom
+namespace PMS.UI.Pages.Client
 {
     public partial class Create
     {

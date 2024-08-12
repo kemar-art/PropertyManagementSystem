@@ -71,6 +71,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IFormRepository, FormRepository>();
         services.AddScoped<IAdminRepository, AdminRepository>();
+        services.AddScoped<IClientRepository, ClientRepository>();
         services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
         services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
         services.AddScoped<IRegionRepository, RegionRepository>();

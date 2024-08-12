@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.ClientUsers;
+namespace Application.Features.Commands.User.ClientUsers.Register;
 
 public class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistrationCommand, RegistrationResponse>
 {

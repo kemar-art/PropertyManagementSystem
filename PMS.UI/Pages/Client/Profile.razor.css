@@ -1,0 +1,36 @@
+﻿.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
+@media (max-width: 767.98px) { /* Mobile devices */
+    .pt-5 {
+        padding-top: 4.7em !important; /* Adjust based on navbar height */
+    }
+}
+
+@media (min-width: 768px) { /* Desktop devices */
+    .pt-5 {
+        padding-top: 7em !important; /* Adjust based on navbar height */
+    }
+}

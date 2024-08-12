@@ -1,3 +1,17 @@
+.logout-item {
+    display: flex;
+    align-items: center;
+}
+
+    .logout-item i {
+        margin-right: 0; /* Space between the icon and the text */
+        margin-left: 20px; /* Space between the icon and the left margin */
+    }
+
+    .logout-item a {
+        display: inline-block;
+    }
+
 /* Hide elements with class 'mobile-device' by default */
 .mobile-device {
     display: none;

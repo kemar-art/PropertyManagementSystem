@@ -10,7 +10,7 @@ using System.Text;
 
 namespace PMS.UI.Pages
 {
-    public partial class ResetPassword
+    public partial class UpdatePassword
     {
         [Inject]
         NavigationManager _NavigationManager { get; set; }
@@ -21,45 +21,40 @@ namespace PMS.UI.Pages
         [Inject]
         private AuthenticationStateProvider _AuthenticationStateProvider { get; set; }
 
-        public NoneLoginResetPassword _noneLoginResetPassword { get; set; } = new NoneLoginResetPassword();
+        public LoginUserPasswordReset _loginUserPasswordReset { get; set; } = new();
 
-        public string UserId { get; set; } = string.Empty;
-        public string Code { get; set; } = string.Empty;
+        private string UserId { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
 
         private bool IsLoading { get; set; } = true;
+        private bool IsUserAuthenticated { get; set; } = false;
 
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
-            _noneLoginResetPassword = new NoneLoginResetPassword();
-            // Extract query parameters
-            var uri = _NavigationManager.ToAbsoluteUri(_NavigationManager.Uri);
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("userId", out var userId))
+
+            // Check if the user is authenticated
+            var authState = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            UserId = user.Claims.FirstOrDefault(x => x.Type.Equals("uid")).Value;
+            IsUserAuthenticated = user.Identity.IsAuthenticated;
+            if (IsUserAuthenticated)
             {
-                Console.WriteLine($"UserId found: {userId}");
-                _noneLoginResetPassword.Id = userId;
+
+                _loginUserPasswordReset = new LoginUserPasswordReset();
+                
             }
             else
             {
-                Console.WriteLine("UserId not found in the query parameters.");
+                _NavigationManager.NavigateTo("/login");
             }
-
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
-            {
-                Console.WriteLine($"ResetToken found: {code}");
-                _noneLoginResetPassword.ResetToken = code;
-            }
-            else
-            {
-                Console.WriteLine("ResetToken not found in the query parameters.");
-            }
-
-
-
+ 
             IsLoading = false;
         }
+
+
+        private InputType _currentPasswordInput = InputType.Password;
 
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -95,25 +90,26 @@ namespace PMS.UI.Pages
             }
         }
 
+
+
         protected async Task OnValidSubmit()
         {
             IsLoading = true;
 
 
-            NoneLoginResetPassword resetPassword = new()
+            LoginUserPasswordReset loginUser = new()
             {
-                Id = _noneLoginResetPassword.Id,
-                Email = _noneLoginResetPassword.Email,
-                NewPassword = _noneLoginResetPassword.NewPassword,
-                ResetToken = _noneLoginResetPassword.ResetToken
+                Id = UserId,
+                CurrentPassword = _loginUserPasswordReset.CurrentPassword,
+                NewPassword = _loginUserPasswordReset.NewPassword,
             };
 
             // Make the API call
-            var result = await _AuthenticationService.PasswordReset(resetPassword);
+            var result = await _AuthenticationService.UpdateResetPassword(loginUser);
             if (result.Exists)
             {
                 Message = "Password reset successfully.";
-                _NavigationManager.NavigateTo("/login");
+                _NavigationManager.NavigateTo("/profile");
             }
             else
             {
@@ -123,7 +119,6 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
     }
-
 
 
 }

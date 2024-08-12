@@ -5,6 +5,7 @@ using PMS.UI.AuthProviders;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.Auth;
+using PMS.UI.Models.Client;
 using PMS.UI.Services.Base;
 using PMS.UI.StaticDetails;
 
@@ -110,21 +111,37 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
         }
 
-        public async Task<AppResponse> ResetPassword(PasswordReset resetPassword)
+        public async Task<AppResponse> PasswordReset(NoneLoginResetPassword noneLoginUser)
         {
-            ResetPasswordCommand resetPasswordCommand = new()
+            NoneLoginUserPasswordResetCommand passwordResetCommand = new()
             {
-                Email = resetPassword.Email,
-                Password = resetPassword.Password,
-                ResetToken = resetPassword.ResetToken,
+                Email = noneLoginUser.Email,
+                Password = noneLoginUser.NewPassword,
+                ResetToken = noneLoginUser.ResetToken
             };
 
-            var response = await _client.ResetpasswordAsync(resetPasswordCommand);
+            var response = await _client.ResetpasswordAsync(passwordResetCommand);
             if (response.Exists)
             {
                 return response;
             }
+            return response;
+        }
 
+        public async Task<AppResponse> UpdateResetPassword(LoginUserPasswordReset resetPassword)
+        {
+            LoginUserPasswordResetCommand passwordResetCommand = new()
+            {
+                Id = resetPassword.Id,
+                CurrentPassword = resetPassword.CurrentPassword,
+                NewPassword = resetPassword.NewPassword,
+            };
+
+            var response = await _client.UpdatepasswordAsync(passwordResetCommand);
+            if (response.Exists)
+            {
+                return response;
+            }
             return response;
         }
     }

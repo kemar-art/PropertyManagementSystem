@@ -86,14 +86,14 @@ namespace PMS.UI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateAppUserCommand body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> ApplicationUsersGETAsync(string id);
+        System.Threading.Tasks.Task<GetASingleUserDTO> ApplicationUsersGETAsync(string id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> ApplicationUsersGETAsync(string id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetASingleUserDTO> ApplicationUsersGETAsync(string id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -103,6 +103,15 @@ namespace PMS.UI.Services.Base
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task ApplicationUsersDELETEAsync(string id, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task UpdateclientAsync(ClientUpdateCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task UpdateclientAsync(ClientUpdateCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -187,12 +196,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(ResetPasswordCommand body);
+        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(ResetPasswordCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1000,17 +1018,17 @@ namespace PMS.UI.Services.Base
             }
         }
 
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProblemDetails> ApplicationUsersGETAsync(string id)
+        public virtual System.Threading.Tasks.Task<GetASingleUserDTO> ApplicationUsersGETAsync(string id)
         {
             return ApplicationUsersGETAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Error</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProblemDetails> ApplicationUsersGETAsync(string id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetASingleUserDTO> ApplicationUsersGETAsync(string id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1022,7 +1040,7 @@ namespace PMS.UI.Services.Base
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1053,6 +1071,16 @@ namespace PMS.UI.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetASingleUserDTO>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -1079,7 +1107,7 @@ namespace PMS.UI.Services.Base
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return objectResponse_.Object;
+                            throw new ApiException<ProblemDetails>("Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                     }
                     finally
@@ -1156,6 +1184,116 @@ namespace PMS.UI.Services.Base
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task UpdateclientAsync(ClientUpdateCommand body)
+        {
+            return UpdateclientAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task UpdateclientAsync(ClientUpdateCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/ApplicationUsers/updateclient"
+                    urlBuilder_.Append("api/ApplicationUsers/updateclient");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 403)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Forbidden", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                     }
                     finally
@@ -2048,7 +2186,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(ResetPasswordCommand body)
+        public virtual System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body)
         {
             return ResetpasswordAsync(body, System.Threading.CancellationToken.None);
         }
@@ -2056,7 +2194,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(ResetPasswordCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2075,6 +2213,98 @@ namespace PMS.UI.Services.Base
                 
                     // Operation Path: "api/Auth/resetpassword"
                     urlBuilder_.Append("api/Auth/resetpassword");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AppResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body)
+        {
+            return UpdatepasswordAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/Auth/updatepassword"
+                    urlBuilder_.Append("api/Auth/updatepassword");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3302,6 +3532,39 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientUpdateCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public byte[] Image { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateAppUserCommand
     {
 
@@ -3581,6 +3844,51 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetASingleUserDTO
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
+        public string TaxRegistrationNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
+        public string NationalInsuranceScheme { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public string Image { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset Datestarted { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+        public System.DateTimeOffset DateEnded { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetAllFormsDto
     {
 
@@ -3752,6 +4060,36 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class LoginUserPasswordResetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("currentPassword")]
+        public string CurrentPassword { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("newPassword")]
+        public string NewPassword { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class NoneLoginUserPasswordResetCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string Password { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("resetToken")]
+        public string ResetToken { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProblemDetails
     {
 
@@ -3817,21 +4155,6 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("userId")]
         public string UserId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResetPasswordCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string Password { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("resetToken")]
-        public string ResetToken { get; set; }
 
     }
 

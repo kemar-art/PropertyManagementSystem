@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Form;
 
-namespace PMS.UI.Pages.ClientFrom
+namespace PMS.UI.Pages.Client
 {
     public partial class Success
     {

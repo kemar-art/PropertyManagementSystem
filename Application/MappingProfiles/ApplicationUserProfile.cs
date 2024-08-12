@@ -1,4 +1,5 @@
-﻿using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
+﻿using Application.Features.Commands.User.ClientUsers.Update;
+using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
 using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
 using AutoMapper;
 using Domain;
@@ -16,6 +17,8 @@ namespace Application.MappingProfiles
         {
             CreateMap<ApplicationUser, GetAllUsersDTO>().ReverseMap();
             CreateMap<ApplicationUser, GetASingleUserDTO>().ReverseMap();
+
+            //CreateMap<ClientUpdateCommand, ApplicationUser>().ReverseMap();
         }
     }
 }

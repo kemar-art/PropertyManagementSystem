@@ -13,9 +13,6 @@
         display: inline-block;
     }
 
-
-
-
 /* Hide elements with class 'mobile-device' by default */
 .mobile-device {
     display: none;

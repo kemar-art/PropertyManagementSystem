@@ -4,9 +4,10 @@ using Application.Contracts.Email;
 using Application.Contracts.Identity;
 using Application.Contracts.ILogging;
 using Application.Exceptions;
-using Application.Features.Commands.User.ClientUsers;
+using Application.Features.Commands.User.ClientUsers.Register;
 using Application.Features.Commands.User.LoginUsers;
-using Application.Features.Commands.User.UserPassword.ResetPassword;
+using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPasswordReset;
+using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Application.IdentityModels;
 using Domain;
 using Domain.Common;
@@ -40,11 +41,11 @@ namespace Persistence.Repository_Implementations
         private readonly IEmailSender _emailSender;
         private readonly string _clientAppUrl;
 
-        public AuthService(UserManager<ApplicationUser> userManager, 
-                            SignInManager<ApplicationUser> signInManager, 
-                            IOptions<JwtSettings> jwtSettings, 
-                            IAppLogger<AuthService> logger, 
-                            IHttpContextAccessor  httpContextAccessor, 
+        public AuthService(UserManager<ApplicationUser> userManager,
+                            SignInManager<ApplicationUser> signInManager,
+                            IOptions<JwtSettings> jwtSettings,
+                            IAppLogger<AuthService> logger,
+                            IHttpContextAccessor httpContextAccessor,
                             IEmailSender emailSender,
                             IOptions<UrlSettings> appSettings)
         {
@@ -219,7 +220,7 @@ namespace Persistence.Repository_Implementations
             };
         }
 
-        public async Task<AppResponse> PasswordReset(ResetPasswordCommand resetPassword)
+        public async Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
         {
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);
             if (user == null)
@@ -240,6 +241,52 @@ namespace Persistence.Repository_Implementations
                 {
                     Exists = true,
                     Message = "Your password has been reset"
+                };
+            }
+
+            return new AppResponse
+            {
+                Exists = false,
+                Message = "User not valid"
+            };
+        }
+
+        public async Task<AppResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword)
+        {
+            var user = await _userManager.FindByIdAsync(resetPassword.Id);
+            if (user == null)
+            {
+                return new AppResponse
+                {
+                    Exists = false,
+                    Message = "User not valid"
+                };
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, resetPassword.CurrentPassword, false);
+            if (result.Succeeded)
+            {
+                var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+                var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(confirmationToken));
+
+                var resutlt = await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
+                if (resutlt.Succeeded)
+                {
+                    return new AppResponse
+                    {
+                        Exists = true,
+                        Message = "Your password has been reset"
+                    };
+                }
+            }
+            else
+            {
+                return new AppResponse
+                {
+                    Exists = true,
+                    Message = "Currnt password does not match"
                 };
             }
 

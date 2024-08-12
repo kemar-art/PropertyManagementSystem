@@ -11,7 +11,7 @@ using PMS.UI.Services.Base;
 using PMS.UI.StaticDetails;
 using System.Xml.Linq;
 
-namespace PMS.UI.Pages.ClientFrom
+namespace PMS.UI.Pages.Client
 {
     public partial class Tracking
     {

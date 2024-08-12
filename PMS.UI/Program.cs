@@ -32,12 +32,14 @@ builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = n
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddAuthorizationCore();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAppraiserRerpository, AppraiserRerpository>();
 builder.Services.AddScoped<IFormRepository, FormRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IRegionRepositoey, RegionRepositoey>();
 builder.Services.AddScoped<ICheckBoxRepository, CheckBoxRepository>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();

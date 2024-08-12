@@ -1,9 +1,10 @@
 ﻿using Application.AuthSettings;
 using Application.Contracts.Identity;
-using Application.Features.Commands.User.ClientUsers;
+using Application.Features.Commands.User.ClientUsers.Register;
 using Application.Features.Commands.User.LoginUsers;
 using Application.Features.Commands.User.UserPassword.ForgetPassword;
-using Application.Features.Commands.User.UserPassword.ResetPassword;
+using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPasswordReset;
+using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -80,9 +81,21 @@ namespace API.Controllers
         [Route("resetpassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppResponse>> ResetPassword(ResetPasswordCommand resetPassword)
+        public async Task<ActionResult<AppResponse>> ResetPassword(NoneLoginUserPasswordResetCommand noneLoginUser)
         {
-            var response = await _mediator.Send(resetPassword);
+
+            var response = await _mediator.Send(noneLoginUser);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("updatepassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<AppResponse>> UpdateResetPassword(LoginUserPasswordResetCommand loginUser)
+        {
+
+            var response = await _mediator.Send(loginUser);
             return Ok(response);
         }
 
