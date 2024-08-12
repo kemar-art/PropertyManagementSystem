@@ -3557,7 +3557,7 @@ namespace PMS.UI.Services.Base
         public string Address { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset DateOfBirth { get; set; }
@@ -3856,6 +3856,9 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("lastName")]
         public string LastName { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
 
@@ -3875,7 +3878,6 @@ namespace PMS.UI.Services.Base
         public string Image { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset DateOfBirth { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
@@ -3988,6 +3990,9 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("image")]
+        public string Image { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("instructionsIssuedBy")]
         public string InstructionsIssuedBy { get; set; }
 
@@ -4077,6 +4082,9 @@ namespace PMS.UI.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class NoneLoginUserPasswordResetCommand
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
         public string Email { get; set; }

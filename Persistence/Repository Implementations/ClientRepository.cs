@@ -5,9 +5,11 @@ using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualBasic.FileIO;
 using Persistence.DatabaseContext;
 using Persistence.SeedConfig.UserRole;
 using System;
@@ -31,14 +33,20 @@ namespace Persistence.Repository_Implementations
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, IFormFile image)
+        public async Task<ApplicationUser> GetClientById(string userId)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
+        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imageBase64)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateClient.Id);
             if (user == null)
             {
-                throw new NotFoundException("User", user.Id);
+                throw new NotFoundException("User", updateClient.Id);
             }
 
+            // Update user properties
             user.FirstName = updateClient.FirstName;
             user.LastName = updateClient.LastName;
             user.Email = updateClient.Email;
@@ -46,31 +54,97 @@ namespace Persistence.Repository_Implementations
             user.Gender = updateClient.Gender;
             user.DateOfBirth = updateClient.DateOfBirth;
 
-            if (image != null && image.Length > 0)
+            IFormFile imageToSave = null;
+            MemoryStream stream = null;
+
+            try
             {
-                string webRootPath = _hostEnvironment.WebRootPath;
-                string newFileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, "images/client");
-                var extension = Path.GetExtension(image.FileName);
-
-
-                if (!string.IsNullOrEmpty(user.ImagePath))
+                if (!string.IsNullOrEmpty(imageBase64))
                 {
-                    var oldImage = Path.Combine(webRootPath, user.ImagePath);
-                    if (File.Exists(oldImage))
+                    string base64Data = imageBase64.Contains(",") ? imageBase64.Split(',')[1] : throw new Exception("Invalid image data format.");
+
+                    string mimeType = "image/png"; // Default to PNG
+                    string extension = ".png"; // Default to .png
+
+                    if (imageBase64.StartsWith("data:image/jpeg"))
                     {
-                        File.Delete(oldImage);
+                        mimeType = "image/jpeg";
+                        extension = ".jpg";
                     }
+                    else if (imageBase64.StartsWith("data:image/png"))
+                    {
+                        mimeType = "image/png";
+                        extension = ".png";
+                    }
+
+                    byte[] imageBytes = Convert.FromBase64String(base64Data);
+                    stream = new MemoryStream(imageBytes);
+
+                    imageToSave = new FormFile(stream, 0, imageBytes.Length, "file", $"uploadedImage{extension}")
+                    {
+                        Headers = new HeaderDictionary(),
+                        ContentType = mimeType
+                    };
                 }
 
-                using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
-                image.CopyTo(fileStream);
+                if (imageToSave != null && imageToSave.Length > 0)
+                {
+                    string webRootPath = _hostEnvironment.WebRootPath;
+                    string newFileName = Guid.NewGuid().ToString();
+                    string uploads = Path.Combine(webRootPath, "images/client");
 
-                user.ImagePath = Path.Combine("images/client", $"{newFileName}{extension}");
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    if (!string.IsNullOrEmpty(user.ImagePath))
+                    {
+                        string oldImage = Path.Combine(webRootPath, user.ImagePath);
+                        if (File.Exists(oldImage))
+                        {
+                            File.Delete(oldImage);
+                        }
+                    }
+
+                    string filePath = Path.Combine(uploads, $"{newFileName}{Path.GetExtension(imageToSave.FileName)}");
+
+                    // Save the image to the server
+                    using var fileStream = new FileStream(filePath, FileMode.Create);
+                    await imageToSave.CopyToAsync(fileStream);
+
+                    // Update the user's image path
+                    user.ImagePath = Path.Combine("images/client", $"{newFileName}{Path.GetExtension(imageToSave.FileName)}");
+                }
+
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    throw new Exception($"Failed to update user: {string.Join(", ", updateResult.Errors.Select(e => e.Description))}");
+                }
+
+                return Unit.Value;
             }
-            await _userManager.UpdateAsync(user);
-
-            return Unit.Value;
+            catch (Exception ex)
+            {
+                // Log detailed information
+                Console.WriteLine($"An error occurred: {ex.Message}\n{ex.StackTrace}");
+                throw;
+            }
+            finally
+            {
+                // Dispose of the stream if it was created
+                stream?.Dispose();
+            }
         }
+
+
+
+
+
+
+
     }
 }
+
+//System.ObjectDisposedException: 'Cannot access a closed Stream.'

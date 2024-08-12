@@ -3,6 +3,7 @@ using Application.Exceptions;
 using Application.Features.Commands.User.ClientUsers.Register;
 using Domain.Common;
 using MediatR;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,6 @@ namespace Application.Features.Commands.User.ClientUsers.Update
             {
                 throw new BadRequestException("An error was encountered when creating the user.", validationResult);
             }
-
 
             var updateClient = await _clientRepository.UpdateClient(request, request.Image);
             return updateClient;

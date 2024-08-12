@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,7 @@ public class GetASingleUserDTO
     public string Id { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string TaxRegistrationNumber { get; set; } = string.Empty;
@@ -19,7 +21,9 @@ public class GetASingleUserDTO
     public string Gender { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
 
-    [DataType(DataType.Date), Display(Name = "D.O.B")]
+    //public IBrowserFile? Image { get; set; }
+
+
     public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

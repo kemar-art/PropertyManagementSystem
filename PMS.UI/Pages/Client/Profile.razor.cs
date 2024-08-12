@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Auth;
 using PMS.UI.Models.Client;
+
 using System.Threading.Tasks;
 
 namespace PMS.UI.Pages.Client
@@ -28,8 +30,64 @@ namespace PMS.UI.Pages.Client
         private bool IsLoading { get; set; } = true;
         private bool IsEditMode { get; set; } = false;
 
+        private IBrowserFile file;
+        private string fileName;
+        private long fileSize;
+
+
+        private async Task UploadFile(IBrowserFile file)
+        {
+            this.file = file;
+            fileName = file.Name;
+            fileSize = file.Size;
+
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                await file.OpenReadStream().CopyToAsync(memoryStream);
+
+                // Convert the MemoryStream to a byte array
+                var buffer = memoryStream.ToArray();
+
+                // Convert byte array to Base64 string and set it to the profile model
+                _profileModel.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while uploading the file: {ex.Message}");
+            }
+        }
+
+
+        //private async Task UploadFile(IBrowserFile file)
+        //{
+        //    this.file = file;
+        //    fileName = file.Name;
+        //    fileSize = file.Size;
+
+        //    const long MaxAllowedSize = 1024 * 1024 * 15; // 15MB limit
+        //    if (file.Size > MaxAllowedSize)
+        //    {
+        //        throw new InvalidOperationException($"File size exceeds the allowed limit of {MaxAllowedSize / (1024 * 1024)}MB.");
+        //    }
+
+        //    try
+        //    {
+        //        var buffer = new byte[file.Size];
+        //        using var stream = file.OpenReadStream(MaxAllowedSize);
+        //        await stream.ReadAsync(buffer);
+
+        //        // Convert byte array to Base64 string and set it to the profile model
+        //        _profileModel.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"An error occurred while uploading the file: {ex.Message}");
+        //    }
+        //}
+
         protected override async Task OnInitializedAsync()
-          {
+        {
             var authState = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
 
@@ -42,20 +100,36 @@ namespace PMS.UI.Pages.Client
 
                     IsLoading = true;
                     _profileModel = await _ClientRepository.GetClientById(UserId);
+
+                    // Ensure ImageBase64 is null or empty string if no image is uploaded
+                    if (string.IsNullOrEmpty(_profileModel.ImageBase64))
+                    {
+                        _profileModel.ImageBase64 = null; // or string.Empty
+                    }
+
                     IsLoading = false;
                 }
                 else
                 {
-                    // Handle case where "uid" claim is missing
                     _NavigationManager.NavigateTo("/login");
                 }
             }
             else
             {
-                // User is not authenticated, redirect to login page
                 _NavigationManager.NavigateTo("/login");
             }
         }
+
+        private void CancelEdit()
+        {
+            // Optionally, reset _profileModel to its original state if needed.
+            // This assumes you have a way to revert changes or reload the original profile.
+
+            //_profileModel = /* Code to reload the original profile */;
+
+            IsEditMode = false; // Exit edit mode
+        }
+
 
         private void ToggleEditMode()
         {
@@ -71,13 +145,18 @@ namespace PMS.UI.Pages.Client
         {
             IsLoading = true;
 
-            // Perform update logic here
+            _profileModel.ImageBase64 = _profileModel.ImageBase64 ?? string.Empty;
+            _profileModel.Id = UserId;
+
             await _ClientRepository.UpdateClient(_profileModel);
             IsLoading = false;
 
+            ToggleEditMode(); // Switch back to view mode after saving
             _NavigationManager.NavigateTo("/profile");
         }
     }
+
+
 
 
 

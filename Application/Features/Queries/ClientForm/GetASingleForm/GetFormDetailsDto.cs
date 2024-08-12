@@ -18,6 +18,8 @@ public class GetFormDetailsDto
 
     public string PhoneNumber { get; set; } = string.Empty;
 
+    public string Image { get; set; } = string.Empty;
+
     public string InstructionsIssuedBy { get; set; } = string.Empty;
 
     public string PropertyAddress { get; set; } = string.Empty;

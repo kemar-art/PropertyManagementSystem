@@ -1,6 +1,7 @@
 ﻿@layout MudBlazorLayout
 @page "/profile"
 @using PMS.UI.StaticDetails
+
 @using MudBlazor
 @* <h3>Register</h3> *@
 <div class="wrapper">
@@ -30,8 +31,36 @@
                                     <MudItem xl="3" lg="3" md="12" sm="12" xs="12">
                                         <MudCard Class="h-100">
                                             <MudCardContent>
-                                                <MudImage Width="200" Height="220" Src="https://bootdey.com/img/Content/avatar/avatar7.png" Alt="Maxwell Admin" />
-                                                <MudText Typo="Typo.h5" Class="pt-2 text-center"></MudText>
+                                                <MudImage Width="200" Height="220" Src="@(_profileModel.ImageBase64 ?? "https://bootdey.com/img/Content/avatar/avatar7.png")" Alt="Profile Image" />
+                                                <MudText Typo="Typo.h5" Class="pt-2 text-center">@($"{_profileModel.FirstName} {_profileModel.LastName}")</MudText>
+
+                                                @if (IsEditMode)
+                                                {
+                                                    <MudGrid Class="justify-content-center">
+                                                        <MudItem xs="12" Class="text-center">
+                                                            <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" MaximumFileCount="1" FilesChanged="UploadFile">
+                                                                <ActivatorContent>
+                                                                    <MudButton Variant="Variant.Filled"
+                                                                               Color="Color.Primary"
+                                                                               StartIcon="@Icons.Material.Filled.CloudUpload">
+                                                                        Upload Photo
+                                                                    </MudButton>
+                                                                </ActivatorContent>
+                                                            </MudFileUpload>
+                                                        </MudItem>
+
+                                                        @if (fileName != null)
+                                                        {
+                                                            <MudItem xs="12" Class="text-center mt-2">
+                                                                <MudList T="string">
+                                                                    <MudListItem Icon="@Icons.Material.Filled.AttachFile">
+                                                                        @fileName <code>@fileSize bytes</code>
+                                                                    </MudListItem>
+                                                                </MudList>
+                                                            </MudItem>
+                                                        }
+                                                    </MudGrid>
+                                                }
                                             </MudCardContent>
                                         </MudCard>
                                     </MudItem>
@@ -43,16 +72,16 @@
                                                         <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Last Name" HelperText="Max. 8 characters" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Last Name" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Email" HelperText="Max. 8 characters" @bind-Value="_profileModel.Email" For="@(() => _profileModel.Email)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Email" @bind-Value="_profileModel.Email" For="@(() => _profileModel.Email)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Phone Number" HelperText="Max. 8 characters" @bind-Value="_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Phone Number" @bind-Value="_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                 </MudGrid>
                                                 <MudDivider Class="my-3" />
@@ -61,16 +90,13 @@
                                                         <MudText Typo="Typo.h6" Class="mt-3 mb-2 text-primary">Address</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField @bind-Value="_profileModel.Address" Label="Street" Placeholder="Enter Street" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-
                                                     </MudItem>
                                                 </MudGrid>
                                                 <MudDivider Class="my-3" />
@@ -81,6 +107,9 @@
                                                             <div class="col-12 col-md-6 mb-2">
                                                                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary">Save</MudButton>
                                                             </div>
+                                                            <div class="col-12 col-md-6 mb-2">
+                                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Secondary" OnClick="CancelEdit">Cancel</MudButton>
+                                                            </div>
                                                         }
                                                         else
                                                         {
@@ -88,7 +117,7 @@
                                                                 <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Warning" OnClick="ToggleEditMode">Edit</MudButton>
                                                             </div>
                                                         }
-                                                        
+
                                                         <div class="col-12 col-md-6">
                                                             <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Info" OnClick="PasswordReset">Update Password</MudButton>
                                                         </div>
@@ -108,7 +137,11 @@
 
 
 
+       
+
+
     }
 
     <Footer />
 </div>
+

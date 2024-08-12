@@ -16,17 +16,19 @@ public class GetASingleUserDetailsQueryHandler : IRequestHandler<GetASingleUserD
 {
     private readonly IMapper _mapper;
     private readonly IAdminRepository _userRepository;
+    private readonly IClientRepository _clientRepository;
 
-    public GetASingleUserDetailsQueryHandler(IMapper mapper, IAdminRepository userRepository)
+    public GetASingleUserDetailsQueryHandler(IMapper mapper, IAdminRepository userRepository, IClientRepository clientRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;
+        _clientRepository = clientRepository;
     }
 
     public async Task<GetASingleUserDTO> Handle(GetASingleUserDetailsQuery request, CancellationToken cancellationToken)
     {
         //Querying the database
-        var getUser = await _userRepository.GetByIdAsync(request.userId);
+        var getUser = await _clientRepository.GetClientById(request.userId);
 
         //Verify if the record exist
         if (getUser is null)

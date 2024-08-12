@@ -1,5 +1,7 @@
-﻿using Domain.Common;
+﻿using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
+using Domain.Common;
 using MediatR;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace Application.Features.Commands.User.ClientUsers.Update
         public string PhoneNumber { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-        public IFormFile? Image { get; set; } = null;
-        public DateTime DateOfBirth { get; set; }
+        public string Image { get; set; } = string.Empty;
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
     }
 }
