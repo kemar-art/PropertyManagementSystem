@@ -23,4 +23,5 @@ public class GetASingleUserDTO
     public string ImageBase64 { get; set; } = string.Empty;
 
     public DateTime DateOfBirth { get; set; } = DateTime.Now;
+    public Guid RegionId { get; set; }
 }

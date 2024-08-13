@@ -3563,7 +3563,7 @@ namespace PMS.UI.Services.Base
         public string ImagePath { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTimeOffset DateOfBirth { get; set; }
+        public System.DateTimeOffset? DateOfBirth { get; set; }
 
     }
 

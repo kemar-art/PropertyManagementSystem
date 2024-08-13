@@ -35,7 +35,7 @@ namespace PMS.UI.Pages.Client
         public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
         public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
         public FormVM _createModel { get; set; } = new();
-        IEnumerable<Region> Regions { get; set; }
+        IEnumerable<Region> Regions { get; set; } = [];
 
 
         private ValidationMessageStore _validationMessageStore;
@@ -71,7 +71,7 @@ namespace PMS.UI.Pages.Client
                     IsChecked = vm.IsChecked
                 }).ToList();
 
-                Regions = await _RegionRepositoey.GetAllRegion() ?? new List<Region>();
+                Regions = await _RegionRepositoey.GetAllRegion() ?? [];
 
                 // Initialize EditContext
                 EditContext = new EditContext(_createModel);

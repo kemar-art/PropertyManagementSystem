@@ -7,7 +7,8 @@ using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Auth;
 using PMS.UI.Models.Client;
-
+using PMS.UI.Services.Base;
+using System;
 using System.Threading.Tasks;
 
 namespace PMS.UI.Pages.Client
@@ -15,6 +16,8 @@ namespace PMS.UI.Pages.Client
     public partial class Profile
     {
         public ClientVM _profileModel { get; set; } = new();
+
+        private EditContext _editContext;
 
         public string UserId { get; set; } = string.Empty;
 
@@ -27,12 +30,19 @@ namespace PMS.UI.Pages.Client
         [Inject]
         private AuthenticationStateProvider _AuthenticationStateProvider { get; set; }
 
+        [Inject]
+        IRegionRepositoey _RegionRepositoey { get; set; }
+
         private bool IsLoading { get; set; } = true;
         private bool IsEditMode { get; set; } = false;
+
+        private ValidationMessageStore _validationMessageStore;
 
         private IBrowserFile file;
         private string fileName;
         private long fileSize;
+
+        IEnumerable<Region> Regions { get; set; } 
 
 
         private async Task UploadFile(IBrowserFile file)
@@ -59,37 +69,14 @@ namespace PMS.UI.Pages.Client
         }
 
 
-        //private async Task UploadFile(IBrowserFile file)
-        //{
-        //    this.file = file;
-        //    fileName = file.Name;
-        //    fileSize = file.Size;
-
-        //    const long MaxAllowedSize = 1024 * 1024 * 15; // 15MB limit
-        //    if (file.Size > MaxAllowedSize)
-        //    {
-        //        throw new InvalidOperationException($"File size exceeds the allowed limit of {MaxAllowedSize / (1024 * 1024)}MB.");
-        //    }
-
-        //    try
-        //    {
-        //        var buffer = new byte[file.Size];
-        //        using var stream = file.OpenReadStream(MaxAllowedSize);
-        //        await stream.ReadAsync(buffer);
-
-        //        // Convert byte array to Base64 string and set it to the profile model
-        //        _profileModel.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"An error occurred while uploading the file: {ex.Message}");
-        //    }
-        //}
 
         protected override async Task OnInitializedAsync()
         {
             var authState = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
+
+            _editContext = new EditContext(_profileModel);
+            _validationMessageStore = new ValidationMessageStore(_editContext);
 
             if (user.Identity.IsAuthenticated)
             {
@@ -106,6 +93,8 @@ namespace PMS.UI.Pages.Client
                     {
                         _profileModel.ImageBase64 = null; // or string.Empty
                     }
+
+                    Regions = await _RegionRepositoey.GetAllRegion() ?? [];
 
                     IsLoading = false;
                 }
@@ -145,20 +134,35 @@ namespace PMS.UI.Pages.Client
         protected async Task OnValidSubmit()
         {
             IsLoading = true;
+            var isValid = true;
 
-            _profileModel.ImageBase64 = _profileModel.ImageBase64 ?? string.Empty;
-            _profileModel.Id = UserId;
+            // Validate RegionId
+            var regionField = new FieldIdentifier(_profileModel, nameof(_profileModel.RegionId));
+            _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
 
-            await _ClientRepository.UpdateClient(_profileModel);
+            if (_profileModel.RegionId == Guid.Empty)
+            {
+                isValid = false;
+                _validationMessageStore.Add(regionField, "Please select a parish.");
+                _editContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
+            }
+
+            if (isValid)
+            {
+                _profileModel.ImageBase64 = _profileModel.ImageBase64 ?? string.Empty;
+                _profileModel.Id = UserId;
+
+                await _ClientRepository.UpdateClient(_profileModel);
+                ToggleEditMode(); // Switch back to view mode after saving
+                _NavigationManager.NavigateTo("/profile");
+            }
+
             IsLoading = false;
-
-            ToggleEditMode(); // Switch back to view mode after saving
-            _NavigationManager.NavigateTo("/profile");
         }
+
+
+       
     }
-
-
-
 
 
 

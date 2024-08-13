@@ -27,6 +27,7 @@
                     <MudItem xs="12">
                         <div class="form-container">
                             <EditForm Model="@_profileModel" OnValidSubmit="OnValidSubmit">
+                                <DataAnnotationsValidator />
                                 <MudGrid Class="gutters">
                                     <MudItem xl="3" lg="3" md="12" sm="12" xs="12">
                                         <MudCard Class="h-100">
@@ -73,7 +74,7 @@
                                                         <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName"  For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Last Name" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" />
@@ -84,6 +85,16 @@
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Phone Number" @bind-Value="_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
+                                                    <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                        <MudText Typo="Typo.subtitle1">Gender</MudText>
+                                                        <MudRadioGroup T="string" @bind-Value="_profileModel.Gender" For="@(() => _profileModel.Gender)" Disabled="@(!IsEditMode)">
+                                                            <MudRadio Value="UserGender.Male">Male</MudRadio>
+                                                            <MudRadio Value="UserGender.Female">Female</MudRadio>
+                                                        </MudRadioGroup>
+                                                    </MudItem>
+                                                    <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                        <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_profileModel.DateOfBirth" Rounded="true" For="@(() => _profileModel.DateOfBirth)" Disabled="@(!IsEditMode)" />
+                                                    </MudItem>
                                                 </MudGrid>
                                                 <MudDivider Class="my-3" />
                                                 <MudGrid Class="gutters">
@@ -92,9 +103,18 @@
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" />
-                                                        <ValidationMessage For="@(() => _profileModel.Address)"></ValidationMessage>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                        <MudSelect T="Guid" Label="Parish" @bind-Value="_profileModel.RegionId" Disabled="@(!IsEditMode)">
+                                                            <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                            @foreach (var region in Regions)
+                                                            {
+                                                                <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+
+                                                            }
+
+                                                        </MudSelect>
+                                                        <ValidationMessage For="@(() => _profileModel.RegionId)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                     </MudItem>
@@ -141,7 +161,7 @@
 
 
 
-       
+
 
 
     }

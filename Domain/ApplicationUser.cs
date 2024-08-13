@@ -39,14 +39,14 @@ namespace Domain
         //public bool IsActive { get; set; } = true;
 
 
-        //[ForeignKey("RegionId")]
-        //public Region? Region { get; set; }
-        //public Guid? RegionId { get; set; }
+        [ForeignKey("RegionId")]
+        public Region? Region { get; set; }
+        public Guid? RegionId { get; set; }
 
 
         //[ForeignKey("JobTitleId")]
         //public JobTitle? JobTitle { get; set; }
         //public Guid? JobTitleId { get; set; }
-        
+
     }
 }
