@@ -18,7 +18,7 @@ namespace Application.MappingProfiles
             CreateMap<ApplicationUser, GetAllUsersDTO>().ReverseMap();
             CreateMap<ApplicationUser, GetASingleUserDTO>().ReverseMap();
 
-            //CreateMap<ClientUpdateCommand, ApplicationUser>().ReverseMap();
+            CreateMap<ClientUpdateCommand, ApplicationUser>().ReverseMap();
         }
     }
 }

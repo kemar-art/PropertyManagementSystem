@@ -10,10 +10,7 @@ public class FormProfile : Profile
 {
     public FormProfile()
     {
-        CreateMap<GetASingleUserDTO, ClientVM>()
-            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.DateTime))
-            .ForMember(dest => dest.ImageBase64, opt => opt.MapFrom(src => src.Image))
-            .ReverseMap();
+       
 
         // Other mappings
         CreateMap<FormVM, GetAllFormsDto>().ReverseMap();

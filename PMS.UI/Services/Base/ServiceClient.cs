@@ -3556,8 +3556,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string Address { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public string Image { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
+        public string ImagePath { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset DateOfBirth { get; set; }
@@ -3865,28 +3865,14 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string Address { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
-        public string TaxRegistrationNumber { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
-        public string NationalInsuranceScheme { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("gender")]
         public string Gender { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public string Image { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
+        public string ImagePath { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset DateOfBirth { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset Datestarted { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset DateEnded { get; set; }
 
     }
 

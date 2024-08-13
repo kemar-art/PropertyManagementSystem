@@ -32,7 +32,7 @@ namespace Application.Features.Commands.User.ClientUsers.Update
                 throw new BadRequestException("An error was encountered when creating the user.", validationResult);
             }
 
-            var updateClient = await _clientRepository.UpdateClient(request, request.Image);
+            var updateClient = await _clientRepository.UpdateClient(request, request.ImagePath);
             return updateClient;
         }
     }

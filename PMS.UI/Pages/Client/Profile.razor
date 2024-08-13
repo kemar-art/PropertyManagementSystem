@@ -72,7 +72,7 @@
                                                         <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName"  For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Last Name" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" />
@@ -91,6 +91,7 @@
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" />
+                                                        <ValidationMessage For="@(() => _profileModel.Address)"></ValidationMessage>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                     </MudItem>
@@ -104,11 +105,14 @@
                                                     <div class="row">
                                                         @if (IsEditMode)
                                                         {
-                                                            <div class="col-12 col-md-6 mb-2">
-                                                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary">Save</MudButton>
+                                                            <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Success">Save</MudButton>
                                                             </div>
-                                                            <div class="col-12 col-md-6 mb-2">
-                                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Secondary" OnClick="CancelEdit">Cancel</MudButton>
+                                                            <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Error" OnClick="CancelEdit">Cancel</MudButton>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Info" OnClick="PasswordReset">Update Password</MudButton>
                                                             </div>
                                                         }
                                                         else
@@ -116,11 +120,10 @@
                                                             <div class="col-12 col-md-6 mb-2">
                                                                 <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Warning" OnClick="ToggleEditMode">Edit</MudButton>
                                                             </div>
+                                                            <div class="col-12 col-md-6 mb-2">
+                                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Info" OnClick="PasswordReset">Update Password</MudButton>
+                                                            </div>
                                                         }
-
-                                                        <div class="col-12 col-md-6">
-                                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Info" OnClick="PasswordReset">Update Password</MudButton>
-                                                        </div>
                                                     </div>
                                                 </MudItem>
                                             </MudCardContent>
