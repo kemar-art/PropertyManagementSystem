@@ -36,7 +36,7 @@ namespace PMS.UI.Services.Repository_Implementation
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender, // Ensure Gender is included if required
                 Address = user.Address,
-                ImagePath = user.ImageBase64,
+                ImagePath = user.ImagePath,
                 DateOfBirth = user.DateOfBirth // Ensure DateOfBirth is included if required
             };
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Domain
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
+        [NotMapped]
+        public string ImageBase64 { get; set; } = string.Empty;
         //public IFormFile? Image { get; set; }
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;

@@ -32,6 +32,7 @@
                                         <MudCard Class="h-100">
                                             <MudCardContent>
                                                 <MudImage Width="200" Height="220" Src="@(_profileModel.ImageBase64 ?? "https://bootdey.com/img/Content/avatar/avatar7.png")" Alt="Profile Image" />
+
                                                 <MudText Typo="Typo.h5" Class="pt-2 text-center">@($"{_profileModel.FirstName} {_profileModel.LastName}")</MudText>
 
                                                 @if (IsEditMode)

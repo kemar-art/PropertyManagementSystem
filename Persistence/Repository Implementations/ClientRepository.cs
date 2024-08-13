@@ -35,10 +35,34 @@ namespace Persistence.Repository_Implementations
 
         public async Task<ApplicationUser> GetClientById(string userId)
         {
-            return await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null && !string.IsNullOrEmpty(user.ImagePath))
+            {
+                try
+                {
+                    var filePath = Path.Combine(_hostEnvironment.WebRootPath, user.ImagePath);
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+                        var base64String = Convert.ToBase64String(fileBytes);
+                        var mimeType = "image/png"; // Adjust MIME type as needed
+                        user.ImageBase64 = $"data:{mimeType};base64,{base64String}";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception if needed
+                    Console.WriteLine($"Error converting image to base64: {ex.Message}");
+                }
+            }
+
+            return user;
         }
 
-        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imageBase64)
+
+        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string ImagePath)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateClient.Id);
             if (user == null)
@@ -59,19 +83,19 @@ namespace Persistence.Repository_Implementations
 
             try
             {
-                if (!string.IsNullOrEmpty(imageBase64))
+                if (!string.IsNullOrEmpty(ImagePath))
                 {
-                    string base64Data = imageBase64.Contains(",") ? imageBase64.Split(',')[1] : throw new Exception("Invalid image data format.");
+                    string base64Data = ImagePath.Contains(",") ? ImagePath.Split(',')[1] : throw new Exception("Invalid image data format.");
 
                     string mimeType = "image/png"; // Default to PNG
                     string extension = ".png"; // Default to .png
 
-                    if (imageBase64.StartsWith("data:image/jpeg"))
+                    if (ImagePath.StartsWith("data:image/jpeg"))
                     {
                         mimeType = "image/jpeg";
                         extension = ".jpg";
                     }
-                    else if (imageBase64.StartsWith("data:image/png"))
+                    else if (ImagePath.StartsWith("data:image/png"))
                     {
                         mimeType = "image/png";
                         extension = ".png";
@@ -137,12 +161,6 @@ namespace Persistence.Repository_Implementations
                 stream?.Dispose();
             }
         }
-
-
-
-
-
-
 
     }
 }

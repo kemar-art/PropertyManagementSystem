@@ -120,6 +120,7 @@ namespace PMS.UI.Pages.Client
             }
         }
 
+
         private void CancelEdit()
         {
             // Optionally, reset _profileModel to its original state if needed.
