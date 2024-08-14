@@ -63,7 +63,7 @@ namespace PMS.UI.Pages.Client
                 _profileModel.ImagePath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
 
                 // Update ImageBase64 with the same data for immediate display
-                //_profileModel.ImageBase64 = _profileModel.ImagePath;
+                _profileModel.ImageBase64 = _profileModel.ImagePath;
 
                 // Trigger UI refresh
                 StateHasChanged();
