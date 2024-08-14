@@ -31,9 +31,9 @@ namespace PMS.UI.Pages.Client
         private bool IsLoading { get; set; } = true;
         private int currentStep = 1;
 
-        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = new();
-        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = new();
-        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = new();
+        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
         public FormVM _createModel { get; set; } = new();
         IEnumerable<Region> Regions { get; set; } = [];
 

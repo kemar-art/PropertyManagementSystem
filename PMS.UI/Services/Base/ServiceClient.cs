@@ -3471,6 +3471,12 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("role")]
         public string Role { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("region")]
+        public Region Region { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
+        public System.Guid? RegionId { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -3564,6 +3570,12 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset? DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("region")]
+        public Region Region { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
+        public System.Guid? RegionId { get; set; }
 
     }
 
@@ -3879,6 +3891,9 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
+        public System.Guid RegionId { get; set; }
 
     }
 

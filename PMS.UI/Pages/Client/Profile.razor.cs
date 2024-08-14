@@ -60,7 +60,13 @@ namespace PMS.UI.Pages.Client
                 var buffer = memoryStream.ToArray();
 
                 // Convert byte array to Base64 string and set it to the profile model
-                _profileModel.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+                _profileModel.ImagePath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+
+                // Update ImageBase64 with the same data for immediate display
+                //_profileModel.ImageBase64 = _profileModel.ImagePath;
+
+                // Trigger UI refresh
+                StateHasChanged();
             }
             catch (Exception ex)
             {
@@ -149,7 +155,17 @@ namespace PMS.UI.Pages.Client
 
             if (isValid)
             {
-                _profileModel.ImageBase64 = _profileModel.ImageBase64 ?? string.Empty;
+                // Check if a new image was uploaded. If not, set ImagePath to null.
+                if (file == null)
+                {
+                    _profileModel.ImagePath = null;
+                }
+                else
+                {
+                    // If a new image was uploaded, ImagePath is already set in UploadFile method.
+                    _profileModel.ImagePath = _profileModel.ImagePath ?? string.Empty;
+                }
+
                 _profileModel.Id = UserId;
 
                 await _ClientRepository.UpdateClient(_profileModel);
@@ -161,7 +177,8 @@ namespace PMS.UI.Pages.Client
         }
 
 
-       
+
+
     }
 
 

@@ -18,6 +18,7 @@ public class ApplicationUserProfile : Profile
            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ReverseMap();
 
+        CreateMap<ClientUpdateCommand, ClientVM>().ReverseMap();
         CreateMap<ClientVM, UpdateAppUserCommand>().ReverseMap();
     }
 }

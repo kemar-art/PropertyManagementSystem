@@ -77,6 +77,8 @@ namespace Persistence.Repository_Implementations
             user.PhoneNumber = updateClient.PhoneNumber;
             user.Gender = updateClient.Gender;
             user.DateOfBirth = updateClient.DateOfBirth;
+            user.Address = updateClient.Address;
+            user.RegionId = updateClient.RegionId;
 
             IFormFile imageToSave = null;
             MemoryStream stream = null;

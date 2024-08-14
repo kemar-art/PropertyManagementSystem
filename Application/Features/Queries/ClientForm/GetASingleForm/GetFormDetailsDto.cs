@@ -48,8 +48,8 @@ public class GetFormDetailsDto
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
-    [ForeignKey("RegionId")]
-    public Region? Region { get; set; }
+    //[ForeignKey("RegionId")]
+    //public Region? Region { get; set; }
     public Guid? RegionId { get; set; }
 
     public string TypeOfPropertySelectedIds { get; set; } = string.Empty;

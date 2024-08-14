@@ -39,7 +39,6 @@ namespace Domain
         //public bool IsActive { get; set; } = true;
 
 
-        [ForeignKey("RegionId")]
         public Region? Region { get; set; }
         public Guid? RegionId { get; set; }
 
