@@ -14,7 +14,7 @@ namespace Application.Contracts.Repository_Interface
 {
     public interface IClientRepository
     {
-        Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string image);
+        Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imagePath);
 
         Task<ApplicationUser> GetClientById(string userId);
     }

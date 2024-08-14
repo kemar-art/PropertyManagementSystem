@@ -1,3 +1,4 @@
+using Blazorise.DeepCloner;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -76,6 +77,8 @@ namespace PMS.UI.Pages.Client
 
 
 
+        private ClientVM _originalProfileModel;
+
         protected override async Task OnInitializedAsync()
         {
             var authState = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -93,6 +96,9 @@ namespace PMS.UI.Pages.Client
 
                     IsLoading = true;
                     _profileModel = await _ClientRepository.GetClientById(UserId);
+
+                    // Store a copy of the original profile
+                    _originalProfileModel = _profileModel.DeepClone();
 
                     // Ensure ImageBase64 is null or empty string if no image is uploaded
                     if (string.IsNullOrEmpty(_profileModel.ImageBase64))
@@ -115,16 +121,14 @@ namespace PMS.UI.Pages.Client
             }
         }
 
-
         private void CancelEdit()
         {
-            // Optionally, reset _profileModel to its original state if needed.
-            // This assumes you have a way to revert changes or reload the original profile.
-
-            //_profileModel = /* Code to reload the original profile */;
+            // Reset _profileModel to its original state using the stored copy
+            _profileModel = _originalProfileModel.DeepClone();
 
             IsEditMode = false; // Exit edit mode
         }
+
 
 
         private void ToggleEditMode()
@@ -159,6 +163,7 @@ namespace PMS.UI.Pages.Client
                 if (file == null)
                 {
                     _profileModel.ImagePath = null;
+                    //_profileModel.ImageBase64 = null;
                 }
                 else
                 {
@@ -167,7 +172,6 @@ namespace PMS.UI.Pages.Client
                 }
 
                 _profileModel.Id = UserId;
-
                 await _ClientRepository.UpdateClient(_profileModel);
                 ToggleEditMode(); // Switch back to view mode after saving
                 _NavigationManager.NavigateTo("/profile");

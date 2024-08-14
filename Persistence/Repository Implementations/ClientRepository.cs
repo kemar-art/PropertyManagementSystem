@@ -62,7 +62,7 @@ namespace Persistence.Repository_Implementations
         }
 
 
-        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string ImagePath)
+        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imagePath)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateClient.Id);
             if (user == null)
@@ -85,19 +85,19 @@ namespace Persistence.Repository_Implementations
 
             try
             {
-                if (!string.IsNullOrEmpty(ImagePath))
+                if (!string.IsNullOrEmpty(imagePath))
                 {
-                    string base64Data = ImagePath.Contains(",") ? ImagePath.Split(',')[1] : throw new Exception("Invalid image data format.");
+                    string base64Data = imagePath.Contains(",") ? imagePath.Split(',')[1] : throw new Exception("Invalid image data format.");
 
                     string mimeType = "image/png"; // Default to PNG
                     string extension = ".png"; // Default to .png
 
-                    if (ImagePath.StartsWith("data:image/jpeg"))
+                    if (imagePath.StartsWith("data:image/jpeg"))
                     {
                         mimeType = "image/jpeg";
                         extension = ".jpg";
                     }
-                    else if (ImagePath.StartsWith("data:image/png"))
+                    else if (imagePath.StartsWith("data:image/png"))
                     {
                         mimeType = "image/png";
                         extension = ".png";

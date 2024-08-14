@@ -26,9 +26,6 @@ namespace Application.Features.Commands.User.ClientUsers.Update
         public string? ImagePath { get; set; } = string.Empty;
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
-
-        //[ForeignKey("RegionId")]
-        //public Region? Region { get; set; }
         public Guid? RegionId { get; set; }
     }
 }
