@@ -31,31 +31,36 @@
 }
 else
 {
-    <div class="container success-page">
-        <div class="success-content">
-            <img src="/images/success-image.png" alt="Success" class="success-image">
-            <h1 class="success-message">Form Submitted Successfully!</h1>
-            @if (_successModel != null)
-            {
-                var firstName = Uri.EscapeDataString(_successModel.FirstName);
-                var lastName = Uri.EscapeDataString(_successModel.LastName);
-                var email = Uri.EscapeDataString(_successModel.Email);
-                var phoneNumber = Uri.EscapeDataString(_successModel.PhoneNumber);
-                var registrationUrl = $"/register?firstName={firstName}&lastName={lastName}&email={email}&phoneNumber={phoneNumber}";
-                <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", _successModel.CustomerId)</span></p>
-                <p>
-                    <strong>
-                        If you do not have an account, you will not be able to track your form status.<br>
-                        <NavLink href="@registrationUrl">Create an account</NavLink>
-                    </strong>
-                </p>
-            }
-            else
-            {
-                <p class="tracking-id">Loading tracking ID...</p>
-            }
+    <div class="content">
+        <div class="form-container">
+            <div class="container success-page">
+                <div class="success-content">
+                    <img src="/images/success-image.png" alt="Success" class="success-image">
+                    <h1 class="success-message">Form Submitted Successfully!</h1>
+                    @if (_successModel != null)
+                    {
+                        var firstName = Uri.EscapeDataString(_successModel.FirstName);
+                        var lastName = Uri.EscapeDataString(_successModel.LastName);
+                        var email = Uri.EscapeDataString(_successModel.Email);
+                        var phoneNumber = Uri.EscapeDataString(_successModel.PhoneNumber);
+                        var registrationUrl = $"/register?firstName={firstName}&lastName={lastName}&email={email}&phoneNumber={phoneNumber}";
+                        <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", _successModel.CustomerId)</span></p>
+                        <p>
+                            <strong>
+                                If you do not have an account, you will not be able to track your form status.<br>
+                                <NavLink href="@registrationUrl">Create an account</NavLink>
+                            </strong>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="tracking-id">Loading tracking ID...</p>
+                    }
+                </div>
+            </div>
         </div>
     </div>
+    
 }
 
 
