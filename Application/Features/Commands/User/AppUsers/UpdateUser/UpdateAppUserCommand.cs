@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,5 +30,9 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = "Start Date")]
         public DateTime Datestarted { get; set; } = DateTime.Now;
+
+        [ForeignKey("ClientRegionId")]
+        public Region? ClientRegion { get; set; }
+        public Guid? ClientRegionId { get; set; }
     }
 }

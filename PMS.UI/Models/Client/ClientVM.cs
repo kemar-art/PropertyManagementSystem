@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PMS.UI.Models.Client
 {
@@ -22,8 +23,9 @@ namespace PMS.UI.Models.Client
         public string ImageBase64 { get; set; } = string.Empty;
         public string? ImagePath { get; set; } = string.Empty;
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
-        [Required(ErrorMessage = "Please select a parish.")]
-        public Guid RegionId { get; set; }
+
+        public Guid ClientRegionId { get; set; }
+
     }
 
 

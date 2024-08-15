@@ -110,8 +110,12 @@ public class Form
     [DataType(DataType.Date)]
     public DateTime ApprovedForm { get; set; }
 
-    public Region? Region { get; set; }
-    public Guid? RegionId { get; set; }
+    public Region? ClientRegion { get; set; }
+    public Guid? ClientRegionId { get; set; }
+
+    public Region? PropertyRegion { get; set; }
+    public Guid? PropertyRegionId { get; set; }
+
 
     public string FrontOfProperyImageURL { get; set; } = string.Empty;
     public string RightSideOfPropertyImageURL { get; set; } = string.Empty;

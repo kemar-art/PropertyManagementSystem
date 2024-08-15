@@ -147,10 +147,10 @@ namespace PMS.UI.Pages.Client
             var isValid = true;
 
             // Validate RegionId
-            var regionField = new FieldIdentifier(_profileModel, nameof(_profileModel.RegionId));
+            var regionField = new FieldIdentifier(_profileModel, nameof(_profileModel.ClientRegionId));
             _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
 
-            if (_profileModel.RegionId == Guid.Empty)
+            if (_profileModel.ClientRegionId == Guid.Empty)
             {
                 isValid = false;
                 _validationMessageStore.Add(regionField, "Please select a parish.");

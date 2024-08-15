@@ -45,11 +45,23 @@
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Email" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
                                             </MudItem>
-                                            <MudItem xs="12">
-                                                <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
+                                            <MudItem xs="6">
+                                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="_createModel.InstructionsIssuedBy" For="@(() => _createModel.InstructionsIssuedBy)" />
+                                            </MudItem>
+                                            <MudItem xs="6">
+                                                <MudSelect T="Guid" Label="Parish" @bind-Value="_createModel.ClientRegionId">
+                                                    <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                    @foreach (var region in Regions)
+                                                    {
+                                                        <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                                <ValidationMessage For="@(() => _createModel.ClientRegionId)" />
+
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="_createModel.InstructionsIssuedBy" For="@(() => _createModel.InstructionsIssuedBy)" />
+                                                <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
+                                                
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
@@ -138,16 +150,15 @@
                                                 </MudRadioGroup>
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudSelect T="Guid" Label="Parish" @bind-Value="_createModel.RegionId">
+                                                <MudSelect T="Guid" Label="Parish" @bind-Value="_createModel.PropertyRegionId">
                                                     <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                     @foreach (var region in Regions)
                                                     {
-                                                        <MudSelectItem  T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
-                                                        
+                                                        <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
                                                     }
-                                                    
                                                 </MudSelect>
-                                                <ValidationMessage For="@(() => _createModel.RegionId)" />
+                                                <ValidationMessage For="@(() => _createModel.PropertyRegionId)" />
+
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudTextField T="string" Label="Property Address" @bind-Value="_createModel.PropertyAddress" For="@(() => _createModel.PropertyAddress)" />

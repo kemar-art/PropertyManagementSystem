@@ -218,6 +218,7 @@ namespace Persistence.Repository_Implementations
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
             applicationUser.DateRegistered = user.Datestarted;
+            applicationUser.ClientRegionId = user.ClientRegionId;
             applicationUser.Role = Roles.Administrator;
 
 

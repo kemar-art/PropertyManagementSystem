@@ -150,22 +150,32 @@ namespace PMS.UI.Pages.Client
                 fieldsToValidate.Add(nameof(_createModel.PhoneNumber));
                 fieldsToValidate.Add(nameof(_createModel.Email));
                 fieldsToValidate.Add(nameof(_createModel.Address));
+
+                // Validate RegionId
+                var regionField = new FieldIdentifier(_createModel, nameof(_createModel.ClientRegionId));
+                _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
+
+                if (_createModel.ClientRegionId == Guid.Empty)
+                {
+                    isValid = false;
+                    _validationMessageStore.Add(regionField, "Please select a parish.");
+                    EditContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
+                }
             }
             else if (currentStep == 2)
             {
                 fieldsToValidate.Add(nameof(_createModel.Volume));
                 fieldsToValidate.Add(nameof(_createModel.Folio));
                 fieldsToValidate.Add(nameof(_createModel.IsKeyAvailable));
-                fieldsToValidate.Add(nameof(_createModel.RegionId)); // Add RegionId to the fields to validate
                 fieldsToValidate.Add(nameof(_createModel.PropertyAddress));
                 fieldsToValidate.Add(nameof(_createModel.StrataPlan));
                 fieldsToValidate.Add(nameof(_createModel.MortgageInstitution));
 
                 // Validate RegionId
-                var regionField = new FieldIdentifier(_createModel, nameof(_createModel.RegionId));
+                var regionField = new FieldIdentifier(_createModel, nameof(_createModel.PropertyRegionId));
                 _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
 
-                if (_createModel.RegionId == Guid.Empty)
+                if (_createModel.PropertyRegionId == Guid.Empty)
                 {
                     isValid = false;
                     _validationMessageStore.Add(regionField, "Please select a parish.");

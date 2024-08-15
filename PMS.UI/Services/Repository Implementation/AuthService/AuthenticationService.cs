@@ -91,10 +91,12 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 FirstName = registerVM.FirstName,
                 LastName = registerVM.LastName,
                 Email = registerVM.Email,
+                Address = registerVM.Address,
                 PhoneNumber = registerVM.PhoneNumber,
                 Gender = registerVM.Gender,
                 DateOfBirth = registerVM.DateOfBirth,
-                Password = registerVM.Password
+                Password = registerVM.Password,
+                ClientRegionId = registerVM.ClientRegionId,
             };
 
             var response = await _client.RegisterAsync(registrationRequest);

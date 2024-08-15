@@ -26,6 +26,6 @@ namespace Application.Features.Commands.User.ClientUsers.Update
         public string? ImagePath { get; set; } = string.Empty;
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
-        public Guid? RegionId { get; set; }
+        public Guid? ClientRegionId { get; set; }
     }
 }

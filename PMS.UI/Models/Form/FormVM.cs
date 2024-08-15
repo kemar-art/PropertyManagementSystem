@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using PMS.UI.Models.CustomValidation;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,7 @@ namespace PMS.UI.Models.Form
 
         [Required]
         [Display(Name = "Email")]
+        [EmailContainsAtSign]
         public string Email { get; set; } = string.Empty;
 
         [Required]
@@ -31,7 +33,7 @@ namespace PMS.UI.Models.Form
         public string Address { get; set; } = string.Empty;
 
         [Required]
-        [Phone]
+        [PhoneNumberFormat]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; } = string.Empty;
 
@@ -74,11 +76,18 @@ namespace PMS.UI.Models.Form
         public string SecondaryContactEmail { get; set; } = string.Empty;
 
         [Required]
+        [PhoneNumberFormat]
         public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
-        [ForeignKey("RegionId")]
-        public Region? Region { get; set; }
-        public Guid RegionId { get; set; }
+
+        [ForeignKey("ClientRegionId")]
+        public Region? ClientRegion { get; set; }
+        public Guid ClientRegionId { get; set; }
+
+        [ForeignKey("PropertyRegionId")]
+        public Region? PropertyRegion { get; set; }
+        public Guid PropertyRegionId { get; set; }
+
 
 
         public string TypeOfPropertySelectedIds { get; set; } = string.Empty;

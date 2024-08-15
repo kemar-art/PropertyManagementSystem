@@ -44,9 +44,13 @@ public class UpdateFormCommand : IRequest<Unit>
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
-    [ForeignKey("RegionId")]
-    public Region? Region { get; set; }
-    public Guid? RegionId { get; set; }
+    [ForeignKey("ClientRegionId")]
+    public Region? ClientRegion { get; set; }
+    public Guid? ClientRegionId { get; set; }
+
+    [ForeignKey("PropertyRegionId")]
+    public Region? PropertyRegion { get; set; }
+    public Guid? PropertyRegionId { get; set; }
 
     public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
     public string ServiceRequestItemSelectId { get; set; } = string.Empty;

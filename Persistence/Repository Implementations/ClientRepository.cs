@@ -47,7 +47,10 @@ namespace Persistence.Repository_Implementations
                     {
                         var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
                         var base64String = Convert.ToBase64String(fileBytes);
-                        var mimeType = "image/png"; // Adjust MIME type as needed
+
+                        // Determine MIME type based on file extension
+                        string mimeType = user.ImagePath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg";
+
                         user.ImageBase64 = $"data:{mimeType};base64,{base64String}";
                     }
                 }
@@ -60,6 +63,9 @@ namespace Persistence.Repository_Implementations
 
             return user;
         }
+
+
+
 
 
         public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imagePath)
@@ -78,7 +84,7 @@ namespace Persistence.Repository_Implementations
             user.Gender = updateClient.Gender;
             user.DateOfBirth = updateClient.DateOfBirth;
             user.Address = updateClient.Address;
-            user.RegionId = updateClient.RegionId;
+            user.ClientRegionId = updateClient.ClientRegionId;
 
             IFormFile imageToSave = null;
             MemoryStream stream = null;

@@ -70,12 +70,14 @@ namespace Persistence.Repository_Implementations
                 LastName = clientUser.LastName,
                 Email = clientUser.Email,
                 UserName = clientUser.Email,
+                Address = clientUser.Address,
                 NormalizedEmail = clientUser.Email,
                 NormalizedUserName = clientUser.Email,
                 PhoneNumber = clientUser.PhoneNumber,
                 Gender = clientUser.Gender,
                 DateOfBirth = clientUser.DateOfBirth,
                 DateRegistered = DateTime.Now,
+                ClientRegionId = clientUser.ClientRegionId,
                 Role = Roles.Client
             };
 

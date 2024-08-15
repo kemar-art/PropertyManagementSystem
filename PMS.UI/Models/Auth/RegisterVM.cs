@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PMS.UI.Services.Base;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PMS.UI.Models.Auth
 {
@@ -15,6 +17,9 @@ namespace PMS.UI.Models.Auth
         public string PhoneNumber { get; set; } = string.Empty;
         [Required]
         public string Gender { get; set; } = string.Empty;
+
+        public string Address { get; set; } = string.Empty;
+
         [Required]
         public string Password { get; set; } = string.Empty;
 
@@ -25,5 +30,9 @@ namespace PMS.UI.Models.Auth
         [DataType(DataType.Date), Display(Name = "D.O.B")]
         [Required]
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
+
+        [ForeignKey("ClientRegionId")]
+        public Region? ClientRegion { get; set; }
+        public Guid ClientRegionId { get; set; }
     }
 }

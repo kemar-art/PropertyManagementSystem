@@ -43,7 +43,9 @@ else
                         var lastName = Uri.EscapeDataString(_successModel.LastName);
                         var email = Uri.EscapeDataString(_successModel.Email);
                         var phoneNumber = Uri.EscapeDataString(_successModel.PhoneNumber);
-                        var registrationUrl = $"/register?firstName={firstName}&lastName={lastName}&email={email}&phoneNumber={phoneNumber}";
+                        var clientRejoinId = Uri.EscapeDataString(_successModel.ClientRegionId.ToString());
+                        var address = Uri.EscapeDataString(_successModel.Address);
+                        var registrationUrl = $"/register?firstName={firstName}&lastName={lastName}&email={email}&phoneNumber={phoneNumber}&regionId={clientRejoinId}&address={address}";
                         <p class="tracking-id">Your Tracking ID: <span id="trackingId">@string.Format("{0:D5}", _successModel.CustomerId)</span></p>
                         <p>
                             <strong>

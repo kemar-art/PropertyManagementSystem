@@ -3471,11 +3471,11 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("role")]
         public string Role { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
 
     }
 
@@ -3531,12 +3531,21 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("gender")]
         public string Gender { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("password")]
         public string Password { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset? DateOfBirth { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
 
     }
 
@@ -3571,11 +3580,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset? DateOfBirth { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
 
     }
 
@@ -3674,11 +3680,17 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegion")]
+        public Region PropertyRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegionId")]
+        public System.Guid? PropertyRegionId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
         public string TypeOfPropertySelectedIds { get; set; }
@@ -3829,11 +3841,17 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset ApprovedForm { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegion")]
+        public Region PropertyRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegionId")]
+        public System.Guid? PropertyRegionId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("frontOfProperyImageURL")]
         public string FrontOfProperyImageURL { get; set; }
@@ -3892,8 +3910,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset DateOfBirth { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid ClientRegionId { get; set; }
 
     }
 
@@ -4042,11 +4060,11 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegionId")]
+        public System.Guid? PropertyRegionId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
         public string TypeOfPropertySelectedIds { get; set; }
@@ -4323,11 +4341,17 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public Region Region { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("regionId")]
-        public System.Guid? RegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegion")]
+        public Region PropertyRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("propertyRegionId")]
+        public System.Guid? PropertyRegionId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
         public string TypeOfPropertySelectedIds { get; set; }

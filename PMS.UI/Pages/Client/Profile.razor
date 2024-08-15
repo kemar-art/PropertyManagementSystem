@@ -106,16 +106,14 @@
                                                         <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudSelect T="Guid" Label="Parish" @bind-Value="_profileModel.RegionId" Disabled="@(!IsEditMode)">
+                                                        <MudSelect T="Guid" Label="Parish" @bind-Value="_profileModel.ClientRegionId" Disabled="@(!IsEditMode)">
                                                             <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                             @foreach (var region in Regions)
                                                             {
                                                                 <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
-
                                                             }
-
                                                         </MudSelect>
-                                                        <ValidationMessage For="@(() => _profileModel.RegionId)" />
+                                                        <ValidationMessage For="@(() => _profileModel.ClientRegionId)" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                     </MudItem>

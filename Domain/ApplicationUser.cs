@@ -39,8 +39,8 @@ namespace Domain
         //public bool IsActive { get; set; } = true;
 
 
-        public Region? Region { get; set; }
-        public Guid? RegionId { get; set; }
+        public Region? ClientRegion { get; set; }
+        public Guid? ClientRegionId { get; set; }
 
 
         //[ForeignKey("JobTitleId")]
