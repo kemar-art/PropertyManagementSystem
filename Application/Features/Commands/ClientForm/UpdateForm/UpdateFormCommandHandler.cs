@@ -51,7 +51,7 @@ public class UpdateFormCommandHandler : IRequestHandler<UpdateFormCommand, Unit>
             //existingForm.CustomerId = existingForm.CustomerId; // No need to reassign
 
             // Update in database
-            var updatedForm = await _formRepository.UpdateFrom(existingForm);
+            var updatedForm = await _formRepository.UpdateForm(existingForm);
 
             _appLogger.LogInformation("Form updated successfully with ID: {FormId}", request.Id);
 

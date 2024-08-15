@@ -80,67 +80,100 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
     }
 
-
-
-
-
-    public async Task<IEnumerable<Form>> GetAllFroms()
+    public async Task<IEnumerable<Form>> GetAllForms()
     {
-        return await _dbContext.Forms.AsNoTracking()
-                                     .OrderBy(x => x.CustomerId)
-                                     .ToListAsync();
+        try
+        {
+            _appLogger.LogInformation("Retrieving all forms from the database.");
+
+            var forms = await _dbContext.Forms.AsNoTracking()
+                                              .OrderBy(x => x.CustomerId)
+                                              .ToListAsync();
+
+            _appLogger.LogInformation($"Retrieved {forms.Count} forms from the database.");
+            return forms;
+        }
+        catch (Exception ex)
+        {
+            _appLogger.LogError("An error occurred while retrieving all forms.", ex);
+            return [];
+        }
     }
+
 
     public async Task<TrackFormResult> TrackForm(int formId)
     {
         // Check if HttpContext is available
         if (_httpContextAccessor.HttpContext == null)
         {
-            // Log or handle the missing HttpContext
-            throw new InvalidOperationException("HttpContext is not available.");
+            _appLogger.LogError("HttpContext is not available.");
+            return new TrackFormResult { Exists = false, Message = "Internal error: HttpContext is unavailable." };
         }
 
         // Retrieve the user email claim
         var userEmail = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
 
-        // Log the retrieved email or the lack of it
         if (string.IsNullOrEmpty(userEmail))
         {
-            // Log the missing email claim
-            throw new InvalidOperationException("User email claim not found.");
+            _appLogger.LogError("User email claim not found.");
+            return new TrackFormResult { Exists = false, Message = "Internal error: User email claim is missing." };
         }
 
-        // Query the database for the form with the provided formId and user email
-        var form = await _dbContext.Forms.FirstOrDefaultAsync(x => x.CustomerId == formId && x.Email == userEmail);
-
-        if (form != null)
+        try
         {
-            return new TrackFormResult
+            // Query the database for the form with the provided formId and user email
+            var form = await _dbContext.Forms.FirstOrDefaultAsync(x => x.CustomerId == formId && x.Email == userEmail);
+
+            if (form != null)
             {
-                Exists = true,
-                Message = "Form found.",
-                Status = form.Status
-            };
+                _appLogger.LogInformation($"Form with ID {formId} found for user {userEmail}.");
+                return new TrackFormResult
+                {
+                    Exists = true,
+                    Message = "Form found.",
+                    Status = form.Status
+                };
+            }
+            else
+            {
+                _appLogger.LogWarning($"Form with ID {formId} not found for user {userEmail}.");
+                return new TrackFormResult { Exists = false, Message = "Form not found." };
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return new TrackFormResult { Exists = false, Message = "Form not found." };
+            _appLogger.LogError($"An error occurred while tracking the form with ID {formId} for user {userEmail}.", ex);
+            return new TrackFormResult { Exists = false, Message = "An unexpected error occurred while tracking the form." };
+        }
+    }
+
+    public async Task<Unit> UpdateForm(Form updateForm)
+    {
+        try
+        {
+            // Attach the entity to the context and mark it as modified
+            _dbContext.Entry(updateForm).State = EntityState.Modified;
+
+            // Ensure that the identity column is not marked as modified
+            _dbContext.Entry(updateForm).Property(f => f.CustomerId).IsModified = false;
+
+            await _dbContext.SaveChangesAsync();
+
+            // Return Unit.Value to indicate success
+            return Unit.Value;
+        }
+        catch (Exception ex)
+        {
+            // Log the error
+            _appLogger.LogError("An error occurred while updating the form.", ex);
+
+            // Return Unit.Value to avoid crashing the application
+            return Unit.Value;
         }
     }
 
 
-    public async Task<Unit> UpdateFrom(Form updateForm)
-    {
-        // Attach the entity to the context and mark it as modified
-        _dbContext.Entry(updateForm).State = EntityState.Modified;
 
-        // Ensure that the identity column is not marked as modified
-        _dbContext.Entry(updateForm).Property(f => f.CustomerId).IsModified = false;
-
-        await _dbContext.SaveChangesAsync();
-
-        return Unit.Value;
-    }
 
 }
 

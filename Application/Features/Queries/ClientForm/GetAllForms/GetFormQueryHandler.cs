@@ -17,7 +17,7 @@ public class GetFormQueryHandler : IRequestHandler<GetFormQuery, IEnumerable<Get
 
     public async Task<IEnumerable<GetAllFormsDto>> Handle(GetFormQuery request, CancellationToken cancellationToken)
     {
-        var getAllForms = await _formRepository.GetAllFroms();
+        var getAllForms = await _formRepository.GetAllForms();
 
         var mapData = _mapper.Map<IEnumerable<GetAllFormsDto>>(getAllForms);
 
