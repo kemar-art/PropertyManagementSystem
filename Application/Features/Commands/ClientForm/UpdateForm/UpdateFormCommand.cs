@@ -1,10 +1,11 @@
 ﻿using Domain;
+using Domain.BaseResponse;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Commands.ClientForm.UpdateForm;
 
-public class UpdateFormCommand : IRequest<Unit>
+public class UpdateFormCommand : IRequest<BaseResult<Unit>>
 {
     public Guid Id { get; set; }
 

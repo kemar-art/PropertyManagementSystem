@@ -1,5 +1,6 @@
 ﻿using Application.Features.Commands.User.ClientUsers.Update;
 using Domain;
+using Domain.BaseResponse;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
@@ -14,7 +15,7 @@ namespace Application.Contracts.Repository_Interface
 {
     public interface IClientRepository
     {
-        Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imagePath);
+        Task<BaseResult<Unit>> UpdateClient(ClientUpdateCommand updateClient, string imagePath);
 
         Task<ApplicationUser> GetClientById(string userId);
     }

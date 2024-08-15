@@ -1,5 +1,6 @@
 ﻿using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
 using Domain;
+using Domain.BaseResponse;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers.Update
 {
-    public class ClientUpdateCommand : IRequest<Unit>
+    public class ClientUpdateCommand : IRequest<BaseResult<Unit>>
     {
         public string Id { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;

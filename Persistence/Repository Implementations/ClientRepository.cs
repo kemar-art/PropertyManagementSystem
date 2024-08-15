@@ -1,7 +1,9 @@
-﻿using Application.Contracts.Repository_Interface;
+﻿using Application.Contracts.ILogging;
+using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
 using Application.Features.Commands.User.ClientUsers.Update;
 using Domain;
+using Domain.BaseResponse;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,58 +27,123 @@ namespace Persistence.Repository_Implementations
         private readonly PMSDatabaseContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IAppLogger<ClientRepository> _appLogger;
 
-        public ClientRepository(PMSDatabaseContext dbContext, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment)
+        public ClientRepository(PMSDatabaseContext dbContext, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, IAppLogger<ClientRepository> appLogger)
         {
             _dbContext = dbContext;
             _userManager = userManager;
             _hostEnvironment = hostEnvironment;
+            _appLogger = appLogger;
         }
 
         public async Task<ApplicationUser> GetClientById(string userId)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
-            if (user != null && !string.IsNullOrEmpty(user.ImagePath))
+            try
             {
-                try
+                _appLogger.LogInformation($"Retrieving user with ID {userId}.");
+
+                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+                if (user == null)
                 {
-                    var filePath = Path.Combine(_hostEnvironment.WebRootPath, user.ImagePath);
+                    _appLogger.LogWarning($"User with ID {userId} was not found.");
+                    return null; // or throw an exception, depending on your needs
+                }
 
-                    if (System.IO.File.Exists(filePath))
+                if (!string.IsNullOrEmpty(user.ImagePath))
+                {
+                    try
                     {
-                        var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-                        var base64String = Convert.ToBase64String(fileBytes);
+                        var filePath = Path.Combine(_hostEnvironment.WebRootPath, user.ImagePath);
 
-                        // Determine MIME type based on file extension
-                        string mimeType = user.ImagePath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg";
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+                            var base64String = Convert.ToBase64String(fileBytes);
 
-                        user.ImageBase64 = $"data:{mimeType};base64,{base64String}";
+                            // Determine MIME type based on file extension
+                            string mimeType = user.ImagePath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg";
+
+                            user.ImageBase64 = $"data:{mimeType};base64,{base64String}";
+
+                            _appLogger.LogInformation($"Successfully converted image to base64 for user {userId}.");
+                        }
+                        else
+                        {
+                            _appLogger.LogWarning($"Image file not found at {filePath} for user {userId}.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _appLogger.LogError($"Error converting image to base64 for user {userId}.", ex);
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Log the exception if needed
-                    Console.WriteLine($"Error converting image to base64: {ex.Message}");
-                }
-            }
 
-            return user;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An error occurred while retrieving the user with ID {userId}.", ex);
+                return null; // or a default ApplicationUser object if needed
+            }
         }
 
-
-
-
-
-        public async Task<Unit> UpdateClient(ClientUpdateCommand updateClient, string imagePath)
+        public async Task<BaseResult<Unit>> UpdateClient(ClientUpdateCommand updateClient, string imagePath)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateClient.Id);
-            if (user == null)
+            try
             {
-                throw new NotFoundException("User", updateClient.Id);
-            }
+                _appLogger.LogInformation($"Attempting to update user with ID {updateClient.Id}.");
 
-            // Update user properties
+                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateClient.Id);
+                if (user == null)
+                {
+                    _appLogger.LogWarning($"User with ID {updateClient.Id} not found.");
+                    return BaseResult<Unit>.Failure($"User with ID {updateClient.Id} not found.");
+                }
+
+                // Update user properties
+                UpdateClientProperties(user, updateClient);
+
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    var imageToSave = ConvertBase64ToFormFile(imagePath);
+                    if (imageToSave != null)
+                    {
+                        var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                        if (!imageSaved)
+                        {
+                            _appLogger.LogError("Image saving failed.");
+                            return BaseResult<Unit>.Failure("Image saving failed.");
+                        }
+                    }
+                    else
+                    {
+                        _appLogger.LogError("Failed to convert image data.");
+                        return BaseResult<Unit>.Failure("Failed to convert image data.");
+                    }
+                }
+
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    var errorMessage = $"Failed to update user: {string.Join(", ", updateResult.Errors.Select(e => e.Description))}";
+                    _appLogger.LogError(errorMessage);
+                    return BaseResult<Unit>.Failure(errorMessage);
+                }
+
+                _appLogger.LogInformation($"User with ID {updateClient.Id} updated successfully.");
+                return BaseResult<Unit>.Success(Unit.Value); // Indicate successful completion
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An unexpected error occurred while updating user with ID {updateClient.Id}. Exception: {ex.Message}");
+                return BaseResult<Unit>.Failure($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        private void UpdateClientProperties(ApplicationUser user, ClientUpdateCommand updateClient)
+        {
             user.FirstName = updateClient.FirstName;
             user.LastName = updateClient.LastName;
             user.Email = updateClient.Email;
@@ -85,91 +152,75 @@ namespace Persistence.Repository_Implementations
             user.DateOfBirth = updateClient.DateOfBirth;
             user.Address = updateClient.Address;
             user.ClientRegionId = updateClient.ClientRegionId;
+        }
 
-            IFormFile imageToSave = null;
-            MemoryStream stream = null;
-
+        private FormFile ConvertBase64ToFormFile(string base64ImageData)
+        {
             try
             {
-                if (!string.IsNullOrEmpty(imagePath))
+                string base64Data = base64ImageData.Contains(",") ? base64ImageData.Split(',')[1] : throw new Exception("Invalid image data format.");
+
+                string mimeType = base64ImageData.StartsWith("data:image/jpeg", StringComparison.OrdinalIgnoreCase) ? "image/jpeg" : "image/png";
+                string extension = mimeType == "image/jpeg" ? ".jpg" : ".png";
+
+                byte[] imageBytes = Convert.FromBase64String(base64Data);
+                var stream = new MemoryStream(imageBytes);
+
+                return new FormFile(stream, 0, imageBytes.Length, "file", $"uploadedImage{extension}")
                 {
-                    string base64Data = imagePath.Contains(",") ? imagePath.Split(',')[1] : throw new Exception("Invalid image data format.");
-
-                    string mimeType = "image/png"; // Default to PNG
-                    string extension = ".png"; // Default to .png
-
-                    if (imagePath.StartsWith("data:image/jpeg"))
-                    {
-                        mimeType = "image/jpeg";
-                        extension = ".jpg";
-                    }
-                    else if (imagePath.StartsWith("data:image/png"))
-                    {
-                        mimeType = "image/png";
-                        extension = ".png";
-                    }
-
-                    byte[] imageBytes = Convert.FromBase64String(base64Data);
-                    stream = new MemoryStream(imageBytes);
-
-                    imageToSave = new FormFile(stream, 0, imageBytes.Length, "file", $"uploadedImage{extension}")
-                    {
-                        Headers = new HeaderDictionary(),
-                        ContentType = mimeType
-                    };
-                }
-
-                if (imageToSave != null && imageToSave.Length > 0)
-                {
-                    string webRootPath = _hostEnvironment.WebRootPath;
-                    string newFileName = Guid.NewGuid().ToString();
-                    string uploads = Path.Combine(webRootPath, "images/client");
-
-                    if (!Directory.Exists(uploads))
-                    {
-                        Directory.CreateDirectory(uploads);
-                    }
-
-                    if (!string.IsNullOrEmpty(user.ImagePath))
-                    {
-                        string oldImage = Path.Combine(webRootPath, user.ImagePath);
-                        if (File.Exists(oldImage))
-                        {
-                            File.Delete(oldImage);
-                        }
-                    }
-
-                    string filePath = Path.Combine(uploads, $"{newFileName}{Path.GetExtension(imageToSave.FileName)}");
-
-                    // Save the image to the server
-                    using var fileStream = new FileStream(filePath, FileMode.Create);
-                    await imageToSave.CopyToAsync(fileStream);
-
-                    // Update the user's image path
-                    user.ImagePath = Path.Combine("images/client", $"{newFileName}{Path.GetExtension(imageToSave.FileName)}");
-                }
-
-                var updateResult = await _userManager.UpdateAsync(user);
-                if (!updateResult.Succeeded)
-                {
-                    throw new Exception($"Failed to update user: {string.Join(", ", updateResult.Errors.Select(e => e.Description))}");
-                }
-
-                return Unit.Value;
+                    Headers = new HeaderDictionary(),
+                    ContentType = mimeType
+                };
             }
             catch (Exception ex)
             {
-                // Log detailed information
-                Console.WriteLine($"An error occurred: {ex.Message}\n{ex.StackTrace}");
-                throw;
-            }
-            finally
-            {
-                // Dispose of the stream if it was created
-                stream?.Dispose();
+                _appLogger.LogError("Error converting base64 image data to FormFile. Exception: " + ex.Message);
+                return null; // Return null if conversion fails
             }
         }
 
+        private async Task<bool> SaveClientImageAsync(ApplicationUser user, IFormFile imageToSave)
+        {
+            try
+            {
+                if (imageToSave == null || imageToSave.Length == 0)
+                {
+                    return true; // No image to save, return success
+                }
+
+                string webRootPath = _hostEnvironment.WebRootPath;
+                string uploads = Path.Combine(webRootPath, "images/client");
+                string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
+                string newFilePath = Path.Combine(uploads, newFileName);
+
+                // Ensure the uploads directory exists
+                Directory.CreateDirectory(uploads);
+
+                // Delete old image if it exists
+                if (!string.IsNullOrEmpty(user.ImagePath))
+                {
+                    string oldImagePath = Path.Combine(webRootPath, user.ImagePath);
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
+                }
+
+                // Save the new image
+                using var fileStream = new FileStream(newFilePath, FileMode.Create);
+                await imageToSave.CopyToAsync(fileStream);
+
+                // Update the user's image path
+                user.ImagePath = Path.Combine("images/client", newFileName);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Error saving user image. Exception: " + ex.Message);
+                return false;
+            }
+        }
     }
 }
 

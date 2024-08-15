@@ -48,8 +48,8 @@ namespace API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Guid>> Post(CreateFormCommand createForm)
         {
-            var formId = await _mediator.Send(createForm);
-            return CreatedAtAction(nameof(Get), new { id = formId }, formId);
+            var result = await _mediator.Send(createForm);
+            return CreatedAtAction(nameof(Get), new { id = result.Value }, result.Value);
         }
 
         // PUT api/<FormController>/5

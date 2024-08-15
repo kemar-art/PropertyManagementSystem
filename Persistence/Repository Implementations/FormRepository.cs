@@ -7,6 +7,7 @@ using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.StaticDetails;
 using AutoMapper;
 using Domain;
+using Domain.BaseResponse;
 using Domain.Repository_Interface;
 using FluentValidation;
 using MediatR;
@@ -41,7 +42,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateFrom(CreateFormCommand createForm)
+    public async Task<BaseResult<Guid>> CreateFrom(CreateFormCommand createForm)
     {
         try
         {
@@ -50,10 +51,11 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             formToCreate.DateCreated = DateTime.Now;
 
             await CreateAsync(formToCreate);
-
             await _dbContext.SaveChangesAsync();
 
-            return formToCreate.Id;
+            _appLogger.LogInformation("Form created successfully with ID: {FormId}", formToCreate.Id);
+
+            return BaseResult<Guid>.Success(formToCreate.Id);
         }
         catch (DbUpdateException ex)
         {
@@ -65,8 +67,8 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             // Log the detailed error message
             _appLogger.LogError(errorMessage, ex);
 
-            // Return an empty Guid to indicate failure
-            return Guid.Empty;
+            // Return a failure result with an empty Guid
+            return BaseResult<Guid>.Failure("Failed to save changes for the form.");
         }
         catch (Exception ex)
         {
@@ -75,10 +77,11 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             // Log the generic error
             _appLogger.LogError(errorMessage, ex);
 
-            // Return an empty Guid to indicate failure
-            return Guid.Empty;
+            // Return a failure result with an empty Guid
+            return BaseResult<Guid>.Failure("An unexpected error occurred while creating the form.");
         }
     }
+
 
     public async Task<IEnumerable<Form>> GetAllForms()
     {
@@ -147,10 +150,12 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
     }
 
-    public async Task<Unit> UpdateForm(Form updateForm)
+    public async Task<BaseResult<Unit>> UpdateForm(Form updateForm)
     {
         try
         {
+            _appLogger.LogInformation("Attempting to update form with ID {FormId}.", updateForm.Id);
+
             // Attach the entity to the context and mark it as modified
             _dbContext.Entry(updateForm).State = EntityState.Modified;
 
@@ -159,18 +164,16 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
             await _dbContext.SaveChangesAsync();
 
-            // Return Unit.Value to indicate success
-            return Unit.Value;
+            _appLogger.LogInformation("Form with ID {FormId} updated successfully.", updateForm.Id);
+            return BaseResult<Unit>.Success(Unit.Value); // Indicate successful completion
         }
         catch (Exception ex)
         {
-            // Log the error
-            _appLogger.LogError("An error occurred while updating the form.", ex);
-
-            // Return Unit.Value to avoid crashing the application
-            return Unit.Value;
+            _appLogger.LogError("An error occurred while updating the form with ID {FormId}.", updateForm.Id, ex);
+            return BaseResult<Unit>.Failure($"An error occurred while updating the form: {ex.Message}");
         }
     }
+
 
 
 

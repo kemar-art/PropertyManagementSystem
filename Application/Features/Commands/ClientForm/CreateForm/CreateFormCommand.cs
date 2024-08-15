@@ -1,10 +1,11 @@
 ﻿using Domain;
+using Domain.BaseResponse;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Commands.ClientForm.CreateForm;
 
-public class CreateFormCommand : IRequest<Guid>
+public class CreateFormCommand : IRequest<BaseResult<Guid>>
 {
     public string FirstName { get; set; } = string.Empty;
 
