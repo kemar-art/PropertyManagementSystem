@@ -3779,9 +3779,6 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("appraiserNote")]
         public string AppraiserNote { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("dataCreated")]
-        public System.DateTimeOffset DataCreated { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("appraiser")]
         public ApplicationUser Appraiser { get; set; }
 
@@ -3797,49 +3794,45 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("message")]
         public string Message { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("valuationRequiredBy")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset ValuationRequiredBy { get; set; }
+        public System.DateTimeOffset DateCreated { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("dateFormWasFilledOut")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateAssigned")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset DateFormWasFilledOut { get; set; }
+        public System.DateTimeOffset DateAssigned { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromAssigned")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateAccepted")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset FromAssigned { get; set; }
+        public System.DateTimeOffset DateAccepted { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("fromAccepted")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateInProcess")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset FromAccepted { get; set; }
+        public System.DateTimeOffset DateInProcess { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("formInProcess")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateRejected")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset FormInProcess { get; set; }
+        public System.DateTimeOffset DateRejected { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("rejectedForm")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateCompleted")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset RejectedForm { get; set; }
+        public System.DateTimeOffset DateCompleted { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("markFromAsCompleted")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateReturnToAppraiser")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset MarkFromAsCompleted { get; set; }
+        public System.DateTimeOffset DateReturnToAppraiser { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("returnFromToAppraiser")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateSubmittedForApproval")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset ReturnFromToAppraiser { get; set; }
+        public System.DateTimeOffset DateSubmittedForApproval { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("submittedFormForApproval")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateCancelled")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset SubmittedFormForApproval { get; set; }
+        public System.DateTimeOffset DateCancelled { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("cancelledForm")]
+        [System.Text.Json.Serialization.JsonPropertyName("dateApproved")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset CancelledForm { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("approvedForm")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset ApprovedForm { get; set; }
+        public System.DateTimeOffset DateApproved { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
         public Region ClientRegion { get; set; }
@@ -4277,6 +4270,12 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset Datestarted { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
+        public Region ClientRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
+        public System.Guid? ClientRegionId { get; set; }
 
     }
 

@@ -8,6 +8,7 @@ using Application.StaticDetails;
 using AutoMapper;
 using Domain;
 using Domain.Repository_Interface;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Persistence.Repository_Implementations;
@@ -41,28 +43,45 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
 
     public async Task<Guid> CreateFrom(CreateFormCommand createForm)
     {
-        var formToCreate = _mapper.Map<Form>(createForm);
-        formToCreate.Status = FormStatus.StatusSubmitted;
-        formToCreate.DataCreated = DateTime.Now;
-
-        await CreateAsync(formToCreate);
-
         try
         {
+            var formToCreate = _mapper.Map<Form>(createForm);
+            formToCreate.Status = FormStatus.StatusSubmitted;
+            formToCreate.DateCreated = DateTime.Now;
+
+            await CreateAsync(formToCreate);
+
             await _dbContext.SaveChangesAsync();
+
+            return formToCreate.Id;
         }
         catch (DbUpdateException ex)
         {
-            var innerException = ex.InnerException?.Message;
-            // Log the inner exception
-            _appLogger.LogError(innerException);
+            var innerExceptionMessage = ex.InnerException?.Message;
+            var errorMessage = $"An error occurred while saving changes for the form. " +
+                               $"Inner Exception: {innerExceptionMessage}. " +
+                               $"Form Details: {JsonSerializer.Serialize(createForm)}";
 
-            // Optionally, you can rethrow the exception or handle it accordingly
-            throw new Exception("An error occurred while saving the entity changes. See the inner exception for details.", ex);
+            // Log the detailed error message
+            _appLogger.LogError(errorMessage, ex);
+
+            // Return an empty Guid to indicate failure
+            return Guid.Empty;
         }
+        catch (Exception ex)
+        {
+            var errorMessage = $"An unexpected error occurred while creating the form. Exception: {ex.Message}";
 
-        return formToCreate.Id;
+            // Log the generic error
+            _appLogger.LogError(errorMessage, ex);
+
+            // Return an empty Guid to indicate failure
+            return Guid.Empty;
+        }
     }
+
+
+
 
 
     public async Task<IEnumerable<Form>> GetAllFroms()

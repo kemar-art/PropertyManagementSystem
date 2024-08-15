@@ -50,65 +50,57 @@ public class Form
 
     public string AppraiserNote { get; set; } = string.Empty;
 
-    public DateTime DataCreated { get; set; }
-
- 
     public ApplicationUser? Appraiser { get; set; }
     public string? AppraiserId { get; set; }
-
 
     public ApplicationUser? JobAssigner { get; set; }
     public string? JobAssignerId { get; set; }
 
     public string? Message { get; set; }
 
-    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-    [DataType(DataType.Date)]
-    public DateTime ValuationRequiredBy { get; set; }
-
     //Date the client submitted the form
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime DateFormWasFilledOut { get; set; }
+    public DateTime DateCreated { get; set; }
 
     //This is the date the form was assigned to an Evaluator
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime FromAssigned { get; set; }
+    public DateTime DateAssigned { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
     //The date when Evaluator accepted form
-    public DateTime FromAccepted { get; set; }
+    public DateTime DateAccepted { get; set; }
 
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime FormInProcess { get; set; }
+    public DateTime DateInProcess { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime RejectedForm { get; set; }
+    public DateTime DateRejected { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime MarkFromAsCompleted { get; set; }
+    public DateTime DateCompleted { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime ReturnFromToAppraiser { get; set; }
+    public DateTime DateReturnToAppraiser { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime SubmittedFormForApproval { get; set; }
+    public DateTime DateSubmittedForApproval { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime CancelledForm { get; set; }
+    public DateTime DateCancelled { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
     [DataType(DataType.Date)]
-    public DateTime ApprovedForm { get; set; }
+    public DateTime DateApproved { get; set; }
 
     public Region? ClientRegion { get; set; }
     public Guid? ClientRegionId { get; set; }

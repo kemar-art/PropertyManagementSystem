@@ -218,7 +218,6 @@ namespace Persistence.Repository_Implementations
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
             applicationUser.DateRegistered = user.Datestarted;
-            applicationUser.ClientRegionId = user.ClientRegionId;
             applicationUser.Role = Roles.Administrator;
 
 
@@ -289,7 +288,7 @@ namespace Persistence.Repository_Implementations
                     _appLogger.LogInformation($"Appraiser {appraiserId} is the assigned appraiser for form {formId}. Marking form as complete...");
 
                     formFromDb.Status = FormStatus.StatusCompleted;
-                    formFromDb.MarkFromAsCompleted = DateTime.Now;
+                    formFromDb.DateCompleted = DateTime.Now;
 
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();
@@ -353,7 +352,7 @@ namespace Persistence.Repository_Implementations
                     _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {returnFormToAppraiser}. Returning form for completion...");
 
                     formFromDb.Status = FormStatus.StatusReturnToAppraiser;
-                    formFromDb.ReturnFromToAppraiser = DateTime.Now;
+                    formFromDb.DateReturnToAppraiser = DateTime.Now;
 
                     _dbContext.Update(formFromDb);
                     await _dbContext.SaveChangesAsync();

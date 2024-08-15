@@ -52,7 +52,7 @@ namespace Persistence.Repository_Implementations
                 {
                     _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {acceptFromId}. Accepting form...");
 
-                    formFromDb.FromAccepted = DateTime.Now;
+                    formFromDb.DateAccepted = DateTime.Now;
                     formFromDb.Status = FormStatus.StatusAccepted;
 
                     _dbContext.Update(formFromDb);
@@ -144,7 +144,7 @@ namespace Persistence.Repository_Implementations
                 {
                     _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {inProcessFromId}. Marking form as in process...");
 
-                    formFromDb.FormInProcess = DateTime.Now;
+                    formFromDb.DateInProcess = DateTime.Now;
                     formFromDb.Status = FormStatus.StatusInProcess;
 
                     _dbContext.Update(formFromDb);
@@ -202,7 +202,7 @@ namespace Persistence.Repository_Implementations
                 {
                     _appLogger.LogInformation($"User {userId} is the assigned appraiser for form {rejectFromId}. Rejecting form...");
 
-                    formFromDb.RejectedForm = DateTime.Now;
+                    formFromDb.DateRejected = DateTime.Now;
                     formFromDb.Status = FormStatus.StatusRejected;
 
                     _dbContext.Update(formFromDb);
@@ -274,7 +274,7 @@ namespace Persistence.Repository_Implementations
                     }
 
                     formFromDb.Status = FormStatus.StatusSubmitForApproval;
-                    formFromDb.SubmittedFormForApproval = DateTime.Now;
+                    formFromDb.DateSubmittedForApproval = DateTime.Now;
                     formFromDb.FrontOfProperyImageURL = await SavePropertyImage(frontImage, uploads);
                     formFromDb.LeftSideOfPropertImageURL = await SavePropertyImage(leftImage, uploads);
                     formFromDb.RightSideOfPropertyImageURL = await SavePropertyImage(rightImage, uploads);
