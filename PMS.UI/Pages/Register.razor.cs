@@ -4,6 +4,7 @@ using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Auth;
 using PMS.UI.Models.Client;
+using PMS.UI.Services.Base;
 using System.Threading.Tasks;
 
 namespace PMS.UI.Pages
@@ -15,20 +16,24 @@ namespace PMS.UI.Pages
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
 
+        [Inject]
+        IRegionRepositoey _RegionRepositoey { get; set; }
+
         public string Message { get; set; } = string.Empty;
         public bool EmailExists { get; set; }
-        public bool IsEmailDisabled { get; set; } = true;
+        public bool IsEmailDisabled { get; set; } = false;
 
         [Inject]
         private IAuthenticationService _AuthenticationService { get; set; }
 
+        IEnumerable<Region> Regions { get; set; } = [];
+
         private bool IsLoading { get; set; } = true;
 
-
-
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
+            Regions = await _RegionRepositoey.GetAllRegion() ?? [];
             var uri = _NavigationManager.ToAbsoluteUri(_NavigationManager.Uri);
             var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
@@ -43,13 +48,14 @@ namespace PMS.UI.Pages
             if (queryParams.TryGetValue("email", out var email))
             {
                 _registerModel.Email = email;
-                IsEmailDisabled = true;
+                IsEmailDisabled = true; // Disable the field if email is present initially
             }
             if (queryParams.TryGetValue("regionId", out var clientRejoinId))
             {
                 if (Guid.TryParse(clientRejoinId, out var regionGuid))
                 {
                     _registerModel.ClientRegionId = regionGuid;
+                    IsEmailDisabled = true;
                 }
             }
             if (queryParams.TryGetValue("phoneNumber", out var phoneNumber))
@@ -64,6 +70,42 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
+        
+
+       
+
+        protected async Task OnValidSubmit()
+        {
+            await CheckEmailExistence();
+
+            if (EmailExists)
+            {
+                Message = "Email already exists.";
+                return;
+            }
+
+            IsLoading = true;
+
+            var result = await _AuthenticationService.IsRegister(_registerModel);
+
+            if (result)
+            {
+                _NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                Message = "Something went wrong, please try again.";
+            }
+            IsLoading = false;
+        }
+
+        private async Task CheckEmailExistence()
+        {
+            if (!string.IsNullOrEmpty(_registerModel.Email))
+            {
+                EmailExists = await _AuthenticationService.IsEmailRegisteredExist(_registerModel.Email);
+            }
+        }
 
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -73,8 +115,6 @@ namespace PMS.UI.Pages
             {
                 _passwordInput = InputType.Text;
                 _passwordInputIcon = Icons.Material.Filled.Visibility;
-
-                
             }
             else
             {
@@ -89,53 +129,17 @@ namespace PMS.UI.Pages
         {
             if (_passwordConfirmationInput == InputType.Password)
             {
-
                 _passwordConfirmationInput = InputType.Text;
                 _passwordConfirmationInputIcon = Icons.Material.Filled.Visibility;
             }
             else
             {
-
                 _passwordConfirmationInput = InputType.Password;
                 _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
             }
         }
-
-        private async Task CheckEmailExistence()
-        {
-            if (!string.IsNullOrEmpty(_registerModel.Email))
-            {
-                EmailExists = await _AuthenticationService.IsEmailRegisteredExist(_registerModel.Email);
-            }
-        }
-
-        protected async Task OnValidSubmit()
-        {
-            await CheckEmailExistence();
-
-            if (EmailExists)
-            {
-                Message = "Email already exists.";
-                return;
-            }
-
-            IsLoading = true;
-
-            //_registerModel.ClientRegionId = _registerModel.ClientRegionId;
-
-            var result = await _AuthenticationService.IsRegister(_registerModel);
-
-            if (result)
-            {
-                _NavigationManager.NavigateTo("/login");
-            }
-            else
-            {
-                Message = "Something went wrong, please try again.";
-            }
-            IsLoading = false;
-        }
     }
+
 
 
 

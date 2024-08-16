@@ -24,8 +24,6 @@
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-4">
                     <div class="form-container">
-                       @*  <MudPaper Class="pa-4">
-                        </MudPaper> *@
                         <EditForm Model="@_registerModel" OnValidSubmit="OnValidSubmit">
                             <DataAnnotationsValidator />
                             <MudGrid>
@@ -50,7 +48,20 @@
                                                     <MudRadio Value="UserGender.Female">Female</MudRadio>
                                                 </MudRadioGroup>
                                             </MudItem>
-                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_registerModel.DateOfBirth" Rounded="true" For="@(() => _registerModel.DateOfBirth)" />
+                                            <MudItem xs="12">
+                                                <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_registerModel.DateOfBirth" Rounded="true" For="@(() => _registerModel.DateOfBirth)" />
+                                            </MudItem>
+
+                                            <MudItem xs="12" Class="mt-2">
+                                                <MudSelect T="Guid" Label="Parish" @bind-Value="_registerModel.ClientRegionId" Disabled="@IsEmailDisabled">
+                                                    <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                    @foreach (var region in Regions)
+                                                    {
+                                                        <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                                <ValidationMessage For="@(() => _registerModel.ClientRegionId)" />
+                                            </MudItem>
                                             <MudTextField Label="Password" HelperText="Choose a strong password"
                                                           Class="mt-3" @bind-Value="_registerModel.Password"
                                                           Adornment="Adornment.End" InputType="@_passwordInput"
@@ -77,6 +88,7 @@
                 </div>
             </div>
         </div>
+
     }
     
     <Footer />
