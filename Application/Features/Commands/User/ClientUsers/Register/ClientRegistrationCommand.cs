@@ -1,6 +1,6 @@
 ﻿using Application.AuthSettings;
 using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;

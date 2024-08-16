@@ -1,7 +1,6 @@
 ﻿using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
 using Application.Features.Commands.User.ClientUsers.Register;
-using Domain.BaseResponse;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Components.Forms;

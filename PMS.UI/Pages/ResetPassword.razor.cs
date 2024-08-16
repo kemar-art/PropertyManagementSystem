@@ -13,6 +13,9 @@ namespace PMS.UI.Pages
     public partial class ResetPassword
     {
         [Inject]
+        ISnackbar _Snackbar { get; set; }
+
+        [Inject]
         NavigationManager _NavigationManager { get; set; }
 
         [Inject]
@@ -21,7 +24,7 @@ namespace PMS.UI.Pages
         [Inject]
         private AuthenticationStateProvider _AuthenticationStateProvider { get; set; }
 
-        public NoneLoginResetPassword _noneLoginResetPassword { get; set; } = new NoneLoginResetPassword();
+        public NoneLoginResetPassword _noneLoginModel { get; set; } = new NoneLoginResetPassword();
 
         public string UserId { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;
@@ -33,27 +36,26 @@ namespace PMS.UI.Pages
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
-            _noneLoginResetPassword = new NoneLoginResetPassword();
+            _noneLoginModel = new NoneLoginResetPassword();
             // Extract query parameters
             var uri = _NavigationManager.ToAbsoluteUri(_NavigationManager.Uri);
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("userId", out var userId))
             {
-                Console.WriteLine($"UserId found: {userId}");
-                _noneLoginResetPassword.Id = userId;
+                _noneLoginModel.Id = userId;
             }
             else
             {
-                Console.WriteLine("UserId not found in the query parameters.");
+                _Snackbar.Add("Something went wrong. Please try again later.", Severity.Error);
+
             }
 
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
             {
-                Console.WriteLine($"ResetToken found: {code}");
-                _noneLoginResetPassword.ResetToken = code;
+                _noneLoginModel.ResetToken = code;
             }
             else
             {
-                Console.WriteLine("ResetToken not found in the query parameters.");
+                _Snackbar.Add("Something went wrong. Please try again later.", Severity.Error); ;
             }
 
 
@@ -61,9 +63,37 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
+        protected async Task OnValidSubmit()
+        {
+            IsLoading = true;
+
+
+            NoneLoginResetPassword resetPassword = new()
+            {
+                Id = _noneLoginModel.Id,
+                Email = _noneLoginModel.Email,
+                NewPassword = _noneLoginModel.NewPassword,
+                ResetToken = _noneLoginModel.ResetToken
+            };
+
+            // Make the API call
+            var result = await _AuthenticationService.PasswordReset(resetPassword);
+            if (result.Exists)
+            {
+                _Snackbar.Add("Password reset successfully.", Severity.Success);
+                _NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                //Message = result.Message;
+                _Snackbar.Add($"{result.Message}", Severity.Error);
+            }
+
+            IsLoading = false;
+        }
+
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-
         private void TogglePasswordVisibility()
         {
             if (_passwordInput == InputType.Password)
@@ -80,7 +110,6 @@ namespace PMS.UI.Pages
 
         private InputType _passwordConfirmationInput = InputType.Password;
         private string _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
-
         private void TogglePasswordConfirmationVisibility()
         {
             if (_passwordConfirmationInput == InputType.Password)
@@ -93,34 +122,6 @@ namespace PMS.UI.Pages
                 _passwordConfirmationInput = InputType.Password;
                 _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
             }
-        }
-
-        protected async Task OnValidSubmit()
-        {
-            IsLoading = true;
-
-
-            NoneLoginResetPassword resetPassword = new()
-            {
-                Id = _noneLoginResetPassword.Id,
-                Email = _noneLoginResetPassword.Email,
-                NewPassword = _noneLoginResetPassword.NewPassword,
-                ResetToken = _noneLoginResetPassword.ResetToken
-            };
-
-            // Make the API call
-            var result = await _AuthenticationService.PasswordReset(resetPassword);
-            if (result.Exists)
-            {
-                Message = "Password reset successfully.";
-                _NavigationManager.NavigateTo("/login");
-            }
-            else
-            {
-                Message = result.Message;
-            }
-
-            IsLoading = false;
         }
     }
 

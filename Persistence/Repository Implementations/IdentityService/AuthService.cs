@@ -10,7 +10,6 @@ using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPas
 using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Application.IdentityModels;
 using Domain;
-using Domain.BaseResponse;
 using Domain.Common;
 using FluentValidation;
 using MediatR;
@@ -116,7 +115,6 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-
         public async Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand loginUser)
         {
             // Log the start of the method
@@ -168,14 +166,10 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-
-
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
         {
-            // Retrieve claims associated with the user from the user manager
+            // Retrieve user claims and roles from the user manager
             var userClaims = await _userManager.GetClaimsAsync(user);
-
-            // Retrieve roles associated with the user from the user manager
             var roles = await _userManager.GetRolesAsync(user);
 
             // Convert roles into claims
@@ -193,23 +187,23 @@ namespace Persistence.Repository_Implementations
             .Union(roleClaims); // Add role claims
 
             // Create a symmetric security key from the JWT settings
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Value.Key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Value.Key));
 
             // Define the signing credentials using the security key and HMAC-SHA256 algorithm
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512);
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
 
             // Create the JWT token with the specified issuer, audience, claims, expiration, and signing credentials
-            var jwtSecurityToken = new JwtSecurityToken
+            var jwtToken = new JwtSecurityToken
             (
-               issuer: _jwtSettings.Value.Issuer, // Token issuer
-               audience: _jwtSettings.Value.Audience, // Token audience
+               issuer: _jwtSettings.Value.Issuer, 
+               audience: _jwtSettings.Value.Audience, 
                claims: claims, // Claims to include in the token
-               expires: DateTime.Now.AddMinutes(_jwtSettings.Value.DurationInMinutes), // Token expiration time
-               signingCredentials: signingCredentials // Signing credentials
+               expires: DateTime.Now.AddMinutes(_jwtSettings.Value.DurationInMinutes), 
+               signingCredentials: signingCredentials 
             );
 
             // Return the generated JWT token
-            return jwtSecurityToken;
+            return jwtToken;
         }
 
         public async Task<BaseResult<bool>> IsEmailRegisteredExist(string email)
@@ -237,41 +231,54 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-
         public async Task<AppResponse> ForgetPassword(string email)
         {
-            if (!string.IsNullOrEmpty(email))
+            // Find the user by their email
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
             {
-                var user = await _userManager.FindByEmailAsync(email);
-                if (user != null)
-                {
-                    var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-                    var callbackUrl = $"{_clientAppUrl}/reset-password?userId={user.Id}&code={confirmationToken}";
+                // Log that no user was found with the provided email
+                _appLogger.LogWarning("ForgetPassword request for non-existing email: {Email}", email);
 
-                    // Send email logic here
-                    await _emailSender.ExternalPasswordResetEmailAsync(user.Email, callbackUrl);
-                    //HtmlEncoder.Default.Encode(callbackUrl)
-                    return new AppResponse
-                    {
-                        Exists = true,
-                        Message = "A password reset link has been sent to your email."
-                    };
-                }
+                return new AppResponse
+                {
+                    Exists = false,
+                    Message = "A password reset link was sent to your email."
+                };
             }
+
+            // Generate a password reset token
+            var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+            // Construct the callback URL for resetting the password
+            var callbackUrl = $"{_clientAppUrl}/reset-password?userId={user.Id}&code={encodedToken}";
+
+            // Send the password reset email
+            await _emailSender.ExternalPasswordResetEmailAsync(user.Email, callbackUrl);
+
+            // Log the successful sending of the reset email
+            _appLogger.LogInformation("Password reset email sent to: {Email}", email);
 
             return new AppResponse
             {
-                Exists = false,
-                Message = "A password reset link has been sent to your email."
+                Exists = true,
+                Message = "A password reset link was sent to your email."
             };
         }
 
         public async Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
         {
-            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            // Log the start of the password reset process
+            _appLogger.LogInformation("Attempting to reset password for user ID: {UserId}", resetPassword.Id);
+
+            // Find the user by their ID
+            var user = await _userManager.FindByIdAsync(resetPassword.Id);
             if (user == null)
             {
+                // Log that the user was not found
+                _appLogger.LogWarning("User not found with ID: {UserId}", resetPassword.Id);
+
                 return new AppResponse
                 {
                     Exists = false,
@@ -279,11 +286,29 @@ namespace Persistence.Repository_Implementations
                 };
             }
 
-            var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPassword.ResetToken));
-
-            var resutlt = await _userManager.ResetPasswordAsync(user, token, resetPassword.Password);
-            if (resutlt.Succeeded)
+            // Verify the email
+            if (!string.Equals(user.Email, resetPassword.Email, StringComparison.OrdinalIgnoreCase))
             {
+                // Log that the email verification failed
+                _appLogger.LogWarning("Email verification failed for user ID: {UserId}, provided email: {Email}", resetPassword.Id, resetPassword.Email);
+
+                return new AppResponse
+                {
+                    Exists = false,
+                    Message = "User not valid"
+                };
+            }
+
+            // Decode reset token
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetPassword.ResetToken));
+
+            // Attempt to reset the password
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, resetPassword.Password);
+            if (result.Succeeded)
+            {
+                // Log the successful password reset
+                _appLogger.LogInformation("Password reset successful for user ID: {UserId}", resetPassword.Id);
+
                 return new AppResponse
                 {
                     Exists = true,
@@ -291,18 +316,29 @@ namespace Persistence.Repository_Implementations
                 };
             }
 
+            // Log that the password reset failed
+            _appLogger.LogError("Password reset failed for user ID: {UserId}", resetPassword.Id);
+
+            // Handle failure
             return new AppResponse
             {
                 Exists = false,
-                Message = "User not valid"
+                Message = "Password reset failed"
             };
         }
 
         public async Task<AppResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword)
         {
+            // Log the start of the password reset process
+            _appLogger.LogInformation("Attempting to reset password for user ID: {UserId}", resetPassword.Id);
+
+            // Find the user by their ID
             var user = await _userManager.FindByIdAsync(resetPassword.Id);
             if (user == null)
             {
+                // Log that the user was not found
+                _appLogger.LogWarning("User not found with ID: {UserId}", resetPassword.Id);
+
                 return new AppResponse
                 {
                     Exists = false,
@@ -310,38 +346,51 @@ namespace Persistence.Repository_Implementations
                 };
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, resetPassword.CurrentPassword, false);
-            if (result.Succeeded)
+            // Check if the current password is correct
+            var passwordCheckResult = await _signInManager.CheckPasswordSignInAsync(user, resetPassword.CurrentPassword, false);
+            if (!passwordCheckResult.Succeeded)
             {
-                var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                // Log that the current password does not match
+                _appLogger.LogWarning("Current password does not match for user ID: {UserId}", resetPassword.Id);
 
-                var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(confirmationToken));
-
-                var resutlt = await _userManager.ResetPasswordAsync(user, token, resetPassword.NewPassword);
-                if (resutlt.Succeeded)
-                {
-                    return new AppResponse
-                    {
-                        Exists = true,
-                        Message = "Your password has been reset"
-                    };
-                }
-            }
-            else
-            {
                 return new AppResponse
                 {
                     Exists = true,
-                    Message = "Currnt password does not match"
+                    Message = "Current password does not match"
                 };
             }
 
+            // Generate a password reset token
+            var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+            // Decode the token (This step might not be necessary if the token is directly usable)
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(confirmationToken));
+
+            // Attempt to reset the password
+            var resetResult = await _userManager.ResetPasswordAsync(user, decodedToken, resetPassword.NewPassword);
+            if (resetResult.Succeeded)
+            {
+                // Log the successful password reset
+                _appLogger.LogInformation("Password reset successful for user ID: {UserId}", resetPassword.Id);
+
+                return new AppResponse
+                {
+                    Exists = true,
+                    Message = "Your password has been reset"
+                };
+            }
+
+            // Log the failure to reset the password
+            _appLogger.LogError("Password reset failed for user ID: {UserId}", resetPassword.Id);
+
+            // Return a failure response
             return new AppResponse
             {
                 Exists = false,
-                Message = "User not valid"
+                Message = "Password reset failed"
             };
         }
+
     }
 }

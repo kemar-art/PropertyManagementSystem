@@ -13,6 +13,9 @@ namespace PMS.UI.Pages
     public partial class UpdatePassword
     {
         [Inject]
+        ISnackbar _Snackbar { get; set; }
+
+        [Inject]
         NavigationManager _NavigationManager { get; set; }
 
         [Inject]
@@ -53,45 +56,6 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
-
-        private InputType _currentPasswordInput = InputType.Password;
-
-        private InputType _passwordInput = InputType.Password;
-        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-
-        private void TogglePasswordVisibility()
-        {
-            if (_passwordInput == InputType.Password)
-            {
-                _passwordInput = InputType.Text;
-                _passwordInputIcon = Icons.Material.Filled.Visibility;
-            }
-            else
-            {
-                _passwordInput = InputType.Password;
-                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-            }
-        }
-
-        private InputType _passwordConfirmationInput = InputType.Password;
-        private string _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
-
-        private void TogglePasswordConfirmationVisibility()
-        {
-            if (_passwordConfirmationInput == InputType.Password)
-            {
-                _passwordConfirmationInput = InputType.Text;
-                _passwordConfirmationInputIcon = Icons.Material.Filled.Visibility;
-            }
-            else
-            {
-                _passwordConfirmationInput = InputType.Password;
-                _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
-            }
-        }
-
-
-
         protected async Task OnValidSubmit()
         {
             IsLoading = true;
@@ -108,15 +72,50 @@ namespace PMS.UI.Pages
             var result = await _AuthenticationService.UpdateResetPassword(loginUser);
             if (result.Exists)
             {
-                Message = "Password reset successfully.";
+                _Snackbar.Add("Password reset successfully.", Severity.Success);
                 _NavigationManager.NavigateTo("/profile");
             }
             else
             {
-                Message = result.Message;
+                //Message = result.Message;
+                _Snackbar.Add($"{result.Message}", Severity.Error);
             }
 
             IsLoading = false;
+        }
+
+        private InputType _currentPasswordInput = InputType.Password;
+
+        private InputType _passwordInput = InputType.Password;
+        private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+        private void TogglePasswordVisibility()
+        {
+            if (_passwordInput == InputType.Password)
+            {
+                _passwordInput = InputType.Text;
+                _passwordInputIcon = Icons.Material.Filled.Visibility;
+            }
+            else
+            {
+                _passwordInput = InputType.Password;
+                _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
+        }
+
+        private InputType _passwordConfirmationInput = InputType.Password;
+        private string _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
+        private void TogglePasswordConfirmationVisibility()
+        {
+            if (_passwordConfirmationInput == InputType.Password)
+            {
+                _passwordConfirmationInput = InputType.Text;
+                _passwordConfirmationInputIcon = Icons.Material.Filled.Visibility;
+            }
+            else
+            {
+                _passwordConfirmationInput = InputType.Password;
+                _passwordConfirmationInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
         }
     }
 

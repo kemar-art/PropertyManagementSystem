@@ -4,7 +4,7 @@ using Application.Contracts.ILogging;
 using Application.Exceptions;
 using AutoMapper;
 using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using FluentValidation;
 using MediatR;
 using System;

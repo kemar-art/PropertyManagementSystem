@@ -13,9 +13,14 @@ namespace PMS.UI.Pages
     public partial class Login
     {
         public LoginVM _loginModel { get; set; }
+        public string Message { get; set; }
+        private bool IsLoading { get; set; } = true;
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        ISnackbar _Snackbar { get; set; }
 
         [Inject]
         private ILocalStorageService _localStorage { get; set; }
@@ -24,10 +29,7 @@ namespace PMS.UI.Pages
         private ISessionStorageService _sessionStorage { get; set; }
 
         [Inject]
-        private IAuthenticationService AuthenticationService { get; set; }
-
-        public string Message { get; set; }
-        private bool IsLoading { get; set; } = true;
+        private IAuthenticationService _AuthenticationService { get; set; }
 
         protected override void OnInitialized()
         {
@@ -36,10 +38,27 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
+        protected async Task HandleLogin()
+        {
+            IsLoading = true;
+
+            var isAuthenticated = await _AuthenticationService.IsAuthenticated(_loginModel);
+            if (isAuthenticated)
+            {
+                // Navigate to the home page or any other page
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                _Snackbar.Add("Username/Password combination unknown", Severity.Error);
+            }
+
+            IsLoading = false;
+        }
+
         private bool _passwordVisibility;
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-
         private void TogglePasswordVisibility()
         {
             if (_passwordVisibility)
@@ -54,24 +73,6 @@ namespace PMS.UI.Pages
                 _passwordInputIcon = Icons.Material.Filled.Visibility;
                 _passwordInput = InputType.Text;
             }
-        }
-
-        protected async Task HandleLogin()
-        {
-            IsLoading = true;
-
-            var isAuthenticated = await AuthenticationService.IsAuthenticated(_loginModel);
-            if (isAuthenticated)
-            {
-                // Navigate to the home page or any other page
-                NavigationManager.NavigateTo("/");
-            }
-            else
-            {
-                Message = "Username/password combination unknown";
-            }
-
-            IsLoading = false;
         }
     }
 

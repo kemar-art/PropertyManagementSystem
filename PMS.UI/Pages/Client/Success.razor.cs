@@ -10,6 +10,13 @@ namespace PMS.UI.Pages.Client
 {
     public partial class Success
     {
+        public FormVM _successModel { get; set; } = new();
+
+        public ClaimsPrincipal UserAuthstate { get; set; } = new();
+
+        [Parameter]
+        public Guid FormId { get; set; }
+
         [Inject]
         private IFormRepository _FormRepository { get; set; } 
 
@@ -21,15 +28,6 @@ namespace PMS.UI.Pages.Client
 
         [Inject]
         private IMapper _Mapper { get; set; }
-
-        public FormVM _successModel { get; set; } = new();
-
-        public ClaimsPrincipal UserAuthstate { get; set; } = new();
-
-        
-
-        [Parameter]
-        public Guid FormId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

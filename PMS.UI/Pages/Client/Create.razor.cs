@@ -16,6 +16,23 @@ namespace PMS.UI.Pages.Client
 {
     public partial class Create
     {
+        private bool IsLoading { get; set; } = true;
+        private int currentStep = 1;
+        private bool _showValidation = false;
+
+        private ValidationMessageStore _validationMessageStore;
+        private EditContext EditContext;
+
+        public FormVM _createModel { get; set; } = new();
+
+        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+
+        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
+
+        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+        
+        IEnumerable<Region> Regions { get; set; } = [];
+        
         [Inject]
         NavigationManager _NavigationManager { get; set; }
 
@@ -27,19 +44,6 @@ namespace PMS.UI.Pages.Client
 
         [Inject]
         ICheckBoxRepository _CheckBoxRepository { get; set; }
-
-        private bool IsLoading { get; set; } = true;
-        private int currentStep = 1;
-
-        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
-        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
-        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
-        public FormVM _createModel { get; set; } = new();
-        IEnumerable<Region> Regions { get; set; } = [];
-
-
-        private ValidationMessageStore _validationMessageStore;
-        private EditContext EditContext;
 
         protected override async Task OnInitializedAsync()
         {
@@ -88,6 +92,34 @@ namespace PMS.UI.Pages.Client
             }
         }
 
+        private async Task OnValidSubmit()
+        {
+            // Populate the selected IDs as comma-separated strings
+            _createModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
+            _createModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+            _createModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+
+            try
+            {
+                var response = await _FormRepository.CreateForm(_createModel);
+
+                if (response.Success)
+                {
+                    _NavigationManager.NavigateTo($"/success/{response.Data}");
+                }
+                else
+                {
+                    // Handle error
+                    Console.WriteLine("Error: " + response.ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected errors
+                Console.WriteLine("Unexpected error: " + ex.Message);
+            }
+        }
+
         private bool ValidateServiceRequestCheckBoxes()
         {
             // Check if at least one checkbox is checked
@@ -110,7 +142,6 @@ namespace PMS.UI.Pages.Client
             EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.TypeOfPropertyValidationMessage)));
         }
 
-
         private bool ValidatePurposeOfEvaluationCheckBoxes()
         {
             // Check if at least one checkbox is checked
@@ -121,10 +152,6 @@ namespace PMS.UI.Pages.Client
             _createModel.PurposeOfEvaluationValidationMessage = message;
             EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.PurposeOfEvaluationValidationMessage)));
         }
-
-
-
-        private bool _showValidation = false;
 
         private async Task NextStep()
         {
@@ -238,50 +265,12 @@ namespace PMS.UI.Pages.Client
             }
         }
 
-
-
-
         private void PreviousStep()
         {
             if (currentStep > 1)
             {
                 currentStep--;
             }
-        }
-
-        private async Task HandleValidSubmit()
-        {
-            // Populate the selected IDs as comma-separated strings
-            _createModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
-            _createModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
-            _createModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
-
-            try
-            {
-                var response = await _FormRepository.CreateForm(_createModel);
-
-                if (response.Success)
-                {
-                    _NavigationManager.NavigateTo($"/success/{response.Data}");
-                }
-                else
-                {
-                    // Handle error
-                    Console.WriteLine("Error: " + response.ErrorMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle unexpected errors
-                Console.WriteLine("Unexpected error: " + ex.Message);
-            }
-        }
-
-        private Task HandleInvalidSubmit()
-        {
-            // Handle invalid form submission
-            Console.WriteLine("Form is invalid");
-            return Task.CompletedTask;
         }
     }
 

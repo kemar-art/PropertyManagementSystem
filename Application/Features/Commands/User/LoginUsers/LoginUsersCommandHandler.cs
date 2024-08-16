@@ -1,7 +1,7 @@
 ﻿using Application.AuthSettings;
 using Application.Contracts.Identity;
 using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;

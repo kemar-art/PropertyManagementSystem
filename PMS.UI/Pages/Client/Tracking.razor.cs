@@ -15,8 +15,8 @@ namespace PMS.UI.Pages.Client
 {
     public partial class Tracking
     {
-        [Inject]
-        IFormRepository _FormRepository { get; set; }
+        string selectedStep = string.Empty;
+
         private bool IsLoading { get; set; } = true;
 
         public string SearchString { get; set; } = string.Empty;
@@ -25,6 +25,9 @@ namespace PMS.UI.Pages.Client
 
         public FormVM _trackingModel { get; set; }
 
+        [Inject]
+        IFormRepository _FormRepository { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
@@ -32,14 +35,6 @@ namespace PMS.UI.Pages.Client
             _trackingModel = new FormVM();
 
             IsLoading = false;
-        }
-
-        string selectedStep = string.Empty;
-
-        private bool NavigationAllowed(StepNavigationContext context)
-        {
-            // Only allow navigation to the current step based on FormVM.Status
-            return context.NextStepName == _trackingModel.Status;
         }
 
         private async Task OnValidSubmit()
@@ -96,6 +91,12 @@ namespace PMS.UI.Pages.Client
             selectedStep = formStatus;
 
             return Task.CompletedTask;
+        }
+
+        private bool NavigationAllowed(StepNavigationContext context)
+        {
+            // Only allow navigation to the current step based on FormVM.Status
+            return context.NextStepName == _trackingModel.Status;
         }
     }
 

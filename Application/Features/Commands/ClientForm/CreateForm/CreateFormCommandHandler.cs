@@ -3,7 +3,7 @@ using Application.Exceptions;
 using Application.StaticDetails;
 using AutoMapper;
 using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using Domain.Repository_Interface;
 using MediatR;
 

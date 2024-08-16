@@ -3,7 +3,6 @@ using Application.Features.Commands.User.ClientUsers.Register;
 using Application.Features.Commands.User.LoginUsers;
 using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPasswordReset;
 using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
-using Domain.BaseResponse;
 using Domain.Common;
 using MediatR;
 using System;

@@ -1,5 +1,5 @@
 ﻿using Application.AuthSettings;
-using Domain.BaseResponse;
+using Domain.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;

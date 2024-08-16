@@ -16,11 +16,23 @@ namespace PMS.UI.Pages.Client
 {
     public partial class Profile
     {
+        private bool IsLoading { get; set; } = true;
+
+        private bool IsEditMode { get; set; } = false;
+
+        public string UserId { get; set; } = string.Empty;
+
+        private IBrowserFile file;
+        private string fileName;
+        private long fileSize;
+
+        IEnumerable<Region> Regions { get; set; }
+
         public ClientVM _profileModel { get; set; } = new();
 
         private EditContext _editContext;
 
-        public string UserId { get; set; } = string.Empty;
+        private ValidationMessageStore _validationMessageStore;
 
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
@@ -34,48 +46,8 @@ namespace PMS.UI.Pages.Client
         [Inject]
         IRegionRepositoey _RegionRepositoey { get; set; }
 
-        private bool IsLoading { get; set; } = true;
-        private bool IsEditMode { get; set; } = false;
-
-        private ValidationMessageStore _validationMessageStore;
-
-        private IBrowserFile file;
-        private string fileName;
-        private long fileSize;
-
-        IEnumerable<Region> Regions { get; set; } 
-
-
-        private async Task UploadFile(IBrowserFile file)
-        {
-            this.file = file;
-            fileName = file.Name;
-            fileSize = file.Size;
-
-            try
-            {
-                using var memoryStream = new MemoryStream();
-                await file.OpenReadStream().CopyToAsync(memoryStream);
-
-                // Convert the MemoryStream to a byte array
-                var buffer = memoryStream.ToArray();
-
-                // Convert byte array to Base64 string and set it to the profile model
-                _profileModel.ImagePath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
-
-                // Update ImageBase64 with the same data for immediate display
-                _profileModel.ImageBase64 = _profileModel.ImagePath;
-
-                // Trigger UI refresh
-                StateHasChanged();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while uploading the file: {ex.Message}");
-            }
-        }
-
-
+        [Inject]
+        ISnackbar _Snackbar { get; set; }
 
         private ClientVM _originalProfileModel;
 
@@ -120,27 +92,7 @@ namespace PMS.UI.Pages.Client
                 _NavigationManager.NavigateTo("/login");
             }
         }
-
-        private void CancelEdit()
-        {
-            // Reset _profileModel to its original state using the stored copy
-            _profileModel = _originalProfileModel.DeepClone();
-
-            IsEditMode = false; // Exit edit mode
-        }
-
-
-
-        private void ToggleEditMode()
-        {
-            IsEditMode = !IsEditMode;
-        }
-
-        private void PasswordReset()
-        {
-            _NavigationManager.NavigateTo("/update-password");
-        }
-
+       
         protected async Task OnValidSubmit()
         {
             IsLoading = true;
@@ -173,15 +125,64 @@ namespace PMS.UI.Pages.Client
 
                 _profileModel.Id = UserId;
                 await _ClientRepository.UpdateClient(_profileModel);
-                ToggleEditMode(); // Switch back to view mode after saving
+                ToggleEditMode(); // Switch back to view mode after savin
+                _Snackbar.Add("Your profile was updated successfully.", Severity.Success);
                 _NavigationManager.NavigateTo("/profile");
             }
 
             IsLoading = false;
         }
 
+        private void CancelEdit()
+        {
+            // Reset _profileModel to its original state using the stored copy
+            _profileModel = _originalProfileModel.DeepClone();
 
+            IsEditMode = false; // Exit edit mode
+        }
 
+        private async Task UploadFile(IBrowserFile file)
+        {
+            this.file = file;
+            fileName = file.Name;
+            fileSize = file.Size;
+
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                await file.OpenReadStream().CopyToAsync(memoryStream);
+
+                // Convert the MemoryStream to a byte array
+                var buffer = memoryStream.ToArray();
+
+                // Convert byte array to Base64 string and set it to the profile model
+                _profileModel.ImagePath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+
+                // Update ImageBase64 with the same data for immediate display
+                _profileModel.ImageBase64 = _profileModel.ImagePath;
+
+                // Trigger UI refresh
+                StateHasChanged();
+
+                // Display success notification
+                _Snackbar.Add("Profile picture uploaded successfully!", Severity.Success);
+            }
+            catch (Exception ex)
+            {
+                // Display error notification
+                _Snackbar.Add($"An error occurred while uploading the file: {ex.Message}", Severity.Error);
+            }
+        }
+
+        private void ToggleEditMode()
+        {
+            IsEditMode = !IsEditMode;
+        }
+
+        private void PasswordReset()
+        {
+            _NavigationManager.NavigateTo("/update-password");
+        }
 
     }
 

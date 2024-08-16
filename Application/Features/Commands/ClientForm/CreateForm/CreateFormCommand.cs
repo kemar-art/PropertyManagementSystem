@@ -1,5 +1,5 @@
 ﻿using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 

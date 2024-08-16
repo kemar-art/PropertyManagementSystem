@@ -12,17 +12,20 @@ namespace PMS.UI.Pages
 {
     public partial class ForgotPassword
     {
+        public string Message { get; set; } = string.Empty;
+
+        private bool IsLoading { get; set; } = true;
+
         public ForgetPassword _forgetPasswordModel { get; set; }
 
         [Inject]
         public IAuthenticationService _AuthenticationService { get; set; }
 
         [Inject]
+        ISnackbar _Snackbar { get; set; }
+
+        [Inject]
         NavigationManager _NavigationManager { get; set; }
-
-
-        public string Message { get; set; } = string.Empty;
-        private bool IsLoading { get; set; } = true;
 
         protected override void OnInitialized()
         {
@@ -39,13 +42,12 @@ namespace PMS.UI.Pages
             var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_forgetPasswordModel);
             if (sendEmailToResetPassword.Exists)
             {
-                // Navigate to the home page or any other page
-                Message = sendEmailToResetPassword.Message;
+                _Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
                 _NavigationManager.NavigateTo("/forget-password");
             }
             else
             {
-                Message = sendEmailToResetPassword.Message;
+                _Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
                 _NavigationManager.NavigateTo("/forget-password");
             }
 

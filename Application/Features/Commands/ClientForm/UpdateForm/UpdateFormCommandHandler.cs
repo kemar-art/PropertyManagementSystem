@@ -2,7 +2,7 @@
 using Application.Exceptions;
 using AutoMapper;
 using Domain;
-using Domain.BaseResponse;
+using Domain.Common;
 using Domain.Repository_Interface;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -117,6 +117,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
         {
             NoneLoginUserPasswordResetCommand passwordResetCommand = new()
             {
+                Id = noneLoginUser.Id,
                 Email = noneLoginUser.Email,
                 Password = noneLoginUser.NewPassword,
                 ResetToken = noneLoginUser.ResetToken

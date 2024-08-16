@@ -2,7 +2,7 @@
 using Application.Features.Commands.ClientForm.CreateForm;
 using Application.Features.Commands.ClientForm.UpdateForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
-using Domain.BaseResponse;
+using Domain.Common;
 using MediatR;
 
 namespace Domain.Repository_Interface;
