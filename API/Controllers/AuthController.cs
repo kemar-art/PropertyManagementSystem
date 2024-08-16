@@ -53,7 +53,7 @@ namespace API.Controllers
         public async Task<ActionResult<RegistrationResponse>> Register(ClientRegistrationCommand registerUser)
         {
             var response = await _mediator.Send(registerUser);
-            return Accepted(response);
+            return Accepted(response.Value);
         }
 
         [HttpPost]

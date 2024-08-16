@@ -82,7 +82,6 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
     }
 
-
     public async Task<IEnumerable<Form>> GetAllForms()
     {
         try
@@ -102,7 +101,6 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             return [];
         }
     }
-
 
     public async Task<TrackFormResult> TrackForm(int formId)
     {

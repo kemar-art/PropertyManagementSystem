@@ -1,5 +1,6 @@
 ﻿using Application.AuthSettings;
 using Domain;
+using Domain.BaseResponse;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.ClientUsers.Register
 {
-    public class ClientRegistrationCommand : IRequest<RegistrationResponse>
+    public class ClientRegistrationCommand : IRequest<BaseResult<RegistrationResponse>>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

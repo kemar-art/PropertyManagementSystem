@@ -10,6 +10,7 @@ using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPas
 using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Application.IdentityModels;
 using Domain;
+using Domain.BaseResponse;
 using Domain.Common;
 using FluentValidation;
 using MediatR;
@@ -58,9 +59,8 @@ namespace Persistence.Repository_Implementations
             _clientAppUrl = appSettings.Value.ClientAppUrl;
         }
 
-        public async Task<RegistrationResponse> RegisterClientUserAsync(ClientRegistrationCommand clientUser)
+        public async Task<BaseResult<RegistrationResponse>> RegisterClientUserAsync(ClientRegistrationCommand clientUser)
         {
-            // Log the start of the registration process
             _logger.LogInformation("Starting user registration for email: {Email}", clientUser.Email);
 
             // Create a new application user
@@ -71,8 +71,8 @@ namespace Persistence.Repository_Implementations
                 Email = clientUser.Email,
                 UserName = clientUser.Email,
                 Address = clientUser.Address,
-                NormalizedEmail = clientUser.Email,
-                NormalizedUserName = clientUser.Email,
+                NormalizedEmail = clientUser.Email.ToUpper(),
+                NormalizedUserName = clientUser.Email.ToUpper(),
                 PhoneNumber = clientUser.PhoneNumber,
                 Gender = clientUser.Gender,
                 DateOfBirth = clientUser.DateOfBirth,
@@ -81,23 +81,41 @@ namespace Persistence.Repository_Implementations
                 Role = Roles.Client
             };
 
-            // Attempt to create the user
-            var result = await _userManager.CreateAsync(applicationUser, clientUser.Password);
-            if (!result.Succeeded)
+            try
             {
-                // Log the failure reason(s)
-                _logger.LogWarning("User registration failed for email: {Email}. Errors: {Errors}", clientUser.Email, string.Join(", ", result.Errors.Select(e => e.Description)));
-                throw new BadRequestException("User registration failed");
+                // Attempt to create the user
+                var result = await _userManager.CreateAsync(applicationUser, clientUser.Password);
+
+                if (!result.Succeeded)
+                {
+                    // Log the failure reason(s)
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    _logger.LogWarning("User registration failed for email: {Email}. Errors: {Errors}", clientUser.Email, errors);
+                    return BaseResult<RegistrationResponse>.Failure($"User registration failed: {errors}");
+                }
+
+                // Add the user to the specified role
+                var roleResult = await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
+
+                if (!roleResult.Succeeded)
+                {
+                    var roleErrors = string.Join(", ", roleResult.Errors.Select(e => e.Description));
+                    _logger.LogWarning("Adding user to role failed for email: {Email}. Errors: {Errors}", clientUser.Email, roleErrors);
+                    return BaseResult<RegistrationResponse>.Failure($"Failed to assign role: {roleErrors}");
+                }
+
+                // Log successful registration
+                _logger.LogInformation("User registered successfully: {Email}", clientUser.Email);
+
+                return BaseResult<RegistrationResponse>.Success(new RegistrationResponse { UserId = applicationUser.Id });
             }
-
-            // Add the user to the specified role
-            await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
-
-            // Log successful registration
-            _logger.LogInformation("User registered successfully: {Email}", clientUser.Email);
-
-            return new RegistrationResponse { UserId = applicationUser.Id };
+            catch (Exception ex)
+            {
+                _logger.LogError("An unexpected error occurred during user registration for email: {Email}", clientUser.Email, ex);
+                return BaseResult<RegistrationResponse>.Failure("An unexpected error occurred. Please try again later.");
+            }
         }
+
 
         public async Task<AuthResponse> LogInUserAsync(LoginUserCommand loginUser)
         {
