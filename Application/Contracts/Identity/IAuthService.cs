@@ -17,7 +17,7 @@ namespace Application.Contracts.Identity
     public interface IAuthService
     {
         Task<BaseResult<RegistrationResponse>> RegisterClientUserAsync(ClientRegistrationCommand user);
-        Task<AuthResponse> LogInUserAsync(LoginUserCommand user);
+        Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand user);
         Task<bool> IsEmailRegisteredExist(string email);
         Task<AppResponse> ForgetPassword(string email);
         Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword);

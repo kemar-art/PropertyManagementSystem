@@ -37,7 +37,7 @@ namespace Persistence.Repository_Implementations
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IOptions<JwtSettings> _jwtSettings;
-        private readonly IAppLogger<AuthService> _logger;
+        private readonly IAppLogger<AuthService> _appLogger;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailSender _emailSender;
         private readonly string _clientAppUrl;
@@ -45,7 +45,7 @@ namespace Persistence.Repository_Implementations
         public AuthService(UserManager<ApplicationUser> userManager,
                             SignInManager<ApplicationUser> signInManager,
                             IOptions<JwtSettings> jwtSettings,
-                            IAppLogger<AuthService> logger,
+                            IAppLogger<AuthService> appLogger,
                             IHttpContextAccessor httpContextAccessor,
                             IEmailSender emailSender,
                             IOptions<UrlSettings> appSettings)
@@ -53,7 +53,7 @@ namespace Persistence.Repository_Implementations
             _userManager = userManager /*?? throw new ArgumentNullException(nameof(userManager))*/;
             _signInManager = signInManager /*?? throw new ArgumentNullException(nameof(signInManager))*/;
             _jwtSettings = jwtSettings /*?? throw new ArgumentNullException(nameof(jwtSettings))*/;
-            _logger = logger;
+            _appLogger = appLogger;
             _httpContextAccessor = httpContextAccessor;
             _emailSender = emailSender;
             _clientAppUrl = appSettings.Value.ClientAppUrl;
@@ -61,7 +61,7 @@ namespace Persistence.Repository_Implementations
 
         public async Task<BaseResult<RegistrationResponse>> RegisterClientUserAsync(ClientRegistrationCommand clientUser)
         {
-            _logger.LogInformation("Starting user registration for email: {Email}", clientUser.Email);
+            _appLogger.LogInformation("Starting user registration for email: {Email}", clientUser.Email);
 
             // Create a new application user
             var applicationUser = new ApplicationUser
@@ -90,7 +90,7 @@ namespace Persistence.Repository_Implementations
                 {
                     // Log the failure reason(s)
                     var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                    _logger.LogWarning("User registration failed for email: {Email}. Errors: {Errors}", clientUser.Email, errors);
+                    _appLogger.LogWarning("User registration failed for email: {Email}. Errors: {Errors}", clientUser.Email, errors);
                     return BaseResult<RegistrationResponse>.Failure($"User registration failed: {errors}");
                 }
 
@@ -100,63 +100,75 @@ namespace Persistence.Repository_Implementations
                 if (!roleResult.Succeeded)
                 {
                     var roleErrors = string.Join(", ", roleResult.Errors.Select(e => e.Description));
-                    _logger.LogWarning("Adding user to role failed for email: {Email}. Errors: {Errors}", clientUser.Email, roleErrors);
+                    _appLogger.LogWarning("Adding user to role failed for email: {Email}. Errors: {Errors}", clientUser.Email, roleErrors);
                     return BaseResult<RegistrationResponse>.Failure($"Failed to assign role: {roleErrors}");
                 }
 
                 // Log successful registration
-                _logger.LogInformation("User registered successfully: {Email}", clientUser.Email);
+                _appLogger.LogInformation("User registered successfully: {Email}", clientUser.Email);
 
                 return BaseResult<RegistrationResponse>.Success(new RegistrationResponse { UserId = applicationUser.Id });
             }
             catch (Exception ex)
             {
-                _logger.LogError("An unexpected error occurred during user registration for email: {Email}", clientUser.Email, ex);
+                _appLogger.LogError("An unexpected error occurred during user registration for email: {Email}", clientUser.Email, ex);
                 return BaseResult<RegistrationResponse>.Failure("An unexpected error occurred. Please try again later.");
             }
         }
 
 
-        public async Task<AuthResponse> LogInUserAsync(LoginUserCommand loginUser)
+        public async Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand loginUser)
         {
             // Log the start of the method
-            _logger.LogInformation("Attempting to log in user with email: {Email}", loginUser.Email);
+            _appLogger.LogInformation("Attempting to log in user with email: {Email}", loginUser.Email);
 
-            // Find the user by email
-            var user = await _userManager.FindByEmailAsync(loginUser.Email);
-            if (user == null)
+            try
             {
-                // Log user not found
-                _logger.LogWarning("User not found with email: {Email}", loginUser.Email);
-                throw new NotFoundException("User not found", loginUser.Email);
+                // Find the user by email
+                var user = await _userManager.FindByEmailAsync(loginUser.Email);
+                if (user == null)
+                {
+                    // Log user not found and return failure
+                    _appLogger.LogWarning("User not found with email: {Email}", loginUser.Email);
+                    return BaseResult<AuthResponse>.Failure($"User not found with email: {loginUser.Email}");
+                }
+
+                // Check if the password is correct
+                var passwordCheckResult = await _signInManager.CheckPasswordSignInAsync(user, loginUser.Password, false);
+                if (!passwordCheckResult.Succeeded)
+                {
+                    // Log invalid password attempt and return failure
+                    _appLogger.LogWarning("Invalid password attempt for user: {Email}", loginUser.Email);
+                    return BaseResult<AuthResponse>.Failure("Invalid credentials provided.");
+                }
+
+                // Generate the JWT token
+                JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+
+                // Log successful login
+                _appLogger.LogInformation("User logged in successfully: {Email}", user.Email);
+
+                // Create the response object
+                var authResponse = new AuthResponse
+                {
+                    Id = user.Id,
+                    Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+                    Email = user.Email,
+                    UserName = user.UserName
+                };
+
+                // Return success result
+                return BaseResult<AuthResponse>.Success(authResponse);
             }
-
-            // Check if the password is correct
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginUser.Password, false);
-            if (result.Succeeded == false)
+            catch (Exception ex)
             {
-                // Log invalid password attempt
-                _logger.LogWarning("Invalid password attempt for user: {Email}", loginUser.Email);
-                throw new UnauthorizedAccessException("Invalid credentials was entered for the user");
+                // Log unexpected exception and return failure
+                _appLogger.LogError("An unexpected error occurred during login: {Exception}", ex);
+                return BaseResult<AuthResponse>.Failure("An unexpected error occurred. Please try again later.");
             }
-
-            // Generate the JWT token
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
-
-            // Log successful login
-            _logger.LogInformation("User logged in successfully: {Email}", user.Email);
-
-            // Create the response object
-            var response = new AuthResponse
-            {
-                Id = user.Id,
-                Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                Email = user.Email,
-                UserName = user.UserName
-            };
-
-            return response;
         }
+
+
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
         {

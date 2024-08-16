@@ -63,7 +63,7 @@ namespace API.Controllers
         public async Task<ActionResult<AuthResponse>> Login(LoginUserCommand loginUsers)
         {
             var response = await _mediator.Send(loginUsers);
-            return Accepted(response);
+            return Accepted(response.Value);
         }
 
         
