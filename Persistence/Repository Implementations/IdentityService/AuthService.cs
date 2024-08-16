@@ -212,11 +212,31 @@ namespace Persistence.Repository_Implementations
             return jwtSecurityToken;
         }
 
-        public async Task<bool> IsEmailRegisteredExist(string email)
+        public async Task<BaseResult<bool>> IsEmailRegisteredExist(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            return user != null;
+            try
+            {
+                // Log the start of the email existence check
+                _appLogger.LogInformation("Checking if email is registered: {Email}", email);
+
+                var user = await _userManager.FindByEmailAsync(email);
+                var isRegistered = user != null;
+
+                // Log the result of the email check
+                _appLogger.LogInformation("Email {Email} registered: {IsRegistered}", email, isRegistered);
+
+                return BaseResult<bool>.Success(isRegistered);
+            }
+            catch (Exception ex)
+            {
+                // Log any unexpected errors
+                _appLogger.LogError("An error occurred while checking if email is registered: {Email}", email, ex);
+
+                // Return a failure result with the error message
+                return BaseResult<bool>.Failure("An error occurred while checking the email.");
+            }
         }
+
 
         public async Task<AppResponse> ForgetPassword(string email)
         {

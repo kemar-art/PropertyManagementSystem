@@ -18,7 +18,7 @@ namespace Application.Contracts.Identity
     {
         Task<BaseResult<RegistrationResponse>> RegisterClientUserAsync(ClientRegistrationCommand user);
         Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand user);
-        Task<bool> IsEmailRegisteredExist(string email);
+        Task<BaseResult<bool>> IsEmailRegisteredExist(string email);
         Task<AppResponse> ForgetPassword(string email);
         Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword);
         Task<AppResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword);

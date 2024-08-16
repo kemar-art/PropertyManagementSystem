@@ -40,7 +40,7 @@ public class ClientRegistrationCommandHandler : IRequestHandler<ClientRegistrati
 
         // Check if the email already exists
         var emailExists = await _authService.IsEmailRegisteredExist(request.Email);
-        if (emailExists)
+        if (!emailExists.IsSuccess)
         {
             // Return email already in use error as a failure result
             return BaseResult<RegistrationResponse>.Failure("Email already in use.");

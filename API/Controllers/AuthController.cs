@@ -29,22 +29,17 @@ namespace API.Controllers
         }
 
         [HttpGet("emailcheck")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> EmailCheck(string email)
         {
+            var result = await _authService.IsEmailRegisteredExist(email);
 
-            //if (string.IsNullOrEmpty(email))
-            //{
-            //    return BadRequest(new { errors = new { email = new[] { "" } } });
-            //}
-
-
-            var emailExists = await _authService.IsEmailRegisteredExist(email);
-            if (emailExists)
-            {
-                return Ok(true);
-            }
-            return Ok(false);
+            // Return the result based on the success or failure of the service method
+            return result.IsSuccess ? Ok(result.Value) : StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while checking the email.");
         }
+
 
         [HttpPost]
         [Route("register")]
