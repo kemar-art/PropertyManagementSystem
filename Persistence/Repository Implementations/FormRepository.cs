@@ -82,25 +82,30 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
     }
 
-    public async Task<IEnumerable<Form>> GetAllForms()
+    public async Task<BaseResult<IEnumerable<Form>>> GetAllForms()
     {
         try
         {
             _appLogger.LogInformation("Retrieving all forms from the database.");
 
+            // Retrieve all forms from the database with no tracking
             var forms = await _dbContext.Forms.AsNoTracking()
                                               .OrderBy(x => x.CustomerId)
                                               .ToListAsync();
 
-            _appLogger.LogInformation($"Retrieved {forms.Count} forms from the database.");
-            return forms;
+            _appLogger.LogInformation("Retrieved {Count} forms from the database.", forms.Count);
+
+            return BaseResult<IEnumerable<Form>>.Success(forms);
         }
         catch (Exception ex)
         {
-            _appLogger.LogError("An error occurred while retrieving all forms.", ex);
-            return [];
+            _appLogger.LogError("An error occurred while retrieving all forms. Exception: {Exception}", ex);
+
+            // Return a failure result with an appropriate error message
+            return BaseResult<IEnumerable<Form>>.Failure("An error occurred while retrieving forms. Please try again later.");
         }
     }
+
 
     public async Task<TrackFormResult> TrackForm(int formId)
     {

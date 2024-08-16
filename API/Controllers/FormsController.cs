@@ -26,7 +26,7 @@ namespace API.Controllers
         public async Task<IEnumerable<GetAllFormsDto>> Get()
         {
             var getAllForms = await _mediator.Send(new GetFormQuery());
-            return getAllForms;
+            return getAllForms.Value;
         }
 
         // GET api/<FormController>/5
@@ -37,7 +37,7 @@ namespace API.Controllers
         public async Task<ActionResult<GetFormDetailsDto>> Get(Guid id)
         {
             var getForm = await _mediator.Send(new GetFormDetailsQuery(id));
-            return Ok(getForm);
+            return Ok(getForm.Value);
         }
 
         // POST api/<FormController>

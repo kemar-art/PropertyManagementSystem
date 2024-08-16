@@ -29,7 +29,7 @@ namespace API.Controllers
         public async Task<IEnumerable<Form>> GetFormByStatus(string status)
         {
             var getAllFormByStatus = await _mediator.Send(new GetFormsByStatusQuery(status));
-            return getAllFormByStatus;
+            return getAllFormByStatus.Value;
         }
 
         [HttpPut]

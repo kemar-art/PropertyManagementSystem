@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Queries.ClientForm.GetFormsByStatus
 {
-    public record GetFormsByStatusQuery(string? Status) : IRequest<IEnumerable<Form>>;
+    public record GetFormsByStatusQuery(string? Status) : IRequest<BaseResult<IEnumerable<Form>>>;
 }

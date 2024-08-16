@@ -223,5 +223,3 @@ namespace Persistence.Repository_Implementations
         }
     }
 }
-
-//System.ObjectDisposedException: 'Cannot access a closed Stream.'
