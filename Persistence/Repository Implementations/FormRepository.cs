@@ -106,7 +106,6 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         }
     }
 
-
     public async Task<TrackFormResult> TrackForm(int formId)
     {
         // Check if HttpContext is available
@@ -176,11 +175,6 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             return BaseResult<Unit>.Failure($"An error occurred while updating the form: {ex.Message}");
         }
     }
-
-
-
-
-
 }
 
 

@@ -76,7 +76,7 @@
                         <EditForm Model="@_trackingModel" OnValidSubmit="OnValidSubmit">
                             @if (string.IsNullOrEmpty(_trackingModel?.Status) && string.IsNullOrEmpty(Message))
                             {
-                                <p><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></p>
+                                <p class="text-center p-5 pb-0"><strong>PLEASE INPUT YOUR TRACKING ID BELOW TO VIEW THE STATUS OF YOUR APPRAISAL FORM</strong></p>
                             }
                             <div class="input-box">
                                 <i class="uil uil-search"></i>

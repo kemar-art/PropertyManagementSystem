@@ -92,46 +92,28 @@ namespace PMS.UI.Pages.Client
                 _NavigationManager.NavigateTo("/login");
             }
         }
-       
+
         protected async Task OnValidSubmit()
         {
             IsLoading = true;
-            var isValid = true;
 
-            // Validate RegionId
-            var regionField = new FieldIdentifier(_profileModel, nameof(_profileModel.ClientRegionId));
-            _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
+            // Handle image update logic
+            _profileModel.ImagePath = file == null ? null : _profileModel.ImagePath ?? string.Empty;
 
-            if (_profileModel.ClientRegionId == Guid.Empty)
-            {
-                isValid = false;
-                _validationMessageStore.Add(regionField, "Please select a parish.");
-                _editContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
-            }
+            // Set the user ID before updating the profile
+            _profileModel.Id = UserId;
 
-            if (isValid)
-            {
-                // Check if a new image was uploaded. If not, set ImagePath to null.
-                if (file == null)
-                {
-                    _profileModel.ImagePath = null;
-                    //_profileModel.ImageBase64 = null;
-                }
-                else
-                {
-                    // If a new image was uploaded, ImagePath is already set in UploadFile method.
-                    _profileModel.ImagePath = _profileModel.ImagePath ?? string.Empty;
-                }
+            // Update the client profile and switch back to view mode
+            await _ClientRepository.UpdateClient(_profileModel);
+            ToggleEditMode();
 
-                _profileModel.Id = UserId;
-                await _ClientRepository.UpdateClient(_profileModel);
-                ToggleEditMode(); // Switch back to view mode after savin
-                _Snackbar.Add("Your profile was updated successfully.", Severity.Success);
-                _NavigationManager.NavigateTo("/profile");
-            }
+            // Display success message and navigate back to the profile page
+            _Snackbar.Add("Your profile was updated successfully.", Severity.Success);
+            _NavigationManager.NavigateTo("/profile");
 
             IsLoading = false;
         }
+
 
         private void CancelEdit()
         {
@@ -160,17 +142,11 @@ namespace PMS.UI.Pages.Client
 
                 // Update ImageBase64 with the same data for immediate display
                 _profileModel.ImageBase64 = _profileModel.ImagePath;
-
-                // Trigger UI refresh
-                StateHasChanged();
-
-                // Display success notification
-                _Snackbar.Add("Profile picture uploaded successfully!", Severity.Success);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Display error notification
-                _Snackbar.Add($"An error occurred while uploading the file: {ex.Message}", Severity.Error);
+                _Snackbar.Add($"An error occurred while uploading the file", Severity.Error);
             }
         }
 

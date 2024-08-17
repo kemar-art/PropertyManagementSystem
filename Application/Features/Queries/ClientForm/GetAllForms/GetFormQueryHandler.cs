@@ -29,7 +29,7 @@ public class GetFormQueryHandler : IRequestHandler<GetFormQuery, BaseResult<IEnu
             var getAllForms = await _formRepository.GetAllForms();
 
             // If no forms are found, log a warning and return an empty list
-            if (!getAllForms.Any())
+            if (!getAllForms.Value.Any())
             {
                 _appLogger.LogWarning("No forms found.");
                 return BaseResult<IEnumerable<GetAllFormsDto>>.Success(Enumerable.Empty<GetAllFormsDto>());
