@@ -65,14 +65,13 @@
                                             </MudItem>
                                             <MudTextField Label="Password" HelperText="Choose a strong password"
                                                           Class="mt-3" @bind-Value="_registerModel.Password"
+                                                          For="@(() => _registerModel.Password)"
                                                           Adornment="Adornment.End" InputType="@_passwordInput"
                                                           OnAdornmentClick="TogglePasswordVisibility"
-                                                          AdornmentIcon="@_passwordInputIcon"
-                                                          onfocus="ShowConfirmPassword()" />
+                                                          AdornmentIcon="@_passwordInputIcon" />
 
                                             <MudTextField Label="Repeat Password" HelperText="Repeat the password"
-                                                          Class="mt-3 confirm-password"
-                                                          @bind-Value="_registerModel.ConfirmPassword"
+                                                          Class="mt-3 confirm-password" @bind-Value="_registerModel.ConfirmPassword"
                                                           For="@(() => _registerModel.ConfirmPassword)"
                                                           Adornment="Adornment.End" InputType="@_passwordConfirmationInput"
                                                           OnAdornmentClick="TogglePasswordConfirmationVisibility"

@@ -84,7 +84,7 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
-        private InputType _currentPasswordInput = InputType.Password;
+        private readonly InputType _currentPasswordInput = InputType.Password;
 
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
