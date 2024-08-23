@@ -59,6 +59,7 @@ namespace PMS.UI.Pages
         private bool _passwordVisibility;
         private InputType _passwordInput = InputType.Password;
         private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+
         private void TogglePasswordVisibility()
         {
             if (_passwordVisibility)

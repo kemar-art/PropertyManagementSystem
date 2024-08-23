@@ -33,42 +33,44 @@
                         </MudGrid> *@
 
                         <MudPaper Class="pa-4">
-                                    <EditForm Model="@_loginModel" OnValidSubmit="HandleLogin">
-                                        <DataAnnotationsValidator />
-                                        @* <ValidationSummary /> *@
+                            <EditForm Model="@_loginModel" OnValidSubmit="HandleLogin">
+                                <DataAnnotationsValidator />
 
-                                        <MudGrid>
-                                            <MudItem xs="12">
-                                                <MudText Typo="Typo.h4">Login</MudText>
-                                            </MudItem>
-                                            <MudItem xs="12">
-                                                <MudTextField T="string" Label="Email" Variant="Variant.Outlined"
-                                                              @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
-                                            </MudItem>
-                                            <MudItem xs="12">
-                                                <MudTextField Label="Password" Variant="Variant.Outlined"
-                                                              @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"
-                                                              Adornment="Adornment.End" InputType="@_passwordInput"
-                                                              OnAdornmentClick="TogglePasswordVisibility"
-                                                              AdornmentIcon="@_passwordInputIcon" />
-                                            </MudItem>
-                                            <MudItem xs="12" Class="d-flex justify-space-between align-center">
-                                                <MudSwitch T="bool" Label="Remember me?" @bind-Value="_loginModel.RememberMe" Color="Color.Primary" Class="ml-n1" />
+                                <MudGrid>
+                                    <MudItem xs="12">
+                                        <MudText Typo="Typo.h4">Login</MudText>
+                                    </MudItem>
+
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Email" Variant="Variant.Outlined"
+                                                      @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
+                                        <ValidationMessage For="@(() => _loginModel.Email)" />
+                                    </MudItem>
+
+                                    <MudItem xs="12">
+                                        <MudTextField Label="Password" Variant="Variant.Outlined"
+                                                      @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"
+                                                      Adornment="Adornment.End" InputType="@_passwordInput"
+                                                      OnAdornmentClick="TogglePasswordVisibility"
+                                                      AdornmentIcon="@_passwordInputIcon" />
+                                        <ValidationMessage For="@(() => _loginModel.Password)" />
+                                    </MudItem>
+
+                                    <MudItem xs="12" Class="d-flex justify-space-between align-center">
+                                        <MudSwitch T="bool" Label="Remember me?" @bind-Value="_loginModel.RememberMe" Color="Color.Primary" Class="ml-n1" />
                                         <MudLink Href="/forget-password">Forgot password?</MudLink>
-                                            </MudItem>
-                                            <MudItem xs="12" Class="d-flex justify-center">
-                                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>
-                                            </MudItem>
-                                        </MudGrid>
-                                    </EditForm>
-                                </MudPaper>
+                                    </MudItem>
 
+                                    <MudItem xs="12" Class="d-flex justify-center">
+                                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>
+                                    </MudItem>
+                                </MudGrid>
+                            </EditForm>
+                        </MudPaper>
                     </div>
                 </div>
             </div>
         </div>
     }
-    
-   
     <Footer />
 </div>
