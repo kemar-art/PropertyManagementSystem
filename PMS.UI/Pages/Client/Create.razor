@@ -73,7 +73,7 @@
                                         <MudText Typo="Typo.h4" Class="text-center pb-2">PROPERTY INFORMATION</MudText>
                                         <MudDivider />
                                         <MudGrid>
-                                            <MudItem xs="12">
+                                            @* <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
                                                 @if (!string.IsNullOrEmpty(_createModel.ServiceRequestValidationMessage))
                                                 {
@@ -91,7 +91,7 @@
                                                     }
                                                 </MudGrid>
                                             </MudItem>
-                                            <MudDivider />
+                                            <MudDivider /> *@
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
                                                 @if (!string.IsNullOrEmpty(_createModel.TypeOfPropertyValidationMessage))

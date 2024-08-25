@@ -51,13 +51,13 @@ namespace PMS.UI.Pages.Client
 
             try
             {
-                var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-                ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
-                {
-                    Id = vm.Id,
-                    Title = vm.Title,
-                    IsChecked = vm.IsChecked
-                }).ToList();
+                //var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
+                //ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
+                //{
+                //    Id = vm.Id,
+                //    Title = vm.Title,
+                //    IsChecked = vm.IsChecked
+                //}).ToList();
 
                 var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
                 PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
@@ -96,7 +96,7 @@ namespace PMS.UI.Pages.Client
         {
             // Populate the selected IDs as comma-separated strings
             _createModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(c => c.IsChecked).Select(c => c.Id));
-            _createModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
+            //_createModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
             _createModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(c => c.IsChecked).Select(c => c.Id));
 
             try
@@ -120,16 +120,16 @@ namespace PMS.UI.Pages.Client
             }
         }
 
-        private bool ValidateServiceRequestCheckBoxes()
-        {
-            // Check if at least one checkbox is checked
-            return ServiceRequestCheckBoxesVM.Any(c => c.IsChecked);
-        }
-        private void SetServiceRequestValidationMessage(string message)
-        {
-            _createModel.ServiceRequestValidationMessage = message;
-            EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.ServiceRequestValidationMessage)));
-        }
+        //private bool ValidateServiceRequestCheckBoxes()
+        //{
+        //    // Check if at least one checkbox is checked
+        //    return ServiceRequestCheckBoxesVM.Any(c => c.IsChecked);
+        //}
+        //private void SetServiceRequestValidationMessage(string message)
+        //{
+        //    _createModel.ServiceRequestValidationMessage = message;
+        //    EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, nameof(_createModel.ServiceRequestValidationMessage)));
+        //}
 
         private bool ValidateTypeOfPropertyCheckBoxes()
         {
@@ -210,11 +210,11 @@ namespace PMS.UI.Pages.Client
                 }
 
                 // Validate the checkboxes for service requests
-                if (!ValidateServiceRequestCheckBoxes())
-                {
-                    isValid = false;
-                    SetServiceRequestValidationMessage("At least one service request must be selected.");
-                }
+                //if (!ValidateServiceRequestCheckBoxes())
+                //{
+                //    isValid = false;
+                //    SetServiceRequestValidationMessage("At least one service request must be selected.");
+                //}
 
                 if (!ValidateTypeOfPropertyCheckBoxes())
                 {
