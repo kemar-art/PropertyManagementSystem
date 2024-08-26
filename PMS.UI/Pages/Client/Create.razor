@@ -32,20 +32,19 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="_createModel.FirstName" For="@(() => _createModel.FirstName)" />
-                                                <span></span>
+                                                <MudTextField T="string" Label="First Name" @onblur="() => ConvertToUpperCase(nameof(_createModel.FirstName))" @bind-Value="_createModel.FirstName" For="@(() => _createModel.FirstName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.LastName" For="@(() => _createModel.LastName)" />
+                                                <MudTextField T="string" Label="Last Name" @onblur="() => ConvertToUpperCase(nameof(_createModel.LastName))" @bind-Value="_createModel.LastName" For="@(() => _createModel.LastName)" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.PhoneNumber" For="@(() => _createModel.PhoneNumber)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Email" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
+                                                <MudTextField T="string" Label="Email" @onblur="() => ConvertToUpperCase(nameof(_createModel.Email))" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Instructions Issued By" @bind-Value="_createModel.InstructionsIssuedBy" For="@(() => _createModel.InstructionsIssuedBy)" />
+                                                <MudTextField T="string" Label="Instructions Issued By" @onblur="() => ConvertToUpperCase(nameof(_createModel.InstructionsIssuedBy))" @bind-Value="_createModel.InstructionsIssuedBy" For="@(() => _createModel.InstructionsIssuedBy)" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudSelect T="Guid" Label="Parish" @bind-Value="_createModel.ClientRegionId">
@@ -59,7 +58,7 @@
 
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
+                                                <MudTextField T="string" Label="Address" @onblur="() => ConvertToUpperCase(nameof(_createModel.Address))" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
                                                 
                                             </MudItem>
                                         </MudGrid>
@@ -110,13 +109,13 @@
                                             </MudItem>
                                             <MudDivider />
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Volume" @bind-Value="_createModel.Volume" For="@(() => _createModel.Volume)" />
+                                                <MudTextField T="string" Label="Volume" @onblur="() => ConvertToUpperCase(nameof(_createModel.Volume))" @bind-Value="_createModel.Volume" For="@(() => _createModel.Volume)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Folio" @bind-Value="_createModel.Folio" For="@(() => _createModel.Folio)" />
+                                                <MudTextField T="string" Label="Folio" @onblur="() => ConvertToUpperCase(nameof(_createModel.Folio))" @bind-Value="_createModel.Folio" For="@(() => _createModel.Folio)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="_createModel.StrataPlan" For="@(() => _createModel.StrataPlan)" />
+                                                <MudTextField T="string" Label="Strata/Deposit Plan" @onblur="() => ConvertToUpperCase(nameof(_createModel.StrataPlan))" @bind-Value="_createModel.StrataPlan" For="@(() => _createModel.StrataPlan)" />
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
@@ -136,10 +135,10 @@
                                             </MudItem>
                                             <MudDivider />
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Mortgage Institution" @bind-Value="_createModel.MortgageInstitution" For="@(() => _createModel.MortgageInstitution)" />
+                                                <MudTextField T="string" Label="Mortgage Institution" @onblur="() => ConvertToUpperCase(nameof(_createModel.MortgageInstitution))" @bind-Value="_createModel.MortgageInstitution" For="@(() => _createModel.MortgageInstitution)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Other" @bind-Value="_createModel.Other" />
+                                                <MudTextField T="string" Label="Other" @onblur="() => ConvertToUpperCase(nameof(_createModel.Other))" @bind-Value="_createModel.Other" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
@@ -160,10 +159,10 @@
 
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Property Address" @bind-Value="_createModel.PropertyAddress" For="@(() => _createModel.PropertyAddress)" />
+                                                <MudTextField T="string" Label="Property Address" @onblur="() => ConvertToUpperCase(nameof(_createModel.PropertyAddress))" @bind-Value="_createModel.PropertyAddress" For="@(() => _createModel.PropertyAddress)" />
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudTextField T="string" Label="Property Direction" @bind-Value="_createModel.PropertyDirection" TextArea="true" />
+                                                <MudTextField T="string" Label="Property Direction" @onblur="() => ConvertToUpperCase(nameof(_createModel.PropertyDirection))" @bind-Value="_createModel.PropertyDirection" TextArea="true" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
@@ -177,10 +176,10 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Name" @bind-Value="_createModel.SecondaryContactName" For="@(() => _createModel.SecondaryContactName)" />
+                                                <MudTextField T="string" Label="Name" @onblur="() => ConvertToUpperCase(nameof(_createModel.SecondaryContactName))" @bind-Value="_createModel.SecondaryContactName" For="@(() => _createModel.SecondaryContactName)" />
                                             </MudItem>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.SecondaryContactPhoneNumber" For="@(() => _createModel.SecondaryContactPhoneNumber)" />
+                                                <MudTextField T="string" Label="Phone Number" @onblur="() => ConvertToUpperCase(nameof(_createModel.SecondaryContactPhoneNumber))" @bind-Value="_createModel.SecondaryContactPhoneNumber" For="@(() => _createModel.SecondaryContactPhoneNumber)" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>

@@ -272,6 +272,29 @@ namespace PMS.UI.Pages.Client
                 currentStep--;
             }
         }
+
+        private void ConvertToUpperCase(string fieldName)
+        {
+            // Get the property info for the field
+            var property = typeof(FormVM).GetProperty(fieldName);
+            if (property != null && property.CanRead)
+            {
+                // Get the current value, convert to upper case, and set it back
+                var currentValue = property.GetValue(_createModel)?.ToString() ?? string.Empty;
+                var upperCaseValue = currentValue.ToUpper();
+
+                // Update the property with the upper case value
+                property.SetValue(_createModel, upperCaseValue);
+
+                // Notify that the field has changed
+                EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, fieldName));
+
+                // Trigger UI update
+                InvokeAsync(StateHasChanged);
+            }
+        }
+
+
     }
 
 
