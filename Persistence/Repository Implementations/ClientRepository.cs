@@ -147,6 +147,8 @@ namespace Persistence.Repository_Implementations
             user.FirstName = updateClient.FirstName;
             user.LastName = updateClient.LastName;
             user.Email = updateClient.Email;
+            user.UserName = updateClient.Email;
+            user.NormalizedUserName = updateClient.Email;
             user.PhoneNumber = updateClient.PhoneNumber;
             user.Gender = updateClient.Gender;
             user.DateOfBirth = updateClient.DateOfBirth;

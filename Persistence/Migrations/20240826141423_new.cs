@@ -28,42 +28,6 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxRegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalInsuranceScheme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateRegistered = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateEnded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PurposeOfValuationItems",
                 columns: table => new
                 {
@@ -134,6 +98,48 @@ namespace Persistence.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxRegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalInsuranceScheme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateRegistered = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateEnded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientRegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Regions_ClientRegionId",
+                        column: x => x.ClientRegionId,
+                        principalTable: "Regions",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -247,22 +253,21 @@ namespace Persistence.Migrations
                     SecondaryContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AdminNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppraiserNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AppraiserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     JobAssignerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ValuationRequiredBy = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateFormWasFilledOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FromAssigned = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FromAccepted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FormInProcess = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RejectedForm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MarkFromAsCompleted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReturnFromToAppraiser = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SubmittedFormForApproval = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CancelledForm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApprovedForm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateAssigned = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateAccepted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateInProcess = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateRejected = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCompleted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateReturnToAppraiser = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateSubmittedForApproval = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCancelled = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateApproved = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClientRegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PropertyRegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FrontOfProperyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RightSideOfPropertyImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LeftSideOfPropertImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -285,8 +290,13 @@ namespace Persistence.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Forms_Regions_RegionId",
-                        column: x => x.RegionId,
+                        name: "FK_Forms_Regions_ClientRegionId",
+                        column: x => x.ClientRegionId,
+                        principalTable: "Regions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Forms_Regions_PropertyRegionId",
+                        column: x => x.PropertyRegionId,
                         principalTable: "Regions",
                         principalColumn: "Id");
                 });
@@ -334,12 +344,12 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "DateRegistered", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ClientRegionId", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "DateRegistered", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", "778a2b55-516e-4f49-8767-47522a7bc127", new DateTime(2024, 8, 6, 21, 41, 31, 707, DateTimeKind.Local).AddTicks(831), new DateTime(2024, 8, 6, 21, 41, 31, 707, DateTimeKind.Local).AddTicks(827), new DateTime(2024, 8, 6, 21, 41, 31, 707, DateTimeKind.Local).AddTicks(831), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEDvY4mk4DUO8ftJBCdskT7soNDm1cvVPa6IaPvpG4MlJ3Xw0a8sa6QVx1RILvwc5fQ==", null, false, "", "37cfa910-f329-4057-92c9-8d68d09e6e6e", "", false, "appraiser@localhost.com" },
-                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", "3fd8a3a3-e780-4d5e-8cd7-b25c441604c5", new DateTime(2024, 8, 6, 21, 41, 31, 666, DateTimeKind.Local).AddTicks(7954), new DateTime(2024, 8, 6, 21, 41, 31, 666, DateTimeKind.Local).AddTicks(7945), new DateTime(2024, 8, 6, 21, 41, 31, 666, DateTimeKind.Local).AddTicks(7954), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEHVX3Qr3iuZ/OEfDagzRiUJEcegmxHTxfw6xV/xFIiCJ2lfa97v6NwD9X/mCBQXg7Q==", null, false, "", "8cde622f-46dc-43b1-a689-ab35c1b60bad", "", false, "admin@localhost.com" },
-                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", "6bdba3c3-906c-42e4-9f07-ef6c8830e955", new DateTime(2024, 8, 6, 21, 41, 31, 745, DateTimeKind.Local).AddTicks(6783), new DateTime(2024, 8, 6, 21, 41, 31, 745, DateTimeKind.Local).AddTicks(6773), new DateTime(2024, 8, 6, 21, 41, 31, 745, DateTimeKind.Local).AddTicks(6783), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEGOPMQ0UAY75DrnMSlpgjfBhUtL0q9x6npUazlMz+kOTO6wE8SAxC2J1xF9zYS5dPA==", null, false, "", "f81c97ac-eaf3-4ab9-af06-ef3b279e40cc", "", false, "client@localhost.com" }
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", null, "a009e031-bde3-4db9-874f-8035551194ea", new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8094), new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8081), new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8093), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOw4ClRHk2NHCvYMQo/eI6YD5qQ+AIcJ6VmPQOKZhYg7Lfjrkznc+fGUi/nE3vTNxQ==", null, false, "", "6f469191-37c2-49c6-b8ab-9251e944fbb2", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", null, "2eec0098-d645-4da4-8faa-4f140877d9cb", new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587), new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7574), new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEHzhazUN3YIlgWBD5PGUXbBO2jxuJ9atR/jV/hhoMU0p2XubWqDJQKMFUjLLttlVKw==", null, false, "", "e6ae4207-5a8e-4d16-8bac-9fd9701d5f03", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", null, "c9996662-c4d0-4de6-976a-3639e6e307fa", new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556), new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5542), new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEKyEQcPEbjhgy3xaZ1dq6crMKiR202CoqcLGZ5Oc3LH0qTZKZd2jkMbYfEDDvyfnrg==", null, false, "", "37849370-76f4-4c37-bb76-636ef984ca55", "", false, "client@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -448,6 +458,11 @@ namespace Persistence.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ClientRegionId",
+                table: "AspNetUsers",
+                column: "ClientRegionId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -470,14 +485,19 @@ namespace Persistence.Migrations
                 column: "AppraiserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forms_ClientRegionId",
+                table: "Forms",
+                column: "ClientRegionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Forms_JobAssignerId",
                 table: "Forms",
                 column: "JobAssignerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Forms_RegionId",
+                name: "IX_Forms_PropertyRegionId",
                 table: "Forms",
-                column: "RegionId");
+                column: "PropertyRegionId");
         }
 
         /// <inheritdoc />

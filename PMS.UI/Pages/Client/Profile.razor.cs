@@ -160,5 +160,19 @@ namespace PMS.UI.Pages.Client
             _NavigationManager.NavigateTo("/update-password");
         }
 
+        private void ConvertToUpperCase(string fieldName)
+        {
+            var propertyInfo = _profileModel.GetType().GetProperty(fieldName);
+            if (propertyInfo != null)
+            {
+                var value = propertyInfo.GetValue(_profileModel)?.ToString();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    propertyInfo.SetValue(_profileModel, value.ToUpper());
+                }
+            }
+        }
+
+
     }
 }

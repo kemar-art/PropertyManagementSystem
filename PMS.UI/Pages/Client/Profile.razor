@@ -75,13 +75,13 @@
                                                         <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="First Name" @bind-Value="_profileModel.FirstName" For="@(() => _profileModel.FirstName)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_profileModel.FirstName))" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Last Name" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Last Name" @bind-Value="_profileModel.LastName" For="@(() => _profileModel.LastName)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_profileModel.LastName))" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Email" @bind-Value="_profileModel.Email" For="@(() => _profileModel.Email)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Email" @bind-Value="_profileModel.Email" For="@(() => _profileModel.Email)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_profileModel.Email))" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudTextField Label="Phone Number" @bind-Value="_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Disabled="@(!IsEditMode)" />
@@ -103,7 +103,7 @@
                                                         <MudText Typo="Typo.h6" Class="mt-3 mb-2 text-primary">Address</MudText>
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                        <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" />
+                                                        <MudTextField Label="Address" @bind-Value="_profileModel.Address" For="@(() => _profileModel.Address)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_profileModel.Address))" />
                                                     </MudItem>
                                                     <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         <MudSelect T="Guid" Label="Parish" @bind-Value="_profileModel.ClientRegionId" Disabled="@(!IsEditMode)">
@@ -159,4 +159,8 @@
     }
     <Footer />
 </div>
+
+
+
+
 

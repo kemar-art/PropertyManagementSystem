@@ -17,7 +17,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -138,10 +138,10 @@ namespace Persistence.Migrations
                             Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "b854cdf7-81ec-42d9-8b7d-ec19df0a1e09",
-                            DateEnded = new DateTime(2024, 8, 15, 19, 44, 55, 776, DateTimeKind.Local).AddTicks(9222),
-                            DateOfBirth = new DateTime(2024, 8, 15, 19, 44, 55, 776, DateTimeKind.Local).AddTicks(9211),
-                            DateRegistered = new DateTime(2024, 8, 15, 19, 44, 55, 776, DateTimeKind.Local).AddTicks(9222),
+                            ConcurrencyStamp = "2eec0098-d645-4da4-8faa-4f140877d9cb",
+                            DateEnded = new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587),
+                            DateOfBirth = new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7574),
+                            DateRegistered = new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -152,10 +152,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAHOANq1x1USzRZ5+YTkj//CiWfUENNxLWp5hsAXPsEdcVRPRiIaivW9/RuBfg7PfQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHzhazUN3YIlgWBD5PGUXbBO2jxuJ9atR/jV/hhoMU0p2XubWqDJQKMFUjLLttlVKw==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "fa7c6d47-b4e3-4f86-acb8-b36e99fd447f",
+                            SecurityStamp = "e6ae4207-5a8e-4d16-8bac-9fd9701d5f03",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
@@ -165,10 +165,10 @@ namespace Persistence.Migrations
                             Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "0f156436-17a7-40d8-9a6b-189ea599814d",
-                            DateEnded = new DateTime(2024, 8, 15, 19, 44, 55, 817, DateTimeKind.Local).AddTicks(4594),
-                            DateOfBirth = new DateTime(2024, 8, 15, 19, 44, 55, 817, DateTimeKind.Local).AddTicks(4589),
-                            DateRegistered = new DateTime(2024, 8, 15, 19, 44, 55, 817, DateTimeKind.Local).AddTicks(4594),
+                            ConcurrencyStamp = "a009e031-bde3-4db9-874f-8035551194ea",
+                            DateEnded = new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8094),
+                            DateOfBirth = new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8081),
+                            DateRegistered = new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8093),
                             Email = "appraiser@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Appraiser",
@@ -179,10 +179,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "APPRAISER@LOCALHOST.COM",
                             NormalizedUserName = "APPRAISER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC7x5XZRooQR5HY5tD8Kd/p+qDA9EPhmOmcWTl7IPmpboxhaSi3aITm3N1UoagFQog==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOw4ClRHk2NHCvYMQo/eI6YD5qQ+AIcJ6VmPQOKZhYg7Lfjrkznc+fGUi/nE3vTNxQ==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "65c03989-a8bb-4168-9069-5631e686de3d",
+                            SecurityStamp = "6f469191-37c2-49c6-b8ab-9251e944fbb2",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "appraiser@localhost.com"
@@ -192,10 +192,10 @@ namespace Persistence.Migrations
                             Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "e1f2213f-876d-4ed1-85d5-fae336620a9f",
-                            DateEnded = new DateTime(2024, 8, 15, 19, 44, 55, 855, DateTimeKind.Local).AddTicks(7371),
-                            DateOfBirth = new DateTime(2024, 8, 15, 19, 44, 55, 855, DateTimeKind.Local).AddTicks(7363),
-                            DateRegistered = new DateTime(2024, 8, 15, 19, 44, 55, 855, DateTimeKind.Local).AddTicks(7371),
+                            ConcurrencyStamp = "c9996662-c4d0-4de6-976a-3639e6e307fa",
+                            DateEnded = new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556),
+                            DateOfBirth = new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5542),
+                            DateRegistered = new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556),
                             Email = "client@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -206,10 +206,10 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "CLIENT@LOCALHOST.COM",
                             NormalizedUserName = "CLIENT@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFU7LX4rqSF1E4uEctloxhNBUPhgdK7FouDHXWVr5PvqSzWsCHWvr880Z3jlkIxA1A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKyEQcPEbjhgy3xaZ1dq6crMKiR202CoqcLGZ5Oc3LH0qTZKZd2jkMbYfEDDvyfnrg==",
                             PhoneNumberConfirmed = false,
                             Role = "",
-                            SecurityStamp = "dbd874f1-7117-4cee-9062-db1757258e34",
+                            SecurityStamp = "37849370-76f4-4c37-bb76-636ef984ca55",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "client@localhost.com"
