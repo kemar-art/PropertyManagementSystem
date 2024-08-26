@@ -273,27 +273,39 @@ namespace PMS.UI.Pages.Client
             }
         }
 
+        //private void ConvertToUpperCase(string fieldName)
+        //{
+        //    // Get the property info for the field
+        //    var property = typeof(FormVM).GetProperty(fieldName);
+        //    if (property != null && property.CanRead)
+        //    {
+        //        // Get the current value, convert to upper case, and set it back
+        //        var currentValue = property.GetValue(_createModel)?.ToString() ?? string.Empty;
+        //        var upperCaseValue = currentValue.ToUpper();
+
+        //        // Update the property with the upper case value
+        //        property.SetValue(_createModel, upperCaseValue);
+
+        //        // Notify that the field has changed
+        //        EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, fieldName));
+
+        //        // Trigger UI update
+        //        InvokeAsync(StateHasChanged);
+        //    }
+        //}
+
         private void ConvertToUpperCase(string fieldName)
         {
-            // Get the property info for the field
-            var property = typeof(FormVM).GetProperty(fieldName);
-            if (property != null && property.CanRead)
+            var propertyInfo = _createModel.GetType().GetProperty(fieldName);
+            if (propertyInfo != null)
             {
-                // Get the current value, convert to upper case, and set it back
-                var currentValue = property.GetValue(_createModel)?.ToString() ?? string.Empty;
-                var upperCaseValue = currentValue.ToUpper();
-
-                // Update the property with the upper case value
-                property.SetValue(_createModel, upperCaseValue);
-
-                // Notify that the field has changed
-                EditContext.NotifyFieldChanged(new FieldIdentifier(_createModel, fieldName));
-
-                // Trigger UI update
-                InvokeAsync(StateHasChanged);
+                var value = propertyInfo.GetValue(_createModel)?.ToString();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    propertyInfo.SetValue(_createModel, value.ToUpper());
+                }
             }
         }
-
 
     }
 
