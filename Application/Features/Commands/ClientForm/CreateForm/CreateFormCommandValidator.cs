@@ -81,7 +81,7 @@ namespace Application.Features.Commands.ClientForm.CreateForm
               .WithMessage("{PropertyName} is required.")
               .NotNull();
 
-            RuleFor(p => p.SecondaryContactFirstName)
+            RuleFor(p => p.SecondaryContactName)
              .NotEmpty()
              .WithMessage("{PropertyName} is required.")
              .NotNull();

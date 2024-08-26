@@ -96,7 +96,7 @@ namespace Application.Features.Commands.ClientForm.UpdateForm
               .WithMessage("{PropertyName} is required.")
               .NotNull();
 
-            RuleFor(p => p.SecondaryContactFirstName)
+            RuleFor(p => p.SecondaryContactName)
              .NotEmpty()
              .WithMessage("{PropertyName} is required.")
              .NotNull();

@@ -66,14 +66,8 @@ namespace PMS.UI.Models.Form
         public string Other { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "First Name")]
-        public string SecondaryContactFirstName { get; set; } = string.Empty;
-
-        [Required]
-        [Display(Name = "Last Name")]
-        public string SecondaryContactLastName { get; set; } = string.Empty;
-
-        public string SecondaryContactEmail { get; set; } = string.Empty;
+        [Display(Name = "Name")]
+        public string SecondaryContactName { get; set; } = string.Empty;
 
         [Required]
         [PhoneNumberFormat]

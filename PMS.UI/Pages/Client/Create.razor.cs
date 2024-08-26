@@ -230,8 +230,8 @@ namespace PMS.UI.Pages.Client
             }
             else if (currentStep == 3)
             {
-                fieldsToValidate.Add(nameof(_createModel.SecondaryContactFirstName));
-                fieldsToValidate.Add(nameof(_createModel.SecondaryContactLastName));
+                //fieldsToValidate.Add(nameof(_createModel.SecondaryContactFirstName));
+                //fieldsToValidate.Add(nameof(_createModel.SecondaryContactLastName));
                 fieldsToValidate.Add(nameof(_createModel.SecondaryContactPhoneNumber));
             }
 

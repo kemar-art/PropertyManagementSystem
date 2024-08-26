@@ -38,11 +38,7 @@ public class GetAllFormsDto
 
     public string Status { get; set; } = string.Empty;
 
-    public string SecondaryContactFirstName { get; set; } = string.Empty;
-
-    public string SecondaryContactLastName { get; set; } = string.Empty;
-
-    public string SecondaryContactEmail { get; set; } = string.Empty;
+    public string SecondaryContactName { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 }

@@ -1889,6 +1889,22 @@ namespace PMS.UI.Services.Base
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("Internal Server Error", status_, responseText_, headers_, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -3668,14 +3684,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("other")]
         public string Other { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
-        public string SecondaryContactFirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
-        public string SecondaryContactLastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
-        public string SecondaryContactEmail { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactName")]
+        public string SecondaryContactName { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
@@ -3963,14 +3973,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
-        public string SecondaryContactFirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
-        public string SecondaryContactLastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
-        public string SecondaryContactEmail { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactName")]
+        public string SecondaryContactName { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
@@ -4041,14 +4045,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
-        public string SecondaryContactFirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
-        public string SecondaryContactLastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
-        public string SecondaryContactEmail { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactName")]
+        public string SecondaryContactName { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
@@ -4328,14 +4326,8 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("other")]
         public string Other { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactFirstName")]
-        public string SecondaryContactFirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactLastName")]
-        public string SecondaryContactLastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactEmail")]
-        public string SecondaryContactEmail { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("secondaryContactName")]
+        public string SecondaryContactName { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }

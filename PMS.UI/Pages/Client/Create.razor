@@ -177,16 +177,10 @@
                                         <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="6">
-                                                <MudTextField T="string" Label="First Name" @bind-Value="_createModel.SecondaryContactFirstName" For="@(() => _createModel.SecondaryContactFirstName)" />
-                                            </MudItem>
-                                            <MudItem xs="6">
-                                                <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.SecondaryContactLastName" For="@(() => _createModel.SecondaryContactLastName)" />
+                                                <MudTextField T="string" Label="Name" @bind-Value="_createModel.SecondaryContactName" For="@(() => _createModel.SecondaryContactName)" />
                                             </MudItem>
                                             <MudItem xs="6">
                                                 <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.SecondaryContactPhoneNumber" For="@(() => _createModel.SecondaryContactPhoneNumber)" />
-                                            </MudItem>
-                                            <MudItem xs="6">
-                                                <MudTextField T="string" Label="Email" @bind-Value="_createModel.SecondaryContactEmail" />
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
