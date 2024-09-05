@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.DatabaseContext;
+using Persistence.SeedConfig.UserRole;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -104,6 +105,20 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             // Return a failure result with an appropriate error message
             return BaseResult<IEnumerable<Form>>.Failure("An error occurred while retrieving forms. Please try again later.");
         }
+    }
+
+    public async Task<int> GetFormCount(string status)
+    {
+        //Getting the count for Admin
+        var isAdmin = _httpContextAccessor.HttpContext.User.IsInRole(Roles.Administrator) || _httpContextAccessor.HttpContext.User.IsInRole(Roles.MasterAdministrator);
+        if (isAdmin)
+        {
+            return await _dbContext.Forms.CountAsync(x => x.Status == status);
+        }
+
+        //Getting the count for Appriaser
+        var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return await _dbContext.Forms.CountAsync(x => x.Status == status && x.AppraiserId == userId);
     }
 
     public async Task<TrackFormResult> TrackForm(int formId)

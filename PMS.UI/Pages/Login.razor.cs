@@ -13,7 +13,7 @@ namespace PMS.UI.Pages
     public partial class Login
     {
         public LoginVM _loginModel { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
         private bool IsLoading { get; set; } = true;
 
         [Inject]
@@ -43,10 +43,18 @@ namespace PMS.UI.Pages
             IsLoading = true;
 
             var isAuthenticated = await _AuthenticationService.IsAuthenticated(_loginModel);
-            if (isAuthenticated)
+            if (isAuthenticated.IsAuthenticate)
             {
-                // Navigate to the home page or any other page
-                NavigationManager.NavigateTo("/");
+                if (isAuthenticated.Role == "Client")
+                {
+                    // Navigate to the home page or any other page
+                    NavigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    NavigationManager.NavigateTo("/admin/dashboard/");
+                }
+                
             }
             else
             {

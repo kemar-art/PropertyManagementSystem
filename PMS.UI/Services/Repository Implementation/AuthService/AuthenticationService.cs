@@ -3,6 +3,7 @@ using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using PMS.UI.AuthProviders;
 using PMS.UI.Contracts.Repository_Interface;
+using PMS.UI.Models;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.Auth;
 using PMS.UI.Models.Client;
@@ -36,7 +37,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             return response;
         }
 
-        public async Task<bool> IsAuthenticated(LoginVM loginVM)
+        public async Task<LoginResponse> IsAuthenticated(LoginVM loginVM)
         {
             try
             {
@@ -63,16 +64,16 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                     }
 
                     await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedIn();
-                    return true;
+                    return new LoginResponse { IsAuthenticate = true, Role = authenticationResponse.Role};
                 }
 
-                return false;
+                return new LoginResponse { IsAuthenticate = false};
             }
             catch (Exception ex)
             {
                 // Log the exception for debugging
                 Console.WriteLine($"Exception: {ex.Message}");
-                return false;
+                return new LoginResponse { IsAuthenticate = false };
             }
         }
 

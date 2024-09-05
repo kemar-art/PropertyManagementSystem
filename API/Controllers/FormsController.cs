@@ -3,6 +3,7 @@ using Application.Features.Commands.ClientForm.DeleteForm;
 using Application.Features.Commands.ClientForm.UpdateForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.Features.Queries.ClientForm.GetASingleForm;
+using Application.Features.Queries.ClientForm.GetFormCount;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,14 @@ namespace API.Controllers
             var getAllForms = await _mediator.Send(new GetFormQuery());
             return getAllForms.Value;
         }
+
+        [HttpGet("status")]
+        public async Task<int> GetFormCount([FromQuery] string status)
+        {
+            var getFormCount = await _mediator.Send(new GetFormCountQuery(status));
+            return getFormCount;
+        }
+
 
         // GET api/<FormController>/5
         [HttpGet("{id}")]

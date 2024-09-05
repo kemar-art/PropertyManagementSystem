@@ -13,4 +13,5 @@ public interface IFormRepository : IGenericRepository<Form>
     Task<BaseResult<Unit>> UpdateForm(Form updateForm);
     Task<BaseResult<IEnumerable<Form>>> GetAllForms();
     Task<TrackFormResult> TrackForm(int formId);
+    Task<int> GetFormCount(string status);
 }

@@ -152,6 +152,7 @@ namespace Persistence.Repository_Implementations
                     Id = user.Id,
                     Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                     Email = user.Email,
+                    Role = user.Role,
                     UserName = user.UserName
                 };
 

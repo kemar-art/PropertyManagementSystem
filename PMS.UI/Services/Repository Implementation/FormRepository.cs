@@ -66,6 +66,12 @@ namespace PMS.UI.Services.Repository_Implementation
             return _mapper.Map<FormVM>(getASingleForm);
         }
 
+        public async Task<int> GetFromCount(string status)
+        {
+            var getFormCount = await _client.StatusAsync(status);
+            return getFormCount;
+        }
+
         public async Task<string> TrackForm(int formId)
         {
             var response = await _client.TrackFormStatusAsync(formId);
