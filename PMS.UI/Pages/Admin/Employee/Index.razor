@@ -1,4 +1,54 @@
-﻿@* @page "/employee/"
+﻿@layout MudBlazorLayout
+@page "/admin/employee/"
+@using PMS.UI.Pages.Admin.Shared
+@using MudBlazor
+
+<RightSidebar />
+
+
+<HeadCSS />
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+else if (ApplicationUserVM.Any())
+{
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+               
+
+            </div>
+            <!-- content -->
+
+            <AdminFooter />
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+
+    <!-- END wrapper -->
+}
+
+
+
+@* @page "/employee/"
 
 
 <h3>Employee List</h3>

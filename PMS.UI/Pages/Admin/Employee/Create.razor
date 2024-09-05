@@ -1,0 +1,128 @@
+﻿@layout MudBlazorLayout
+@page "/create-employee/"
+@using PMS.UI.Pages.Admin.Shared
+@using MudBlazor
+@using PMS.UI.StaticDetails
+
+<RightSidebar />
+
+
+<HeadCSS />
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+else
+{
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
+                    <DataAnnotationsValidator />
+                    @* <ValidationSummary /> *@
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudPaper Class="pa-4 lifted">
+                                <!-- Step 1: Client Details -->
+                                <MudText Typo="Typo.h4" Class="text-center">New Employee</MudText>
+                                    <MudPaper Class="pa-4 mt-4 lifted">
+                                        
+                                        @* <MudDivider /> *@
+                                        <MudGrid>
+                                            <MudItem xs="6">
+                                                <MudTextField T="string" Label="First Name" @bind-Value="_createModel.FirstName" For="@(() => _createModel.FirstName)" />
+                                            </MudItem>
+                                            <MudItem xs="6">
+                                                <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.LastName" For="@(() => _createModel.LastName)" />
+                                            </MudItem>
+                                        <MudItem xs="6">
+                                            <MudText Typo="Typo.subtitle1">Gender</MudText>
+                                            <MudRadioGroup T="string" @bind-Value="_createModel.Gender" For="@(() => _createModel.Gender)">
+                                                <MudRadio Value="UserGender.Male">Male</MudRadio>
+                                                <MudRadio Value="UserGender.Female">Female</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Email" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
+                                        </MudItem>
+                                            <MudItem xs="6">
+                                                <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.PhoneNumber" For="@(() => _createModel.PhoneNumber)" />
+                                            </MudItem>
+                                            <MudItem xs="6">
+                                            <MudTextField T="string" Label="N.I.S" @bind-Value="_createModel.NationalInsuranceScheme" For="@(() => _createModel.NationalInsuranceScheme)" />
+                                            </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="T.R.N" @bind-Value="_createModel.TaxRegistrationNumber" For="@(() => _createModel.TaxRegistrationNumber)" />
+                                        </MudItem>
+                                        <MudItem xs="6" Class="text-center">
+                                            <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" MaximumFileCount="1" FilesChanged="UploadFile">
+                                                <ActivatorContent>
+                                                    <MudButton Variant="Variant.Filled"
+                                                               Color="Color.Primary"
+                                                               StartIcon="@Icons.Material.Filled.CloudUpload">
+                                                        Upload Photo
+                                                    </MudButton>
+                                                </ActivatorContent>
+                                            </MudFileUpload>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
+                                        </MudItem>
+                                        </MudGrid>
+                                    </MudPaper>
+                                
+
+                               
+
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                </EditForm>
+
+            </div>
+            <!-- content -->
+
+            <AdminFooter />
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+        <MudItem xs="6">
+            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
+        </MudItem>
+    </div>
+
+    <!-- END wrapper -->
+}
+
+@* 
+        
+        
+
+        public string ImagePath { get; set; } = string.Empty;
+        //public IFormFile? Image { get; set; }
+        [DataType(DataType.Date), Display(Name = ("D.O.B"))]
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date), Display(Name = ("Start Date"))]
+        public DateTime DateRegistered { get; set; } = DateTime.Now;
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
+        public DateTime DateEnded { get; set; } = DateTime.Now; *@

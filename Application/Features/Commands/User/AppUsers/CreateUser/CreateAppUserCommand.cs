@@ -22,7 +22,7 @@ namespace Application.Features.Commands.User.AppUsers.CreateUser
         public IFormFile? Image { get; set; }
 
         [DataType(DataType.Date), Display(Name = "D.O.B")]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
 
         //public string Role { get; set; } = string.Empty;

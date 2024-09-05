@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Employee;
 
-namespace PMS.UI.Pages.Employee
+namespace PMS.UI.Pages.Admin.Employee
 {
     public partial class Index
     {
