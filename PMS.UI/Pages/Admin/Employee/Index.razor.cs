@@ -17,15 +17,13 @@ namespace PMS.UI.Pages.Admin.Employee
 
         public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
 
-        
-
         // Quick filter across columns
         private Func<ApplicationUserVM, bool> _quickFilter => x =>
         {
             if (string.IsNullOrWhiteSpace(_searchString))
+            {
                 return true;
-
-           
+            }
 
             return false;
         };
@@ -34,6 +32,11 @@ namespace PMS.UI.Pages.Admin.Employee
         {
             _indexModel = await _AdminRepository.GetAllEmployees();
             IsLoading = false;
+        }
+
+        protected void CreateNewEmployee()
+        {
+            _NavigationManager.NavigateTo("/create-employee/");
         }
 
         private bool IsLoading { get; set; } = true;

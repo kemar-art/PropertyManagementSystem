@@ -13,17 +13,13 @@ namespace PMS.UI.Models.Employee
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
 
-        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
+        public DateTime? DateRegistered { get; set; } 
+        public DateTime? DateEnded { get; set; }
 
         
-        public DateTime? DateRegistered { get; set; } = DateTime.Now;
-
-      
-        public DateTime? DateEnded { get; set; } = DateTime.Now;
-
-        public string Role { get; set; } = string.Empty;
 
         //public bool IsActive { get; set; } = true;
 

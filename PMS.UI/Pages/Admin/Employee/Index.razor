@@ -27,11 +27,18 @@ else if (_indexModel.Any())
         <!-- ============================================================== -->
         <div class="content-page">
             <div class="content">
-
+                <div class="row mb-1">
+                    <div class="col">
+                        <h1>Employee List</h1>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
+                        <MudButton @onclick="(() => CreateNewEmployee())" Variant="@Variant.Filled" Color="@Color.Success">Create Employee</MudButton>
+                    </div>
+                </div>
                 <MudDataGrid T="ApplicationUserVM" Items="@_indexModel" SortMode="SortMode.Multiple" Filterable="true"
                              QuickFilter="@_quickFilter" Hideable="true">
                     <ToolBarContent>
-                        <MudText Typo="Typo.h6">Employee List</MudText>
+                        <MudText Typo="Typo.h6">Employees</MudText>
                         <MudSpacer />
                         <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
@@ -42,7 +49,6 @@ else if (_indexModel.Any())
                         <PropertyColumn Property="x => x.LastName" Title="Last Name" />
                         <PropertyColumn Property="x => x.Email" Title="Email" />
                         <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
-                        @* <PropertyColumn Property="x => x.Address" Title="Address" /> *@
                         <PropertyColumn Property="x => x.Role" Title="Status" />
                         <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
                             <CellTemplate>

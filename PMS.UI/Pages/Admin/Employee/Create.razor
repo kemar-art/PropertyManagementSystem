@@ -37,7 +37,7 @@ else
                             <MudPaper Class="pa-4 lifted">
                                 <!-- Step 1: Client Details -->
                                 <MudText Typo="Typo.h4" Class="text-center">New Employee</MudText>
-                                    <MudPaper Class="pa-4 mt-4 lifted">
+                                    <MudPaper Class="pa-4 mt-1 lifted">
                                         
                                          <MudDivider /> 
                                         <MudGrid>
@@ -77,6 +77,12 @@ else
                                                 </ActivatorContent>
                                             </MudFileUpload>
                                         </MudItem>
+                                        <MudItem xs="6">
+                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_createModel.DateRegistered" Rounded="true" For="@(() => _createModel.DateRegistered)" />
+                                        </MudItem>
                                         <MudItem xs="12">
                                             <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
                                         </MudItem>
@@ -101,9 +107,9 @@ else
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->
-        <MudItem xs="6">
+        @* <MudItem xs="6">
             <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
-        </MudItem>
+        </MudItem> *@
     </div>
 
     <!-- END wrapper -->

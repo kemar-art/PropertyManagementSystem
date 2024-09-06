@@ -18,14 +18,12 @@ namespace Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
-
-
-        //public DateTime? DateRegistered { get; set; } = DateTime.Now;
-
-
-        //public DateTime? DateEnded { get; set; } = DateTime.Now;
-
         public string Role { get; set; } = string.Empty;
+
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime DateRegistered { get; set; } = DateTime.Now;
+        public DateTime DateEnded { get; set; } = DateTime.Now;
+
+        
     }
 }
