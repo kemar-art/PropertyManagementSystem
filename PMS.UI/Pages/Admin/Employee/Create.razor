@@ -29,9 +29,9 @@ else
         <div class="content-page">
             <div class="content">
 
-                @* <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
+                <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
                     <DataAnnotationsValidator />
-                    @* <ValidationSummary />
+                    <ValidationSummary />
                     <MudGrid>
                         <MudItem xs="12">
                             <MudPaper Class="pa-4 lifted">
@@ -89,7 +89,7 @@ else
                             </MudPaper>
                         </MudItem>
                     </MudGrid>
-                </EditForm> *@
+                </EditForm>
 
             </div>
             <!-- content -->
@@ -101,9 +101,9 @@ else
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->
-       @*  <MudItem xs="6">
+        <MudItem xs="6">
             <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
-        </MudItem> *@
+        </MudItem>
     </div>
 
     <!-- END wrapper -->
