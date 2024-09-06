@@ -42,8 +42,20 @@ else if (_indexModel.Any())
                         <PropertyColumn Property="x => x.LastName" Title="Last Name" />
                         <PropertyColumn Property="x => x.Email" Title="Email" />
                         <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
-                        <PropertyColumn Property="x => x.Address" Title="Address" />
+                        @* <PropertyColumn Property="x => x.Address" Title="Address" /> *@
                         <PropertyColumn Property="x => x.Role" Title="Status" />
+                        <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
+                            <CellTemplate>
+                                <MudStack Row>
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                    @* <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Warning"><i class="fa-solid fa-pen-clip"></i></MudButton>
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Info">Hire</MudButton>
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Hire</MudButton> *@
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
                     </Columns>
                     <PagerContent>
                         <MudDataGridPager T="ApplicationUserVM" />
