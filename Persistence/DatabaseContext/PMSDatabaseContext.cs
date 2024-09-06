@@ -40,7 +40,7 @@ public class PMSDatabaseContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfiguration(new RolesSeedConfiguration());
+        //builder.ApplyConfiguration(new RolesSeedConfiguration());
         builder.ApplyConfiguration(new UserSeedConfiguration());
         builder.ApplyConfiguration(new UserRolesSeedConfiguration());
         builder.ApplyConfiguration(new RegionSeedConfiguration());

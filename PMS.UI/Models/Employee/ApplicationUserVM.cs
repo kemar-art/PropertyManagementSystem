@@ -13,7 +13,6 @@ namespace PMS.UI.Models.Employee
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
-        //public IFormFile? Image { get; set; }
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         

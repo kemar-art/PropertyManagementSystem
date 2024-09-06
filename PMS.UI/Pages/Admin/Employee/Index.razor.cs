@@ -12,7 +12,7 @@ namespace PMS.UI.Pages.Admin.Employee
         [Inject]
         IAdminRepository _AdminRepository { get; set; }
 
-        public IEnumerable<ApplicationUserVM> ApplicationUserVM { get; private set; } = [];
+        public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
 
         public string Message { get; set; } = string.Empty;
 
@@ -34,7 +34,7 @@ namespace PMS.UI.Pages.Admin.Employee
             if (response.Success)
             {
                 // Refresh the data after deletion
-                ApplicationUserVM = await _AdminRepository.GetAllEmployees();
+                _indexModel = await _AdminRepository.GetAllEmployees();
                 StateHasChanged();
             }
             else
@@ -45,7 +45,7 @@ namespace PMS.UI.Pages.Admin.Employee
 
         protected override async Task OnInitializedAsync()
         {
-            ApplicationUserVM = await _AdminRepository.GetAllEmployees();
+            _indexModel = await _AdminRepository.GetAllEmployees();
             IsLoading = false;
         }
     }

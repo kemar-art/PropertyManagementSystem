@@ -3571,11 +3571,11 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset DateRegistered { get; set; }
+        public System.DateTimeOffset? DateRegistered { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset DateEnded { get; set; }
+        public System.DateTimeOffset? DateEnded { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("role")]
         public string Role { get; set; }
@@ -3650,7 +3650,6 @@ namespace PMS.UI.Services.Base
         public string Password { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset? DateOfBirth { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
@@ -4080,6 +4079,36 @@ namespace PMS.UI.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetAllUsersDTO
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
+        public string TaxRegistrationNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
+        public string NationalInsuranceScheme { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
+        public string ImagePath { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("role")]
+        public string Role { get; set; }
 
     }
 

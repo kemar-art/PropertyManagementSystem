@@ -27,12 +27,12 @@ namespace Domain
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("Start Date"))]
-        public DateTime DateRegistered { get; set; } = DateTime.Now;
+        public DateTime? DateRegistered { get; set; } = DateTime.Now;
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         [Display(Name = "End Date")]
-        public DateTime DateEnded { get; set; } = DateTime.Now;
+        public DateTime? DateEnded { get; set; } = DateTime.Now;
 
         public string Role { get; set; } = string.Empty;
 
