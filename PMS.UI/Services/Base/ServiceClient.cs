@@ -4107,6 +4107,9 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
         public string ImagePath { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTimeOffset DateOfBirth { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("role")]
         public string Role { get; set; }
 

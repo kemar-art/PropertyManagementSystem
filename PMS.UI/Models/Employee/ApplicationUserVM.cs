@@ -13,7 +13,9 @@ namespace PMS.UI.Models.Employee
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
-        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
 
         
         public DateTime? DateRegistered { get; set; } = DateTime.Now;

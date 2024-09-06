@@ -10,7 +10,9 @@ public class ApplicationUserProfile : Profile
 {
     public ApplicationUserProfile()
     {
-        CreateMap<ApplicationUserVM, GetAllUsersDTO>().ReverseMap();
+        CreateMap<GetAllUsersDTO, ApplicationUserVM>()
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.DateTime))
+            .ReverseMap();
         //CreateMap<ApplicationUserVM, GetFormDetailsDto>().ReverseMap();
 
         CreateMap<GetASingleUserDTO, ClientVM>()
@@ -18,7 +20,7 @@ public class ApplicationUserProfile : Profile
            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ReverseMap();
 
-        CreateMap<ClientUpdateCommand, ClientVM>().ReverseMap();
-        CreateMap<ClientVM, UpdateAppUserCommand>().ReverseMap();
+        //CreateMap<ClientUpdateCommand, ClientVM>().ReverseMap();
+        //CreateMap<ClientVM, UpdateAppUserCommand>().ReverseMap();
     }
 }

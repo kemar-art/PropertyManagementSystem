@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Employee;
 
@@ -6,6 +7,8 @@ namespace PMS.UI.Pages.Admin.Employee
 {
     public partial class Index
     {
+        public string _searchString;
+
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
 
@@ -14,39 +17,51 @@ namespace PMS.UI.Pages.Admin.Employee
 
         public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
 
-        public string Message { get; set; } = string.Empty;
+        
 
-        private bool IsLoading { get; set; } = true;
-
-        protected void EditEmployee(string userId)
+        // Quick filter across columns
+        private Func<ApplicationUserVM, bool> _quickFilter => x =>
         {
-            _NavigationManager.NavigateTo($"/employee/edit/{userId}");
-        }
+            if (string.IsNullOrWhiteSpace(_searchString))
+                return true;
 
-        protected void EmployeeDetails(string userId)
-        {
-            _NavigationManager.NavigateTo($"/employee/details/{userId}");
-        }
+           
 
-        protected async Task DeleteEmployee(string userId)
-        {
-            var response = await _AdminRepository.DeleteEmployee(userId);
-            if (response.Success)
-            {
-                // Refresh the data after deletion
-                _indexModel = await _AdminRepository.GetAllEmployees();
-                StateHasChanged();
-            }
-            else
-            {
-                Message = response.Message;
-            }
-        }
+            return false;
+        };
 
         protected override async Task OnInitializedAsync()
         {
             _indexModel = await _AdminRepository.GetAllEmployees();
             IsLoading = false;
         }
+
+        private bool IsLoading { get; set; } = true;
     }
 }
+
+
+//protected void EditEmployee(string userId)
+//{
+//    _NavigationManager.NavigateTo($"/employee/edit/{userId}");
+//}
+
+//protected void EmployeeDetails(string userId)
+//{
+//    _NavigationManager.NavigateTo($"/employee/details/{userId}");
+//}
+
+//protected async Task DeleteEmployee(string userId)
+//{
+//    var response = await _AdminRepository.DeleteEmployee(userId);
+//    if (response.Success)
+//    {
+//        Refresh the data after deletion
+//       _indexModel = await _AdminRepository.GetAllEmployees();
+//        StateHasChanged();
+//    }
+//    else
+//    {
+//        Message = response.Message;
+//    }
+//}
