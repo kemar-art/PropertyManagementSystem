@@ -135,6 +135,11 @@ namespace PMS.UI.Pages.Admin.Employee
         //{
 
         //}
+
+        protected void BackToInex()
+        {
+            _NavigationManager.NavigateTo("/admin/employee/");
+        }
     }
 
 
