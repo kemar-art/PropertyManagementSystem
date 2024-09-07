@@ -78,7 +78,7 @@ namespace PMS.UI.Pages
 
             // Make the API call
             var result = await _AuthenticationService.PasswordReset(resetPassword);
-            if (result.Exists)
+            if (result.IsSuccess)
             {
                 _Snackbar.Add("Password reset successfully.", Severity.Success);
                 _NavigationManager.NavigateTo("/login");

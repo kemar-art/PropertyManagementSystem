@@ -127,7 +127,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         if (_httpContextAccessor.HttpContext == null)
         {
             _appLogger.LogError("HttpContext is not available.");
-            return new TrackFormResult { Exists = false, Message = "Internal error: HttpContext is unavailable." };
+            return new TrackFormResult { IsSuccess = false, Message = "Internal error: HttpContext is unavailable." };
         }
 
         // Retrieve the user email claim
@@ -136,7 +136,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
         if (string.IsNullOrEmpty(userEmail))
         {
             _appLogger.LogError("User email claim not found.");
-            return new TrackFormResult { Exists = false, Message = "Internal error: User email claim is missing." };
+            return new TrackFormResult { IsSuccess = false, Message = "Internal error: User email claim is missing." };
         }
 
         try
@@ -149,7 +149,7 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
                 _appLogger.LogInformation($"Form with ID {formId} found for user {userEmail}.");
                 return new TrackFormResult
                 {
-                    Exists = true,
+                    IsSuccess = true,
                     Message = "Form found.",
                     Status = form.Status
                 };
@@ -157,13 +157,13 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             else
             {
                 _appLogger.LogWarning($"Form with ID {formId} not found for user {userEmail}.");
-                return new TrackFormResult { Exists = false, Message = "Form not found." };
+                return new TrackFormResult { IsSuccess = false, Message = "Form not found." };
             }
         }
         catch (Exception ex)
         {
             _appLogger.LogError($"An error occurred while tracking the form with ID {formId} for user {userEmail}.", ex);
-            return new TrackFormResult { Exists = false, Message = "An unexpected error occurred while tracking the form." };
+            return new TrackFormResult { IsSuccess = false, Message = "An unexpected error occurred while tracking the form." };
         }
     }
 

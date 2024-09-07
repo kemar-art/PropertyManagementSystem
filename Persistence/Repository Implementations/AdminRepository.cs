@@ -1,8 +1,6 @@
 ﻿using Application.Contracts.Email;
 using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
-using Application.Features.Commands.User.AppUsers.CreateUser;
-using Application.Features.Commands.User.AppUsers.UpdateUser;
 using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
 using Domain;
@@ -25,6 +23,15 @@ using Persistence.SeedConfig.UserRole;
 using Application.StaticDetails;
 using Application.Contracts.ILogging;
 using Application.Features.Commands.Admin.AssignForm;
+using Application.Features.Commands.User.BackOfficeUsers.UpdateUser;
+using Application.Features.Commands.User.BackOfficeUsers.CreateUser;
+using Domain.Common;
+using Microsoft.IdentityModel.Tokens;
+using static System.Net.Mime.MediaTypeNames;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Persistence.Repository_Implementations
 {
@@ -36,6 +43,7 @@ namespace Persistence.Repository_Implementations
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IAppLogger<AdminRepository> _appLogger;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
 
@@ -51,6 +59,7 @@ namespace Persistence.Repository_Implementations
             IHttpContextAccessor httpContextAccessor,
             IUserStore<ApplicationUser> userStore,
             IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
             IAppLogger<AdminRepository> appLogger)
             : base(dbContext)
         {
@@ -59,6 +68,7 @@ namespace Persistence.Repository_Implementations
             _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));
             _emailSender = emailSender; //?? throw new ArgumentNullException(nameof(emailSender));
+            _roleManager = roleManager;
             _appLogger = appLogger;
             _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
         }
@@ -142,64 +152,99 @@ namespace Persistence.Repository_Implementations
                                         .ToListAsync();
         }
 
-        public async Task<string> RegisterAppUserAsync(CreateAppUserCommand user, IFormFile image)
+        public async Task<BaseResult<AppResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath)
         {
-            var applicationUser = new ApplicationUser
+            ApplicationUser applicationUser = new();
+            try
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-                TaxRegistrationNumber = user.TaxRegistrationNumber,
-                NationalInsuranceScheme = user.NationalInsuranceScheme,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth,
-                DateRegistered = DateTime.Now,
-                EmailConfirmed = true,
-                Role = Roles.Administrator,
-            };  
+                _appLogger.LogInformation($"Registering Back Office User: {user.FirstName} {user.LastName}");
 
-            await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
-            await _emailStore.SetEmailAsync(applicationUser, user.Email, CancellationToken.None);
+                applicationUser.FirstName = user.FirstName;
+                applicationUser.LastName = user.LastName;
+                applicationUser.Email = user.Email;
+                applicationUser.Address = user.Address;
+                applicationUser.PhoneNumber = user.PhoneNumber;
+                applicationUser.TaxRegistrationNumber = user.TaxRegistrationNumber;
+                applicationUser.NationalInsuranceScheme = user.NationalInsuranceScheme;
+                applicationUser.Gender = user.Gender;
+                applicationUser.DateOfBirth = user.DateOfBirth;
+                applicationUser.DateRegistered = user.DateRegistered;
+                applicationUser.EmailConfirmed = true;
+                //applicationUser.Role = Roles.Administrator;
 
-            var password = await GenerateRandomPasswordAsync();
-            var result = await _userManager.CreateAsync(applicationUser, password);
+                await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(applicationUser, user.Email, CancellationToken.None);
 
-            if (result.Succeeded)
-            {
-                if (image != null && image.Length > 0)
+                var password = await GenerateRandomPasswordAsync();
+                var result = await _userManager.CreateAsync(applicationUser, password);
+
+                if (result.Succeeded)
                 {
-                    string webRootPath = _hostEnvironment.WebRootPath;
-                    string newFileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, "images/employees");
-                    var extension = Path.GetExtension(image.FileName);
-
-                    if (!Directory.Exists(uploads))
+                    if (!string.IsNullOrEmpty(imagePath))
                     {
-                        Directory.CreateDirectory(uploads);
+                        var imageToSave = ConvertBase64ToFormFile(imagePath);
+                        if (imageToSave != null)
+                        {
+                            var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                            if (!imageSaved)
+                            {
+                                _appLogger.LogError("Image saving failed.");
+                                return BaseResult<AppResponse>.Failure("Image saving failed.");
+                            }
+                        }
+                        else
+                        {
+                            _appLogger.LogError("Failed to convert image data.");
+                            return BaseResult<AppResponse>.Failure("Failed to convert image data.");
+                        }
                     }
 
-                    using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
-                    image.CopyTo(fileStream);
+                    var role = await _roleManager.FindByIdAsync(user.RoleId);
+                    if (role == null)
+                    {
+                        _appLogger.LogError($"Role with ID {user.RoleId} does not exist.");
+                        return BaseResult<AppResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
+                    }
 
-                    applicationUser.ImagePath = Path.Combine("images/employees", $"{newFileName}{extension}");
+
+                    var roleExists = await _roleManager.RoleExistsAsync(role.Name);
+                    if (!roleExists)
+                    {
+                        _appLogger.LogError($"Role {user.RoleId} does not exist.");
+                        return BaseResult<AppResponse>.Failure($"Role {user.RoleId} does not exist.");
+                    }
+
+                    
+
+
+                    await _userManager.AddToRoleAsync(applicationUser, role.Name);
+
+
+
+                    var userId = await _userManager.GetUserIdAsync(applicationUser);
+                    var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+                    string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+                    var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
+
+                    await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
+                    await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
+
+                    _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
+
+                    // Return success with the user Id
+                    return BaseResult<AppResponse>.Success(new AppResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
                 }
-
-                await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
-                var userId = await _userManager.GetUserIdAsync(applicationUser);
-                var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
-                string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-                var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
-
-                await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
-                await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
-
-                return applicationUser.Id;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"An unexpected error occurred while registering user with ID {applicationUser.Id}. Exception: {ex.Message}");
+                return BaseResult<AppResponse>.Failure($"An unexpected error occurred while registering user: {ex.Message}");
             }
 
-            throw new Exception("User registration failed");
+            return BaseResult<AppResponse>.Failure("User registration failed");
         }
 
-        public async Task<Unit> UpdateAppUserAsync(UpdateAppUserCommand user, IFormFile image)
+        public async Task<Unit> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, IFormFile image)
         {
             var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
             if (applicationUser == null)
@@ -218,7 +263,7 @@ namespace Persistence.Repository_Implementations
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
             applicationUser.DateRegistered = user.Datestarted;
-            applicationUser.Role = Roles.Administrator;
+            //applicationUser.Role = Roles.Administrator;
 
 
             if (image != null && image.Length > 0)
@@ -245,7 +290,7 @@ namespace Persistence.Repository_Implementations
             }
 
             await _userManager.UpdateAsync(applicationUser);
-            await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
+            //await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
             return Unit.Value;
         }
@@ -383,6 +428,79 @@ namespace Persistence.Repository_Implementations
             }
 
             throw new BadHttpRequestException("An error occurred while returning this job for completion. Please refresh and try again.");
+        }
+
+        public async Task<IEnumerable<IdentityRole>> GetRoles()
+        {
+            return await _roleManager.Roles.Where(r => r.Name != Roles.Client).ToListAsync();
+        }
+
+        private FormFile ConvertBase64ToFormFile(string base64ImageData)
+        {
+            try
+            {
+                string base64Data = base64ImageData.Contains(",") ? base64ImageData.Split(',')[1] : throw new Exception("Invalid image data format.");
+
+                string mimeType = base64ImageData.StartsWith("data:image/jpeg", StringComparison.OrdinalIgnoreCase) ? "image/jpeg" : "image/png";
+                string extension = mimeType == "image/jpeg" ? ".jpg" : ".png";
+
+                byte[] imageBytes = Convert.FromBase64String(base64Data);
+                var stream = new MemoryStream(imageBytes);
+
+                return new FormFile(stream, 0, imageBytes.Length, "file", $"uploadedImage{extension}")
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = mimeType
+                };
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Error converting base64 image data to FormFile. Exception: " + ex.Message);
+                return null; // Return null if conversion fails
+            }
+        }
+
+        private async Task<bool> SaveClientImageAsync(CreateBackOfficeUserCommand user, IFormFile imageToSave)
+        {
+            try
+            {
+                if (imageToSave == null || imageToSave.Length == 0)
+                {
+                    return true; // No image to save, return success
+                }
+
+                string webRootPath = _hostEnvironment.WebRootPath;
+                string uploads = Path.Combine(webRootPath, "images/admins");
+                string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
+                string newFilePath = Path.Combine(uploads, newFileName);
+
+                // Ensure the uploads directory exists
+                Directory.CreateDirectory(uploads);
+
+                // Delete old image if it exists
+                if (!string.IsNullOrEmpty(user.ImagePath))
+                {
+                    string oldImagePath = Path.Combine(webRootPath, user.ImagePath);
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
+                }
+
+                // Save the new image
+                using var fileStream = new FileStream(newFilePath, FileMode.Create);
+                await imageToSave.CopyToAsync(fileStream);
+
+                // Update the user's image path
+                user.ImagePath = Path.Combine("images/client", newFileName);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Error saving user image. Exception: " + ex.Message);
+                return false;
+            }
         }
 
         private async Task<string> GenerateRandomPasswordAsync()

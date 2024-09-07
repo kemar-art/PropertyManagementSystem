@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.AppUsers.CreateUser;
+namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser;
 
-public class CreateAppUserCommandValidator : AbstractValidator<CreateAppUserCommand>
+public class CreateBackOfficeUserCommandValidator : AbstractValidator<CreateBackOfficeUserCommand>
 {
-    public CreateAppUserCommandValidator()
+    public CreateBackOfficeUserCommandValidator()
     {
         RuleFor(p => p.FirstName)
             .NotEmpty()

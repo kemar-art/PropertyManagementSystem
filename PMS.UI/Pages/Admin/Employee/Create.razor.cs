@@ -32,11 +32,24 @@ namespace PMS.UI.Pages.Admin.Employee
         public IFormRepository _FormRepository { get; set; }
 
         [Inject]
+        IRegionRepositoey _RegionRepositoey { get; set; }
+
+        [Inject]
+        IAdminRepository _AdminRepository { get; set; }
+
+        [Inject]
         public NavigationManager _NavigationManager { get; set; }
+
+        [Inject]
+        ISnackbar _Snackbar { get; set; }
 
         public ApplicationUserVM _createModel { get; set; } = new();
 
-        public DashBoardVM DashboardVM { get; set; } = new();
+        //public DashBoardVM DashboardVM { get; set; } = new();
+
+        IEnumerable<IdentityRole> _roles = [];
+
+        IEnumerable<Region> Regions { get; set; } = [];
 
         private bool _isFirstRender = true;
 
@@ -45,6 +58,8 @@ namespace PMS.UI.Pages.Admin.Employee
             IsLoading = true; // Ensure the loading overlay is displayed
             try
             {
+                Regions = await _RegionRepositoey.GetAllRegion() ?? [];
+                _roles = await _AdminRepository.GetRolesAsync();
                 _createModel = new ApplicationUserVM();
             }
             catch (Exception ex)
@@ -61,8 +76,33 @@ namespace PMS.UI.Pages.Admin.Employee
 
         private async Task OnValidSubmit()
         {
+            IsLoading = true;
+            try
+            {
+                var response = await _AdminRepository.CreateBackOfficeUser(_createModel);
 
+                if (response != null && response.IsSuccess)
+                {
+                    _Snackbar.Add(response.Value.Message, Severity.Success);
+                    _NavigationManager.NavigateTo("/admin/employee/");
+                }
+                else
+                {
+                    _Snackbar.Add(response?.Error, Severity.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                _Snackbar.Add("An error occurred, please contact the administrator", Severity.Error);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
+
+
+
 
         private async Task UploadFile(IBrowserFile file)
         {

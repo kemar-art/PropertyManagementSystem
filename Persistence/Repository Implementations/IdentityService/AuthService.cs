@@ -39,6 +39,7 @@ namespace Persistence.Repository_Implementations
         private readonly IAppLogger<AuthService> _appLogger;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly string _clientAppUrl;
 
         public AuthService(UserManager<ApplicationUser> userManager,
@@ -47,6 +48,7 @@ namespace Persistence.Repository_Implementations
                             IAppLogger<AuthService> appLogger,
                             IHttpContextAccessor httpContextAccessor,
                             IEmailSender emailSender,
+                            RoleManager<IdentityRole> roleManager,
                             IOptions<UrlSettings> appSettings)
         {
             _userManager = userManager /*?? throw new ArgumentNullException(nameof(userManager))*/;
@@ -55,6 +57,7 @@ namespace Persistence.Repository_Implementations
             _appLogger = appLogger;
             _httpContextAccessor = httpContextAccessor;
             _emailSender = emailSender;
+            _roleManager = roleManager;
             _clientAppUrl = appSettings.Value.ClientAppUrl;
         }
 
@@ -77,7 +80,6 @@ namespace Persistence.Repository_Implementations
                 DateOfBirth = clientUser.DateOfBirth,
                 DateRegistered = DateTime.Now,
                 ClientRegionId = clientUser.ClientRegionId,
-                Role = Roles.Client
             };
 
             try
@@ -94,7 +96,7 @@ namespace Persistence.Repository_Implementations
                 }
 
                 // Add the user to the specified role
-                var roleResult = await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
+                var roleResult = await _userManager.AddToRoleAsync(applicationUser, Roles.Client);
 
                 if (!roleResult.Succeeded)
                 {
@@ -146,13 +148,17 @@ namespace Persistence.Repository_Implementations
                 // Log successful login
                 _appLogger.LogInformation("User logged in successfully: {Email}", user.Email);
 
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var role = userRoles.FirstOrDefault();
+
                 // Create the response object
                 var authResponse = new AuthResponse
                 {
                     Id = user.Id,
                     Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                     Email = user.Email,
-                    Role = user.Role,
+                    Role = role,
                     UserName = user.UserName
                 };
 
@@ -243,7 +249,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = false,
+                    IsSuccess = false,
                     Message = "A password reset link was sent to your email."
                 };
             }
@@ -263,7 +269,7 @@ namespace Persistence.Repository_Implementations
 
             return new AppResponse
             {
-                Exists = true,
+                IsSuccess = true,
                 Message = "A password reset link was sent to your email."
             };
         }
@@ -282,7 +288,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = false,
+                    IsSuccess = false,
                     Message = "User not valid"
                 };
             }
@@ -295,7 +301,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = false,
+                    IsSuccess = false,
                     Message = "User not valid"
                 };
             }
@@ -312,7 +318,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = true,
+                    IsSuccess = true,
                     Message = "Your password has been reset"
                 };
             }
@@ -323,7 +329,7 @@ namespace Persistence.Repository_Implementations
             // Handle failure
             return new AppResponse
             {
-                Exists = false,
+                IsSuccess = false,
                 Message = "Password reset failed"
             };
         }
@@ -342,7 +348,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = false,
+                    IsSuccess = false,
                     Message = "User not valid"
                 };
             }
@@ -356,7 +362,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = true,
+                    IsSuccess = true,
                     Message = "Current password does not match"
                 };
             }
@@ -377,7 +383,7 @@ namespace Persistence.Repository_Implementations
 
                 return new AppResponse
                 {
-                    Exists = true,
+                    IsSuccess = true,
                     Message = "Your password has been reset"
                 };
             }
@@ -388,7 +394,7 @@ namespace Persistence.Repository_Implementations
             // Return a failure response
             return new AppResponse
             {
-                Exists = false,
+                IsSuccess = false,
                 Message = "Password reset failed"
             };
         }

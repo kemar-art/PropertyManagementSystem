@@ -1,10 +1,11 @@
 ﻿using Application.Features.Commands.ClientForm.DeleteForm;
-using Application.Features.Commands.User.AppUsers.CreateUser;
-using Application.Features.Commands.User.AppUsers.DeleteUser;
-using Application.Features.Commands.User.AppUsers.UpdateUser;
+using Application.Features.Commands.User.BackOfficeUsers.CreateUser;
+using Application.Features.Commands.User.BackOfficeUsers.DeleteUser;
+using Application.Features.Commands.User.BackOfficeUsers.UpdateUser;
 using Application.Features.Commands.User.ClientUsers.Update;
 using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
 using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,13 +49,13 @@ namespace API.Controllers
 
         // POST api/<ApplicationUsersController>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult> Post([FromBody] CreateAppUserCommand createAppUser)
+        public async Task<ActionResult<BaseResult<AppResponse>>> Post([FromBody] CreateBackOfficeUserCommand createAppUser)
         {
-            var response = await _mediator.Send(createAppUser);
-            return CreatedAtAction(nameof(Get), new { id = response });
+            var result = await _mediator.Send(createAppUser);
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
 
@@ -65,7 +66,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put([FromBody] UpdateAppUserCommand updateAppUser)
+        public async Task<ActionResult> Put([FromBody] UpdateBackOfficeUserCommand updateAppUser)
         {
             await _mediator.Send(updateAppUser);
             return NoContent();

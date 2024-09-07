@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,24 +26,28 @@ namespace Domain
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]
-        public DateTime? DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime? DateOfBirth { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("Start Date"))]
-        public DateTime? DateRegistered { get; set; } = DateTime.Now;
+        public DateTime? DateRegistered { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         [Display(Name = "End Date")]
         public DateTime? DateEnded { get; set; } = DateTime.Now;
 
-        public string Role { get; set; } = string.Empty;
+        //public string Role { get; set; } = string.Empty;
 
         //public bool IsActive { get; set; } = true;
 
 
         public Region? ClientRegion { get; set; }
         public Guid? ClientRegionId { get; set; }
+
+        public Region? AdminRegion { get; set; }
+        public Guid? AdminRegionId { get; set; }
+
 
 
         //[ForeignKey("JobTitleId")]

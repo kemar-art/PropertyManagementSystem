@@ -34,6 +34,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("AdminRegionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("ClientRegionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -100,10 +103,6 @@ namespace Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -119,6 +118,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdminRegionId");
 
                     b.HasIndex("ClientRegionId");
 
@@ -138,10 +139,8 @@ namespace Persistence.Migrations
                             Id = "588cc79d-bfba-4063-a577-a08a19ff3fba",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "ec217ffa-9a80-4c2a-ab97-b620edc6b2e3",
-                            DateEnded = new DateTime(2024, 9, 6, 0, 11, 52, 777, DateTimeKind.Local).AddTicks(8229),
-                            DateOfBirth = new DateTime(2024, 9, 6, 0, 11, 52, 777, DateTimeKind.Local).AddTicks(8218),
-                            DateRegistered = new DateTime(2024, 9, 6, 0, 11, 52, 777, DateTimeKind.Local).AddTicks(8229),
+                            ConcurrencyStamp = "48c589a7-f4fe-4c6e-8378-bdb476cb749c",
+                            DateEnded = new DateTime(2024, 9, 7, 2, 28, 41, 386, DateTimeKind.Local).AddTicks(3000),
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -152,10 +151,9 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELkPh9/96CJaZRAo23Oq1MoUBjYSs94RPpBOs+rWA81d/slaL7hQOGbP8tFX3chMKw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN+HhZlXlAYPR6ui+wTvuTXTW09KexPxw1Grg4F59LWOr5vgZp2nlpNcJej545Ftqg==",
                             PhoneNumberConfirmed = false,
-                            Role = "",
-                            SecurityStamp = "8c973a9c-7f17-46b4-ab50-4c862b24fb12",
+                            SecurityStamp = "daca0b1f-45a3-4c77-b40f-ec8489b5bedb",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
@@ -165,10 +163,8 @@ namespace Persistence.Migrations
                             Id = "4cb8218a-f54a-472f-84db-275ff92a659f",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "8831b33e-4d3c-4f79-92d9-902e0b323034",
-                            DateEnded = new DateTime(2024, 9, 6, 0, 11, 52, 817, DateTimeKind.Local).AddTicks(6081),
-                            DateOfBirth = new DateTime(2024, 9, 6, 0, 11, 52, 817, DateTimeKind.Local).AddTicks(6072),
-                            DateRegistered = new DateTime(2024, 9, 6, 0, 11, 52, 817, DateTimeKind.Local).AddTicks(6081),
+                            ConcurrencyStamp = "fb2f689d-559c-4f7f-9a2e-dac4a7c4d142",
+                            DateEnded = new DateTime(2024, 9, 7, 2, 28, 41, 425, DateTimeKind.Local).AddTicks(1364),
                             Email = "appraiser@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Appraiser",
@@ -179,10 +175,9 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "APPRAISER@LOCALHOST.COM",
                             NormalizedUserName = "APPRAISER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHD9UG7QVdJ64huzZ3a4WW5tO9ccWpv+jUJId1E98fiI7XxlxSuFcQuyg+/Vr8CDVw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFWkq23A8AfosLQJGvnj8BkfacgJoGGD1nuySkxJr3tYPZN7J8Ekfc16IuLptb6GCQ==",
                             PhoneNumberConfirmed = false,
-                            Role = "",
-                            SecurityStamp = "b8d92894-637a-4d01-a423-29c23b7af17e",
+                            SecurityStamp = "e30af4f1-b8ac-4d1a-af93-043883e5f444",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "appraiser@localhost.com"
@@ -192,10 +187,8 @@ namespace Persistence.Migrations
                             Id = "89d67a78-bd8e-4e72-93dc-602de068282a",
                             AccessFailedCount = 0,
                             Address = "",
-                            ConcurrencyStamp = "8fac54c2-38e0-4507-8c12-5008e6462eef",
-                            DateEnded = new DateTime(2024, 9, 6, 0, 11, 52, 856, DateTimeKind.Local).AddTicks(2267),
-                            DateOfBirth = new DateTime(2024, 9, 6, 0, 11, 52, 856, DateTimeKind.Local).AddTicks(2254),
-                            DateRegistered = new DateTime(2024, 9, 6, 0, 11, 52, 856, DateTimeKind.Local).AddTicks(2266),
+                            ConcurrencyStamp = "5752de2d-cfff-41e9-bfcc-ce7817dc75ac",
+                            DateEnded = new DateTime(2024, 9, 7, 2, 28, 41, 463, DateTimeKind.Local).AddTicks(8110),
                             Email = "client@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -206,10 +199,9 @@ namespace Persistence.Migrations
                             NationalInsuranceScheme = "",
                             NormalizedEmail = "CLIENT@LOCALHOST.COM",
                             NormalizedUserName = "CLIENT@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAwBoJ30x0gE/M1zfX4L6s10/zyV+851C8Mw6EtJqTozXS9u4g0l5l4g2Bphh66IPQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELGhzHxr7genB/HAKea1RREudza606TW476vn3zLNsjR1fANhD3v3txIPNQPKyRXkg==",
                             PhoneNumberConfirmed = false,
-                            Role = "",
-                            SecurityStamp = "9c966189-3116-4e36-a599-24fd03b84692",
+                            SecurityStamp = "2a10997a-ce03-4153-a047-4f12ff09a284",
                             TaxRegistrationNumber = "",
                             TwoFactorEnabled = false,
                             UserName = "client@localhost.com"
@@ -744,6 +736,26 @@ namespace Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0b3c24a8-fd98-4dd7-8e8e-13b70a7ccc9c",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "1ff8b9a5-91cd-478d-942d-baaca93a4bf9",
+                            Name = "Appraiser",
+                            NormalizedName = "APPRAISER"
+                        },
+                        new
+                        {
+                            Id = "abcf3529-e04c-4fc6-b654-da3f444b3c0c",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -871,9 +883,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.ApplicationUser", b =>
                 {
+                    b.HasOne("Domain.Region", "AdminRegion")
+                        .WithMany()
+                        .HasForeignKey("AdminRegionId");
+
                     b.HasOne("Domain.Region", "ClientRegion")
                         .WithMany()
                         .HasForeignKey("ClientRegionId");
+
+                    b.Navigation("AdminRegion");
 
                     b.Navigation("ClientRegion");
                 });

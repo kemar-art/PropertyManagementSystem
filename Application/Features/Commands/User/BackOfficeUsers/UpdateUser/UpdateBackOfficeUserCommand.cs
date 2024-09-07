@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.AppUsers.UpdateUser
+namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateAppUserCommand : IRequest<Unit>
+    public class UpdateBackOfficeUserCommand : IRequest<Unit>
     {
         public string Id { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;

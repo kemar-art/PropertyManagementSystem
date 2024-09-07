@@ -13,16 +13,17 @@ namespace Domain.Common
         public T Value { get; private set; }
         public string Error { get; private set; }
 
-        private BaseResult(bool isSuccess, T value, string error)
+        private BaseResult(bool isSuccess, T value, string error, Guid id = default)
         {
             IsSuccess = isSuccess;
             Value = value;
             Error = error;
+            Id = id; // Set the Id if provided
         }
 
-        public static BaseResult<T> Success(T value)
+        public static BaseResult<T> Success(T value, Guid id = default)
         {
-            return new BaseResult<T>(true, value, null);
+            return new BaseResult<T>(true, value, null, id);
         }
 
         public static BaseResult<T> Failure(string error)
@@ -30,4 +31,6 @@ namespace Domain.Common
             return new BaseResult<T>(false, default, error);
         }
     }
+
+
 }

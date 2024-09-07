@@ -1,51 +1,44 @@
-﻿using PMS.UI.Services.Base;
+﻿using Domain;
+using Domain.Common;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PMS.UI.Models.Employee
+namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser
 {
-    public class ApplicationUserVM
+    public class CreateBackOfficeUserCommand : IRequest<BaseResult<AppResponse>>
     {
-        [Required]
         public string FirstName { get; set; } = string.Empty;
-        [Required]
         public string LastName { get; set; } = string.Empty;
-        [Required]
         public string Email { get; set; } = string.Empty;
-        [Required]
         public string Address { get; set; } = string.Empty;
-        [Required]
         public string PhoneNumber { get; set; } = string.Empty;
-        [Required]
         public string TaxRegistrationNumber { get; set; } = string.Empty;
-        [Required]
         public string NationalInsuranceScheme { get; set; } = string.Empty;
-        [Required]
         public string Gender { get; set; } = string.Empty;
-
         public string ImagePath { get; set; } = string.Empty;
-        //public string Role { get; set; } = string.Empty;
 
-        [Required]
         public DateTime? DateOfBirth { get; set; }
-        [Required]
-        public DateTime? DateRegistered { get; set; } 
+        public DateTime? DateRegistered { get; set; }
         public DateTime? DateEnded { get; set; }
 
 
-
-        //public bool IsActive { get; set; } = true;
-
         public string RoleId { get; set; } = string.Empty;
+        //public bool IsActive { get; set; } = true;
 
 
         [ForeignKey("AdminRegionId")]
         public Region? AdminRegion { get; set; }
-        public Guid AdminRegionId { get; set; }
+        public Guid? AdminRegionId { get; set; }
 
+        //public string Role { get; set; } = string.Empty;
 
-        //[ForeignKey("JobTitleId")]
-        //public JobTitle? JobTitle { get; set; }
-        //public Guid? JobTitleId { get; set; }
+        //public SelectList RolesList { get; set; }
     }
 }

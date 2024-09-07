@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.AppUsers.UpdateUser
+namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateAppUserCommandHandler : IRequestHandler<UpdateAppUserCommand, Unit>
+    public class UpdateAppUserCommandHandler : IRequestHandler<UpdateBackOfficeUserCommand, Unit>
     {
         private readonly IMapper _mapper;
         private readonly IAdminRepository _userRepository;
@@ -24,7 +24,7 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
             _userRepository = userRepository;
         }
 
-        public async Task<Unit> Handle(UpdateAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateBackOfficeUserCommand request, CancellationToken cancellationToken)
         {
             //Validate incoming data
             var validator = new UpdateAppUserCommandValidation(_userRepository);
@@ -38,7 +38,7 @@ namespace Application.Features.Commands.User.AppUsers.UpdateUser
             //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-           var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.Image);
+            var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.Image);
 
             //Return result.
             return updatedUser;

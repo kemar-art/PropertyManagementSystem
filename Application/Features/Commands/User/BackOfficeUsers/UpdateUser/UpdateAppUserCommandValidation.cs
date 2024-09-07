@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.AppUsers.UpdateUser
+namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateAppUserCommandValidation : AbstractValidator<UpdateAppUserCommand>
+    public class UpdateAppUserCommandValidation : AbstractValidator<UpdateBackOfficeUserCommand>
     {
         private readonly IAdminRepository _userRepository;
 

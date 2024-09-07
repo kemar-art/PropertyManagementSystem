@@ -40,7 +40,7 @@ namespace PMS.UI.Pages
             IsLoading = true;
 
             var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_forgetPasswordModel);
-            if (sendEmailToResetPassword.Exists)
+            if (sendEmailToResetPassword.IsSuccess)
             {
                 _Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
                 _NavigationManager.NavigateTo("/forget-password");

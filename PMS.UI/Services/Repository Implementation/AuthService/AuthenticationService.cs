@@ -29,7 +29,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             };
 
             var response = await _client.ForgetpasswordAsync(extrnalPasswordRest);
-            if (response.Exists)
+            if (response.IsSuccess)
             {
                 return response;
             }
@@ -125,7 +125,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             };
 
             var response = await _client.ResetpasswordAsync(passwordResetCommand);
-            if (response.Exists)
+            if (response.IsSuccess)
             {
                 return response;
             }
@@ -142,7 +142,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             };
 
             var response = await _client.UpdatepasswordAsync(passwordResetCommand);
-            if (response.Exists)
+            if (response.IsSuccess)
             {
                 return response;
             }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class @new : Migration
+    public partial class Removerole : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,10 +113,10 @@ namespace Persistence.Migrations
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateRegistered = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateEnded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateRegistered = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateEnded = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClientRegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AdminRegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -135,6 +135,11 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Regions_AdminRegionId",
+                        column: x => x.AdminRegionId,
+                        principalTable: "Regions",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Regions_ClientRegionId",
                         column: x => x.ClientRegionId,
@@ -344,12 +349,12 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "ClientRegionId", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "DateRegistered", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "AdminRegionId", "ClientRegionId", "ConcurrencyStamp", "DateEnded", "DateOfBirth", "DateRegistered", "Email", "EmailConfirmed", "FirstName", "Gender", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NationalInsuranceScheme", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TaxRegistrationNumber", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", null, "a009e031-bde3-4db9-874f-8035551194ea", new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8094), new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8081), new DateTime(2024, 8, 26, 9, 14, 23, 2, DateTimeKind.Local).AddTicks(8093), "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOw4ClRHk2NHCvYMQo/eI6YD5qQ+AIcJ6VmPQOKZhYg7Lfjrkznc+fGUi/nE3vTNxQ==", null, false, "", "6f469191-37c2-49c6-b8ab-9251e944fbb2", "", false, "appraiser@localhost.com" },
-                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", null, "2eec0098-d645-4da4-8faa-4f140877d9cb", new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587), new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7574), new DateTime(2024, 8, 26, 9, 14, 22, 926, DateTimeKind.Local).AddTicks(7587), "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEHzhazUN3YIlgWBD5PGUXbBO2jxuJ9atR/jV/hhoMU0p2XubWqDJQKMFUjLLttlVKw==", null, false, "", "e6ae4207-5a8e-4d16-8bac-9fd9701d5f03", "", false, "admin@localhost.com" },
-                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", null, "c9996662-c4d0-4de6-976a-3639e6e307fa", new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556), new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5542), new DateTime(2024, 8, 26, 9, 14, 23, 71, DateTimeKind.Local).AddTicks(5556), "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAEKyEQcPEbjhgy3xaZ1dq6crMKiR202CoqcLGZ5Oc3LH0qTZKZd2jkMbYfEDDvyfnrg==", null, false, "", "37849370-76f4-4c37-bb76-636ef984ca55", "", false, "client@localhost.com" }
+                    { "4cb8218a-f54a-472f-84db-275ff92a659f", 0, "", null, null, "fb2f689d-559c-4f7f-9a2e-dac4a7c4d142", new DateTime(2024, 9, 7, 2, 28, 41, 425, DateTimeKind.Local).AddTicks(1364), null, null, "appraiser@localhost.com", true, "Appraiser", "", "", "Appraiser", false, null, "", "APPRAISER@LOCALHOST.COM", "APPRAISER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEFWkq23A8AfosLQJGvnj8BkfacgJoGGD1nuySkxJr3tYPZN7J8Ekfc16IuLptb6GCQ==", null, false, "e30af4f1-b8ac-4d1a-af93-043883e5f444", "", false, "appraiser@localhost.com" },
+                    { "588cc79d-bfba-4063-a577-a08a19ff3fba", 0, "", null, null, "48c589a7-f4fe-4c6e-8378-bdb476cb749c", new DateTime(2024, 9, 7, 2, 28, 41, 386, DateTimeKind.Local).AddTicks(3000), null, null, "admin@localhost.com", true, "Admin", "", "", "Admin", false, null, "", "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEN+HhZlXlAYPR6ui+wTvuTXTW09KexPxw1Grg4F59LWOr5vgZp2nlpNcJej545Ftqg==", null, false, "daca0b1f-45a3-4c77-b40f-ec8489b5bedb", "", false, "admin@localhost.com" },
+                    { "89d67a78-bd8e-4e72-93dc-602de068282a", 0, "", null, null, "5752de2d-cfff-41e9-bfcc-ce7817dc75ac", new DateTime(2024, 9, 7, 2, 28, 41, 463, DateTimeKind.Local).AddTicks(8110), null, null, "client@localhost.com", true, "Client", "", "", "Client", false, null, "", "CLIENT@LOCALHOST.COM", "CLIENT@LOCALHOST.COM", "AQAAAAIAAYagAAAAELGhzHxr7genB/HAKea1RREudza606TW476vn3zLNsjR1fANhD3v3txIPNQPKyRXkg==", null, false, "2a10997a-ce03-4153-a047-4f12ff09a284", "", false, "client@localhost.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -456,6 +461,11 @@ namespace Persistence.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AdminRegionId",
+                table: "AspNetUsers",
+                column: "AdminRegionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ClientRegionId",

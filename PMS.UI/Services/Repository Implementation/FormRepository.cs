@@ -76,7 +76,7 @@ namespace PMS.UI.Services.Repository_Implementation
         {
             var response = await _client.TrackFormStatusAsync(formId);
 
-            if (response.Exists)
+            if (response.IsSuccess)
             {
                 
                 return response.Status;

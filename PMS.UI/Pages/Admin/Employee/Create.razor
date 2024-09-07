@@ -31,7 +31,6 @@ else
 
                 <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
                     <DataAnnotationsValidator />
-                    <ValidationSummary />
                     <MudGrid>
                         <MudItem xs="12">
                             <MudPaper Class="pa-4 lifted">
@@ -83,13 +82,45 @@ else
                                         <MudItem xs="6">
                                             <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_createModel.DateRegistered" Rounded="true" For="@(() => _createModel.DateRegistered)" />
                                         </MudItem>
+                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                            <MudSelect T="string"  @bind-Value="_createModel.RoleId">
+                                                <MudSelectItem T="string" Value="string.Empty" Disabled>--Select Role--</MudSelectItem>
+                                                @foreach (var role in _roles)
+                                                {
+                                                    <MudSelectItem T="string" Value="@role.Id">@role.Name</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                <MudSelect T="Guid" @bind-Value="_createModel.AdminRegionId">
+                                                    <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                    @foreach (var region in Regions)
+                                                    {
+                                                        <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                        </MudItem>
                                         <MudItem xs="12">
                                             <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
                                         </MudItem>
                                         </MudGrid>
                                     </MudPaper>
-                                
 
+                                <MudItem xs="12" class="mt-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                        </div>
+
+
+                                       
+                                            <div class="col">
+                                                <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit &nbsp; <i class="fa-regular fa-paper-plane"></i></MudButton>
+                                            </div>
+
+                                        
+                                    </div>
+                                </MudItem>
                                
 
                             </MudPaper>
@@ -111,6 +142,10 @@ else
             <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
         </MudItem> *@
     </div>
+
+
+
+
 
     <!-- END wrapper -->
 }

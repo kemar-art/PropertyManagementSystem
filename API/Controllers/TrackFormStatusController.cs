@@ -36,7 +36,7 @@ namespace API.Controllers
 
             var result = await _formRepository.TrackForm(formId);
 
-            if (!result.Exists)
+            if (!result.IsSuccess)
             {
                 return NotFound(result.Message);
             }
