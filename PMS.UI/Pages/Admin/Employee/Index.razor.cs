@@ -25,6 +25,12 @@ namespace PMS.UI.Pages.Admin.Employee
                 return true;
             }
 
+            if ($"{x.FirstName} {x.LastName} {x.Email} {x.PhoneNumber}".Contains(_searchString))
+            {
+                return true;
+            }
+                
+
             return false;
         };
 

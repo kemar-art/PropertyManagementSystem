@@ -159,7 +159,7 @@ namespace PMS.UI.Pages.Client
             _showValidation = true;
 
             // Clear previous validation messages
-            _createModel.ServiceRequestValidationMessage = string.Empty;
+            //_createModel.ServiceRequestValidationMessage = string.Empty;
             _createModel.TypeOfPropertyValidationMessage = string.Empty;
             _createModel.PurposeOfEvaluationValidationMessage = string.Empty;
             _validationMessageStore.Clear();

@@ -49,6 +49,11 @@ namespace PMS.UI.Pages.Client
                 return true;
             }
 
+            if ($"{x.CustomerId} {x.FirstName} {x.LastName} {x.Email} {x.PropertyAddress}".Contains(_searchString))
+            {
+                return true;
+            }
+
             return false;
         };
 
