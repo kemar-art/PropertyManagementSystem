@@ -33,6 +33,7 @@ namespace PMS.UI.Models.Auth
 
         [ForeignKey("ClientRegionId")]
         public Region? ClientRegion { get; set; }
+        [Required(ErrorMessage = "Parish is required.")]
         public Guid ClientRegionId { get; set; }
     }
 }

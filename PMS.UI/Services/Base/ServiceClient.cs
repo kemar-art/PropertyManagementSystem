@@ -4202,6 +4202,12 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("secondaryContactPhoneNumber")]
         public string SecondaryContactPhoneNumber { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
+        public string TypeOfPropertySelectedIds { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
+        public string PurposeOfValuationItemSelectedIds { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]

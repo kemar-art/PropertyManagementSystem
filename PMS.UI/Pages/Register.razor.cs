@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
@@ -25,6 +26,9 @@ namespace PMS.UI.Pages
         public string Message { get; set; } = string.Empty;
         public bool EmailExists { get; set; }
         public bool IsEmailDisabled { get; set; } = false;
+
+        // Property to store custom validation error message
+        public string RegionErrorMessage { get; set; } = string.Empty;
 
         [Inject]
         private IAuthenticationService _AuthenticationService { get; set; }
@@ -79,6 +83,18 @@ namespace PMS.UI.Pages
 
         protected async Task OnValidSubmit()
         {
+
+            // Reset validation error message
+            RegionErrorMessage = string.Empty;
+
+            // Validate if the Parish (Region) is selected
+            if (_registerModel.ClientRegionId == Guid.Empty)
+            {
+                RegionErrorMessage = "Parish is required.";
+                return; // Stop form submission if Parish is not selected
+            }
+
+
             await CheckEmailExistence();
 
             if (EmailExists)
@@ -104,6 +120,14 @@ namespace PMS.UI.Pages
             }
             IsLoading = false;
         }
+
+        private bool ValidateForm()
+        {
+            // Perform form validation (automatically validates via DataAnnotations)
+            var editContext = new EditContext(_registerModel);
+            return editContext.Validate();
+        }
+
 
         private async Task CheckEmailExistence()
         {

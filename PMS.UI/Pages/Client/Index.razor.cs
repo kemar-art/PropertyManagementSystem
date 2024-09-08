@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models;
+using PMS.UI.Models.Employee;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
 
@@ -20,11 +21,40 @@ namespace PMS.UI.Pages.Client
         [Inject]
         public SweetAlertService Swal { get; set; }
 
+        //[Inject]
+        //ICheckBoxRepository _CheckBoxRepository { get; set; }
+
         public IEnumerable<FormVM> _indexModel { get; private set; } = [];
+
+        //public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+
+        //public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
+
+        //public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+
+
+
 
         public string Message { get; set; } = string.Empty;
 
         private bool IsLoading { get; set; } = true;
+
+        public string _searchString;
+
+        // Quick filter across columns
+        private Func<FormVM, bool> _quickFilter => x =>
+        {
+            if (string.IsNullOrWhiteSpace(_searchString))
+            {
+                return true;
+            }
+
+            return false;
+        };
+
+
+
+
 
         protected void FormEdit(Guid id)
         {
@@ -67,23 +97,49 @@ namespace PMS.UI.Pages.Client
 
         protected override async Task OnInitializedAsync()
         {
-            IsLoading = true; // Ensure the loading overlay is displayed
+            IsLoading = true;
             try
             {
+                //var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
+                //PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+                //{
+                //    Id = vm.Id,
+                //    Title = vm.Title,
+                //    IsChecked = vm.IsChecked
+                //}).ToList();
+
+                //var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
+                //TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                //{
+                //    Id = vm.Id,
+                //    Title = vm.Title,
+                //    IsChecked = vm.IsChecked
+                //}).ToList();
+
+                // Retrieve forms and map checkbox titles
                 _indexModel = await _FormRepository.GetAllForms();
 
+                //foreach (var form in _indexModel)
+                //{
+                //    form.TypeOfPropertySelectedIds = string.Join(", ", TypeOfPropertyCheckBoxItemVM
+                //        .Where(c => form.TypeOfPropertySelectedIds.Split(',').Contains(c.Id.ToString()))
+                //        .Select(c => c.Title));
+
+                //    form.PurposeOfValuationItemSelectedIds = string.Join(", ", PurposeOfEvaluationCheckBoxesVM
+                //        .Where(c => form.PurposeOfValuationItemSelectedIds.Split(',').Contains(c.Id.ToString()))
+                //        .Select(c => c.Title));
+                //}
             }
             catch (Exception ex)
             {
-                //This is to be logged this most not be seen by the user on developer
                 Message = $"An error occurred: {ex.Message}";
             }
             finally
             {
-                IsLoading = false; // Hide the loading overlay
+                IsLoading = false;
             }
-
         }
+
 
 
 

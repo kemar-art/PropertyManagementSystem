@@ -23,7 +23,7 @@ namespace PMS.UI.Models.Client
         public string ImageBase64 { get; set; } = string.Empty;
         public string? ImagePath { get; set; } = string.Empty;
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
-
+        
         public Guid ClientRegionId { get; set; }
 
     }

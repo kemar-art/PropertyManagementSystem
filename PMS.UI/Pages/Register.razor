@@ -34,15 +34,15 @@
                                             <MudItem xs="12">
                                                 <MudText Typo="Typo.h4">Register</MudText>
                                             </MudItem>
-                                            <MudTextField Label="First Name" HelperText="Max. 8 characters" @bind-Value="_registerModel.FirstName" For="@(() => _registerModel.FirstName)" />
-                                            <MudTextField Label="Last Name" Class="mt-3" @bind-Value="_registerModel.LastName" For="@(() => _registerModel.LastName)" />
-                                            <MudTextField Label="Email" Class="mt-3" @bind-Value="_registerModel.Email" For="@(() => _registerModel.Email)" Disabled="@IsEmailDisabled" />
+                                            <MudTextField Label="First Name"  @bind-Value="_registerModel.FirstName" For="@(() => _registerModel.FirstName)" />
+                                            <MudTextField Label="Last Name" @bind-Value="_registerModel.LastName" For="@(() => _registerModel.LastName)" />
+                                            <MudTextField Label="Email" @bind-Value="_registerModel.Email" For="@(() => _registerModel.Email)" Disabled="@IsEmailDisabled" />
                                             @if (EmailExists && !string.IsNullOrEmpty(_registerModel.Email))
                                             {
                                                 <div class="text-danger">Email already exists.</div>
                                             }
-                                            <MudTextField Label="Phone Number" Class="mt-3" @bind-Value="_registerModel.PhoneNumber" For="@(() => _registerModel.PhoneNumber)" />
-                                            <MudItem xs="12">
+                                            <MudTextField Label="Phone Number"  @bind-Value="_registerModel.PhoneNumber" For="@(() => _registerModel.PhoneNumber)" />
+                                            <MudItem Class="mt-2" xs="12">
                                                 <MudText Typo="Typo.subtitle1">Gender</MudText>
                                                 <MudRadioGroup T="string" @bind-Value="_registerModel.Gender" For="@(() => _registerModel.Gender)">
                                                     <MudRadio Value="UserGender.Male">Male</MudRadio>
@@ -50,28 +50,31 @@
                                                 </MudRadioGroup>
                                             </MudItem>
                                             <MudItem xs="12">
-                                                <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_registerModel.DateOfBirth" Rounded="true" For="@(() => _registerModel.DateOfBirth)" />
+                                                <MudDatePicker Label="Date Of Birth" Class="mt-2" Color="Color.Secondary" @bind-Date="_registerModel.DateOfBirth" Rounded="true" For="@(() => _registerModel.DateOfBirth)" />
                                             </MudItem>
 
-                                            <MudItem xs="12" Class="mt-2">
+                                            <MudItem xs="12" Class="mt-3">
                                                 <MudSelect T="Guid" Label="Parish" @bind-Value="_registerModel.ClientRegionId" Disabled="@IsEmailDisabled">
                                                     <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                     @foreach (var region in Regions)
+
                                                     {
                                                         <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
                                                     }
                                                 </MudSelect>
                                                 <ValidationMessage For="@(() => _registerModel.ClientRegionId)" />
+
+                                               
                                             </MudItem>
                                             <MudTextField Label="Password" HelperText="Choose a strong password"
-                                                          Class="mt-3" @bind-Value="_registerModel.Password"
+                                                          @bind-Value="_registerModel.Password"
                                                           For="@(() => _registerModel.Password)"
                                                           Adornment="Adornment.End" InputType="@_passwordInput"
                                                           OnAdornmentClick="TogglePasswordVisibility"
                                                           AdornmentIcon="@_passwordInputIcon" />
 
-                                            <MudTextField Label="Repeat Password" HelperText="Repeat the password"
-                                                          Class="mt-3 confirm-password" @bind-Value="_registerModel.ConfirmPassword"
+                                            <MudTextField Label="Confirm Password" HelperText="Repeat the password"
+                                                          Class="confirm-password" @bind-Value="_registerModel.ConfirmPassword"
                                                           For="@(() => _registerModel.ConfirmPassword)"
                                                           Adornment="Adornment.End" InputType="@_passwordConfirmationInput"
                                                           OnAdornmentClick="TogglePasswordConfirmationVisibility"

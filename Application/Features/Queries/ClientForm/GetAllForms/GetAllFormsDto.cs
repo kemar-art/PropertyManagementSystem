@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Features.Queries.ClientForm.GetAllForms;
 
@@ -41,5 +42,9 @@ public class GetAllFormsDto
     public string SecondaryContactName { get; set; } = string.Empty;
 
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
-}
 
+    public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
+
+    public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
+
+}

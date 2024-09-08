@@ -10,8 +10,8 @@ namespace Application.MappingProfiles;
 public class FormProfile : Profile
 {
     public FormProfile() 
-    { 
-        CreateMap<Form, GetAllFormsDto>().ReverseMap();
+    {
+        CreateMap<Form, GetAllFormsDto>();
         CreateMap<Form, GetFormDetailsDto>().ReverseMap();
 
         CreateMap<CreateFormCommand, Form>().ReverseMap();

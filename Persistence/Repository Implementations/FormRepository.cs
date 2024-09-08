@@ -92,6 +92,8 @@ public class FormRepository : GenericRepository<Form>, IFormRepository
             // Retrieve all forms from the database with no tracking
             var forms = await _dbContext.Forms.AsNoTracking()
                                               .OrderBy(x => x.CustomerId)
+                                              //.Include(x => x.TypeOfPropertySelectedIds)
+                                              //.Include(x => x.PurposeOfValuationItemSelectedIds)
                                               .ToListAsync();
 
             _appLogger.LogInformation("Retrieved {Count} forms from the database.", forms.Count);

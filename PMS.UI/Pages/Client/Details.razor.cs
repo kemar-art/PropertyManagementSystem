@@ -43,13 +43,13 @@ namespace PMS.UI.Pages.Client
             var form = await _FormRepository.GetASingleFormDetails(FormId);
             _detailModel = form;
 
-            var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-            ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
-            {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = form.ServiceRequestItemSelectId.ConvertStringToListOfInt().Contains(vm.Id)
-            }).ToList();
+            //var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
+            //ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
+            //{
+            //    Id = vm.Id,
+            //    Title = vm.Title,
+            //    IsChecked = form.ServiceRequestItemSelectId.ConvertStringToListOfInt().Contains(vm.Id)
+            //}).ToList();
 
             var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
             PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()

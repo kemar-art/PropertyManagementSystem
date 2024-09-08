@@ -43,13 +43,13 @@ namespace PMS.UI.Pages.Client
             var form = await _FormRepository.GetASingleFormDetails(FormId);
             _editModel = form;
 
-            var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-            ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
-            {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = form.ServiceRequestItemSelectId.ConvertStringToListOfInt().Contains(vm.Id)
-            }).ToList();
+            //var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
+            //ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
+            //{
+            //    Id = vm.Id,
+            //    Title = vm.Title,
+            //    IsChecked = form.ServiceRequestItemSelectId.ConvertStringToListOfInt().Contains(vm.Id)
+            //}).ToList();
 
             var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
             PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
@@ -75,7 +75,7 @@ namespace PMS.UI.Pages.Client
         private async Task OnValidSubmit()
         {
             _editModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(x => x.IsChecked).Select(x => x.Id));
-            _editModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
+            //_editModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
             _editModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
 
             var response = await _FormRepository.UpdateForm(_editModel);

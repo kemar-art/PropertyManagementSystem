@@ -8,14 +8,21 @@
     <CustomHeader />
 
     @if (IsLoading)
+
     {
         <div class="loading-overlay">
             @*  <div class="spinner"></div> *@
             <div id="preloader"></div>
         </div>
     }
+
     else
+
+
+
     {
+        
+
         <div class="content">
             <div class="form-container">
                 <EditForm EditContext="EditContext" OnValidSubmit="OnValidSubmit">
@@ -54,12 +61,15 @@
                                                         <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
                                                     }
                                                 </MudSelect>
-                                                <ValidationMessage For="@(() => _createModel.ClientRegionId)" />
+                                                <MudText Typo="Typo.overline">
+                                                    <ValidationMessage For="@(() => _createModel.ClientRegionId)" />
+                                                </MudText>
+                                                
 
                                             </MudItem>
                                             <MudItem xs="12">
                                                 <MudTextField T="string" Label="Address" @onblur="() => ConvertToUpperCase(nameof(_createModel.Address))" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
-                                                
+
                                             </MudItem>
                                         </MudGrid>
                                     </MudPaper>
@@ -73,29 +83,31 @@
                                         <MudDivider />
                                         <MudGrid>
                                             @* <MudItem xs="12">
-                                                <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
-                                                @if (!string.IsNullOrEmpty(_createModel.ServiceRequestValidationMessage))
-                                                {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.ServiceRequestValidationMessage</MudText>
-                                                }
-                                                <MudGrid>
+                                    <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
+                                    @if (!string.IsNullOrEmpty(_createModel.ServiceRequestValidationMessage))
+                                    {
+                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.ServiceRequestValidationMessage</MudText>
+                                    }
+                                    <MudGrid>
 
-                                                    @foreach (var item in ServiceRequestCheckBoxesVM)
-                                                    {
-                                                        <MudItem xs="12" sm="6">
-                                                            <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
+                                    @foreach (var item in ServiceRequestCheckBoxesVM)
+                                    {
+                                    <MudItem xs="12" sm="6">
+                                    <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
 
 
-                                                        </MudItem>
-                                                    }
-                                                </MudGrid>
-                                            </MudItem>
-                                            <MudDivider /> *@
+                                    </MudItem>
+                                    }
+                                    </MudGrid>
+                                    </MudItem>
+                                    <MudDivider /> *@
                                             <MudItem xs="12">
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
                                                 @if (!string.IsNullOrEmpty(_createModel.TypeOfPropertyValidationMessage))
                                                 {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.TypeOfPropertyValidationMessage</MudText>
+                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000" Typo="Typo.overline">
+                                                        @_createModel.TypeOfPropertyValidationMessage
+                                                    </MudText>
                                                 }
                                                 <MudGrid>
                                                     @foreach (var item in TypeOfPropertyCheckBoxItemVM)
@@ -121,7 +133,16 @@
                                                 <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
                                                 @if (!string.IsNullOrEmpty(_createModel.PurposeOfEvaluationValidationMessage))
                                                 {
-                                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_createModel.PurposeOfEvaluationValidationMessage</MudText>
+                                                    @* <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                                        <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000; font-family: 'Roboto';" Typo="Typo.caption">
+                                                            @_createModel.PurposeOfEvaluationValidationMessage
+                                                        </MudText>
+                                                    </div> *@
+                                                    <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000" Typo="Typo.caption">
+                                                        @_createModel.PurposeOfEvaluationValidationMessage
+                                                    </MudText>
+
+
                                                 }
                                                 <MudGrid>
                                                     @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
@@ -155,7 +176,10 @@
                                                         <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
                                                     }
                                                 </MudSelect>
-                                                <ValidationMessage For="@(() => _createModel.PropertyRegionId)" />
+                                                <MudText Typo="Typo.overline">
+                                                    <ValidationMessage For="@(() => _createModel.PropertyRegionId)" />
+                                                </MudText>
+                                                
 
                                             </MudItem>
                                             <MudItem xs="12">
@@ -194,13 +218,16 @@
 
 
                                         @if (currentStep < 3)
+
                                         {
                                             <div class="col">
                                                 <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" @onclick="NextStep">Next &nbsp;<i class="fa-solid fa-forward-step"></i></MudButton>
                                             </div>
 
                                         }
+
                                         else
+
                                         {
                                             <div class="col">
                                                 <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit &nbsp; <i class="fa-regular fa-paper-plane"></i></MudButton>

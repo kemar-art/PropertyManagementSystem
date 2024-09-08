@@ -42,9 +42,7 @@
                                     </MudItem>
 
                                     <MudItem xs="12">
-                                        <MudTextField T="string" Label="Email" Variant="Variant.Outlined"
-                                                      @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
-                                        <ValidationMessage For="@(() => _loginModel.Email)" />
+                                        <MudTextField T="string" Label="Email" Variant="Variant.Outlined" @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
                                     </MudItem>
 
                                     <MudItem xs="12">
@@ -53,7 +51,6 @@
                                                       Adornment="Adornment.End" InputType="@_passwordInput"
                                                       OnAdornmentClick="TogglePasswordVisibility"
                                                       AdornmentIcon="@_passwordInputIcon" />
-                                        <ValidationMessage For="@(() => _loginModel.Password)" />
                                     </MudItem>
 
                                     <MudItem xs="12" Class="d-flex justify-space-between align-center">

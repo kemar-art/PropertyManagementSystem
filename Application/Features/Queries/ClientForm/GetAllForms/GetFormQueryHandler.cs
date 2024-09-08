@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.ILogging;
+using Application.Exceptions;
 using AutoMapper;
 using Domain.Common;
 using Domain.Repository_Interface;
@@ -36,15 +37,15 @@ public class GetFormQueryHandler : IRequestHandler<GetFormQuery, BaseResult<IEnu
             }
 
             // Mapping the retrieved forms to the DTO
-            var mapData = _mapper.Map<IEnumerable<GetAllFormsDto>>(getAllForms);
+            var mapData = _mapper.Map<IEnumerable<GetAllFormsDto>>(getAllForms.Value);
             _appLogger.LogInformation("Successfully retrieved and mapped all forms.");
-
             return BaseResult<IEnumerable<GetAllFormsDto>>.Success(mapData);
         }
         catch (Exception ex)
         {
             _appLogger.LogError("An error occurred while handling GetFormQuery. Exception: {Exception}", ex);
-            return BaseResult<IEnumerable<GetAllFormsDto>>.Failure("An error occurred while retrieving forms. Please try again later.");
+            //return BaseResult<IEnumerable<GetAllFormsDto>>.Failure("An error occurred while retrieving forms. Please try again later.");
+            throw new BadRequestException("An error occurred while handling GetFormQuery. Exception: {Exception}");
         }
     }
 
