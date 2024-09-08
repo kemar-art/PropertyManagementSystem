@@ -21,16 +21,16 @@ namespace PMS.UI.Pages.Client
         [Inject]
         public SweetAlertService Swal { get; set; }
 
-        //[Inject]
-        //ICheckBoxRepository _CheckBoxRepository { get; set; }
+        [Inject]
+        ICheckBoxRepository _CheckBoxRepository { get; set; }
 
         public IEnumerable<FormVM> _indexModel { get; private set; } = [];
 
-        //public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> TypeOfPropertyCheckBoxItemVM { get; set; } = [];
 
-        //public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
 
-        //public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
+        public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
 
 
 
@@ -56,10 +56,6 @@ namespace PMS.UI.Pages.Client
 
             return false;
         };
-
-
-
-
 
         protected void FormEdit(Guid id)
         {
@@ -105,35 +101,35 @@ namespace PMS.UI.Pages.Client
             IsLoading = true;
             try
             {
-                //var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
-                //PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
-                //{
-                //    Id = vm.Id,
-                //    Title = vm.Title,
-                //    IsChecked = vm.IsChecked
-                //}).ToList();
+                var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
+                PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = vm.IsChecked
+                }).ToList();
 
-                //var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
-                //TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
-                //{
-                //    Id = vm.Id,
-                //    Title = vm.Title,
-                //    IsChecked = vm.IsChecked
-                //}).ToList();
+                var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
+                TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = vm.IsChecked
+                }).ToList();
 
                 // Retrieve forms and map checkbox titles
                 _indexModel = await _FormRepository.GetAllForms();
 
-                //foreach (var form in _indexModel)
-                //{
-                //    form.TypeOfPropertySelectedIds = string.Join(", ", TypeOfPropertyCheckBoxItemVM
-                //        .Where(c => form.TypeOfPropertySelectedIds.Split(',').Contains(c.Id.ToString()))
-                //        .Select(c => c.Title));
+                foreach (var checkedItem in _indexModel)
+                {
+                    checkedItem.TypeOfPropertySelectedIds = string.Join(", ", TypeOfPropertyCheckBoxItemVM
+                        .Where(c => checkedItem.TypeOfPropertySelectedIds.Split(',').Contains(c.Id.ToString()))
+                        .Select(c => c.Title));
 
-                //    form.PurposeOfValuationItemSelectedIds = string.Join(", ", PurposeOfEvaluationCheckBoxesVM
-                //        .Where(c => form.PurposeOfValuationItemSelectedIds.Split(',').Contains(c.Id.ToString()))
-                //        .Select(c => c.Title));
-                //}
+                    checkedItem.PurposeOfValuationItemSelectedIds = string.Join(", ", PurposeOfEvaluationCheckBoxesVM
+                        .Where(c => checkedItem.PurposeOfValuationItemSelectedIds.Split(',').Contains(c.Id.ToString()))
+                        .Select(c => c.Title));
+                }
             }
             catch (Exception ex)
             {
