@@ -50,6 +50,6 @@ public class UpdateFormCommand : IRequest<BaseResult<Unit>>
     public Guid? PropertyRegionId { get; set; }
 
     public string TypeOfPropertySelectedIds { get; set; } = string.Empty;
-    public string ServiceRequestItemSelectId { get; set; } = string.Empty;
+
     public string PurposeOfValuationItemSelectedIds { get; set; } = string.Empty;
 }

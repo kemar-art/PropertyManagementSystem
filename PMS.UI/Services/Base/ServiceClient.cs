@@ -4852,9 +4852,6 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("typeOfPropertySelectedIds")]
         public string TypeOfPropertySelectedIds { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("serviceRequestItemSelectId")]
-        public string ServiceRequestItemSelectId { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
         public string PurposeOfValuationItemSelectedIds { get; set; }
 
