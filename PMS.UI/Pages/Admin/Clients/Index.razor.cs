@@ -3,7 +3,7 @@ using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Employee;
 
-namespace PMS.UI.Pages.Admin.Employee
+namespace PMS.UI.Pages.Admin.Clients
 {
     public partial class Index
     {
@@ -37,7 +37,7 @@ namespace PMS.UI.Pages.Admin.Employee
 
         protected override async Task OnInitializedAsync()
         {
-            _indexModel = await _AdminRepository.GetAllEmployees();
+            _indexModel = await _AdminRepository.GetAllClients();
             IsLoading = false;
         }
 

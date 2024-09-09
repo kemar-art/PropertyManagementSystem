@@ -1,0 +1,271 @@
+﻿@layout MudBlazorLayout
+@page "/admin/client/"
+@using PMS.UI.Models.Employee
+@using PMS.UI.Pages.Admin.Shared
+@using MudBlazor
+
+<RightSidebar />
+
+
+<HeadCSS />
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+else if (_indexModel.Any())
+{
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <div class="content">
+                <div class="row mb-1">
+                    <div class="col">
+                        <h1>Client List</h1>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
+                        @* <MudButton @onclick="(() => CreateNewEmployee())" Variant="@Variant.Filled" Color="@Color.Success">Create Employee</MudButton> *@
+                    </div>
+                </div>
+                <MudDataGrid T="ApplicationUserVM" Items="@_indexModel" SortMode="SortMode.Multiple" Filterable="true"
+                             QuickFilter="@_quickFilter" Hideable="true">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Employees</MudText>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+                        </MudTextField>
+                    </ToolBarContent>
+                    <Columns>
+                        <PropertyColumn Property="x => x.FirstName" Title="First Name" />
+                        <PropertyColumn Property="x => x.LastName" Title="Last Name" />
+                        <PropertyColumn Property="x => x.Email" Title="Email" />
+                        <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
+                        @* <PropertyColumn Property="x => x.Role" Title="Status" /> *@
+                        <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
+                            <CellTemplate>
+                                <MudStack Row>
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                    @* <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Warning"><i class="fa-solid fa-pen-clip"></i></MudButton>
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Info">Hire</MudButton>
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Hire</MudButton> *@
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                    <PagerContent>
+                        <MudDataGridPager T="ApplicationUserVM" />
+                    </PagerContent>
+                </MudDataGrid>
+
+            </div>
+            <!-- content -->
+            <br />
+            <AdminFooter />
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+
+    <!-- END wrapper -->
+}
+
+
+
+@* @page "/employee/"
+
+
+<h3>Employee List</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">
+        @Message
+    </div>
+}
+
+
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+}
+else if (ApplicationUserVM.Any())
+{
+    <table class="table table-bordered table-striped" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                 <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in ApplicationUserVM)
+            {
+                <tr>
+                    <td> <img src="@user.ImagePath" class="rounded-circle" style="width:30px;height:30px;" alt="image" /></td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@(@user.IsActive ? "Active" : "Disabled")</td>
+                    <td class="btn-group" role="group" style="width: 100%">
+                        <button @onclick="(() => EditEmployee())" class="btn btn-warning">Edit</button>
+                        <button @onclick="(() => EmployeeDetails()" class="btn btn-info">Details</button>
+                        <button @onclick="(() => DeleteEmployee())" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+<MudDataGrid @ref="dataGrid" T="ApplicationUserVM" ServerData="ServerReload"  Filterable="false">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Employees</MudText>
+                        <MudSpacer />
+                        <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <Columns>
+                        <PropertyColumn Property="x => x.FirstName" Title="First Name" />
+                        <PropertyColumn Property="x => x.LastName" Title="Last Name" />
+                        <PropertyColumn Property="x => x.Email" Title="Email" />
+                        <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
+                        <PropertyColumn Property="x => x.Address" Title="Address" />
+                        <PropertyColumn Property="x => x.Role" Title="Status" />
+                    </Columns>
+                    <PagerContent>
+                        <MudDataGridPager T="ApplicationUserVM" />
+                    </PagerContent>
+
+                </MudDataGrid>
+
+
+
+
+
+
+
+                 public partial class Index
+    {
+        string searchString = null;
+        MudDataGrid<ApplicationUserVM> dataGrid;
+
+        [Inject]
+        IAdminRepository _AdminRepository { get; set; }
+
+        public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
+
+        private bool IsLoading { get; set; } = true;
+
+        protected override async Task OnInitializedAsync()
+        {
+            // Initial employee data load
+            _indexModel = await _AdminRepository.GetAllEmployees();
+            IsLoading = false;
+        }
+
+        private Task OnSearch(string text)
+        {
+            searchString = text;
+            return dataGrid.ReloadServerData();
+        }
+
+        private async Task<GridData<ApplicationUserVM>> ServerReload(GridState<ApplicationUserVM> state)
+        {
+            // Simulate fetching the filtered and sorted employee data from a repository
+            IEnumerable<ApplicationUserVM> data = await _AdminRepository.GetAllEmployees();
+            await Task.Delay(300); // Simulate delay
+
+            // Filter data based on the search string
+            data = data.Where(employee =>
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (employee.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    employee.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    employee.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                return false;
+            }).ToArray();
+
+            // Sort data
+            var sortDefinition = state.SortDefinitions.FirstOrDefault();
+            if (sortDefinition != null)
+            {
+                switch (sortDefinition.SortBy)
+                {
+                    case nameof(ApplicationUserVM.FirstName):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.FirstName);
+                        break;
+                    case nameof(ApplicationUserVM.LastName):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.LastName);
+                        break;
+                    case nameof(ApplicationUserVM.Email):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Email);
+                        break;
+                    case nameof(ApplicationUserVM.PhoneNumber):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.PhoneNumber);
+                        break;
+                    case nameof(ApplicationUserVM.Address):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Address);
+                        break;
+                    case nameof(ApplicationUserVM.Role):
+                        data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Role);
+                        break;
+                    //case nameof(ApplicationUserVM.Department):
+                    //    data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Department);
+                    //    break;
+                    //case nameof(ApplicationUserVM.Position):
+                    //    data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Position);
+                    //    break;
+                    //case nameof(ApplicationUserVM.Department):
+                    //    data = data.OrderByDirection(sortDefinition.Descending ? SortDirection.Descending : SortDirection.Ascending, e => e.Department);
+                    //    break;
+                }
+            }
+
+            // Pagination
+            var pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+            return new GridData<ApplicationUserVM> { TotalItems = data.Count(), Items = pagedData };
+        }
+    }
+
+
+
+
+
+ *@
+

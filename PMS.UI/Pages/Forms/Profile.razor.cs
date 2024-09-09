@@ -12,7 +12,7 @@ using PMS.UI.Services.Base;
 using System;
 using System.Threading.Tasks;
 
-namespace PMS.UI.Pages.Client
+namespace PMS.UI.Pages.Forms
 {
     public partial class Profile
     {

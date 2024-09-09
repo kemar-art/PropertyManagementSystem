@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
+namespace Application.Features.Queries.Admin.Users.SingleUser;
 
 public class GetASingleUserDTO
 {

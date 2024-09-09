@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers
+namespace Application.Features.Queries.Admin.Users.ClientUsers
 {
-    public class GetAllUsersDTO
+    public class GetAllClientUsersDTO
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -24,6 +24,6 @@ namespace Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers
         public DateTime DateRegistered { get; set; } = DateTime.Now;
         public DateTime DateEnded { get; set; } = DateTime.Now;
 
-        
+
     }
 }

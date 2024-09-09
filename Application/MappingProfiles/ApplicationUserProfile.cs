@@ -1,6 +1,7 @@
 ﻿using Application.Features.Commands.User.ClientUsers.Update;
-using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
-using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
+using Application.Features.Queries.Admin.Users.BackOficeUsers;
+using Application.Features.Queries.Admin.Users.ClientUsers;
+using Application.Features.Queries.Admin.Users.SingleUser;
 using AutoMapper;
 using Domain;
 using System;
@@ -15,7 +16,8 @@ namespace Application.MappingProfiles
     {
         public ApplicationUserProfile()
         {
-            CreateMap<ApplicationUser, GetAllUsersDTO>().ReverseMap();
+            CreateMap<ApplicationUser, GetAllBackOfficeUsersDTO>().ReverseMap();
+            CreateMap<ApplicationUser, GetAllClientUsersDTO>().ReverseMap();
             CreateMap<ApplicationUser, GetASingleUserDTO>().ReverseMap();
 
             CreateMap<ClientUpdateCommand, ApplicationUser>().ReverseMap();

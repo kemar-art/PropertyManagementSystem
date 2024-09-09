@@ -7,7 +7,7 @@ using PMS.UI.Models.Form;
 using PMS.UI.Services;
 using PMS.UI.Services.Base;
 
-namespace PMS.UI.Pages.Client
+namespace PMS.UI.Pages.Forms
 {
     public partial class Details
     {

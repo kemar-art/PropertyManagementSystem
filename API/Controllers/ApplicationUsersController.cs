@@ -3,8 +3,9 @@ using Application.Features.Commands.User.BackOfficeUsers.CreateUser;
 using Application.Features.Commands.User.BackOfficeUsers.DeleteUser;
 using Application.Features.Commands.User.BackOfficeUsers.UpdateUser;
 using Application.Features.Commands.User.ClientUsers.Update;
-using Application.Features.Queries.Admin.Users.AppUsers.GetAllUsers;
-using Application.Features.Queries.Admin.Users.AppUsers.GetASingleUser;
+using Application.Features.Queries.Admin.Users.BackOficeUsers;
+using Application.Features.Queries.Admin.Users.ClientUsers;
+using Application.Features.Queries.Admin.Users.SingleUser;
 using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,10 +30,19 @@ namespace API.Controllers
 
         // GET: api/<ApplicationUsersController>
         [HttpGet]
-        public async Task<IEnumerable<GetAllUsersDTO>> Get()
+        [Route("admins")]
+        public async Task<IEnumerable<GetAllBackOfficeUsersDTO>> GetAllBackOfficeUsers()
         {
-            var getAllAppUsers = await _mediator.Send(new GetAllUsersQuery());
-            return getAllAppUsers;
+            var users = await _mediator.Send(new GetAllBackOfficeUsersQuery());
+            return users;
+        }
+
+        [HttpGet]
+        [Route("cliets")]
+        public async Task<IEnumerable<GetAllClientUsersDTO>> GetAllClientUsers()
+        {
+            var users = await _mediator.Send(new GetAllClientUsersQuery());
+            return users;
         }
 
         // GET api/<ApplicationUsersController>/5

@@ -55,9 +55,15 @@ namespace PMS.UI.Services.Repository_Implementation
             }
         }
 
+        public async Task<IEnumerable<ApplicationUserVM>> GetAllClients()
+        {
+            var getAllEmployees = await _client.ClietsAsync();
+            return _mapper.Map<IEnumerable<ApplicationUserVM>>(getAllEmployees);
+        }
+
         public async Task<IEnumerable<ApplicationUserVM>> GetAllEmployees()
         {
-            var getAllEmployees = await _client.ApplicationUsersAllAsync();
+            var getAllEmployees = await _client.AdminsAsync();
             return _mapper.Map<IEnumerable<ApplicationUserVM>>(getAllEmployees);
         }
 

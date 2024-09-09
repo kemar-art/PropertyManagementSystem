@@ -6,7 +6,7 @@ using PMS.UI.Contracts;
 using PMS.UI.Models.Form;
 using System.Security.Claims;
 
-namespace PMS.UI.Pages.Client
+namespace PMS.UI.Pages.Forms
 {
     public partial class Success
     {

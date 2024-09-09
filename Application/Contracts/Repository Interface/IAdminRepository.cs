@@ -3,6 +3,8 @@ using Application.Features.Commands.User.BackOfficeUsers.CreateUser;
 using Application.Features.Commands.User.BackOfficeUsers.UpdateUser;
 using Application.Features.Commands.User.ClientUsers;
 using Application.Features.Commands.User.LoginUsers;
+using Application.Features.Queries.Admin.Users.BackOficeUsers;
+using Application.Features.Queries.Admin.Users.ClientUsers;
 using Domain;
 using Domain.Common;
 using Domain.Repository_Interface;
@@ -22,5 +24,8 @@ namespace Application.Contracts.Repository_Interface
         Task<Unit> MarkFormHasComplete(Guid? formId, string? appraiserId);
         Task<Unit> ReturnTheFormToAppraiserForCompletion(Guid? returnFormToAppraiser);
         Task<IEnumerable<IdentityRole>> GetRoles();
+
+        Task<IEnumerable<GetAllBackOfficeUsersDTO>> GetAllBackOfficeUsers();
+        Task<IEnumerable<GetAllClientUsersDTO>> GetAllClientUsers();
     }
 }

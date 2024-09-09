@@ -1,0 +1,164 @@
+﻿@layout MudBlazorLayout
+@page "/submitted-forms/"
+@using MudBlazor
+@using PMS.UI.Models.Form
+@using PMS.UI.Pages.Admin.Shared
+
+
+
+
+
+<RightSidebar />
+
+
+<HeadCSS />
+@if (IsLoading)
+
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+
+else if (_indexModel.Any())
+
+{
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <div class="content">
+                <div class="row mb-1">
+                    <div class="col">
+                        <h1>Job List</h1>
+                    </div>
+                    @*                     <div class="col d-flex justify-content-end align-items-center">
+                <MudButton @onclick="(() => CreateNewEmployee())" Variant="@Variant.Filled" Color="@Color.Success">Create Employee</MudButton>
+                </div> *@
+                </div>
+                <MudDataGrid T="FormVM" Items="@_indexModel" SortMode="SortMode.Multiple" Filterable="true"
+                             QuickFilter="@_quickFilter" Hideable="true">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Joss</MudText>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start"
+                                      Immediate="true" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+                                      Class="mt-0">
+                        </MudTextField>
+                    </ToolBarContent>
+                    <Columns>
+                        <TemplateColumn Title="Id">
+                            <CellTemplate>
+                                @string.Format("{0:D7}", context.Item.CustomerId)
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <PropertyColumn Property="x => x.FirstName" Title="First Name" />
+                        <PropertyColumn Property="x => x.LastName" Title="Last Name" />
+                        <PropertyColumn Property="x => x.Email" Title="Email" />
+                        <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
+                        <PropertyColumn Property="x => x.Address" Title="Address" />
+                        @*< PropertyColumn Property="x => x.PropertyAddress" Title="Property Address" />
+                        <PropertyColumn Property="x => x.TypeOfPropertySelectedIds" Title="Type Of Property" />
+                        <PropertyColumn Property="x => x.PurposeOfValuationItemSelectedIds" Title="Purpose Of Valuation" /> *@
+                        <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
+                            <CellTemplate>
+                                <MudStack Row>
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                    <PagerContent>
+                        <MudDataGridPager T="FormVM" />
+                    </PagerContent>
+                </MudDataGrid>
+
+
+
+            </div>
+            <!-- content -->
+            <br />
+            <AdminFooter />
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+
+    <!-- END wrapper -->
+}
+
+
+
+
+@* @page "/submitted-forms/"
+
+<h3>Client List</h3>
+
+
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">
+        @Message
+    </div>
+}
+
+@if (IsLoading)
+{
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+}
+else if (_indexModel.Any())
+{
+    <table class="table table-bordered table-striped" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Client ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Property Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _indexModel)
+            {
+                <tr>
+                    <td>@string.Format("{0:D7}", item.CustomerId)</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.PropertyAddress</td>
+                    <td class="btn-group" role="group" style="width: 100%">
+                        <button @onclick="(() => FormEdit(item.Id))" class="btn btn-warning">Edit</button>
+                        <button @onclick="(() => FormDetails(item.Id))" class="btn btn-info">Details</button>
+                        <button @onclick="(() => FormDeletion(item.Id))" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        No records found.
+    </div>
+} *@
+

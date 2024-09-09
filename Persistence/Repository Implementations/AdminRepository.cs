@@ -32,6 +32,9 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using Microsoft.AspNetCore.Rewrite;
+using AutoMapper;
+using Application.Features.Queries.Admin.Users.BackOficeUsers;
+using Application.Features.Queries.Admin.Users.ClientUsers;
 
 namespace Persistence.Repository_Implementations
 {
@@ -43,14 +46,10 @@ namespace Persistence.Repository_Implementations
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IEmailSender _emailSender;
+        private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IAppLogger<AdminRepository> _appLogger;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
-
-        const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
-        const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const string NUMBERS = "1234567890";
-        const string SPECIALS = @"`~!@£$%^&*()[]#€?;+<>";
 
         public AdminRepository(
             PMSDatabaseContext dbContext,
@@ -59,6 +58,7 @@ namespace Persistence.Repository_Implementations
             IHttpContextAccessor httpContextAccessor,
             IUserStore<ApplicationUser> userStore,
             IEmailSender emailSender,
+            IMapper mapper,
             RoleManager<IdentityRole> roleManager,
             IAppLogger<AdminRepository> appLogger)
             : base(dbContext)
@@ -68,6 +68,7 @@ namespace Persistence.Repository_Implementations
             _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));
             _emailSender = emailSender; //?? throw new ArgumentNullException(nameof(emailSender));
+            _mapper = mapper;
             _roleManager = roleManager;
             _appLogger = appLogger;
             _emailStore = (IUserEmailStore<ApplicationUser>)userStore; //?? throw new ArgumentNullException(nameof(userStore));
@@ -143,12 +144,6 @@ namespace Persistence.Repository_Implementations
                                         //.Include(x => x.Region)
                                         .Where(x => x.Status == status)
                                         .Include(x => x.Appraiser)
-                                        //.Include(x => x.ServiceRequestFormServiceRequestItem)
-                                        //.ThenInclude(x => x.ServiceRequestItem)
-                                        //.Include(x => x.ServiceRequesFormTypeOfPropertyItem)
-                                        //.ThenInclude(x => x.TypeOfPropertyItem)
-                                        //.Include(x => x.ServiceRequestFormPurposeOfValuationItem)
-                                        //.ThenInclude(x => x.PurposeOfValuationItem)
                                         .ToListAsync();
         }
 
@@ -435,6 +430,46 @@ namespace Persistence.Repository_Implementations
             return await _roleManager.Roles.Where(r => r.Name != Roles.Client).ToListAsync();
         }
 
+        public async Task<IEnumerable<GetAllBackOfficeUsersDTO>> GetAllBackOfficeUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            // Filter users who are not in the "Client" role
+            var nonClientUsers = new List<ApplicationUser>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                if (!roles.Contains(Roles.Client))
+                {
+                    nonClientUsers.Add(user);
+                }
+            }
+
+            var backOfficeUsers = _mapper.Map<IEnumerable<GetAllBackOfficeUsersDTO>>(nonClientUsers);
+
+            return backOfficeUsers;
+        }
+
+        public async Task<IEnumerable<GetAllClientUsersDTO>> GetAllClientUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            var nonBackOfficeUsers = new List<ApplicationUser>();
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                if (roles.Contains(Roles.Client))
+                {
+                    nonBackOfficeUsers.Add(user);
+                }
+            }
+
+            var clientUsers = _mapper.Map<IEnumerable<GetAllClientUsersDTO>>(nonBackOfficeUsers);
+
+            return clientUsers;
+        }
+
         private FormFile ConvertBase64ToFormFile(string base64ImageData)
         {
             try
@@ -509,16 +544,16 @@ namespace Persistence.Repository_Implementations
             var passwordSize = options.RequiredLength;
 
             var charSet = new StringBuilder();
-            if (options.RequireLowercase) charSet.Append(LOWER_CASE);
-            if (options.RequireUppercase) charSet.Append(UPPER_CASE);
-            if (options.RequireDigit) charSet.Append(NUMBERS);
-            if (options.RequireNonAlphanumeric) charSet.Append(SPECIALS);
+            if (options.RequireLowercase) charSet.Append(RandomPasswordCharSets.LOWER_CASE);
+            if (options.RequireUppercase) charSet.Append(RandomPasswordCharSets.UPPER_CASE);
+            if (options.RequireDigit) charSet.Append(RandomPasswordCharSets.NUMBERS);
+            if (options.RequireNonAlphanumeric) charSet.Append(RandomPasswordCharSets.SPECIALS);
 
             var password = new char[passwordSize];
-            password[0] = LOWER_CASE[_random.Next(LOWER_CASE.Length)];
-            if (options.RequireUppercase) password[1] = UPPER_CASE[_random.Next(UPPER_CASE.Length)];
-            if (options.RequireDigit) password[2] = NUMBERS[_random.Next(NUMBERS.Length)];
-            if (options.RequireNonAlphanumeric) password[3] = SPECIALS[_random.Next(SPECIALS.Length)];
+            password[0] = RandomPasswordCharSets.LOWER_CASE[_random.Next(RandomPasswordCharSets.LOWER_CASE.Length)];
+            if (options.RequireUppercase) password[1] = RandomPasswordCharSets.UPPER_CASE[_random.Next(RandomPasswordCharSets.UPPER_CASE.Length)];
+            if (options.RequireDigit) password[2] = RandomPasswordCharSets.NUMBERS[_random.Next(RandomPasswordCharSets.NUMBERS.Length)];
+            if (options.RequireNonAlphanumeric) password[3] = RandomPasswordCharSets.SPECIALS[_random.Next(RandomPasswordCharSets.SPECIALS.Length)];
 
             for (int i = 4; i < passwordSize; i++)
             {
