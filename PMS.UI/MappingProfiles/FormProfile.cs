@@ -13,6 +13,7 @@ public class FormProfile : Profile
        
 
         // Other mappings
+        CreateMap<FormVM, Form>().ReverseMap();
         CreateMap<FormVM, GetAllFormsDto>().ReverseMap();
         CreateMap<FormVM, GetFormDetailsDto>().ReverseMap();
         CreateMap<CreateFormCommand, FormVM>().ReverseMap();

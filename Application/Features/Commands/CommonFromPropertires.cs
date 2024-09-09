@@ -11,5 +11,7 @@ namespace Application.Features.Commands
     {
         public Guid FormId { get; set; }
         public string AppraiserId { get; set; } = string.Empty;
+
+
     }
 }

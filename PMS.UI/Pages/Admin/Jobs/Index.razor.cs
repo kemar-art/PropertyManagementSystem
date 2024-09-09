@@ -4,6 +4,7 @@ using PMS.UI.Models.Form;
 using PMS.UI.Models;
 using PMS.UI.Contracts;
 using Application.Contracts.Repository_Interface;
+using PMS.UI.StaticDetails;
 
 namespace PMS.UI.Pages.Admin.Jobs
 {
@@ -115,7 +116,7 @@ namespace PMS.UI.Pages.Admin.Jobs
                 }).ToList();
 
                 // Retrieve forms and map checkbox titles
-                _indexModel = await _FormRepository.GetAllForms();
+                _indexModel = await _FormRepository.GetFromByStatus(FormStatus.StatusSubmitted);
 
                 foreach (var checkedItem in _indexModel)
                 {

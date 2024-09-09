@@ -4,6 +4,8 @@ using Application.Features.Commands.ClientForm.UpdateForm;
 using Application.Features.Queries.ClientForm.GetAllForms;
 using Application.Features.Queries.ClientForm.GetASingleForm;
 using Application.Features.Queries.ClientForm.GetFormCount;
+using Application.Features.Queries.ClientForm.GetFormsByStatus;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,11 +32,19 @@ namespace API.Controllers
             return getAllForms.Value;
         }
 
-        [HttpGet("status")]
+        [HttpGet("formcount")]
         public async Task<int> GetFormCount([FromQuery] string status)
         {
-            var getFormCount = await _mediator.Send(new GetFormCountQuery(status));
-            return getFormCount;
+            var formCount = await _mediator.Send(new GetFormCountQuery(status));
+            return formCount;
+        }
+
+
+        [HttpGet("status")]
+        public async Task<IEnumerable<Form>> GetFormByStatus([FromQuery] string status)
+        {
+            var formStatus = await _mediator.Send(new GetFormsByStatusQuery(status));
+            return formStatus.Value;
         }
 
 

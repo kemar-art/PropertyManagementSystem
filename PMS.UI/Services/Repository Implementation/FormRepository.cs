@@ -6,6 +6,7 @@ using PMS.UI.Contracts;
 using PMS.UI.Models;
 using PMS.UI.Models.Form;
 using PMS.UI.Services.Base;
+using PMS.UI.StaticDetails;
 
 namespace PMS.UI.Services.Repository_Implementation
 {
@@ -60,6 +61,13 @@ namespace PMS.UI.Services.Repository_Implementation
             return _mapper.Map<IEnumerable<FormVM>>(getAllForms);
         }
 
+        public async Task<IEnumerable<FormVM>> GetFromByStatus(string status)
+        {
+            var getAllForms = await _client.StatusAsync(status);
+            return _mapper.Map<IEnumerable<FormVM>>(getAllForms);
+            
+        }
+
         public async Task<FormVM> GetASingleFormDetails(Guid id)
         {
             var getASingleForm = await _client.FormsGETAsync(id);
@@ -68,7 +76,7 @@ namespace PMS.UI.Services.Repository_Implementation
 
         public async Task<int> GetFromCount(string status)
         {
-            var getFormCount = await _client.StatusAsync(status);
+            var getFormCount = await _client.FormcountAsync(status);
             return getFormCount;
         }
 

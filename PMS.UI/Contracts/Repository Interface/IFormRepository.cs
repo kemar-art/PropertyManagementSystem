@@ -6,6 +6,7 @@ namespace PMS.UI.Contracts
     public interface IFormRepository
     {
         Task<IEnumerable<FormVM>> GetAllForms();
+        Task<IEnumerable<FormVM>> GetFromByStatus(string status);
         Task<FormVM> GetASingleFormDetails(Guid id);
         Task<Response<Guid>> CreateForm(FormVM form);
         Task<Response<Guid>> UpdateForm(FormVM form);

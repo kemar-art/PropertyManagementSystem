@@ -141,9 +141,9 @@ namespace Persistence.Repository_Implementations
         public async Task<IEnumerable<Form>> GetFormByStatusForAdmin(string status)
         {
             return await _dbContext.Forms
-                                        //.Include(x => x.Region)
-                                        .Where(x => x.Status == status)
-                                        .Include(x => x.Appraiser)
+                                        //.Include(x => x.PropertyRegion)
+                                        //.Where(x => x.Status == status)
+                                        //.Include(x => x.Appraiser)
                                         .ToListAsync();
         }
 
