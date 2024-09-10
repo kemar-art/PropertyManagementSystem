@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Client;

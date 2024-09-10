@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using PMS.UI.Services.Base;
+﻿using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

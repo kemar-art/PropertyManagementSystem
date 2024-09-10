@@ -33,7 +33,7 @@ builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = n
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddAuthorizationCore();
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
