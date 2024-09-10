@@ -1,0 +1,181 @@
+﻿@layout MudBlazorLayout
+@page "/edit/profile/{userId}"
+@using MudBlazor
+@using PMS.UI.Models.Form
+@using PMS.UI.Pages.Admin.Shared
+@using PMS.UI.StaticDetails
+
+
+<RightSidebar />
+
+
+<HeadCSS />
+@if (IsLoading)
+
+{
+    <div class="loading-overlay">
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
+    </div>
+}
+
+else 
+{
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <div class="content">
+                <MudTHeadRow Class="d-flex justify-content-center align-items-center h-100">
+                    <div class="col col-xl-12">
+                        <MudItem xs="12">
+                            <div class="form-container">
+                                <EditForm Model="@_editModel" OnValidSubmit="OnValidSubmit">
+                                    <DataAnnotationsValidator />
+                                    <MudGrid Class="gutters">
+                                        <MudItem xl="3" lg="3" md="12" sm="12" xs="12">
+                                            <MudCard Class="h-100">
+                                                <MudCardContent>
+                                                    <MudImage Width="200" Height="220" Src="@(_editModel.ImageBase64 ?? "https://bootdey.com/img/Content/avatar/avatar7.png")" Alt="Profile Image" />
+
+                                                    <MudText Typo="Typo.h5" Class="pt-2 text-center">@($"{_editModel.FirstName} {_editModel.LastName}")</MudText>
+
+                                                    @if (IsEditMode)
+                                                    {
+                                                        <MudGrid Class="justify-content-center">
+                                                            <MudItem xs="12" Class="text-center">
+                                                                <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" MaximumFileCount="1" FilesChanged="UploadFile">
+                                                                    <ActivatorContent>
+                                                                        <MudButton Variant="Variant.Filled"
+                                                                                   Color="Color.Primary"
+                                                                                   StartIcon="@Icons.Material.Filled.CloudUpload">
+                                                                            Upload Photo
+                                                                        </MudButton>
+                                                                    </ActivatorContent>
+                                                                </MudFileUpload>
+                                                            </MudItem>
+
+                                                            @if (fileName != null)
+                                                            {
+                                                                <MudItem xs="12" Class="text-center mt-2">
+                                                                    <MudList T="string">
+                                                                        <MudListItem Icon="@Icons.Material.Filled.AttachFile">
+                                                                            @fileName <code>@fileSize bytes</code>
+                                                                        </MudListItem>
+                                                                    </MudList>
+                                                                </MudItem>
+                                                            }
+                                                        </MudGrid>
+                                                    }
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                        <MudItem xl="9" lg="9" md="12" sm="12" xs="12">
+                                            <MudCard Class="h-100">
+                                                <MudCardContent>
+                                                    <MudGrid Class="gutters">
+                                                        <MudItem xs="12">
+                                                            <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="First Name" @bind-Value="_editModel.FirstName" For="@(() => _editModel.FirstName)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_editModel.FirstName))" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Last Name" @bind-Value="_editModel.LastName" For="@(() => _editModel.LastName)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_editModel.LastName))" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Email" @bind-Value="_editModel.Email" For="@(() => _editModel.Email)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_editModel.Email))" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Phone Number" @bind-Value="_editModel.PhoneNumber" For="@(() => _editModel.PhoneNumber)" Disabled="@(!IsEditMode)" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudText Typo="Typo.subtitle1">Gender</MudText>
+                                                            <MudRadioGroup T="string" @bind-Value="_editModel.Gender" For="@(() => _editModel.Gender)" Disabled="@(!IsEditMode)">
+                                                                <MudRadio Value="UserGender.Male">Male</MudRadio>
+                                                                <MudRadio Value="UserGender.Female">Female</MudRadio>
+                                                            </MudRadioGroup>
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_editModel.DateOfBirth" Rounded="true" For="@(() => _editModel.DateOfBirth)" Disabled="@(!IsEditMode)" />
+                                                        </MudItem>
+                                                    </MudGrid>
+                                                    <MudDivider Class="my-3" />
+                                                    <MudGrid Class="gutters">
+                                                        <MudItem xs="12">
+                                                            <MudText Typo="Typo.h6" Class="mt-3 mb-2 text-primary">Address</MudText>
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Address" @bind-Value="_editModel.Address" For="@(() => _editModel.Address)" Disabled="@(!IsEditMode)" OnBlur="() => ConvertToUpperCase(nameof(_editModel.Address))" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_editModel.ClientRegionId" Disabled="@(!IsEditMode)">
+                                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                                @foreach (var region in Regions)
+                                                                {
+                                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                                }
+                                                            </MudSelect>
+                                                            <ValidationMessage For="@(() => _editModel.ClientRegionId)" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                        </MudItem>
+                                                    </MudGrid>
+                                                    <MudDivider Class="my-3" />
+                                                    <MudItem xs="12">
+                                                        <div class="row">
+                                                            @if (IsEditMode)
+                                                            {
+                                                                <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Success">Save</MudButton>
+                                                                </div>
+                                                                <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Error" OnClick="CancelEdit">Cancel</MudButton>
+                                                                </div>
+                                                                <div class="col-12 col-md-4 mb-2 button-edit-mode">
+                                                                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" OnClick="BackToIndex"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col-12 col-md-6 mb-2">
+                                                                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Warning" OnClick="ToggleEditMode">Edit</MudButton>
+                                                                </div>
+                                                                <div class="col-12 col-md-6 mb-2">
+                                                                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" OnClick="BackToIndex"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </MudItem>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                    </MudGrid>
+                                </EditForm>
+                            </div>
+                        </MudItem>
+                    </div>
+                </MudTHeadRow>
+            </div>
+            <!-- content -->
+            <br />
+            <AdminFooter />
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+
+    <!-- END wrapper -->
+}
+

@@ -1,3 +1,4 @@
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PMS.UI.Contracts;
@@ -9,6 +10,10 @@ namespace PMS.UI.Pages.Admin.Clients
     {
         public string _searchString;
         private bool IsLoading { get; set; } = true;
+        public string Message { get; set; } = string.Empty;
+
+        [Inject]
+        public SweetAlertService Swal { get; set; }
 
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
@@ -45,7 +50,47 @@ namespace PMS.UI.Pages.Admin.Clients
         {
             _NavigationManager.NavigateTo("/create-employee/");
         }
+
+        protected void EditForm(Guid id)
+        {
+            _NavigationManager.NavigateTo($"/edit/profile/{id}");
+        }
+        
+        protected void EmployeeDetail(Guid id)
+        {
+            _NavigationManager.NavigateTo($"/edit/client/details/{id}");
+        }
+
+        protected async Task EmployeeDeletion(Guid id)
+        {
+            var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Are you sure?",
+                Text = "You won't be able to revert this!",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonColor = "#d33",
+                CancelButtonColor = "#008000",
+                ConfirmButtonText = "Yes, delete it!"
+            });
+            if (result.IsConfirmed)
+            {
+                var response = await _AdminRepository.DeleteEmployee(id.ToString());
+                if (response.Success)
+                {
+                    // Refresh the data after deletion
+                    _indexModel = await _AdminRepository.GetAllClients();
+                    StateHasChanged();
+                }
+                else
+                {
+                    Message = response.Message;
+                }
+            }
+        }
     }
+
+
 }
 
 

@@ -213,7 +213,7 @@
                                 <MudItem xs="12" class="mt-4">
                                     <div class="row">
                                         <div class="col">
-                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" @onclick="PreviousStep" Disabled="@((currentStep == 1))"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                            <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" OnClick="PreviousStep" Disabled="@((currentStep == 1))"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
                                         </div>
 
 
@@ -221,7 +221,7 @@
 
                                         {
                                             <div class="col">
-                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" @onclick="NextStep">Next &nbsp;<i class="fa-solid fa-forward-step"></i></MudButton>
+                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" OnClick="NextStep">Next &nbsp;<i class="fa-solid fa-forward-step"></i></MudButton>
                                             </div>
 
                                         }

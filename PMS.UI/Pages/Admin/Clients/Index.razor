@@ -53,9 +53,9 @@ else if (_indexModel.Any())
                         <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
                             <CellTemplate>
                                 <MudStack Row>
-                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
-                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
-                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                    <MudIconButton Variant="Variant.Filled" OnClick="() => EditForm(context.Item.Id)" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
+                                    <MudIconButton Variant="Variant.Filled" OnClick="() => EmployeeDetail(context.Item.Id)" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" OnClick="() => EmployeeDeletion(context.Item.Id)" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                                     @* <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Warning"><i class="fa-solid fa-pen-clip"></i></MudButton>
                                     <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Info">Hire</MudButton>
                                     <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Hire</MudButton> *@

@@ -6,6 +6,7 @@ namespace PMS.UI.Models.Employee
 {
     public class ApplicationUserVM
     {
+        public Guid Id { get; set; }
         [Required]
         public string FirstName { get; set; } = string.Empty;
         [Required]
