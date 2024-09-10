@@ -57,7 +57,7 @@ namespace PMS.UI.Pages.Forms
             return false;
         };
 
-        protected void FormEdit(Guid id)
+        protected void EditForm(Guid id)
         {
             _NavigationManager.NavigateTo($"/edit/{id}");
         }
@@ -67,7 +67,7 @@ namespace PMS.UI.Pages.Forms
             _NavigationManager.NavigateTo($"/details/{id}");
         }
 
-        protected async Task FormDeletion(Guid id)
+        protected async Task DeleteForm(Guid id)
         {
             var result = await Swal.FireAsync(new SweetAlertOptions
             {
@@ -133,7 +133,7 @@ namespace PMS.UI.Pages.Forms
             }
             catch (Exception ex)
             {
-                Message = $"An error occurred: {ex.Message}";
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
             finally
             {

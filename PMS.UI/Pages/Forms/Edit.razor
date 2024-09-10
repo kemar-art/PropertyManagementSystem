@@ -5,55 +5,21 @@
 @using PMS.UI.StaticDetails
 @* <h3>Create</h3> *@
 @using MudBlazor
-@* <div class="wrapper">
-    <CustomHeader />
-
-    @if (IsLoading)
-
-
-
-    {
-        <div class="loading-overlay">
-            @*  <div class="spinner"></div> 
-            <div id="preloader"></div>
-        </div>
-    }
-
-
-
-    else
-
-
-
-
-
-
-
-    {
-
-
-        <div class="content">
-           
-        </div>
-    }
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    <Footer />
-</div> *@
-
-
 <RightSidebar />
 
 
 <HeadCSS />
 @if (IsLoading)
+
 {
     <div class="loading-overlay">
         @*  <div class="spinner"></div> *@
         <div id="preloader"></div>
     </div>
 }
+
 else
+
 {
     <!-- Begin page -->
     <div class="wrapper">
@@ -70,232 +36,180 @@ else
                 <div class="form-container">
                     <EditForm EditContext="EditContext" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
-                        @* <ValidationSummary /> *@
                         <MudGrid>
                             <MudItem xs="12">
                                 <MudPaper Class="pa-4 lifted">
-                                    <!-- Step 1: Client Details -->
-                                    @if (currentStep == 1)
-
-                                    {
-                                        <MudPaper Class="pa-4 mt-4 lifted">
-                                            <MudText Typo="Typo.h4" Class="text-center">CLIENT INFORMATION</MudText>
-                                            <MudDivider />
-                                            <MudGrid>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="First Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.FirstName))" @bind-Value="_editModel.FirstName" For="@(() => _editModel.FirstName)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Last Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.LastName))" @bind-Value="_editModel.LastName" For="@(() => _editModel.LastName)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Phone Number" @bind-Value="_editModel.PhoneNumber" For="@(() => _editModel.PhoneNumber)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Email" @onblur="() => ConvertToUpperCase(nameof(_editModel.Email))" @bind-Value="_editModel.Email" For="@(() => _editModel.Email)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Instructions Issued By" @onblur="() => ConvertToUpperCase(nameof(_editModel.InstructionsIssuedBy))" @bind-Value="_editModel.InstructionsIssuedBy" For="@(() => _editModel.InstructionsIssuedBy)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudSelect T="Guid" Label="Parish" @bind-Value="_editModel.ClientRegionId">
-                                                        <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
-                                                        @foreach (var region in Regions)
-
-                                                        {
-                                                            <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
-                                                        }
-                                                    </MudSelect>
-                                                    <MudText Typo="Typo.overline">
-                                                        <ValidationMessage For="@(() => _editModel.ClientRegionId)" />
-                                                    </MudText>
-
-
-                                                </MudItem>
-                                                <MudItem xs="12">
-                                                    <MudTextField T="string" Label="Address" @onblur="() => ConvertToUpperCase(nameof(_editModel.Address))" @bind-Value="_editModel.Address" For="@(() => _editModel.Address)" />
-
-                                                </MudItem>
-                                            </MudGrid>
-                                        </MudPaper>
-                                    }
-
-                                    <!-- Step 2: Property Details -->
-                                    @if (currentStep == 2)
-
-                                    {
-                                        <MudPaper Class="pa-4 mt-4 lifted">
-                                            <MudText Typo="Typo.h4" Class="text-center pb-2">PROPERTY INFORMATION</MudText>
-                                            <MudDivider />
-                                            <MudGrid>
-                                                @* <MudItem xs="12">
-                                        <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
-                                        @if (!string.IsNullOrEmpty(_editModel.ServiceRequestValidationMessage))
-                                        {
-                                        <MudText Class=" text-center pt-2" Style="color:#FF0000">@_editModel.ServiceRequestValidationMessage</MudText>
-                                        }
-                                        <MudGrid>
-
-                                        @foreach (var item in ServiceRequestCheckBoxesVM)
-                                        {
-                                        <MudItem xs="12" sm="6">
-                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
-
-
+                                    <MudText Typo="Typo.h4" Class="text-center">CLIENT INFORMATION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="First Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.FirstName))" @bind-Value="_editModel.FirstName" For="@(() => _editModel.FirstName)" />
                                         </MudItem>
-                                        }
-                                        </MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Last Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.LastName))" @bind-Value="_editModel.LastName" For="@(() => _editModel.LastName)" />
                                         </MudItem>
-                                        <MudDivider /> *@
-                                                <MudItem xs="12">
-                                                    <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
-                                                    @if (!string.IsNullOrEmpty(_editModel.TypeOfPropertyValidationMessage))
-
-                                                    {
-                                                        <MudText Class=" text-center pt-2" Style="color:#FF0000" Typo="Typo.overline">
-                                                            @_editModel.TypeOfPropertyValidationMessage
-                                                        </MudText>
-                                                    }
-                                                    <MudGrid>
-                                                        @foreach (var item in TypeOfPropertyCheckBoxItemVM)
-
-                                                        {
-                                                            <MudItem xs="12" sm="6">
-                                                                <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
-                                                                <input type="hidden" value="@item.Id" />
-                                                            </MudItem>
-                                                        }
-                                                    </MudGrid>
-                                                </MudItem>
-                                                <MudDivider />
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Volume" @onblur="() => ConvertToUpperCase(nameof(_editModel.Volume))" @bind-Value="_editModel.Volume" For="@(() => _editModel.Volume)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Folio" @onblur="() => ConvertToUpperCase(nameof(_editModel.Folio))" @bind-Value="_editModel.Folio" For="@(() => _editModel.Folio)" />
-                                                </MudItem>
-                                                <MudItem xs="12">
-                                                    <MudTextField T="string" Label="Strata/Deposit Plan" @onblur="() => ConvertToUpperCase(nameof(_editModel.StrataPlan))" @bind-Value="_editModel.StrataPlan" For="@(() => _editModel.StrataPlan)" />
-                                                </MudItem>
-                                                <MudItem xs="12">
-                                                    <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
-                                                    @if (!string.IsNullOrEmpty(_editModel.PurposeOfEvaluationValidationMessage))
-
-                                                    {
-                                                        @* <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                            <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000; font-family: 'Roboto';" Typo="Typo.caption">
-                                            @_editModel.PurposeOfEvaluationValidationMessage
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Phone Number" @bind-Value="_editModel.PhoneNumber" For="@(() => _editModel.PhoneNumber)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Email" @onblur="() => ConvertToUpperCase(nameof(_editModel.Email))" @bind-Value="_editModel.Email" For="@(() => _editModel.Email)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Instructions Issued By" @onblur="() => ConvertToUpperCase(nameof(_editModel.InstructionsIssuedBy))" @bind-Value="_editModel.InstructionsIssuedBy" For="@(() => _editModel.InstructionsIssuedBy)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_editModel.ClientRegionId">
+                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                @foreach (var region in Regions)
+                                                {
+                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                            <MudText Typo="Typo.overline">
+                                                <ValidationMessage For="@(() => _editModel.ClientRegionId)" />
                                             </MudText>
-                                            </div> *@
-                                                        <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000" Typo="Typo.caption">
-                                                            @_editModel.PurposeOfEvaluationValidationMessage
-                                                        </MudText>
-                                                    }
-                                                    <MudGrid>
-                                                        @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Address" @onblur="() => ConvertToUpperCase(nameof(_editModel.Address))" @bind-Value="_editModel.Address" For="@(() => _editModel.Address)" />
 
-                                                        {
-                                                            <MudItem xs="12" sm="6">
-                                                                <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
-                                                                <input type="hidden" value="@item.Id" />
-                                                            </MudItem>
-                                                        }
-                                                    </MudGrid>
-                                                </MudItem>
-                                                <MudDivider />
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Mortgage Institution" @onblur="() => ConvertToUpperCase(nameof(_editModel.MortgageInstitution))" @bind-Value="_editModel.MortgageInstitution" For="@(() => _editModel.MortgageInstitution)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Other" @onblur="() => ConvertToUpperCase(nameof(_editModel.Other))" @bind-Value="_editModel.Other" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
-                                                    <MudRadioGroup T="string" @bind-Value="_editModel.IsKeyAvailable" For="@(() => _editModel.IsKeyAvailable)">
-                                                        <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
-                                                        <MudRadio Value="KeyAvailability.No">No</MudRadio>
-                                                    </MudRadioGroup>
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudSelect T="Guid" Label="Parish" @bind-Value="_editModel.PropertyRegionId">
-                                                        <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
-                                                        @foreach (var region in Regions)
-                                                        {
-                                                            <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
-                                                        }
-                                                    </MudSelect>
-                                                    <MudText Typo="Typo.overline">
-                                                        <ValidationMessage For="@(() => _editModel.PropertyRegionId)" />
-                                                    </MudText>
-                                                </MudItem>
-                                                <MudItem xs="12">
-                                                    <MudTextField T="string" Label="Property Address" @onblur="() => ConvertToUpperCase(nameof(_editModel.PropertyAddress))" @bind-Value="_editModel.PropertyAddress" For="@(() => _editModel.PropertyAddress)" />
-                                                </MudItem>
-                                                <MudItem xs="12">
-                                                    <MudTextField T="string" Label="Property Direction" @onblur="() => ConvertToUpperCase(nameof(_editModel.PropertyDirection))" @bind-Value="_editModel.PropertyDirection" TextArea="true" />
-                                                </MudItem>
-                                            </MudGrid>
-                                        </MudPaper>
-                                    }
-                                    <!-- Step 3: Contact for Inspection -->
-                                    @if (currentStep == 3)
-
+                                        </MudItem>
+                                    </MudGrid>
+                                    <MudText Typo="Typo.h4" Class="text-center pb-2">PROPERTY INFORMATION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        @* <MudItem xs="12">
+                                    <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>SERVICE(S) REQUIRED</b></MudText>
+                                    @if (!string.IsNullOrEmpty(_editModel.ServiceRequestValidationMessage))
                                     {
-                                        <MudPaper Class="pa-4 mt-4 lifted">
-                                            <MudText Typo="Typo.h4" Class="text-center pb-2">CONTACT FOR INSPECTION</MudText>
-                                            <MudDivider />
-                                            <MudGrid>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.SecondaryContactName))" @bind-Value="_editModel.SecondaryContactName" For="@(() => _editModel.SecondaryContactName)" />
-                                                </MudItem>
-                                                <MudItem xs="6">
-                                                    <MudTextField T="string" Label="Phone Number" @onblur="() => ConvertToUpperCase(nameof(_editModel.SecondaryContactPhoneNumber))" @bind-Value="_editModel.SecondaryContactPhoneNumber" For="@(() => _editModel.SecondaryContactPhoneNumber)" />
-                                                </MudItem>
-                                            </MudGrid>
-                                        </MudPaper>
+                                    <MudText Class=" text-center pt-2" Style="color:#FF0000">@_editModel.ServiceRequestValidationMessage</MudText>
                                     }
+                                    <MudGrid>
 
-                                    <!-- Navigation Buttons -->
+                                    @foreach (var item in ServiceRequestCheckBoxesVM)
+                                    {
+                                    <MudItem xs="12" sm="6">
+                                    <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
+
+
+                                    </MudItem>
+                                    }
+                                    </MudGrid>
+                                    </MudItem>
+                                    <MudDivider /> *@
+                                        <MudItem xs="12">
+                                            <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
+                                            @if (!string.IsNullOrEmpty(_editModel.TypeOfPropertyValidationMessage))
+                                            {
+                                                <MudText Class=" text-center pt-2" Style="color:#FF0000" Typo="Typo.overline">
+                                                    @_editModel.TypeOfPropertyValidationMessage
+                                                </MudText>
+                                            }
+                                            <MudGrid>
+                                                @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                                {
+                                                    <MudItem xs="12" sm="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                            <MudDivider />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Volume" @onblur="() => ConvertToUpperCase(nameof(_editModel.Volume))" @bind-Value="_editModel.Volume" For="@(() => _editModel.Volume)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Folio" @onblur="() => ConvertToUpperCase(nameof(_editModel.Folio))" @bind-Value="_editModel.Folio" For="@(() => _editModel.Folio)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Strata/Deposit Plan" @onblur="() => ConvertToUpperCase(nameof(_editModel.StrataPlan))" @bind-Value="_editModel.StrataPlan" For="@(() => _editModel.StrataPlan)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
+                                            @if (!string.IsNullOrEmpty(_editModel.PurposeOfEvaluationValidationMessage))
+                                            {
+                                                @* <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                        <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000; font-family: 'Roboto';" Typo="Typo.caption">
+                                        @_editModel.PurposeOfEvaluationValidationMessage
+                                        </MudText>
+                                        </div> *@
+                                                <MudText Align="Align.Center" Class="text-center pt-2" Style="color:#FF0000" Typo="Typo.caption">
+                                                    @_editModel.PurposeOfEvaluationValidationMessage
+                                                </MudText>
+                                            }
+                                            <MudGrid>
+                                                @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                                {
+                                                    <MudItem xs="12" sm="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                            <MudDivider />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Mortgage Institution" @onblur="() => ConvertToUpperCase(nameof(_editModel.MortgageInstitution))" @bind-Value="_editModel.MortgageInstitution" For="@(() => _editModel.MortgageInstitution)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Other" @onblur="() => ConvertToUpperCase(nameof(_editModel.Other))" @bind-Value="_editModel.Other" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
+                                            <MudRadioGroup T="string" @bind-Value="_editModel.IsKeyAvailable" For="@(() => _editModel.IsKeyAvailable)">
+                                                <MudRadio Value="KeyAvailability.Yes">Yes</MudRadio>
+                                                <MudRadio Value="KeyAvailability.No">No</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_editModel.PropertyRegionId">
+                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                @foreach (var region in Regions)
+                                                {
+                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                            <MudText Typo="Typo.overline">
+                                                <ValidationMessage For="@(() => _editModel.PropertyRegionId)" />
+                                            </MudText>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Address" @onblur="() => ConvertToUpperCase(nameof(_editModel.PropertyAddress))" @bind-Value="_editModel.PropertyAddress" For="@(() => _editModel.PropertyAddress)" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Direction" @onblur="() => ConvertToUpperCase(nameof(_editModel.PropertyDirection))" @bind-Value="_editModel.PropertyDirection" TextArea="true" />
+                                        </MudItem>
+                                    </MudGrid>
+                                    <MudText Typo="Typo.h4" Class="text-center pb-2">CONTACT FOR INSPECTION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Name" @onblur="() => ConvertToUpperCase(nameof(_editModel.SecondaryContactName))" @bind-Value="_editModel.SecondaryContactName" For="@(() => _editModel.SecondaryContactName)" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Phone Number" @onblur="() => ConvertToUpperCase(nameof(_editModel.SecondaryContactPhoneNumber))" @bind-Value="_editModel.SecondaryContactPhoneNumber" For="@(() => _editModel.SecondaryContactPhoneNumber)" />
+                                        </MudItem>
+                                    </MudGrid>
                                     <MudItem xs="12" class="mt-4">
                                         <div class="row">
+
                                             <div class="col">
-                                                <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" @onclick="PreviousStep" Disabled="@((currentStep == 1))"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                                <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit &nbsp; <i class="fa-regular fa-paper-plane"></i></MudButton>
                                             </div>
-                                            @if (currentStep < 3)
-                                            {
-                                                <div class="col">
-                                                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" @onclick="NextStep">Next &nbsp;<i class="fa-solid fa-forward-step"></i></MudButton>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col">
-                                                    <MudButton ButtonType="ButtonType.Submit" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Submit &nbsp; <i class="fa-regular fa-paper-plane"></i></MudButton>
-                                                </div>
-                                            }
+                                            <div class="col">
+                                                <MudButton Variant="Variant.Filled" OnClick="(() => BackToIndex())" FullWidth="true" Color="Color.Dark"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                            </div>
                                         </div>
                                     </MudItem>
-
                                 </MudPaper>
                             </MudItem>
                         </MudGrid>
                     </EditForm>
                 </div>
-
             </div>
-            <!-- content -->
-
             <AdminFooter />
-
         </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
-
     </div>
-
-    <!-- END wrapper -->
 }
 
 

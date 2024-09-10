@@ -1,15 +1,173 @@
-﻿@page "/details/{formId:guid}"
-<h3>Edit Form</h3>
+﻿@layout MudBlazorLayout
+@page "/details/{formId:guid}"
+@using PMS.UI.Pages.Admin.Shared
+@using PMS.UI.StaticDetails
+@* <h3>Create</h3> *@
+@using MudBlazor
+<RightSidebar />
 
 
-
+<HeadCSS />
 @if (IsLoading)
+
+
+
 {
     <div class="loading-overlay">
-        <div class="spinner"></div>
+        @*  <div class="spinner"></div> *@
+        <div id="preloader"></div>
     </div>
 }
+
+
+
 else
+
+
+
 {
-    
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <div class="form-container">
+                    <EditForm Model="_detailModel">
+                        <DataAnnotationsValidator />
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudPaper Class="pa-4 lifted">
+                                    <MudText Typo="Typo.h4" Class="text-center">CLIENT INFORMATION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="First Name" @bind-Value="_detailModel.FirstName" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Last Name" @bind-Value="_detailModel.LastName" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Phone Number" @bind-Value="_detailModel.PhoneNumber" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Email"@bind-Value="_detailModel.Email" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Instructions Issued By"@bind-Value="_detailModel.InstructionsIssuedBy" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_detailModel.ClientRegionId" Disabled="true">
+                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                @foreach (var region in Regions)
+
+                                                {
+                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Address" @bind-Value="_detailModel.Address" Disabled="true" />
+                                        </MudItem>
+                                    </MudGrid>
+                                    <MudText Typo="Typo.h4" Class="text-center pb-2">PROPERTY INFORMATION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        <MudItem xs="12">
+                                            <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>TYPE OF PROPERTY:</b></MudText>
+                                            <MudGrid>
+                                                @foreach (var item in TypeOfPropertyCheckBoxItemVM)
+                                                {
+                                                    <MudItem xs="12" sm="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" Disabled="true" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                            <MudDivider />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Volume" @bind-Value="_detailModel.Volume" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Folio" @bind-Value="_detailModel.Folio" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Strata/Deposit Plan" @bind-Value="_detailModel.StrataPlan" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudText Align="Align.Center" Typo="Typo.subtitle1"><b>PURPOSE OF VALUATION:</b></MudText>
+                                            <MudGrid>
+                                                @foreach (var item in PurposeOfEvaluationCheckBoxesVM)
+                                                {
+                                                    <MudItem xs="12" sm="6">
+                                                        <MudCheckBox @bind-Value="item.IsChecked" Size="Size.Medium" Label="@item.Title" Disabled="true" />
+                                                        <input type="hidden" value="@item.Id" />
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                            <MudDivider />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Mortgage Institution" @bind-Value="_detailModel.MortgageInstitution" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Other" @bind-Value="_detailModel.Other" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudText Typo="Typo.subtitle1">Is The Key Available</MudText>
+                                            <MudRadioGroup T="string" @bind-Value="_detailModel.IsKeyAvailable" For="@(() => _detailModel.IsKeyAvailable)">
+                                                <MudRadio Value="KeyAvailability.Yes" Disabled="true">Yes</MudRadio>
+                                                <MudRadio Value="KeyAvailability.No" Disabled="true">No</MudRadio>
+                                            </MudRadioGroup>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_detailModel.PropertyRegionId" Disabled="true">
+                                                <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
+                                                @foreach (var region in Regions)
+
+                                                {
+                                                    <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Address" @bind-Value="_detailModel.PropertyAddress" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudTextField T="string" Label="Property Direction" @bind-Value="_detailModel.PropertyDirection" Disabled="true" />
+                                        </MudItem>
+                                    </MudGrid>
+                                    <MudText Typo="Typo.h4" Class="text-center pb-2">CONTACT FOR INSPECTION</MudText>
+                                    <MudDivider />
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Name" @bind-Value="_detailModel.SecondaryContactName" Disabled="true" />
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudTextField T="string" Label="Phone Number" @bind-Value="_detailModel.SecondaryContactPhoneNumber" Disabled="true" />
+                                        </MudItem>
+                                    </MudGrid>
+                                    <MudItem xs="12" class="mt-4">
+                                        <div class="row">
+                                            <div class="col">
+                                                <MudButton Variant="Variant.Filled" OnClick="(() => BackToIndex())" FullWidth="true" Color="Color.Dark"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
+                                            </div>
+                                        </div>
+                                    </MudItem>
+                                </MudPaper>
+                            </MudItem>
+                        </MudGrid>
+                    </EditForm>
+                </div>
+            </div>
+            <AdminFooter />
+        </div>
+    </div>
 }

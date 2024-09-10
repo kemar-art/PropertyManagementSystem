@@ -1,5 +1,6 @@
 using Application.Contracts.Repository_Interface;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models;
@@ -40,36 +41,65 @@ namespace PMS.UI.Pages.Forms
 
         protected override async Task OnInitializedAsync()
         {
-            var form = await _FormRepository.GetASingleFormDetails(FormId);
-            _detailModel = form;
-
-            //var serviceRequests = await _CheckBoxRepository.GetAllServiceRequestItem();
-            //ServiceRequestCheckBoxesVM = serviceRequests.Select(vm => new CheckBoxPropertyVM()
-            //{
-            //    Id = vm.Id,
-            //    Title = vm.Title,
-            //    IsChecked = form.ServiceRequestItemSelectId.ConvertStringToListOfInt().Contains(vm.Id)
-            //}).ToList();
-
-            var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
-            PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+            IsLoading = true;
+            try
             {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = form.PurposeOfValuationItemSelectedIds.ConvertStringToListOfInt().Contains(vm.Id)
-            }).ToList();
+                // Fetch all Purpose of Evaluation checkboxes
+                var purposeOfEvaluation = await _CheckBoxRepository.GetAllPurposeOfValuationItem();
+                // Fetch all Type of Property checkboxes
+                var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
 
-            var typeOfProperty = await _CheckBoxRepository.GetAllTypeOfPropertyItem();
-            TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                // Get form details, including previously checked items (if any)
+                _detailModel = await _FormRepository.GetASingleFormDetails(FormId);
+
+                // Set up checkboxes for Purpose of Valuation
+                PurposeOfEvaluationCheckBoxesVM = purposeOfEvaluation.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = _detailModel.PurposeOfValuationItemSelectedIds?.Split(',').Contains(vm.Id.ToString()) ?? false // Check based on selected IDs
+                }).ToList();
+
+                // Set up checkboxes for Type of Property
+                TypeOfPropertyCheckBoxItemVM = typeOfProperty.Select(vm => new CheckBoxPropertyVM()
+                {
+                    Id = vm.Id,
+                    Title = vm.Title,
+                    IsChecked = _detailModel.TypeOfPropertySelectedIds?.Split(',').Contains(vm.Id.ToString()) ?? false // Check based on selected IDs
+                }).ToList();
+
+                // Load regions (if required)
+                Regions = await _RegionRepositoey.GetAllRegion() ?? [];
+
+                
+            }
+            catch (Exception ex)
             {
-                Id = vm.Id,
-                Title = vm.Title,
-                IsChecked = form.TypeOfPropertySelectedIds.ConvertStringToListOfInt().Contains(vm.Id)
-            }).ToList();
+                // Handle the exception (e.g., log it, show an error message)
+                Console.WriteLine($"Error loading data: {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
 
-            Regions = await _RegionRepositoey.GetAllRegion();
+        protected void BackToIndex()
+        {
+            _NavigationManager.NavigateTo("/submitted-forms/");
+        }
 
-            IsLoading = false;
+        private void ConvertToUpperCase(string fieldName)
+        {
+            var propertyInfo = _detailModel.GetType().GetProperty(fieldName);
+            if (propertyInfo != null)
+            {
+                var value = propertyInfo.GetValue(_detailModel)?.ToString();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    propertyInfo.SetValue(_detailModel, value.ToUpper());
+                }
+            }
         }
     }
 }

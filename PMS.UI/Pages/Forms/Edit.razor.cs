@@ -96,31 +96,103 @@ namespace PMS.UI.Pages.Forms
 
         private async Task OnValidSubmit()
         {
-            _editModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(x => x.IsChecked).Select(x => x.Id));
-            //_editModel.ServiceRequestItemSelectId = string.Join(",", ServiceRequestCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
-            _editModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
+            // Reset validation messages and show validation errors
+            _showValidation = true;
+            _validationMessageStore.Clear();
 
-            try
+            // Track form validity
+            var isValid = true;
+
+            // Validate RegionId (Client and Property)
+            var clientRegionField = new FieldIdentifier(_editModel, nameof(_editModel.ClientRegionId));
+            if (_editModel.ClientRegionId == Guid.Empty)
             {
-                var response = await _FormRepository.UpdateForm(_editModel);
+                isValid = false;
+                _validationMessageStore.Add(clientRegionField, "Please select a parish.");
+            }
 
-                if (response.Success)
+            var propertyRegionField = new FieldIdentifier(_editModel, nameof(_editModel.PropertyRegionId));
+            if (_editModel.PropertyRegionId == Guid.Empty)
+            {
+                isValid = false;
+                _validationMessageStore.Add(propertyRegionField, "Please select a parish.");
+            }
+
+            // Validate checkboxes (Type of Property and Purpose of Evaluation)
+            if (!ValidateTypeOfPropertyCheckBoxes())
+            {
+                isValid = false;
+                TypeOfPropertyValidationMessage("At least one type of property must be selected.");
+            }
+
+            if (!ValidatePurposeOfEvaluationCheckBoxes())
+            {
+                isValid = false;
+                PurposeOfEvaluationValidationMessage("At least one purpose of evaluation must be selected.");
+            }
+
+            // Validate required text fields
+            var fieldsToValidate = new List<string>
+    {
+                nameof(_editModel.FirstName),
+                nameof(_editModel.LastName),
+                nameof(_editModel.PhoneNumber),
+                nameof(_editModel.Email),
+                nameof(_editModel.Address),
+                nameof(_editModel.Volume),
+                nameof(_editModel.Folio),
+                nameof(_editModel.PropertyAddress),
+                nameof(_editModel.StrataPlan),
+                nameof(_editModel.MortgageInstitution),
+                nameof(_editModel.SecondaryContactPhoneNumber)
+            };
+
+            foreach (var field in fieldsToValidate)
+            {
+                var fieldIdentifier = new FieldIdentifier(_editModel, field);
+                EditContext.NotifyFieldChanged(fieldIdentifier); // Notify that a field has changed
+                var validationMessages = EditContext.GetValidationMessages(fieldIdentifier);
+
+                // If any field has validation messages, mark the form as invalid
+                if (validationMessages.Any())
                 {
-                    _Snackbar.Add("Record updated successfully.", Severity.Success);
-                    _NavigationManager.NavigateTo("/submitted-forms");
-                }
-                else
-                {
-                    // Handle error
-                    Console.WriteLine("Error: " + response.ErrorMessage);
+                    isValid = false;
                 }
             }
-            catch (Exception ex)
+
+            // If valid, submit the form
+            if (isValid)
             {
-                // Handle unexpected errors
-                Console.WriteLine("Unexpected error: " + ex.Message);
+                try
+                {
+                    _editModel.TypeOfPropertySelectedIds = string.Join(",", TypeOfPropertyCheckBoxItemVM.Where(x => x.IsChecked).Select(x => x.Id));
+                    _editModel.PurposeOfValuationItemSelectedIds = string.Join(",", PurposeOfEvaluationCheckBoxesVM.Where(x => x.IsChecked).Select(x => x.Id));
+
+                    var response = await _FormRepository.UpdateForm(_editModel);
+
+                    if (response.Success)
+                    {
+                        _Snackbar.Add("Record updated successfully.", Severity.Success);
+                        _NavigationManager.NavigateTo("/submitted-forms");
+                    }
+                    else
+                    {
+                        // Handle error
+                        Console.WriteLine("Error: " + response.ErrorMessage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle unexpected errors
+                    Console.WriteLine("Unexpected error: " + ex.Message);
+                }
+            }
+            else
+            {
+                EditContext.NotifyValidationStateChanged(); // Update UI with validation errors
             }
         }
+
 
         private bool ValidateTypeOfPropertyCheckBoxes()
         {
@@ -144,125 +216,12 @@ namespace PMS.UI.Pages.Forms
             EditContext.NotifyFieldChanged(new FieldIdentifier(_editModel, nameof(_editModel.PurposeOfEvaluationValidationMessage)));
         }
 
-        private async Task NextStep()
+
+        protected void BackToIndex()
         {
-            // Show validation errors
-            _showValidation = true;
-
-            // Clear previous validation messages
-            //_editModel.ServiceRequestValidationMessage = string.Empty;
-            _editModel.TypeOfPropertyValidationMessage = string.Empty;
-            _editModel.PurposeOfEvaluationValidationMessage = string.Empty;
-            _validationMessageStore.Clear();
-
-            // Track if the form is valid
-            var isValid = true;
-
-            // Determine the fields to validate based on the current step
-            var fieldsToValidate = new List<string>();
-
-            if (currentStep == 1)
-            {
-                fieldsToValidate.Add(nameof(_editModel.FirstName));
-                fieldsToValidate.Add(nameof(_editModel.LastName));
-                fieldsToValidate.Add(nameof(_editModel.PhoneNumber));
-                fieldsToValidate.Add(nameof(_editModel.Email));
-                fieldsToValidate.Add(nameof(_editModel.Address));
-
-                // Validate RegionId
-                var regionField = new FieldIdentifier(_editModel, nameof(_editModel.ClientRegionId));
-                _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
-
-                if (_editModel.ClientRegionId == Guid.Empty)
-                {
-                    isValid = false;
-                    _validationMessageStore.Add(regionField, "Please select a parish.");
-                    EditContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
-                }
-            }
-            else if (currentStep == 2)
-            {
-                fieldsToValidate.Add(nameof(_editModel.Volume));
-                fieldsToValidate.Add(nameof(_editModel.Folio));
-                fieldsToValidate.Add(nameof(_editModel.IsKeyAvailable));
-                fieldsToValidate.Add(nameof(_editModel.PropertyAddress));
-                fieldsToValidate.Add(nameof(_editModel.StrataPlan));
-                fieldsToValidate.Add(nameof(_editModel.MortgageInstitution));
-
-                // Validate RegionId
-                var regionField = new FieldIdentifier(_editModel, nameof(_editModel.PropertyRegionId));
-                _validationMessageStore.Clear(regionField); // Clear previous validation messages for RegionId
-
-                if (_editModel.PropertyRegionId == Guid.Empty)
-                {
-                    isValid = false;
-                    _validationMessageStore.Add(regionField, "Please select a parish.");
-                    EditContext.NotifyValidationStateChanged(); // Notify the EditContext of validation state change
-                }
-
-                // Validate the checkboxes for service requests
-                //if (!ValidateServiceRequestCheckBoxes())
-                //{
-                //    isValid = false;
-                //    SetServiceRequestValidationMessage("At least one service request must be selected.");
-                //}
-
-                if (!ValidateTypeOfPropertyCheckBoxes())
-                {
-                    isValid = false;
-                    TypeOfPropertyValidationMessage("At least one type of property must be selected.");
-                }
-
-                if (!ValidatePurposeOfEvaluationCheckBoxes())
-                {
-                    isValid = false;
-                    PurposeOfEvaluationValidationMessage("At least one purpose of evaluation must be selected.");
-                }
-            }
-            else if (currentStep == 3)
-            {
-                //fieldsToValidate.Add(nameof(_editModel.SecondaryContactFirstName));
-                //fieldsToValidate.Add(nameof(_editModel.SecondaryContactLastName));
-                fieldsToValidate.Add(nameof(_editModel.SecondaryContactPhoneNumber));
-            }
-
-            // Validate each field
-            foreach (var field in fieldsToValidate)
-            {
-                var fieldIdentifier = new FieldIdentifier(_editModel, field);
-                EditContext.NotifyFieldChanged(fieldIdentifier); // Notify that a field has changed
-                var validationMessages = EditContext.GetValidationMessages(fieldIdentifier);
-
-                // If any field has validation messages, mark the form as invalid
-                if (validationMessages.Any())
-                {
-                    isValid = false;
-                }
-            }
-
-            if (isValid)
-            {
-                // Proceed to the next step only if validation passes
-                if (currentStep < 3)
-                {
-                    currentStep++;
-                    _showValidation = false; // Reset validation flag after moving to the next step
-                }
-            }
-            else
-            {
-                // Handle validation failure
-                Console.WriteLine("Validation failed, staying on the current step.");
-            }
+            _NavigationManager.NavigateTo("/submitted-forms/");
         }
 
-        private void PreviousStep()
-        {
-            if (currentStep > 1)
-            {
-                currentStep--;
-            }
-        }
 
         //private void ConvertToUpperCase(string fieldName)
         //{
