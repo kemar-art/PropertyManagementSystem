@@ -86,19 +86,20 @@ else if (_indexModel.Any())
             </div>
             <!-- content -->
             <br />
-            <AdminFooter />
-
         </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
-
+    </div>
+}
+else
+{
+    <Menu />
+    <div class="content-page">
+        <div class="content">
+            <MudText Class="text-center mt-2 text-danger" Typo="Typo.h4">No Records Found</MudText>
+        </div>
     </div>
 
-    <!-- END wrapper -->
+    <AdminFooter />
 }
-
 
 
 

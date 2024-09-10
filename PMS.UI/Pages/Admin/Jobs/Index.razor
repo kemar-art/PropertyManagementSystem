@@ -22,7 +22,6 @@
 }
 
 else if (_indexModel.Any())
-
 {
     <!-- Begin page -->
     <div class="wrapper">
@@ -63,8 +62,8 @@ else if (_indexModel.Any())
                         <PropertyColumn Property="x => x.Email" Title="Email" />
                         <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
                         <PropertyColumn Property="x => x.PropertyAddress" Title="Property Address" />
-                    <PropertyColumn Property="x => x.TypeOfPropertySelectedIds" Title="Type Of Property" />
-                    <PropertyColumn Property="x => x.PurposeOfValuationItemSelectedIds" Title="Purpose Of Valuation" />
+                        <PropertyColumn Property="x => x.TypeOfPropertySelectedIds" Title="Type Of Property" />
+                        <PropertyColumn Property="x => x.PurposeOfValuationItemSelectedIds" Title="Purpose Of Valuation" />
                         <TemplateColumn Title="Actions" CellClass="d-flex justify-end">
                             <CellTemplate>
                                 <MudStack Row>
@@ -85,7 +84,7 @@ else if (_indexModel.Any())
             </div>
             <!-- content -->
             <br />
-            <AdminFooter />
+
 
         </div>
 
@@ -96,4 +95,15 @@ else if (_indexModel.Any())
     </div>
 
     <!-- END wrapper -->
+}
+else
+{
+    <Menu />
+    <div class="content-page">
+        <div class="content">
+            <MudText Class="text-center mt-2 text-danger" Typo="Typo.h4">No Records Found</MudText>
+        </div>
+    </div>
+    
+    <AdminFooter />
 }
