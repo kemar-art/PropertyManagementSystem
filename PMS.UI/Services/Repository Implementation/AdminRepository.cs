@@ -2,6 +2,7 @@
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using PMS.UI.Contracts;
+using PMS.UI.Models.Client;
 using PMS.UI.Models.Employee;
 using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,28 +38,19 @@ namespace PMS.UI.Services.Repository_Implementation
                 RoleId = userToCreate.RoleId,
                 AdminRegionId = userToCreate.AdminRegionId,
             };
-            var response = await _client.ApplicationUsersPOSTAsync(createBackOfficeUser); 
+            var response = await _client.ApplicationUsersPOSTAsync(createBackOfficeUser);
             return response;
         }
 
-        public async Task<Response<Guid>> DeleteEmployee(string uerId)
+        public async Task DeleteEmployee(string uerId)
         {
-            try
-            {
-                await _client.ApplicationUsersDELETEAsync(uerId);
-                return new Response<Guid> { Success = true };
-            }
-            catch (ApiException ex)
-            {
-
-                return ConvertApiExceptions<Guid>(ex);
-            }
+            await _client.ApplicationUsersDELETEAsync(uerId);
         }
 
-        public async Task<IEnumerable<ApplicationUserVM>> GetAllClients()
+        public async Task<IEnumerable<ClientVM>> GetAllClients()
         {
             var getAllEmployees = await _client.ClietsAsync();
-            return _mapper.Map<IEnumerable<ApplicationUserVM>>(getAllEmployees);
+            return _mapper.Map<IEnumerable<ClientVM>>(getAllEmployees);
         }
 
         public async Task<IEnumerable<ApplicationUserVM>> GetAllEmployees()

@@ -26,24 +26,25 @@ namespace PMS.UI.Services.Repository_Implementation
         public async Task UpdateClient(ClientVM user)
         {
 
-            var updateUser = _mapper.Map<ClientUpdateCommand>(user);
+            //var updateUser = _mapper.Map<ClientUpdateCommand>(user);
 
 
-            //ClientUpdateCommand command = new()
-            //{
-            //    Id = user.Id, // Ensure the ID is included
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    Email = user.Email,
-            //    PhoneNumber = user.PhoneNumber,
-            //    Gender = user.Gender, // Ensure Gender is included if required
-            //    Address = user.Address,
-            //    ImagePath = user.ImagePath,
-            //    DateOfBirth = user.DateOfBirth, // Ensure DateOfBirth is included if required
-            //    RegionId = user.RegionId,
-            //};
+            ClientUpdateCommand command = new()
+            {
+                Id = user.Id, // Ensure the ID is included
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Gender = user.Gender, // Ensure Gender is included if required
+                Address = user.Address,
+                ImagePath = user.ImagePath,
+                ImageBase64 = user.ImageBase64,
+                DateOfBirth = user.DateOfBirth, // Ensure DateOfBirth is included if required
+                ClientRegionId = user.ClientRegionId,
+            };
 
-            await _client.UpdateclientAsync(updateUser);
+            await _client.UpdateclientAsync(command);
         }
 
 

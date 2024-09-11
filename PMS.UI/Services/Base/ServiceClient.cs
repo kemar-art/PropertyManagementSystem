@@ -3979,6 +3979,9 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string Address { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("imageBase64")]
+        public string ImageBase64 { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
         public string ImagePath { get; set; }
 
@@ -3986,7 +3989,7 @@ namespace PMS.UI.Services.Base
         public System.DateTimeOffset? DateOfBirth { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
-        public System.Guid? ClientRegionId { get; set; }
+        public System.Guid ClientRegionId { get; set; }
 
     }
 

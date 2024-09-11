@@ -54,5 +54,8 @@ namespace Domain
         //public JobTitle? JobTitle { get; set; }
         //public Guid? JobTitleId { get; set; }
 
+
+
+
     }
 }

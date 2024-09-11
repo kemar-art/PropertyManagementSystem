@@ -21,7 +21,7 @@ namespace PMS.UI.Pages
         IRegionRepositoey _RegionRepositoey { get; set; }
 
         [Inject]
-        ISnackbar Snackbar { get; set; }
+        ISnackbar _Snackbar { get; set; }
 
         public string Message { get; set; } = string.Empty;
         public bool EmailExists { get; set; }
@@ -100,7 +100,7 @@ namespace PMS.UI.Pages
             if (EmailExists)
             {
                 //Message = "";
-                Snackbar.Add("Email already exists.", Severity.Error);
+                _Snackbar.Add("Email already exists.", Severity.Error);
                 return;
             }
 
@@ -110,12 +110,13 @@ namespace PMS.UI.Pages
 
             if (result)
             {
-                Snackbar.Add("You have successfully registered.", Severity.Success);
+                _Snackbar.Add("You have successfully registered.", Severity.Success);
                 _NavigationManager.NavigateTo("/login");
             }
             else
             {
-                Snackbar.Add("Something went wrong, please try again.", Severity.Error);
+
+                _Snackbar.Add("Something went wrong, please try again.", Severity.Error);
                 //Message = "";
             }
             IsLoading = false;

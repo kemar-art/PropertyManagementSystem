@@ -101,7 +101,7 @@ namespace API.Controllers
         {
             var deleteAppUser = new DeleteAppUserCommand { Id = id };
             await _mediator.Send(deleteAppUser);
-            return NoContent();
+            return Ok();
         }
     }
 }

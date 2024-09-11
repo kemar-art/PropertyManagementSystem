@@ -1,6 +1,7 @@
 using Application.Contracts.Repository_Interface;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models;
@@ -22,6 +23,9 @@ namespace PMS.UI.Pages.Forms
         public SweetAlertService Swal { get; set; }
 
         [Inject]
+        ISnackbar _Snackbar { get; set; }
+
+        [Inject]
         ICheckBoxRepository _CheckBoxRepository { get; set; }
 
         public IEnumerable<FormVM> _indexModel { get; private set; } = [];
@@ -31,9 +35,6 @@ namespace PMS.UI.Pages.Forms
         public List<CheckBoxPropertyVM> ServiceRequestCheckBoxesVM { get; set; } = [];
 
         public List<CheckBoxPropertyVM> PurposeOfEvaluationCheckBoxesVM { get; set; } = [];
-
-
-
 
         public string Message { get; set; } = string.Empty;
 
@@ -86,11 +87,12 @@ namespace PMS.UI.Pages.Forms
                 {
                     // Refresh the data after deletion
                     _indexModel = await _FormRepository.GetAllForms();
+                    _Snackbar.Add("Record Deleted Successfully.", Severity.Success);
                     StateHasChanged();
                 }
                 else
                 {
-                    Message = response.Message;
+                    _Snackbar.Add("Unable to delete the record. Please try again.", Severity.Error);
                 }
             }
         }

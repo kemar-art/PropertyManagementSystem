@@ -2,7 +2,9 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PMS.UI.Contracts;
+using PMS.UI.Models.Client;
 using PMS.UI.Models.Employee;
+using PMS.UI.Services.Base;
 
 namespace PMS.UI.Pages.Admin.Clients
 {
@@ -16,15 +18,18 @@ namespace PMS.UI.Pages.Admin.Clients
         public SweetAlertService Swal { get; set; }
 
         [Inject]
+        ISnackbar _Snackbar { get; set; }
+
+        [Inject]
         public NavigationManager _NavigationManager { get; set; }
 
         [Inject]
         IAdminRepository _AdminRepository { get; set; }
 
-        public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
+        public IEnumerable<ClientVM> _indexModel { get; private set; } = [];
 
         // Quick filter across columns
-        private Func<ApplicationUserVM, bool> _quickFilter => x =>
+        private Func<ClientVM, bool> _quickFilter => x =>
         {
             if (string.IsNullOrWhiteSpace(_searchString))
             {
@@ -35,7 +40,7 @@ namespace PMS.UI.Pages.Admin.Clients
             {
                 return true;
             }
-                
+
 
             return false;
         };
@@ -51,17 +56,17 @@ namespace PMS.UI.Pages.Admin.Clients
             _NavigationManager.NavigateTo("/create-employee/");
         }
 
-        protected void EditForm(Guid id)
+        protected void EditForm(string id)
         {
             _NavigationManager.NavigateTo($"/edit/profile/{id}");
         }
-        
-        protected void EmployeeDetail(Guid id)
+
+        protected void EmployeeDetail(string id)
         {
             _NavigationManager.NavigateTo($"/edit/client/details/{id}");
         }
 
-        protected async Task EmployeeDeletion(Guid id)
+        protected async Task EmployeeDeletion(string id)
         {
             var result = await Swal.FireAsync(new SweetAlertOptions
             {
@@ -75,17 +80,16 @@ namespace PMS.UI.Pages.Admin.Clients
             });
             if (result.IsConfirmed)
             {
-                var response = await _AdminRepository.DeleteEmployee(id.ToString());
-                if (response.Success)
-                {
-                    // Refresh the data after deletion
-                    _indexModel = await _AdminRepository.GetAllClients();
-                    StateHasChanged();
-                }
-                else
-                {
-                    Message = response.Message;
-                }
+                await _AdminRepository.DeleteEmployee(id);
+                _indexModel = await _AdminRepository.GetAllClients();
+                _Snackbar.Add("Record Deleted Successfully.", Severity.Success);
+                StateHasChanged();
+
+
+            }
+            else
+            {
+                _Snackbar.Add("Unable to delete the record. Please try again.", Severity.Error);
             }
         }
     }
