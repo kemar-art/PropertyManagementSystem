@@ -80,16 +80,19 @@ namespace PMS.UI.Pages.Admin.Clients
             });
             if (result.IsConfirmed)
             {
-                await _AdminRepository.DeleteEmployee(id);
-                _indexModel = await _AdminRepository.GetAllClients();
-                _Snackbar.Add("Record Deleted Successfully.", Severity.Success);
-                StateHasChanged();
+                var response = await _AdminRepository.DeleteEmployee(id);
+                if (response.IsSuccess)
+                {
+                    _indexModel = await _AdminRepository.GetAllClients();
+                    _Snackbar.Add("Record Deleted Successfully.", Severity.Success);
+                    StateHasChanged();
+                }
+                else
+                {
+                    _Snackbar.Add("Unable to delete the record. Please try again.", Severity.Error);
+                }
 
 
-            }
-            else
-            {
-                _Snackbar.Add("Unable to delete the record. Please try again.", Severity.Error);
             }
         }
     }

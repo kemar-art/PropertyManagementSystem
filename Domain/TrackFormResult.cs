@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class TrackFormResult : AppResponse
+    public class TrackFormResult : CustomResponse
     {
         public string Status { get; set; } = string.Empty;
     }

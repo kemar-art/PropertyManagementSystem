@@ -21,7 +21,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<AppResponse> ForgetPassword(ForgetPassword passwordResetVM)
+        public async Task<CustomResponse> ForgetPassword(ForgetPassword passwordResetVM)
         {
             ForgetPasswordRestCommand extrnalPasswordRest = new()
             {
@@ -77,9 +77,6 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             }
         }
 
-
-
-
         public async Task<bool> IsEmailRegisteredExist(string email)
         {
             return await _client.EmailcheckAsync(email);
@@ -114,7 +111,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             await ((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
         }
 
-        public async Task<AppResponse> PasswordReset(NoneLoginResetPassword noneLoginUser)
+        public async Task<CustomResponse> PasswordReset(NoneLoginResetPassword noneLoginUser)
         {
             NoneLoginUserPasswordResetCommand passwordResetCommand = new()
             {
@@ -132,7 +129,7 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
             return response;
         }
 
-        public async Task<AppResponse> UpdateResetPassword(LoginUserPasswordReset resetPassword)
+        public async Task<CustomResponse> UpdateResetPassword(LoginUserPasswordReset resetPassword)
         {
             LoginUserPasswordResetCommand passwordResetCommand = new()
             {

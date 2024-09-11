@@ -62,7 +62,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<BaseResult<AppResponse>>> Post([FromBody] CreateBackOfficeUserCommand createAppUser)
+        public async Task<ActionResult<BaseResult<CustomResponse>>> Post([FromBody] CreateBackOfficeUserCommand createAppUser)
         {
             var result = await _mediator.Send(createAppUser);
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
@@ -97,11 +97,13 @@ namespace API.Controllers
 
         // DELETE api/<ApplicationUsersController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(string id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CustomResponse>> Delete(string id)
         {
-            var deleteAppUser = new DeleteAppUserCommand { Id = id };
-            await _mediator.Send(deleteAppUser);
-            return Ok();
+            var user = new DeleteAppUserCommand { Id = id };
+            var deletedUser = await _mediator.Send(user);
+            return Ok(deletedUser);
         }
     }
 }

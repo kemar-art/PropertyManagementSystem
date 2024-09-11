@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Common
 {
-    public class AppResponse
+    public class CustomResponse
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; } = string.Empty;

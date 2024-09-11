@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser
 {
-    public class CreateBackOfficeUserCommand : IRequest<BaseResult<AppResponse>>
+    public class CreateBackOfficeUserCommand : IRequest<BaseResult<CustomResponse>>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

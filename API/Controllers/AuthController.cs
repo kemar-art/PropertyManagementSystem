@@ -66,7 +66,7 @@ namespace API.Controllers
         [Route("forgetpassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppResponse>> ForgetPassword(ForgetPasswordRestCommand email)
+        public async Task<ActionResult<CustomResponse>> ForgetPassword(ForgetPasswordRestCommand email)
         {
             var response = await _mediator.Send(email);
             return Ok(response);
@@ -76,7 +76,7 @@ namespace API.Controllers
         [Route("resetpassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppResponse>> ResetPassword(NoneLoginUserPasswordResetCommand noneLoginUser)
+        public async Task<ActionResult<CustomResponse>> ResetPassword(NoneLoginUserPasswordResetCommand noneLoginUser)
         {
 
             var response = await _mediator.Send(noneLoginUser);
@@ -87,7 +87,7 @@ namespace API.Controllers
         [Route("updatepassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppResponse>> UpdateResetPassword(LoginUserPasswordResetCommand loginUser)
+        public async Task<ActionResult<CustomResponse>> UpdateResetPassword(LoginUserPasswordResetCommand loginUser)
         {
 
             var response = await _mediator.Send(loginUser);

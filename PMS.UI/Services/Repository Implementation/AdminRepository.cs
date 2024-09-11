@@ -20,7 +20,7 @@ namespace PMS.UI.Services.Repository_Implementation
             //await AddBearerToken();
         }
 
-        public async Task<AppResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate)
+        public async Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate)
         {
             CreateBackOfficeUserCommand createBackOfficeUser = new()
             {
@@ -42,9 +42,10 @@ namespace PMS.UI.Services.Repository_Implementation
             return response;
         }
 
-        public async Task DeleteEmployee(string uerId)
+        public async Task<CustomResponse> DeleteEmployee(string uerId)
         {
-            await _client.ApplicationUsersDELETEAsync(uerId);
+            var response = await _client.ApplicationUsersDELETEAsync(uerId);
+            return response;
         }
 
         public async Task<IEnumerable<ClientVM>> GetAllClients()

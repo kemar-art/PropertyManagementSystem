@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset
 {
-    public class LoginUserPasswordResetCommandHandler : IRequestHandler<NoneLoginUserPasswordResetCommand, AppResponse>
+    public class LoginUserPasswordResetCommandHandler : IRequestHandler<NoneLoginUserPasswordResetCommand, CustomResponse>
     {
         private readonly IAuthService _authService;
 
@@ -19,7 +19,7 @@ namespace Application.Features.Commands.User.UserPassword.ResetPassword.NoneLogi
             _authService = authService;
         }
 
-        public async Task<AppResponse> Handle(NoneLoginUserPasswordResetCommand request, CancellationToken cancellationToken)
+        public async Task<CustomResponse> Handle(NoneLoginUserPasswordResetCommand request, CancellationToken cancellationToken)
         {
 
             var response = await _authService.NoneLoginResetPassword(request);

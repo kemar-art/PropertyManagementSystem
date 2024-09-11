@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.UserPassword.ForgetPassword
 {
-    public class ForgetPasswordRestCommandHandler : IRequestHandler<ForgetPasswordRestCommand, AppResponse>
+    public class ForgetPasswordRestCommandHandler : IRequestHandler<ForgetPasswordRestCommand, CustomResponse>
     {
         private readonly IAuthService _authService;
 
@@ -18,7 +18,7 @@ namespace Application.Features.Commands.User.UserPassword.ForgetPassword
             _authService = authService;
         }
 
-        public async Task<AppResponse> Handle(ForgetPasswordRestCommand request, CancellationToken cancellationToken)
+        public async Task<CustomResponse> Handle(ForgetPasswordRestCommand request, CancellationToken cancellationToken)
         {
             var findUserByEmail = await _authService.ForgetPassword(request.Email);
             return findUserByEmail;

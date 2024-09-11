@@ -17,7 +17,7 @@ namespace Application.Contracts.Repository_Interface
 {
     public interface IAdminRepository : IGenericRepository<ApplicationUser>
     {
-        Task<BaseResult<AppResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath);
+        Task<BaseResult<CustomResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath);
         Task<Unit> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, IFormFile image);
         Task<IEnumerable<Form>> GetFormByStatusForAdmin(string status);
         Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser);
@@ -27,5 +27,7 @@ namespace Application.Contracts.Repository_Interface
 
         Task<IEnumerable<GetAllBackOfficeUsersDTO>> GetAllBackOfficeUsers();
         Task<IEnumerable<GetAllClientUsersDTO>> GetAllClientUsers();
+
+        Task<CustomResponse> DeleteAllUsers(string userId);
     }
 }

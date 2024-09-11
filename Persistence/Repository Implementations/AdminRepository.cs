@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Rewrite;
 using AutoMapper;
 using Application.Features.Queries.Admin.Users.BackOficeUsers;
 using Application.Features.Queries.Admin.Users.ClientUsers;
+using Application.Features.Commands.User.BackOfficeUsers.DeleteUser;
 
 namespace Persistence.Repository_Implementations
 {
@@ -63,7 +64,7 @@ namespace Persistence.Repository_Implementations
             IAppLogger<AdminRepository> appLogger)
             : base(dbContext)
         {
-            _userManager = userManager; 
+            _userManager = userManager;
             _hostEnvironment = hostEnvironment; //?? throw new ArgumentNullException(nameof(hostEnvironment));
             _httpContextAccessor = httpContextAccessor; //?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userStore = userStore; //?? throw new ArgumentNullException(nameof(userStore));
@@ -148,7 +149,7 @@ namespace Persistence.Repository_Implementations
                                         .ToListAsync();
         }
 
-        public async Task<BaseResult<AppResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath)
+        public async Task<BaseResult<CustomResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath)
         {
             ApplicationUser applicationUser = new();
             try
@@ -185,13 +186,13 @@ namespace Persistence.Repository_Implementations
                             if (!imageSaved)
                             {
                                 _appLogger.LogError("Image saving failed.");
-                                return BaseResult<AppResponse>.Failure("Image saving failed.");
+                                return BaseResult<CustomResponse>.Failure("Image saving failed.");
                             }
                         }
                         else
                         {
                             _appLogger.LogError("Failed to convert image data.");
-                            return BaseResult<AppResponse>.Failure("Failed to convert image data.");
+                            return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
                         }
                     }
 
@@ -199,7 +200,7 @@ namespace Persistence.Repository_Implementations
                     if (role == null)
                     {
                         _appLogger.LogError($"Role with ID {user.RoleId} does not exist.");
-                        return BaseResult<AppResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
+                        return BaseResult<CustomResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
                     }
 
 
@@ -207,10 +208,10 @@ namespace Persistence.Repository_Implementations
                     if (!roleExists)
                     {
                         _appLogger.LogError($"Role {user.RoleId} does not exist.");
-                        return BaseResult<AppResponse>.Failure($"Role {user.RoleId} does not exist.");
+                        return BaseResult<CustomResponse>.Failure($"Role {user.RoleId} does not exist.");
                     }
 
-                    
+
 
 
                     await _userManager.AddToRoleAsync(applicationUser, role.Name);
@@ -228,16 +229,16 @@ namespace Persistence.Repository_Implementations
                     _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
 
                     // Return success with the user Id
-                    return BaseResult<AppResponse>.Success(new AppResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
+                    return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
                 }
             }
             catch (Exception ex)
             {
                 _appLogger.LogError($"An unexpected error occurred while registering user with ID {applicationUser.Id}. Exception: {ex.Message}");
-                return BaseResult<AppResponse>.Failure($"An unexpected error occurred while registering user: {ex.Message}");
+                return BaseResult<CustomResponse>.Failure($"An unexpected error occurred while registering user: {ex.Message}");
             }
 
-            return BaseResult<AppResponse>.Failure("User registration failed");
+            return BaseResult<CustomResponse>.Failure("User registration failed");
         }
 
         public async Task<Unit> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, IFormFile image)
@@ -356,7 +357,7 @@ namespace Persistence.Repository_Implementations
             }
             catch (Exception ex)
             {
-                _appLogger.LogError($"An error occurred while marking form {formId} as complete for appraiser {appraiserId} by user {userId}.", ex); 
+                _appLogger.LogError($"An error occurred while marking form {formId} as complete for appraiser {appraiserId} by user {userId}.", ex);
             }
 
             throw new BadHttpRequestException("An error occurred while marking this job as complete. Please refresh and try again.");
@@ -574,6 +575,22 @@ namespace Persistence.Repository_Implementations
                 int j = _random.Next(i + 1);
                 (array[i], array[j]) = (array[j], array[i]);
             }
+        }
+
+        public async Task<CustomResponse> DeleteAllUsers(string userId)
+        {
+            // Find the form to be deleted
+            var userToDelete = await _userManager.FindByIdAsync(userId);
+            if (userToDelete != null)
+            {
+                await _userManager.DeleteAsync(userToDelete);
+                await _dbContext.SaveChangesAsync();
+
+                return new CustomResponse { IsSuccess = true, Message = "Record Deleted Successfully." };
+            }
+
+            // Throw an exception if the user is not found
+            throw new NotFoundException(nameof(DeleteAppUserCommand), userId);
         }
     }
 }

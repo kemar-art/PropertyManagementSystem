@@ -6,11 +6,11 @@ namespace PMS.UI.Contracts
 {
     public interface IAdminRepository
     {
-        Task<AppResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate);
+        Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate);
         Task<IEnumerable<ClientVM>> GetAllClients();
         Task<IEnumerable<ApplicationUserVM>> GetAllEmployees();
         Task<ApplicationUserVM> GetEmployeesById(string uerId);
-        Task DeleteEmployee(string uerId);
+        Task<CustomResponse> DeleteEmployee(string uerId);
         Task<IEnumerable<IdentityRole>> GetRolesAsync();
     }
 }

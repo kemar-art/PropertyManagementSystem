@@ -1,8 +1,10 @@
 ﻿using Application.Contracts.Repository_Interface;
 using Application.Exceptions;
 using Application.Features.Commands.ClientForm.DeleteForm;
+using Domain.Common;
 using Domain.Repository_Interface;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.DeleteUser
 {
-    public class DeleteAppUserCommandHandler : IRequestHandler<DeleteAppUserCommand, Unit>
+    public class DeleteAppUserCommandHandler : IRequestHandler<DeleteAppUserCommand, CustomResponse>
     {
         private readonly IAdminRepository _userRepository;
 
@@ -20,22 +22,16 @@ namespace Application.Features.Commands.User.BackOfficeUsers.DeleteUser
             _userRepository = userRepository;
         }
 
-        public async Task<Unit> Handle(DeleteAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<CustomResponse> Handle(DeleteAppUserCommand request, CancellationToken cancellationToken)
         {
-            //Find the form to be deleted
-            var userToDelete = await _userRepository.GetByIdAsync(request.Id);
-
-            //Verify if the record exist
-            if (userToDelete is null)
+            if (request == null)
             {
-                throw new NotFoundException(nameof(DeleteFormCommand), request.Id);
+                return new CustomResponse { IsSuccess = false, Message = "A value was not send for Id"};
             }
 
-            //remove the record from the database 
-            await _userRepository.DeleteAsync(userToDelete);
+            var result = await _userRepository.DeleteAllUsers(request.Id);
 
-            //Return result.+
-            return Unit.Value;
+            return result;
         }
     }
 }

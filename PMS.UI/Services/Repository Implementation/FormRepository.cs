@@ -49,7 +49,6 @@ namespace PMS.UI.Services.Repository_Implementation
             }
             catch (ApiException ex)
             {
-
                 return ConvertApiExceptions<Guid>(ex);
             }
         }

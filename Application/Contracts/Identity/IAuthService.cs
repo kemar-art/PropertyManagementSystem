@@ -18,8 +18,8 @@ namespace Application.Contracts.Identity
         Task<BaseResult<RegistrationResponse>> RegisterClientUserAsync(ClientRegistrationCommand user);
         Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand user);
         Task<BaseResult<bool>> IsEmailRegisteredExist(string email);
-        Task<AppResponse> ForgetPassword(string email);
-        Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword);
-        Task<AppResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword);
+        Task<CustomResponse> ForgetPassword(string email);
+        Task<CustomResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword);
+        Task<CustomResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword);
     }
 }

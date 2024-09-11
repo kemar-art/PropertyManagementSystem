@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser;
 
-public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOfficeUserCommand, BaseResult<AppResponse>>
+public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOfficeUserCommand, BaseResult<CustomResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IAdminRepository _userRepository;
@@ -38,13 +38,13 @@ public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOffi
         _userManager = userManager;
     }
 
-    public async Task<BaseResult<AppResponse>> Handle(CreateBackOfficeUserCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResult<CustomResponse>> Handle(CreateBackOfficeUserCommand request, CancellationToken cancellationToken)
     {
         // Check for null request
         if (request == null)
         {
             _appLogger.LogError("CreateBackOfficeUserCommand request is null.");
-            return BaseResult<AppResponse>.Failure("Request cannot be null.");
+            return BaseResult<CustomResponse>.Failure("Request cannot be null.");
         }
 
         // Validate incoming data
@@ -53,7 +53,7 @@ public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOffi
         if (validationResult.Errors.Any())
         {
             _appLogger.LogWarning("Validation failed for CreateBackOfficeUserCommand: {Errors}", validationResult.Errors);
-            return BaseResult<AppResponse>.Failure("An error was encountered when creating the user.");
+            return BaseResult<CustomResponse>.Failure("An error was encountered when creating the user.");
         }
 
         // Check if the email already exists
@@ -61,7 +61,7 @@ public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOffi
         if (emailExists != null)
         {
             _appLogger.LogWarning("Attempt to create a user with an email that is already in use: {Email}", request.Email);
-            return BaseResult<AppResponse>.Failure("Email already in use.");
+            return BaseResult<CustomResponse>.Failure("Email already in use.");
         }
 
         try
@@ -76,7 +76,7 @@ public class CreateBackOfficeUserCommandHandler : IRequestHandler<CreateBackOffi
         catch (Exception ex)
         {
             _appLogger.LogError("An error occurred while creating the user: {Email}", request.Email, ex);
-            return BaseResult<AppResponse>.Failure("An error occurred while processing your request.");
+            return BaseResult<CustomResponse>.Failure("An error occurred while processing your request.");
         }
     }
 

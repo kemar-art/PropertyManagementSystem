@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.UserPassword.ForgetPassword
 {
-    public class ForgetPasswordRestCommand : IRequest<AppResponse>
+    public class ForgetPasswordRestCommand : IRequest<CustomResponse>
     {
         public string Email { get; set; } = string.Empty;
     }

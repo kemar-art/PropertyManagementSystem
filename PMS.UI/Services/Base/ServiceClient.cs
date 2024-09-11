@@ -88,21 +88,21 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersDELETEAsync(string id);
+        System.Threading.Tasks.Task<CustomResponse> ApplicationUsersDELETEAsync(string id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersDELETEAsync(string id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomResponse> ApplicationUsersDELETEAsync(string id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body);
+        System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -196,30 +196,30 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body);
+        System.Threading.Tasks.Task<CustomResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body);
+        System.Threading.Tasks.Task<CustomResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CustomResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CustomResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1034,7 +1034,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApplicationUsersDELETEAsync(string id)
+        public virtual System.Threading.Tasks.Task<CustomResponse> ApplicationUsersDELETEAsync(string id)
         {
             return ApplicationUsersDELETEAsync(id, System.Threading.CancellationToken.None);
         }
@@ -1042,7 +1042,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApplicationUsersDELETEAsync(string id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponse> ApplicationUsersDELETEAsync(string id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1054,6 +1054,7 @@ namespace PMS.UI.Services.Base
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1086,7 +1087,22 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -1110,7 +1126,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body)
+        public virtual System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body)
         {
             return ApplicationUsersPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1118,7 +1134,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1163,7 +1179,7 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AppResponseBaseResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponseBaseResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2230,7 +2246,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body)
+        public virtual System.Threading.Tasks.Task<CustomResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body)
         {
             return ForgetpasswordAsync(body, System.Threading.CancellationToken.None);
         }
@@ -2238,7 +2254,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponse> ForgetpasswordAsync(ForgetPasswordRestCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2283,7 +2299,7 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AppResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2322,7 +2338,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body)
+        public virtual System.Threading.Tasks.Task<CustomResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body)
         {
             return ResetpasswordAsync(body, System.Threading.CancellationToken.None);
         }
@@ -2330,7 +2346,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponse> ResetpasswordAsync(NoneLoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2375,7 +2391,7 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AppResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2414,7 +2430,7 @@ namespace PMS.UI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body)
+        public virtual System.Threading.Tasks.Task<CustomResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body)
         {
             return UpdatepasswordAsync(body, System.Threading.CancellationToken.None);
         }
@@ -2422,7 +2438,7 @@ namespace PMS.UI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponse> UpdatepasswordAsync(LoginUserPasswordResetCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2467,7 +2483,7 @@ namespace PMS.UI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<AppResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3754,36 +3770,6 @@ namespace PMS.UI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AppResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("isSuccess")]
-        public bool IsSuccess { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("message")]
-        public string Message { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AppResponseBaseResult
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("isSuccess")]
-        public bool IsSuccess { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public AppResponse Value { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("error")]
-        public string Error { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApplicationUser
     {
 
@@ -3979,11 +3965,11 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string Address { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("imageBase64")]
-        public string ImageBase64 { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
         public string ImagePath { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("imageBase64")]
+        public string ImageBase64 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTimeOffset? DateOfBirth { get; set; }
@@ -4113,6 +4099,36 @@ namespace PMS.UI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("purposeOfValuationItemSelectedIds")]
         public string PurposeOfValuationItemSelectedIds { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("isSuccess")]
+        public bool IsSuccess { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("message")]
+        public string Message { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomResponseBaseResult
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isSuccess")]
+        public bool IsSuccess { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("value")]
+        public CustomResponse Value { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("error")]
+        public string Error { get; set; }
 
     }
 

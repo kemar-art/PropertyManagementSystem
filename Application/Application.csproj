@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Features\Commands\Users\**" />
+    <Compile Remove="Features\Commands\User\NewFolder\**" />
     <EmbeddedResource Remove="Features\Commands\Users\**" />
+    <EmbeddedResource Remove="Features\Commands\User\NewFolder\**" />
     <None Remove="Features\Commands\Users\**" />
+    <None Remove="Features\Commands\User\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Commands\User\NewFolder\" />
   </ItemGroup>
 
 </Project>

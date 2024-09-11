@@ -238,7 +238,7 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-        public async Task<AppResponse> ForgetPassword(string email)
+        public async Task<CustomResponse> ForgetPassword(string email)
         {
             // Find the user by their email
             var user = await _userManager.FindByEmailAsync(email);
@@ -247,7 +247,7 @@ namespace Persistence.Repository_Implementations
                 // Log that no user was found with the provided email
                 _appLogger.LogWarning("ForgetPassword request for non-existing email: {Email}", email);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = false,
                     Message = "A password reset link was sent to your email."
@@ -267,14 +267,14 @@ namespace Persistence.Repository_Implementations
             // Log the successful sending of the reset email
             _appLogger.LogInformation("Password reset email sent to: {Email}", email);
 
-            return new AppResponse
+            return new CustomResponse
             {
                 IsSuccess = true,
                 Message = "A password reset link was sent to your email."
             };
         }
 
-        public async Task<AppResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
+        public async Task<CustomResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
         {
             // Log the start of the password reset process
             _appLogger.LogInformation("Attempting to reset password for user ID: {UserId}", resetPassword.Id);
@@ -286,7 +286,7 @@ namespace Persistence.Repository_Implementations
                 // Log that the user was not found
                 _appLogger.LogWarning("User not found with ID: {UserId}", resetPassword.Id);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = false,
                     Message = "User not valid"
@@ -299,7 +299,7 @@ namespace Persistence.Repository_Implementations
                 // Log that the email verification failed
                 _appLogger.LogWarning("Email verification failed for user ID: {UserId}, provided email: {Email}", resetPassword.Id, resetPassword.Email);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = false,
                     Message = "User not valid"
@@ -316,7 +316,7 @@ namespace Persistence.Repository_Implementations
                 // Log the successful password reset
                 _appLogger.LogInformation("Password reset successful for user ID: {UserId}", resetPassword.Id);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = true,
                     Message = "Your password has been reset"
@@ -327,14 +327,14 @@ namespace Persistence.Repository_Implementations
             _appLogger.LogError("Password reset failed for user ID: {UserId}", resetPassword.Id);
 
             // Handle failure
-            return new AppResponse
+            return new CustomResponse
             {
                 IsSuccess = false,
                 Message = "Password reset failed"
             };
         }
 
-        public async Task<AppResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword)
+        public async Task<CustomResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword)
         {
             // Log the start of the password reset process
             _appLogger.LogInformation("Attempting to reset password for user ID: {UserId}", resetPassword.Id);
@@ -346,7 +346,7 @@ namespace Persistence.Repository_Implementations
                 // Log that the user was not found
                 _appLogger.LogWarning("User not found with ID: {UserId}", resetPassword.Id);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = false,
                     Message = "User not valid"
@@ -360,7 +360,7 @@ namespace Persistence.Repository_Implementations
                 // Log that the current password does not match
                 _appLogger.LogWarning("Current password does not match for user ID: {UserId}", resetPassword.Id);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = true,
                     Message = "Current password does not match"
@@ -381,7 +381,7 @@ namespace Persistence.Repository_Implementations
                 // Log the successful password reset
                 _appLogger.LogInformation("Password reset successful for user ID: {UserId}", resetPassword.Id);
 
-                return new AppResponse
+                return new CustomResponse
                 {
                     IsSuccess = true,
                     Message = "Your password has been reset"
@@ -392,7 +392,7 @@ namespace Persistence.Repository_Implementations
             _appLogger.LogError("Password reset failed for user ID: {UserId}", resetPassword.Id);
 
             // Return a failure response
-            return new AppResponse
+            return new CustomResponse
             {
                 IsSuccess = false,
                 Message = "Password reset failed"

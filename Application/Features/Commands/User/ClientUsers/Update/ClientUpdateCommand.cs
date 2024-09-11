@@ -30,6 +30,9 @@ namespace Application.Features.Commands.User.ClientUsers.Update
         public string Address { get; set; } = string.Empty;
 
         public string? ImagePath { get; set; } = string.Empty;
+
+        public string ImageBase64 { get; set; } = string.Empty;
+
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
         public Guid ClientRegionId { get; set; }
