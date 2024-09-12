@@ -35,7 +35,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _dbContext.Set<T>().AsNoTracking().ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(Guid id)
+    public async Task<T> GetFormByIdAsync(Guid id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }

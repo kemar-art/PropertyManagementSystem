@@ -54,7 +54,7 @@ else if (_indexModel.Any())
                             <CellTemplate>
                                 <MudStack Row>
                                     <MudIconButton Variant="Variant.Filled" OnClick="() => EditEmployee(context.Item.Id)" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
-                                    <MudIconButton Variant="Variant.Filled" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" OnClick="() => EmployeeDetail(context.Item.Id)" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
                                     <MudIconButton Variant="Variant.Filled" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                                     @* <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Warning"><i class="fa-solid fa-pen-clip"></i></MudButton>
                                     <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Info">Hire</MudButton>

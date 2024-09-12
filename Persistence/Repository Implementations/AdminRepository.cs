@@ -183,7 +183,7 @@ namespace Persistence.Repository_Implementations
                         var imageToSave = ConvertBase64ToFormFile(imagePath);
                         if (imageToSave != null)
                         {
-                            var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                            var imageSaved = await SaveBackOfficeUserImageAsync(user, imageToSave);
                             if (!imageSaved)
                             {
                                 _appLogger.LogError("Image saving failed.");
@@ -242,7 +242,7 @@ namespace Persistence.Repository_Implementations
             return BaseResult<CustomResponse>.Failure("User registration failed");
         }
 
-        public async Task<BaseResult<CustomResponse>> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, string imagePath)
+        public async Task<BaseResult<CustomResponse>> UpdateBackOfficeUserAsync(UpdateBackOfficeUserCommand user, string imagePath)
         {
             var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
             if (applicationUser == null)
@@ -290,7 +290,7 @@ namespace Persistence.Repository_Implementations
                     var imageToSave = ConvertBase64ToFormFile(imagePath);
                     if (imageToSave != null)
                     {
-                        var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                        var imageSaved = await UpdateBackOfficeUserImageAsync(user, imageToSave);
                         if (!imageSaved)
                         {
                             _appLogger.LogError("Image saving failed.");
@@ -304,26 +304,13 @@ namespace Persistence.Repository_Implementations
                     }
                 }
 
-               
-
-
-
-
-
-
                 await _userManager.AddToRoleAsync(applicationUser, role.Name);
-
 
                 _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
 
                 // Return success with the user Id
                 return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
             }
-
-
-
-
-
 
             //await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
@@ -535,7 +522,7 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-        private async Task<bool> SaveClientImageAsync(CreateBackOfficeUserCommand user, IFormFile imageToSave)
+        private async Task<bool> SaveBackOfficeUserImageAsync(CreateBackOfficeUserCommand user, IFormFile imageToSave)
         {
             try
             {
@@ -545,7 +532,7 @@ namespace Persistence.Repository_Implementations
                 }
 
                 string webRootPath = _hostEnvironment.WebRootPath;
-                string uploads = Path.Combine(webRootPath, "images/admins");
+                string uploads = Path.Combine(webRootPath, "images/employees");
                 string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
                 string newFilePath = Path.Combine(uploads, newFileName);
 
@@ -567,7 +554,7 @@ namespace Persistence.Repository_Implementations
                 await imageToSave.CopyToAsync(fileStream);
 
                 // Update the user's image path
-                user.ImagePath = Path.Combine("images/client", newFileName);
+                user.ImagePath = Path.Combine("images/employees", newFileName);
 
                 return true;
             }
@@ -631,10 +618,7 @@ namespace Persistence.Repository_Implementations
             throw new NotFoundException(nameof(DeleteAppUserCommand), userId);
         }
 
-
-
-
-        private async Task<bool> SaveClientImageAsync(UpdateBackOfficeUserCommand user, IFormFile imageToSave)
+        private async Task<bool> UpdateBackOfficeUserImageAsync(UpdateBackOfficeUserCommand user, IFormFile imageToSave)
         {
             try
             {
@@ -644,7 +628,7 @@ namespace Persistence.Repository_Implementations
                 }
 
                 string webRootPath = _hostEnvironment.WebRootPath;
-                string uploads = Path.Combine(webRootPath, "images/admins");
+                string uploads = Path.Combine(webRootPath, "images/employees");
                 string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
                 string newFilePath = Path.Combine(uploads, newFileName);
 
@@ -666,7 +650,7 @@ namespace Persistence.Repository_Implementations
                 await imageToSave.CopyToAsync(fileStream);
 
                 // Update the user's image path
-                user.ImagePath = Path.Combine("images/client", newFileName);
+                user.ImagePath = Path.Combine("images/employees", newFileName);
 
                 return true;
             }

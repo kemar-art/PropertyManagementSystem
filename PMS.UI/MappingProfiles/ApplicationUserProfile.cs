@@ -24,7 +24,7 @@ public class ApplicationUserProfile : Profile
 
         CreateMap<GetASingleUserDTO, ClientVM>()
            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.DateTime))
-           .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
+           //.ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ReverseMap();
 
 

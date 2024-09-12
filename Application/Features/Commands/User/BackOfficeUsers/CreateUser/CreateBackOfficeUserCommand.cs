@@ -22,7 +22,9 @@ namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public string ImagePath { get; set; } = string.Empty;
+        public string? ImagePath { get; set; } = string.Empty;
+
+        public string ImageBase64 { get; set; } = string.Empty;
 
         public DateTime? DateOfBirth { get; set; }
         public DateTime? DateRegistered { get; set; }

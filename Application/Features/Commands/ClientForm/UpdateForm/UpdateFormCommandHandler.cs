@@ -39,7 +39,7 @@ public class UpdateFormCommandHandler : IRequestHandler<UpdateFormCommand, BaseR
             }
 
             // Retrieve the existing form from the database
-            var existingForm = await _formRepository.GetByIdAsync(request.Id);
+            var existingForm = await _formRepository.GetFormByIdAsync(request.Id);
             if (existingForm == null)
             {
                 _appLogger.LogWarning("Form not found with ID: {FormId}", request.Id);

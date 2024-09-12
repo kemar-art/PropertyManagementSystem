@@ -44,8 +44,6 @@ namespace PMS.UI.Pages.Admin.Clients
         [Inject]
         ISnackbar _Snackbar { get; set; }
 
-        private ClientVM _originalProfileModel;
-
         protected override async Task OnInitializedAsync()
         {
 
@@ -66,20 +64,9 @@ namespace PMS.UI.Pages.Admin.Clients
 
         }
 
-        
-
-
-        
-
-        
-
-        
-
         private void BackToIndex()
         {
             _NavigationManager.NavigateTo("/admin/client/");
-        }
-
-        
+        }  
     }
 }

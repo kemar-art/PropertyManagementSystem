@@ -54,32 +54,25 @@ else
                                         <MudItem xs="6">
                                             <MudTextField T="string" Label="T.R.N" @bind-Value="_editModel.TaxRegistrationNumber" For="@(() => _editModel.TaxRegistrationNumber)" />
                                         </MudItem>
-                                        <MudItem xs="2" Class="text-center">
+                                        <MudItem xs="6" Class="text-center">
                                             <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" MaximumFileCount="1" FilesChanged="UploadFile">
                                                 <ActivatorContent>
                                                     <MudButton Variant="Variant.Filled"
                                                                Color="Color.Primary"
                                                                StartIcon="@Icons.Material.Filled.CloudUpload">
-                                                        Upload Photo
+                                                        @(!string.IsNullOrEmpty(fileName) ? fileName : "Upload Photo")
                                                     </MudButton>
                                                 </ActivatorContent>
                                             </MudFileUpload>
                                         </MudItem>
-                                        @if (fileName != null)
-                                        {
-                                            <MudItem xs="4" Class="text-center">
-                                                <MudList T="string">
-                                                    <MudListItem Icon="@Icons.Material.Filled.AttachFile">
-                                                        @fileName <code>@fileSize bytes</code>
-                                                    </MudListItem>
-                                                </MudList>
-                                            </MudItem>
-                                        }
-                                        <MudItem xs="6">
+                                        <MudItem xs="4">
                                             <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_editModel.DateOfBirth" Rounded="true" For="@(() => _editModel.DateOfBirth)" />
                                         </MudItem>
-                                        <MudItem xs="6">
+                                        <MudItem xs="4">
                                             <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_editModel.DateRegistered" Rounded="true" For="@(() => _editModel.DateRegistered)" />
+                                        </MudItem>
+                                        <MudItem xs="4">
+                                            <MudDatePicker Label="Last Work" Color="Color.Secondary" @bind-Date="_editModel.DateEnded" Rounded="true" For="@(() => _editModel.DateEnded)" />
                                         </MudItem>
                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                             <MudSelect T="string" @bind-Value="_editModel.RoleId">

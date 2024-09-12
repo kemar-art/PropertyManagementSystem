@@ -6,6 +6,7 @@ namespace Application.Features.Queries.ClientForm.GetASingleForm;
 public class GetFormDetailsDto
 {
     public Guid Id { get; set; }
+
     public int CustomerId { get; set; }
 
     public string FirstName { get; set; } = string.Empty;
@@ -45,7 +46,6 @@ public class GetFormDetailsDto
     public string SecondaryContactPhoneNumber { get; set; } = string.Empty;
 
     public Guid? ClientRegionId { get; set; }
-
 
     public Guid? PropertyRegionId { get; set; }
 

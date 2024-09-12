@@ -60,7 +60,7 @@ namespace PMS.UI.Pages.Admin.Employee
 
         protected void EmployeeDetail(string id)
         {
-            _NavigationManager.NavigateTo($"/edit/client/details/{id}");
+            _NavigationManager.NavigateTo($"/client/details/{id}");
         }
 
         protected async Task EmployeeDeletion(string id)

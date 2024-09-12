@@ -5,6 +5,7 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Employee;
 using PMS.UI.Services.Base;
 using PMS.UI.Contracts;
+using System.Reflection.Metadata;
 
 namespace PMS.UI.Pages.Admin.Employee
 {
@@ -79,6 +80,9 @@ namespace PMS.UI.Pages.Admin.Employee
             IsLoading = true;
             try
             {
+                // Handle image update logic
+                _editModel.ImagePath = file == null ? null : _editModel.ImagePath ?? string.Empty;
+
                 var response = await _AdminRepository.UpdateBackOfficeUse(_editModel);
 
                 if (response != null && response.IsSuccess)
@@ -122,12 +126,12 @@ namespace PMS.UI.Pages.Admin.Employee
                 _editModel.ImagePath = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
 
                 // Update ImageBase64 with the same data for immediate display
-                //_profileModel.ImageBase64 = _profileModel.ImagePath;
+                _editModel.ImageBase64 = _editModel.ImagePath;
             }
             catch (Exception)
             {
                 // Display error notification
-                // _Snackbar.Add($"An error occurred while uploading the file", Severity.Error);
+                _Snackbar.Add($"An error occurred while uploading the file", Severity.Error);
             }
         }
 

@@ -24,6 +24,8 @@ public class GetASingleUserDTO
     [NotMapped]
     public string ImageBase64 { get; set; } = string.Empty;
 
+
+
     public DateTime DateOfBirth { get; set; } 
     public Guid ClientRegionId { get; set; }
 

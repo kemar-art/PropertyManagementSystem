@@ -6,6 +6,8 @@ using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Client;
 using Blazorise.DeepCloner;
 using PMS.UI.Services.Base;
+using PMS.UI.Models.Employee;
+using PMS.UI.Contracts;
 
 namespace PMS.UI.Pages.Admin.Employee
 {
@@ -26,7 +28,7 @@ namespace PMS.UI.Pages.Admin.Employee
 
         IEnumerable<Region> Regions { get; set; }
 
-        public ClientVM _editdetailsModel { get; set; } = new();
+        public ApplicationUserVM _detailsModel { get; set; } = new();
 
         private EditContext _editContext;
 
@@ -36,7 +38,7 @@ namespace PMS.UI.Pages.Admin.Employee
         public NavigationManager _NavigationManager { get; set; }
 
         [Inject]
-        private IClientRepository _ClientRepository { get; set; }
+        private IAdminRepository _AdminRepository { get; set; }
 
         [Inject]
         IRegionRepositoey _RegionRepositoey { get; set; }
@@ -44,20 +46,26 @@ namespace PMS.UI.Pages.Admin.Employee
         [Inject]
         ISnackbar _Snackbar { get; set; }
 
-        private ClientVM _originalProfileModel;
+        private ApplicationUserVM _originalProfileModel;
+
+        IEnumerable<IdentityRole> _roles = [];
 
         protected override async Task OnInitializedAsync()
         {
 
+            Regions = await _RegionRepositoey.GetAllRegion() ?? [];
+            _roles = await _AdminRepository.GetRolesAsync();
+
             IsLoading = true;
-            _editdetailsModel = await _ClientRepository.GetClientById(UserId);
+            _detailsModel = await _AdminRepository.GetEmployeesById(UserId);
 
-
+            _detailsModel.AdminRegionId = Regions.FirstOrDefault().Id;
+            _detailsModel.RoleId = _roles.FirstOrDefault().Id;
 
             // Ensure ImageBase64 is null or empty string if no image is uploaded
-            if (string.IsNullOrEmpty(_editdetailsModel.ImageBase64))
+            if (string.IsNullOrEmpty(_detailsModel.ImageBase64))
             {
-                _editdetailsModel.ImageBase64 = null; // or string.Empty
+                _detailsModel.ImageBase64 = null; // or string.Empty
             }
 
             Regions = await _RegionRepositoey.GetAllRegion() ?? [];
@@ -65,19 +73,9 @@ namespace PMS.UI.Pages.Admin.Employee
             IsLoading = false;
 
         }
-
-        
-
-
-        
-
-        
-
-        
-
         private void BackToIndex()
         {
-            _NavigationManager.NavigateTo("/admin/client/");
+            _NavigationManager.NavigateTo("/admin/employee/");
         }
 
         

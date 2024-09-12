@@ -27,7 +27,7 @@ public class GetFormDetailsQueryHandler : IRequestHandler<GetFormDetailsQuery, B
             _appLogger.LogInformation("Handling GetFormDetailsQuery for Form ID: {Id}", request.Id);
 
             // Querying the database
-            var getForm = await _formRepository.GetByIdAsync(request.Id);
+            var getForm = await _formRepository.GetFormByIdAsync(request.Id);
 
             // Verify if the record does not exist
             if (getForm is null)

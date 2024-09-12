@@ -16,7 +16,7 @@ namespace Application.Features.Commands.ClientForm.DeleteForm
         public async Task<Unit> Handle(DeleteFormCommand request, CancellationToken cancellationToken)
         {
             //Find the form to be deleted
-            var formToDelete = await _formRepository.GetByIdAsync(request.Id);
+            var formToDelete = await _formRepository.GetFormByIdAsync(request.Id);
 
             //Verify if the record exist
             if (formToDelete is null)

@@ -127,7 +127,7 @@ namespace Application.Features.Commands.ClientForm.UpdateForm
 
         private async Task<bool> FormIdMustExist(Guid id, CancellationToken token)
         {
-            var checkIfFormIdExist = await _formRepository.GetByIdAsync(id);
+            var checkIfFormIdExist = await _formRepository.GetFormByIdAsync(id);
             return checkIfFormIdExist != null;
         }
     }

@@ -22,7 +22,6 @@ namespace Domain
         public string ImagePath { get; set; } = string.Empty;
         [NotMapped]
         public string ImageBase64 { get; set; } = string.Empty;
-        //public IFormFile? Image { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date), Display(Name = ("D.O.B"))]

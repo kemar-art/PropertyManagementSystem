@@ -1,5 +1,5 @@
 ﻿@layout MudBlazorLayout
-@page "/employee/details/{userId}"
+@page "/client/details/{userId}"
 @using MudBlazor
 @using PMS.UI.Models.Form
 @using PMS.UI.Pages.Admin.Shared
@@ -35,15 +35,15 @@ else
                     <div class="col col-xl-12">
                         <MudItem xs="12">
                             <div class="form-container">
-                                <EditForm Model="@_editdetailsModel">
+                                <EditForm Model="@_detailsModel">
                                     <DataAnnotationsValidator />
                                     <MudGrid Class="gutters">
                                         <MudItem xl="3" lg="3" md="12" sm="12" xs="12">
                                             <MudCard Class="h-100">
                                                 <MudCardContent>
-                                                    <MudImage Width="200" Height="220" Src="@(_editdetailsModel.ImageBase64 ?? "https://bootdey.com/img/Content/avatar/avatar7.png")" Alt="Profile Image" />
+                                                    <MudImage Width="200" Height="220" Src="@(_detailsModel.ImageBase64 ?? "https://bootdey.com/img/Content/avatar/avatar7.png")" Alt="Employee Image" />
 
-                                                    <MudText Typo="Typo.h5" Class="pt-2 text-center">@($"{_editdetailsModel.FirstName} {_editdetailsModel.LastName}")</MudText>
+                                                    <MudText Typo="Typo.h5" Class="pt-2 text-center">@($"{_detailsModel.FirstName} {_detailsModel.LastName}")</MudText>
 
                                                     @if (IsEditMode)
                                                     {
@@ -83,26 +83,47 @@ else
                                                             <MudText Typo="Typo.h6" Class="mb-2 text-primary">Personal Details</MudText>
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudTextField Label="First Name" @bind-Value="_editdetailsModel.FirstName" Disabled="true" />
+                                                            <MudTextField Label="First Name" @bind-Value="_detailsModel.FirstName" Disabled="true" />
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudTextField Label="Last Name" @bind-Value="_editdetailsModel.LastName" Disabled="true" />
+                                                            <MudTextField Label="Last Name" @bind-Value="_detailsModel.LastName" Disabled="true" />
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudTextField Label="Email" @bind-Value="_editdetailsModel.Email" Disabled="true" />
+                                                            <MudTextField Label="Last Name" @bind-Value="_detailsModel.NationalInsuranceScheme" Disabled="true" />
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudTextField Label="Phone Number" @bind-Value="_editdetailsModel.PhoneNumber" Disabled="true" />
+                                                            <MudTextField Label="Last Name" @bind-Value="_detailsModel.TaxRegistrationNumber" Disabled="true" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Email" @bind-Value="_detailsModel.Email" Disabled="true" />
+                                                        </MudItem>
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
+                                                            <MudTextField Label="Phone Number" @bind-Value="_detailsModel.PhoneNumber" Disabled="true" />
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                             <MudText Typo="Typo.subtitle1">Gender</MudText>
-                                                            <MudRadioGroup T="string" @bind-Value="_editdetailsModel.Gender" Disabled="true">
+                                                            <MudRadioGroup T="string" @bind-Value="_detailsModel.Gender" Disabled="true">
                                                                 <MudRadio Value="UserGender.Male">Male</MudRadio>
                                                                 <MudRadio Value="UserGender.Female">Female</MudRadio>
                                                             </MudRadioGroup>
                                                         </MudItem>
-                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_editdetailsModel.DateOfBirth" Disabled="true" />
+                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12" Class="mt-3">
+                                                            <MudSelect T="string" @bind-Value="_detailsModel.RoleId" Disabled="true">
+                                                                <MudSelectItem T="string" Value="string.Empty" Disabled>--Select Role--</MudSelectItem>
+                                                                @foreach (var role in _roles)
+                                                                {
+                                                                    <MudSelectItem T="string" Value="@role.Id">@role.Name</MudSelectItem>
+                                                                }
+                                                            </MudSelect>
+                                                        </MudItem>
+                                                        <MudItem xs="4">
+                                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_detailsModel.DateOfBirth" Rounded="true" For="@(() => _detailsModel.DateOfBirth)" Disabled="true" />
+                                                        </MudItem>
+                                                        <MudItem xs="4">
+                                                            <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_detailsModel.DateRegistered" Rounded="true" For="@(() => _detailsModel.DateRegistered)" Disabled="true" />
+                                                        </MudItem>
+                                                        <MudItem xs="4">
+                                                            <MudDatePicker Label="Last Work" Color="Color.Secondary" @bind-Date="_detailsModel.DateEnded" Rounded="true" For="@(() => _detailsModel.DateEnded)" Disabled="true" />
                                                         </MudItem>
                                                     </MudGrid>
                                                     <MudDivider Class="my-3" />
@@ -110,18 +131,18 @@ else
                                                         <MudItem xs="12">
                                                             <MudText Typo="Typo.h6" Class="mt-3 mb-2 text-primary">Address</MudText>
                                                         </MudItem>
-                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudTextField Label="Address" @bind-Value="_editdetailsModel.Address" Disabled="true" />
+                                                        <MudItem xs="8">
+                                                            <MudTextField Label="Address" @bind-Value="_detailsModel.Address" Disabled="true" />
                                                         </MudItem>
-                                                        <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_editdetailsModel.ClientRegionId" Disabled="true">
+                                                        <MudItem xs="4">
+                                                            <MudSelect T="Guid" Label="Parish" @bind-Value="_detailsModel.AdminRegionId" Disabled="true">
                                                                 <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                                 @foreach (var region in Regions)
                                                                 {
                                                                     <MudSelectItem T="Guid" Value="@region.Id">@region.ParishName</MudSelectItem>
                                                                 }
                                                             </MudSelect>
-                                                            <ValidationMessage For="@(() => _editdetailsModel.ClientRegionId)" />
+                                                            <ValidationMessage For="@(() => _detailsModel.AdminRegionId)" />
                                                         </MudItem>
                                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
                                                         </MudItem>
@@ -130,12 +151,7 @@ else
                                                     </MudGrid>
                                                     <MudDivider Class="my-3" />
                                                     <MudItem xs="12">
-                                                        <div class="row">
-
-
                                                             <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Dark" OnClick="BackToIndex"><i class="fa-solid fa-backward-step"></i>&nbsp; Back</MudButton>
-
-                                                        </div>
                                                     </MudItem>
                                                 </MudCardContent>
                                             </MudCard>

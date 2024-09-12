@@ -39,7 +39,7 @@ namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
             //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-            var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.ImagePath);
+            var updatedUser = await _userRepository.UpdateBackOfficeUserAsync(request, request.ImagePath);
 
             //Return result.
             return updatedUser;
