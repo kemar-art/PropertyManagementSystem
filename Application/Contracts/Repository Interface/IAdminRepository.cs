@@ -18,7 +18,7 @@ namespace Application.Contracts.Repository_Interface
     public interface IAdminRepository : IGenericRepository<ApplicationUser>
     {
         Task<BaseResult<CustomResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath);
-        Task<Unit> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, IFormFile image);
+        Task<BaseResult<CustomResponse>> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, string imagePath);
         Task<IEnumerable<Form>> GetFormByStatusForAdmin(string status);
         Task<Unit> AssignJob(AssignFormToAppraiserCommand assignFormToAppraiser);
         Task<Unit> MarkFormHasComplete(Guid? formId, string? appraiserId);

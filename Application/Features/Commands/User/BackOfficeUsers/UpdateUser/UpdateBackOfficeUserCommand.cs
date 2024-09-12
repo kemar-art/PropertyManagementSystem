@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -11,28 +12,30 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateBackOfficeUserCommand : IRequest<Unit>
+    public class UpdateBackOfficeUserCommand : IRequest<BaseResult<CustomResponse>>
     {
         public string Id { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string TaxRegistrationNumber { get; set; } = string.Empty;
         public string NationalInsuranceScheme { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public IFormFile? Image { get; set; }
+        public string ImagePath { get; set; } = string.Empty;
 
-        [DataType(DataType.Date), Display(Name = "D.O.B")]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime DateOfBirth { get; set; }
+        public DateTime DateRegistered { get; set; }
+        public DateTime DateEnded { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        [DataType(DataType.Date), Display(Name = "Start Date")]
-        public DateTime Datestarted { get; set; } = DateTime.Now;
 
-        [ForeignKey("ClientRegionId")]
-        public Region? ClientRegion { get; set; }
-        public Guid? ClientRegionId { get; set; }
+        public string RoleId { get; set; } = string.Empty;
+        //public bool IsActive { get; set; } = true;
+
+
+        [ForeignKey("AdminRegionId")]
+        public Region? AdminRegion { get; set; }
+        public Guid? AdminRegionId { get; set; }
     }
 }

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateAppUserCommandValidation : AbstractValidator<UpdateBackOfficeUserCommand>
+    public class UpdateBackOfficeUserCommandValidation : AbstractValidator<UpdateBackOfficeUserCommand>
     {
         private readonly IAdminRepository _userRepository;
 
-        public UpdateAppUserCommandValidation(IAdminRepository userRepository)
+        public UpdateBackOfficeUserCommandValidation(IAdminRepository userRepository)
         {
             _userRepository = userRepository;
 

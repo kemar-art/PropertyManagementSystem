@@ -18,8 +18,6 @@ namespace PMS.UI.Pages.Admin.Clients
 
         private bool IsEditMode { get; set; } = false;
 
-        //public string UserId { get; set; } = string.Empty;
-
         private IBrowserFile file;
         private string fileName;
         private long fileSize;

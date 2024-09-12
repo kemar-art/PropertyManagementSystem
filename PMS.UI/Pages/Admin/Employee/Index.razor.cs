@@ -1,3 +1,4 @@
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PMS.UI.Contracts;
@@ -16,6 +17,12 @@ namespace PMS.UI.Pages.Admin.Employee
         [Inject]
         IAdminRepository _AdminRepository { get; set; }
 
+        [Inject]
+        public SweetAlertService Swal { get; set; }
+
+        [Inject]
+        ISnackbar _Snackbar { get; set; }
+
         public IEnumerable<ApplicationUserVM> _indexModel { get; private set; } = [];
 
         // Quick filter across columns
@@ -30,7 +37,7 @@ namespace PMS.UI.Pages.Admin.Employee
             {
                 return true;
             }
-                
+
 
             return false;
         };
@@ -44,6 +51,46 @@ namespace PMS.UI.Pages.Admin.Employee
         protected void CreateNewEmployee()
         {
             _NavigationManager.NavigateTo("/create-employee/");
+        }
+
+        protected void EditEmployee(string id)
+        {
+            _NavigationManager.NavigateTo($"/employee/edit/{id}");
+        }
+
+        protected void EmployeeDetail(string id)
+        {
+            _NavigationManager.NavigateTo($"/edit/client/details/{id}");
+        }
+
+        protected async Task EmployeeDeletion(string id)
+        {
+            var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Are you sure?",
+                Text = "You won't be able to revert this!",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonColor = "#d33",
+                CancelButtonColor = "#008000",
+                ConfirmButtonText = "Yes, delete it!"
+            });
+            if (result.IsConfirmed)
+            {
+                var response = await _AdminRepository.DeleteEmployee(id);
+                if (response.IsSuccess)
+                {
+                    _indexModel = await _AdminRepository.GetAllEmployees();
+                    _Snackbar.Add("Record Deleted Successfully.", Severity.Success);
+                    StateHasChanged();
+                }
+                else
+                {
+                    _Snackbar.Add("Unable to delete the record. Please try again.", Severity.Error);
+                }
+
+
+            }
         }
     }
 }

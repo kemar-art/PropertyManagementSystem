@@ -1,5 +1,5 @@
 ﻿@layout MudBlazorLayout
-@page "/create-employee/"
+@page "/employee/edit/{userId}"
 @using PMS.UI.Pages.Admin.Shared
 @using MudBlazor
 @using PMS.UI.StaticDetails
@@ -19,7 +19,7 @@ else
         <Menu />
         <div class="content-page">
             <div class="content">
-                <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
+                <EditForm Model="_editModel" OnValidSubmit="OnValidSubmit">
                     <DataAnnotationsValidator />
                     <MudGrid>
                         <MudItem xs="12">
@@ -30,29 +30,29 @@ else
                                     <MudDivider />
                                     <MudGrid>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="First Name" @bind-Value="_createModel.FirstName" For="@(() => _createModel.FirstName)" />
+                                            <MudTextField T="string" Label="First Name" @bind-Value="_editModel.FirstName" For="@(() => _editModel.FirstName)" />
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="Last Name" @bind-Value="_createModel.LastName" For="@(() => _createModel.LastName)" />
+                                            <MudTextField T="string" Label="Last Name" @bind-Value="_editModel.LastName" For="@(() => _editModel.LastName)" />
                                         </MudItem>
                                         <MudItem xs="6">
                                             <MudText Typo="Typo.subtitle1">Gender</MudText>
-                                            <MudRadioGroup T="string" @bind-Value="_createModel.Gender" For="@(() => _createModel.Gender)">
+                                            <MudRadioGroup T="string" @bind-Value="_editModel.Gender" For="@(() => _editModel.Gender)">
                                                 <MudRadio Value="UserGender.Male">Male</MudRadio>
                                                 <MudRadio Value="UserGender.Female">Female</MudRadio>
                                             </MudRadioGroup>
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="Email" @bind-Value="_createModel.Email" For="@(() => _createModel.Email)" />
+                                            <MudTextField T="string" Label="Email" @bind-Value="_editModel.Email" For="@(() => _editModel.Email)" />
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="Phone Number" @bind-Value="_createModel.PhoneNumber" For="@(() => _createModel.PhoneNumber)" />
+                                            <MudTextField T="string" Label="Phone Number" @bind-Value="_editModel.PhoneNumber" For="@(() => _editModel.PhoneNumber)" />
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="N.I.S" @bind-Value="_createModel.NationalInsuranceScheme" For="@(() => _createModel.NationalInsuranceScheme)" />
+                                            <MudTextField T="string" Label="N.I.S" @bind-Value="_editModel.NationalInsuranceScheme" For="@(() => _editModel.NationalInsuranceScheme)" />
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudTextField T="string" Label="T.R.N" @bind-Value="_createModel.TaxRegistrationNumber" For="@(() => _createModel.TaxRegistrationNumber)" />
+                                            <MudTextField T="string" Label="T.R.N" @bind-Value="_editModel.TaxRegistrationNumber" For="@(() => _editModel.TaxRegistrationNumber)" />
                                         </MudItem>
                                         <MudItem xs="2" Class="text-center">
                                             <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" MaximumFileCount="1" FilesChanged="UploadFile">
@@ -76,13 +76,13 @@ else
                                             </MudItem>
                                         }
                                         <MudItem xs="6">
-                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_createModel.DateOfBirth" Rounded="true" For="@(() => _createModel.DateOfBirth)" />
+                                            <MudDatePicker Label="Date Of Birth" Color="Color.Secondary" @bind-Date="_editModel.DateOfBirth" Rounded="true" For="@(() => _editModel.DateOfBirth)" />
                                         </MudItem>
                                         <MudItem xs="6">
-                                            <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_createModel.DateRegistered" Rounded="true" For="@(() => _createModel.DateRegistered)" />
+                                            <MudDatePicker Label="Start Date" Color="Color.Secondary" @bind-Date="_editModel.DateRegistered" Rounded="true" For="@(() => _editModel.DateRegistered)" />
                                         </MudItem>
                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                            <MudSelect T="string" @bind-Value="_createModel.RoleId">
+                                            <MudSelect T="string" @bind-Value="_editModel.RoleId">
                                                 <MudSelectItem T="string" Value="string.Empty" Disabled>--Select Role--</MudSelectItem>
                                                 @foreach (var role in _roles)
                                                 {
@@ -91,7 +91,7 @@ else
                                             </MudSelect>
                                         </MudItem>
                                         <MudItem xl="6" lg="6" md="6" sm="6" xs="12">
-                                            <MudSelect T="Guid" @bind-Value="_createModel.AdminRegionId">
+                                            <MudSelect T="Guid" @bind-Value="_editModel.AdminRegionId">
                                                 <MudSelectItem T="Guid" Value="@Guid.Empty" Disabled>--Select Parish--</MudSelectItem>
                                                 @foreach (var region in Regions)
                                                 {
@@ -100,7 +100,7 @@ else
                                             </MudSelect>
                                         </MudItem>
                                         <MudItem xs="12">
-                                            <MudTextField T="string" Label="Address" @bind-Value="_createModel.Address" For="@(() => _createModel.Address)" />
+                                            <MudTextField T="string" Label="Address" @bind-Value="_editModel.Address" For="@(() => _editModel.Address)" />
                                         </MudItem>
                                     </MudGrid>
                                 </MudPaper>

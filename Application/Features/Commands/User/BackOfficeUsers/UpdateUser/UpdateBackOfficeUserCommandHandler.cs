@@ -10,24 +10,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Common;
 
 namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
 {
-    public class UpdateAppUserCommandHandler : IRequestHandler<UpdateBackOfficeUserCommand, Unit>
+    public class UpdateBackOfficeUserCommandHandler : IRequestHandler<UpdateBackOfficeUserCommand, BaseResult<CustomResponse>>
     {
         private readonly IMapper _mapper;
         private readonly IAdminRepository _userRepository;
 
-        public UpdateAppUserCommandHandler(IMapper mapper, IAdminRepository userRepository)
+        public UpdateBackOfficeUserCommandHandler(IMapper mapper, IAdminRepository userRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
         }
 
-        public async Task<Unit> Handle(UpdateBackOfficeUserCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult<CustomResponse>> Handle(UpdateBackOfficeUserCommand request, CancellationToken cancellationToken)
         {
             //Validate incoming data
-            var validator = new UpdateAppUserCommandValidation(_userRepository);
+            var validator = new UpdateBackOfficeUserCommandValidation(_userRepository);
             var validationResult = await validator.ValidateAsync(request);
             if (validationResult.Errors.Any())
             {
@@ -38,7 +39,7 @@ namespace Application.Features.Commands.User.BackOfficeUsers.UpdateUser
             //var userToUpdate = _mapper.Map<ApplicationUser>(request);
 
             //Add to database 
-            var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.Image);
+            var updatedUser = await _userRepository.UpdateAppUserAsync(request, request.ImagePath);
 
             //Return result.
             return updatedUser;

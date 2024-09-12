@@ -71,15 +71,15 @@ namespace API.Controllers
 
         // PUT api/<ApplicationUsersController>/5
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put([FromBody] UpdateBackOfficeUserCommand updateAppUser)
+        public async Task<ActionResult<BaseResult<CustomResponse>>> Put([FromBody] UpdateBackOfficeUserCommand updateAppUser)
         {
-            await _mediator.Send(updateAppUser);
-            return NoContent();
+            var result = await _mediator.Send(updateAppUser);
+            return Ok(result);
         }
 
         [HttpPut]

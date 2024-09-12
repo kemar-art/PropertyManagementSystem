@@ -20,23 +20,23 @@ namespace PMS.UI.Services.Repository_Implementation
             //await AddBearerToken();
         }
 
-        public async Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate)
+        public async Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM user)
         {
             CreateBackOfficeUserCommand createBackOfficeUser = new()
             {
-                FirstName = userToCreate.FirstName,
-                LastName = userToCreate.LastName,
-                Email = userToCreate.Email,
-                Address = userToCreate.Address,
-                PhoneNumber = userToCreate.PhoneNumber,
-                TaxRegistrationNumber = userToCreate.TaxRegistrationNumber,
-                NationalInsuranceScheme = userToCreate.NationalInsuranceScheme,
-                Gender = userToCreate.Gender,
-                ImagePath = userToCreate.ImagePath,
-                DateOfBirth = userToCreate.DateOfBirth,
-                DateRegistered = userToCreate.DateRegistered,
-                RoleId = userToCreate.RoleId,
-                AdminRegionId = userToCreate.AdminRegionId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                TaxRegistrationNumber = user.TaxRegistrationNumber,
+                NationalInsuranceScheme = user.NationalInsuranceScheme,
+                Gender = user.Gender,
+                ImagePath = user.ImagePath,
+                DateOfBirth = user.DateOfBirth,
+                DateRegistered = user.DateRegistered,
+                RoleId = user.RoleId,
+                AdminRegionId = user.AdminRegionId,
             };
             var response = await _client.ApplicationUsersPOSTAsync(createBackOfficeUser);
             return response;
@@ -70,6 +70,13 @@ namespace PMS.UI.Services.Repository_Implementation
         {
             var roles = await _client.RolesAsync();
             return roles;
+        }
+
+        public async Task<CustomResponseBaseResult> UpdateBackOfficeUse(ApplicationUserVM user)
+        {
+            var mapUser = _mapper.Map<UpdateBackOfficeUserCommand>(user);
+            var response = await _client.ApplicationUsersPUTAsync(mapUser);
+            return response;
         }
     }
 }

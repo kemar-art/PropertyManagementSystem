@@ -51,17 +51,12 @@ namespace PMS.UI.Pages.Admin.Clients
             IsLoading = false;
         }
 
-        protected void CreateNewEmployee()
-        {
-            _NavigationManager.NavigateTo("/create-employee/");
-        }
-
         protected void EditForm(string id)
         {
             _NavigationManager.NavigateTo($"/edit/profile/{id}");
         }
 
-        protected void EmployeeDetail(string id)
+        protected void ClientDetail(string id)
         {
             _NavigationManager.NavigateTo($"/edit/client/details/{id}");
         }

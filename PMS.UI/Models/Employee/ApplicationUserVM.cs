@@ -1,4 +1,5 @@
-﻿using PMS.UI.Services.Base;
+﻿using PMS.UI.Models.CustomValidation;
+using PMS.UI.Services.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +17,7 @@ namespace PMS.UI.Models.Employee
         [Required]
         public string Address { get; set; } = string.Empty;
         [Required]
+        [PhoneNumberFormat]
         public string PhoneNumber { get; set; } = string.Empty;
         [Required]
         public string TaxRegistrationNumber { get; set; } = string.Empty;
@@ -24,6 +26,7 @@ namespace PMS.UI.Models.Employee
         [Required]
         public string Gender { get; set; } = string.Empty;
 
+        public string ImageBase64 { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
         //public string Role { get; set; } = string.Empty;
 

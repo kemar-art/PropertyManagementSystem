@@ -6,7 +6,8 @@ namespace PMS.UI.Contracts
 {
     public interface IAdminRepository
     {
-        Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM userToCreate);
+        Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM user);
+        Task<CustomResponseBaseResult> UpdateBackOfficeUse(ApplicationUserVM user);
         Task<IEnumerable<ClientVM>> GetAllClients();
         Task<IEnumerable<ApplicationUserVM>> GetAllEmployees();
         Task<ApplicationUserVM> GetEmployeesById(string uerId);

@@ -1,7 +1,6 @@
 ﻿@layout MudBlazorLayout
 @page "/admin/client/"
 @using PMS.UI.Models.Client
-@using PMS.UI.Models.Employee
 @using PMS.UI.Pages.Admin.Shared
 @using MudBlazor
 
@@ -55,7 +54,7 @@ else if (_indexModel.Any())
                             <CellTemplate>
                                 <MudStack Row>
                                     <MudIconButton Variant="Variant.Filled" OnClick="() => EditForm(context.Item.Id)" Color="@Color.Warning" Icon="@Icons.Material.Filled.Edit" aria-label="edit" />
-                                    <MudIconButton Variant="Variant.Filled" OnClick="() => EmployeeDetail(context.Item.Id)" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
+                                    <MudIconButton Variant="Variant.Filled" OnClick="() => ClientDetail(context.Item.Id)" Color="@Color.Info" Icon="@Icons.Material.Filled.Info" aria-label="details" />
                                     <MudIconButton Variant="Variant.Filled" OnClick="() => EmployeeDeletion(context.Item.Id.ToString())" Color="@Color.Error" Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
                                     @* <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Warning"><i class="fa-solid fa-pen-clip"></i></MudButton>
                                     <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Info">Hire</MudButton>

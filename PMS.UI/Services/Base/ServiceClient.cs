@@ -104,14 +104,14 @@ namespace PMS.UI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPOSTAsync(CreateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body);
+        System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1226,17 +1226,17 @@ namespace PMS.UI.Services.Base
             }
         }
 
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body)
+        public virtual System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body)
         {
             return ApplicationUsersPUTAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>No Content</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CustomResponseBaseResult> ApplicationUsersPUTAsync(UpdateBackOfficeUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1249,6 +1249,7 @@ namespace PMS.UI.Services.Base
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1278,9 +1279,14 @@ namespace PMS.UI.Services.Base
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
+                        if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<CustomResponseBaseResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 400)
@@ -4317,6 +4323,12 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         public string Address { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("taxRegistrationNumber")]
+        public string TaxRegistrationNumber { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("nationalInsuranceScheme")]
+        public string NationalInsuranceScheme { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("gender")]
         public string Gender { get; set; }
 
@@ -4332,11 +4344,26 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
         public System.Guid ClientRegionId { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
+        public System.DateTimeOffset DateRegistered { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
+        public System.DateTimeOffset DateEnded { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string RoleId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminRegionId")]
+        public System.Guid AdminRegionId { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetAllBackOfficeUsersDTO
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("firstName")]
         public string FirstName { get; set; }
@@ -4767,11 +4794,11 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("lastName")]
         public string LastName { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public string Address { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("email")]
         public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string Address { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
@@ -4785,22 +4812,26 @@ namespace PMS.UI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("gender")]
         public string Gender { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public byte[] Image { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("imagePath")]
+        public string ImagePath { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
         public System.DateTimeOffset DateOfBirth { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("datestarted")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTimeOffset Datestarted { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
+        public System.DateTimeOffset DateRegistered { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("clientRegion")]
-        public Region ClientRegion { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
+        public System.DateTimeOffset DateEnded { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("clientRegionId")]
-        public System.Guid? ClientRegionId { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("roleId")]
+        public string RoleId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminRegion")]
+        public Region AdminRegion { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminRegionId")]
+        public System.Guid? AdminRegionId { get; set; }
 
     }
 

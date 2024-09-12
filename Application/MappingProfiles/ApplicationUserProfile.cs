@@ -1,4 +1,5 @@
-﻿using Application.Features.Commands.User.ClientUsers.Update;
+﻿using Application.Features.Commands.User.BackOfficeUsers.UpdateUser;
+using Application.Features.Commands.User.ClientUsers.Update;
 using Application.Features.Queries.Admin.Users.BackOficeUsers;
 using Application.Features.Queries.Admin.Users.ClientUsers;
 using Application.Features.Queries.Admin.Users.SingleUser;
@@ -21,6 +22,7 @@ namespace Application.MappingProfiles
             CreateMap<ApplicationUser, GetASingleUserDTO>().ReverseMap();
 
             CreateMap<ClientUpdateCommand, ApplicationUser>().ReverseMap();
+            CreateMap<UpdateBackOfficeUserCommandHandler, ApplicationUser>().ReverseMap();
         }
     }
 }

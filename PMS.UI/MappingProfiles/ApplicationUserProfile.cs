@@ -30,6 +30,18 @@ public class ApplicationUserProfile : Profile
 
         CreateMap<ClientUpdateCommand, ClientVM>()
            .ReverseMap();
-        //CreateMap<ClientVM, UpdateAppUserCommand>().ReverseMap();
+
+        CreateMap<UpdateBackOfficeUserCommand, ApplicationUserVM>()
+              .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.DateTime))
+            .ForMember(dest => dest.DateRegistered, opt => opt.MapFrom(src => src.DateRegistered.DateTime))
+            .ForMember(dest => dest.DateEnded, opt => opt.MapFrom(src => src.DateEnded.DateTime))
+           .ReverseMap();
+
+
+        CreateMap<GetASingleUserDTO, ApplicationUserVM>()
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.DateTime))
+            .ForMember(dest => dest.DateRegistered, opt => opt.MapFrom(src => src.DateRegistered.DateTime))
+            .ForMember(dest => dest.DateEnded, opt => opt.MapFrom(src => src.DateEnded.DateTime))
+            .ReverseMap();
     }
 }

@@ -36,6 +36,7 @@ using AutoMapper;
 using Application.Features.Queries.Admin.Users.BackOficeUsers;
 using Application.Features.Queries.Admin.Users.ClientUsers;
 using Application.Features.Commands.User.BackOfficeUsers.DeleteUser;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Persistence.Repository_Implementations
 {
@@ -241,7 +242,7 @@ namespace Persistence.Repository_Implementations
             return BaseResult<CustomResponse>.Failure("User registration failed");
         }
 
-        public async Task<Unit> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, IFormFile image)
+        public async Task<BaseResult<CustomResponse>> UpdateAppUserAsync(UpdateBackOfficeUserCommand user, string imagePath)
         {
             var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
             if (applicationUser == null)
@@ -259,37 +260,74 @@ namespace Persistence.Repository_Implementations
             applicationUser.Gender = user.Gender;
             applicationUser.UserName = user.Email;
             applicationUser.DateOfBirth = user.DateOfBirth;
-            applicationUser.DateRegistered = user.Datestarted;
-            //applicationUser.Role = Roles.Administrator;
+            applicationUser.DateRegistered = user.DateRegistered;
 
 
-            if (image != null && image.Length > 0)
+
+
+            var role = await _roleManager.FindByIdAsync(user.RoleId);
+            if (role == null)
             {
-                string webRootPath = _hostEnvironment.WebRootPath;
-                string newFileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, "images/employees");
-                var extension = Path.GetExtension(image.FileName);
+                _appLogger.LogError($"Role with ID {user.RoleId} does not exist.");
+                return BaseResult<CustomResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
+            }
 
 
-                if (!string.IsNullOrEmpty(applicationUser.ImagePath))
+            var roleExists = await _roleManager.RoleExistsAsync(role.Name);
+            if (!roleExists)
+            {
+                _appLogger.LogError($"Role {user.RoleId} does not exist.");
+                return BaseResult<CustomResponse>.Failure($"Role {user.RoleId} does not exist.");
+            }
+
+
+            var result = await _userManager.UpdateAsync(applicationUser);
+
+            if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(imagePath))
                 {
-                    var oldImage = Path.Combine(webRootPath, applicationUser.ImagePath);
-                    if (File.Exists(oldImage))
+                    var imageToSave = ConvertBase64ToFormFile(imagePath);
+                    if (imageToSave != null)
                     {
-                        File.Delete(oldImage);
+                        var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                        if (!imageSaved)
+                        {
+                            _appLogger.LogError("Image saving failed.");
+                            return BaseResult<CustomResponse>.Failure("Image saving failed.");
+                        }
+                    }
+                    else
+                    {
+                        _appLogger.LogError("Failed to convert image data.");
+                        return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
                     }
                 }
 
-                using var fileStream = new FileStream(Path.Combine(uploads, $"{newFileName}{extension}"), FileMode.Create);
-                image.CopyTo(fileStream);
+               
 
-                applicationUser.ImagePath = Path.Combine("images/employees", $"{newFileName}{extension}");
+
+
+
+
+
+                await _userManager.AddToRoleAsync(applicationUser, role.Name);
+
+
+                _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
+
+                // Return success with the user Id
+                return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
             }
 
-            await _userManager.UpdateAsync(applicationUser);
+
+
+
+
+
             //await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
-            return Unit.Value;
+            return BaseResult<CustomResponse>.Failure("Failed To Update User");
         }
 
         public async Task<Unit> MarkFormHasComplete(Guid? formId, string? appraiserId)
@@ -591,6 +629,52 @@ namespace Persistence.Repository_Implementations
 
             // Throw an exception if the user is not found
             throw new NotFoundException(nameof(DeleteAppUserCommand), userId);
+        }
+
+
+
+
+        private async Task<bool> SaveClientImageAsync(UpdateBackOfficeUserCommand user, IFormFile imageToSave)
+        {
+            try
+            {
+                if (imageToSave == null || imageToSave.Length == 0)
+                {
+                    return true; // No image to save, return success
+                }
+
+                string webRootPath = _hostEnvironment.WebRootPath;
+                string uploads = Path.Combine(webRootPath, "images/admins");
+                string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
+                string newFilePath = Path.Combine(uploads, newFileName);
+
+                // Ensure the uploads directory exists
+                Directory.CreateDirectory(uploads);
+
+                // Delete old image if it exists
+                if (!string.IsNullOrEmpty(user.ImagePath))
+                {
+                    string oldImagePath = Path.Combine(webRootPath, user.ImagePath);
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
+                }
+
+                // Save the new image
+                using var fileStream = new FileStream(newFilePath, FileMode.Create);
+                await imageToSave.CopyToAsync(fileStream);
+
+                // Update the user's image path
+                user.ImagePath = Path.Combine("images/client", newFileName);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Error saving user image. Exception: " + ex.Message);
+                return false;
+            }
         }
     }
 }
