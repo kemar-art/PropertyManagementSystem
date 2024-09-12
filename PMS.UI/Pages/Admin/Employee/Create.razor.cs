@@ -13,6 +13,7 @@ using PMS.UI.Services.Base;
 using PMS.UI.StaticDetails;
 using System;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Security.AccessControl;
 
 namespace PMS.UI.Pages.Admin.Employee
@@ -79,6 +80,9 @@ namespace PMS.UI.Pages.Admin.Employee
             IsLoading = true;
             try
             {
+                // Handle image update logic
+                _createModel.ImagePath = file == null ? null : _createModel.ImagePath ?? string.Empty;
+
                 var response = await _AdminRepository.CreateBackOfficeUser(_createModel);
 
                 if (response != null && response.IsSuccess)
