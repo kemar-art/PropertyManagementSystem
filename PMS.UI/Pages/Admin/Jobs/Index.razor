@@ -1,39 +1,40 @@
 ﻿@layout MudBlazorLayout
-@page "/jobs/"
-@using MudBlazor
-@using PMS.UI.Models.Form
+@page "/admin/jobs/"
+@using PMS.UI.Models.Client
 @using PMS.UI.Pages.Admin.Shared
-
-
-
-
+@using PMS.UI.Models.Form
+@using MudBlazor
 
 <RightSidebar />
 
 
 <HeadCSS />
 @if (IsLoading)
-
 {
     <div class="loading-overlay">
         @*  <div class="spinner"></div> *@
         <div id="preloader"></div>
     </div>
 }
-
 else if (_indexModel.Any())
 {
+    <!-- Begin page -->
     <div class="wrapper">
+
         <Menu />
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
         <div class="content-page">
             <div class="content">
                 <div class="row mb-1">
                     <div class="col">
-                        <h1>Job List</h1>
+                        <h1>Client List</h1>
                     </div>
-                    @*                     <div class="col d-flex justify-content-end align-items-center">
-                <MudButton @onclick="(() => CreateNewEmployee())" Variant="@Variant.Filled" Color="@Color.Success">Create Employee</MudButton>
-                </div> *@
+                    <div class="col d-flex justify-content-end align-items-center">
+                        @* <MudButton @onclick="(() => CreateNewEmployee())" Variant="@Variant.Filled" Color="@Color.Success">Create Employee</MudButton> *@
+                    </div>
                 </div>
                 <MudDataGrid T="FormVM" Items="@_indexModel" SortMode="SortMode.Multiple" Filterable="true"
                              QuickFilter="@_quickFilter" Hideable="true">
@@ -72,9 +73,13 @@ else if (_indexModel.Any())
                         <MudDataGridPager T="FormVM" />
                     </PagerContent>
                 </MudDataGrid>
+
             </div>
+            <br />
         </div>
+
     </div>
+
     <AdminFooter />
 }
 else
@@ -85,6 +90,9 @@ else
             <MudText Class="text-center mt-2 text-danger" Typo="Typo.h4">No Records Found</MudText>
         </div>
     </div>
+
     
-    <AdminFooter />
 }
+
+
+

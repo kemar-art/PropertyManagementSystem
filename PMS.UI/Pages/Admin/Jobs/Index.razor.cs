@@ -2,9 +2,9 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using PMS.UI.Models.Form;
 using PMS.UI.Models;
-using PMS.UI.Contracts;
-using Application.Contracts.Repository_Interface;
 using PMS.UI.StaticDetails;
+using Application.Contracts.Repository_Interface;
+using PMS.UI.Contracts;
 
 namespace PMS.UI.Pages.Admin.Jobs
 {
@@ -138,8 +138,6 @@ namespace PMS.UI.Pages.Admin.Jobs
                 IsLoading = false;
             }
         }
-
-
 
 
     }

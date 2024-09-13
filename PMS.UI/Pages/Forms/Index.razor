@@ -1,5 +1,5 @@
 ﻿@layout MudBlazorLayout
-@page "/submitted-forms/"
+@page "/client/forms/"
 @using MudBlazor
 @using PMS.UI.Models.Form
 @using PMS.UI.Pages.Admin.Shared
@@ -80,14 +80,11 @@ else if (_indexModel.Any())
                         <MudDataGridPager T="FormVM" />
                     </PagerContent>
                 </MudDataGrid>
-
-
-
             </div>
-            <!-- content -->
             <br />
         </div>
     </div>
+    <AdminFooter />
 }
 else
 {
