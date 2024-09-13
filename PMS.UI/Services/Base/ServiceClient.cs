@@ -4020,13 +4020,13 @@ namespace PMS.UI.Services.Base
         public string ImageBase64 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTimeOffset? DateOfBirth { get; set; }
+        public System.DateTimeOffset DateOfBirth { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateRegistered")]
-        public System.DateTimeOffset? DateRegistered { get; set; }
+        public System.DateTimeOffset DateRegistered { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("dateEnded")]
-        public System.DateTimeOffset? DateEnded { get; set; }
+        public System.DateTimeOffset DateEnded { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("roleId")]
         public string RoleId { get; set; }

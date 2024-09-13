@@ -51,5 +51,16 @@ namespace PMS.UI.Models.Employee
         //[ForeignKey("JobTitleId")]
         //public JobTitle? JobTitle { get; set; }
         //public Guid? JobTitleId { get; set; }
+
+
+
+
+
+
+        
+
+        //public string Role { get; set; } = string.Empty;
+
+        //public SelectList RolesList { get; set; }
     }
 }

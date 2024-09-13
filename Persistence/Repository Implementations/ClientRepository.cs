@@ -99,7 +99,8 @@ namespace Persistence.Repository_Implementations
                 if (user == null)
                 {
                     _appLogger.LogWarning($"User with ID {updateClient.Id} not found.");
-                    return BaseResult<Unit>.Failure($"User with ID {updateClient.Id} not found.");
+                    //return BaseResult<Unit>.Failure();
+                    throw new NotFoundException(nameof(ClientUpdateCommand), updateClient.Id);
                 }
 
                 // Update user properties
@@ -115,6 +116,7 @@ namespace Persistence.Repository_Implementations
                         {
                             _appLogger.LogError("Image saving failed.");
                             return BaseResult<Unit>.Failure("Image saving failed.");
+                            //throw new CustomProblemsDetails()
                         }
                     }
                     else

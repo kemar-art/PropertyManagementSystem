@@ -22,23 +22,8 @@ namespace PMS.UI.Services.Repository_Implementation
 
         public async Task<CustomResponseBaseResult> CreateBackOfficeUser(ApplicationUserVM user)
         {
-            CreateBackOfficeUserCommand createBackOfficeUser = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Address = user.Address,
-                PhoneNumber = user.PhoneNumber,
-                TaxRegistrationNumber = user.TaxRegistrationNumber,
-                NationalInsuranceScheme = user.NationalInsuranceScheme,
-                Gender = user.Gender,
-                ImagePath = user.ImagePath,
-                DateOfBirth = user.DateOfBirth,
-                DateRegistered = user.DateRegistered,
-                RoleId = user.RoleId,
-                AdminRegionId = user.AdminRegionId,
-            };
-            var response = await _client.ApplicationUsersPOSTAsync(createBackOfficeUser);
+            var mapUser = _mapper.Map<CreateBackOfficeUserCommand>(user);
+            var response = await _client.ApplicationUsersPOSTAsync(mapUser);
             return response;
         }
 

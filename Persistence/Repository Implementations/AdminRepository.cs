@@ -170,32 +170,34 @@ namespace Persistence.Repository_Implementations
                 user.EmailConfirmed = true;
                 //applicationUser.Role = Roles.Administrator;
 
+
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    var imageToSave = ConvertBase64ToFormFile(imagePath);
+                    if (imageToSave != null)
+                    {
+                        var imageSaved = await UploadBackOfficeUserImageAsync(user, imageToSave);
+                        if (!imageSaved)
+                        {
+                            _appLogger.LogError("Image saving failed.");
+                            return BaseResult<CustomResponse>.Failure("Image saving failed.");
+                        }
+                    }
+                    else
+                    {
+                        _appLogger.LogError("Failed to convert image data.");
+                        return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
+                    }
+                }
+
                 await _userStore.SetUserNameAsync(user, updateUser.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, updateUser.Email, CancellationToken.None);
 
                 var password = await GenerateRandomPasswordAsync();
                 var result = await _userManager.CreateAsync(user, password);
-
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(imagePath))
-                    {
-                        var imageToSave = ConvertBase64ToFormFile(imagePath);
-                        if (imageToSave != null)
-                        {
-                            var imageSaved = await UploadBackOfficeUserImageAsync(user, imageToSave);
-                            if (!imageSaved)
-                            {
-                                _appLogger.LogError("Image saving failed.");
-                                return BaseResult<CustomResponse>.Failure("Image saving failed.");
-                            }
-                        }
-                        else
-                        {
-                            _appLogger.LogError("Failed to convert image data.");
-                            return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
-                        }
-                    }
+                    
 
                     var role = await _roleManager.FindByIdAsync(updateUser.RoleId);
                     if (role == null)
@@ -204,7 +206,6 @@ namespace Persistence.Repository_Implementations
                         return BaseResult<CustomResponse>.Failure($"Role with ID {updateUser.RoleId} does not exist.");
                     }
 
-
                     var roleExists = await _roleManager.RoleExistsAsync(role.Name);
                     if (!roleExists)
                     {
@@ -212,12 +213,7 @@ namespace Persistence.Repository_Implementations
                         return BaseResult<CustomResponse>.Failure($"Role {updateUser.RoleId} does not exist.");
                     }
 
-
-
-
                     await _userManager.AddToRoleAsync(user, role.Name);
-
-
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);

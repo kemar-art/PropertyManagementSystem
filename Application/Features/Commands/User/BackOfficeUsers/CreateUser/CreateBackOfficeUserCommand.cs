@@ -26,9 +26,9 @@ namespace Application.Features.Commands.User.BackOfficeUsers.CreateUser
 
         public string ImageBase64 { get; set; } = string.Empty;
 
-        public DateTime? DateOfBirth { get; set; }
-        public DateTime? DateRegistered { get; set; }
-        public DateTime? DateEnded { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public DateTime DateRegistered { get; set; }
+        public DateTime DateEnded { get; set; }
 
 
         public string RoleId { get; set; } = string.Empty;

@@ -95,7 +95,7 @@ namespace PMS.UI.Pages.Admin.Employee
                     _Snackbar.Add(response?.Error, Severity.Warning);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _Snackbar.Add("An error occurred, please contact the administrator", Severity.Error);
             }
