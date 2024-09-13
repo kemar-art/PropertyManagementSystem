@@ -3,10 +3,11 @@
 @using PMS.UI.Pages.Admin.Shared
 
 
-<RightSidebar />
+<_RightSidebar />
 
 
-<HeadCSS />
+<_HeadCSS />
+
 @if (IsLoading)
 {
     <div class="loading-overlay">
@@ -19,7 +20,7 @@ else
     <!-- Begin page -->
     <div class="wrapper">
 
-        <Menu />
+        <_Menu />
         <div class="content-page">
             <div class="content">
 
@@ -92,10 +93,8 @@ else
                     </div>
                 </div>
             </div>
+            <_Vender />
         </div>
     </div>
-        
-    <AdminFooter />
-
-          
+    <_AdminFooter />      
 }

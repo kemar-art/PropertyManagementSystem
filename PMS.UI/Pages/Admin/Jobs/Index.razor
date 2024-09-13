@@ -5,10 +5,10 @@
 @using PMS.UI.Models.Form
 @using MudBlazor
 
-<RightSidebar />
+<_RightSidebar />
 
 
-<HeadCSS />
+<_HeadCSS />
 @if (IsLoading)
 {
     <div class="loading-overlay">
@@ -18,14 +18,8 @@
 }
 else if (_indexModel.Any())
 {
-    <!-- Begin page -->
     <div class="wrapper">
-
-        <Menu />
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
+        <_Menu />
         <div class="content-page">
             <div class="content">
                 <div class="row mb-1">
@@ -73,25 +67,22 @@ else if (_indexModel.Any())
                         <MudDataGridPager T="FormVM" />
                     </PagerContent>
                 </MudDataGrid>
-
             </div>
+            <_Vender />
             <br />
         </div>
-
     </div>
-
-    <AdminFooter />
+    <_AdminFooter />
 }
 else
 {
-    <Menu />
+    <_Menu />
     <div class="content-page">
         <div class="content">
             <MudText Class="text-center mt-2 text-danger" Typo="Typo.h4">No Records Found</MudText>
         </div>
     </div>
-
-    
+    <_AdminFooter />
 }
 
 

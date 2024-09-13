@@ -1,0 +1,43 @@
+﻿@inject IJSRuntime JS
+
+
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10 text-center">
+               @*  @currentYear © Velonic - Theme by <b>Techzaa</b> *@
+                <span>@currentYear © <a href="https://www.qualityitsolutions.co" target="_blank" style="text-decoration: none; color: inherit;"><b>Quality IT Solutions.co</b></a> - Delivering Excellence in Technology</span>
+            </div>
+        </div>
+    </div>
+   
+</footer>
+
+
+
+@* <footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                @currentYear © Velonic - Theme by <b>Techzaa</b>
+            </div>
+        </div>
+    </div>
+</footer> *@
+<!-- end Footer -->
+
+
+
+<script src="/assets/js/app.min.js"></script>
+@code {
+    private string currentYear;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentYear = await JS.InvokeAsync<string>("getCurrentYear");
+    }
+}
+
+ 

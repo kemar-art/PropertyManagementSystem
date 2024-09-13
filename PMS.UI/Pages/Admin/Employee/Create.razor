@@ -4,8 +4,8 @@
 @using MudBlazor
 @using PMS.UI.StaticDetails
 
-<RightSidebar />
-<HeadCSS />
+<_RightSidebar />
+<_HeadCSS />
 @if (IsLoading)
 {
     <div class="loading-overlay">
@@ -16,7 +16,7 @@
 else
 {
     <div class="wrapper">
-        <Menu />
+        <_Menu />
         <div class="content-page">
             <div class="content">
                 <EditForm Model="_createModel" OnValidSubmit="OnValidSubmit">
@@ -109,9 +109,10 @@ else
                     </MudGrid>
                 </EditForm>
             </div>
+            <_Vender />
         </div>
     </div>
-    <AdminFooter />
+    <_AdminFooter />
 }
 
 

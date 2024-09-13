@@ -6,10 +6,10 @@
 @using PMS.UI.StaticDetails
 
 
-<RightSidebar />
+<_RightSidebar />
 
 
-<HeadCSS />
+<_HeadCSS />
 @if (IsLoading)
 
 {
@@ -23,12 +23,7 @@ else
 {
     <!-- Begin page -->
     <div class="wrapper">
-
-        <Menu />
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
+        <_Menu />
         <div class="content-page">
             <div class="content">
                 <MudTHeadRow Class="d-flex justify-content-center align-items-center h-100">
@@ -164,11 +159,9 @@ else
                     </div>
                 </MudTHeadRow>
             </div>
-            <!-- content -->
-            <br />
+            <_Vender />
         </div>
     </div>
-
-    <AdminFooter />
+    <_AdminFooter />
 }
 
