@@ -23,14 +23,8 @@
 
 else if (_indexModel.Any())
 {
-    <!-- Begin page -->
     <div class="wrapper">
-
         <Menu />
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
         <div class="content-page">
             <div class="content">
                 <div class="row mb-1">
@@ -78,23 +72,10 @@ else if (_indexModel.Any())
                         <MudDataGridPager T="FormVM" />
                     </PagerContent>
                 </MudDataGrid>
-
-
-
             </div>
-            <!-- content -->
-            <br />
-
-
         </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
-
     </div>
-
-    <!-- END wrapper -->
+    <AdminFooter />
 }
 else
 {

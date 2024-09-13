@@ -94,29 +94,3 @@ namespace PMS.UI.Pages.Admin.Employee
         }
     }
 }
-
-
-//protected void EditEmployee(string userId)
-//{
-//    _NavigationManager.NavigateTo($"/employee/edit/{userId}");
-//}
-
-//protected void EmployeeDetails(string userId)
-//{
-//    _NavigationManager.NavigateTo($"/employee/details/{userId}");
-//}
-
-//protected async Task DeleteEmployee(string userId)
-//{
-//    var response = await _AdminRepository.DeleteEmployee(userId);
-//    if (response.Success)
-//    {
-//        Refresh the data after deletion
-//       _indexModel = await _AdminRepository.GetAllEmployees();
-//        StateHasChanged();
-//    }
-//    else
-//    {
-//        Message = response.Message;
-//    }
-//}
