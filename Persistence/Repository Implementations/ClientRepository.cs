@@ -110,7 +110,7 @@ namespace Persistence.Repository_Implementations
                     var imageToSave = ConvertBase64ToFormFile(imagePath);
                     if (imageToSave != null)
                     {
-                        var imageSaved = await SaveClientImageAsync(user, imageToSave);
+                        var imageSaved = await UploadClientImageAsync(user, imageToSave);
                         if (!imageSaved)
                         {
                             _appLogger.LogError("Image saving failed.");
@@ -181,7 +181,7 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-        private async Task<bool> SaveClientImageAsync(ApplicationUser user, IFormFile imageToSave)
+        private async Task<bool> UploadClientImageAsync(ApplicationUser user, IFormFile imageToSave)
         {
             try
             {

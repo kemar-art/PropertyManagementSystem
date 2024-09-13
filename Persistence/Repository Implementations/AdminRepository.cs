@@ -150,31 +150,31 @@ namespace Persistence.Repository_Implementations
                                         .ToListAsync();
         }
 
-        public async Task<BaseResult<CustomResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand user, string imagePath)
+        public async Task<BaseResult<CustomResponse>> RegisterAdminUserAsync(CreateBackOfficeUserCommand updateUser, string imagePath)
         {
-            ApplicationUser applicationUser = new();
+            ApplicationUser user = new();
             try
             {
                 _appLogger.LogInformation($"Registering Back Office User: {user.FirstName} {user.LastName}");
 
-                applicationUser.FirstName = user.FirstName;
-                applicationUser.LastName = user.LastName;
-                applicationUser.Email = user.Email;
-                applicationUser.Address = user.Address;
-                applicationUser.PhoneNumber = user.PhoneNumber;
-                applicationUser.TaxRegistrationNumber = user.TaxRegistrationNumber;
-                applicationUser.NationalInsuranceScheme = user.NationalInsuranceScheme;
-                applicationUser.Gender = user.Gender;
-                applicationUser.DateOfBirth = user.DateOfBirth;
-                applicationUser.DateRegistered = user.DateRegistered;
-                applicationUser.EmailConfirmed = true;
+                user.FirstName = updateUser.FirstName;
+                user.LastName = updateUser.LastName;
+                user.Email = updateUser.Email;
+                user.Address = updateUser.Address;
+                user.PhoneNumber = updateUser.PhoneNumber;
+                user.TaxRegistrationNumber = updateUser.TaxRegistrationNumber;
+                user.NationalInsuranceScheme = updateUser.NationalInsuranceScheme;
+                user.Gender = updateUser.Gender;
+                user.DateOfBirth = updateUser.DateOfBirth;
+                user.DateRegistered = updateUser.DateRegistered;
+                user.EmailConfirmed = true;
                 //applicationUser.Role = Roles.Administrator;
 
-                await _userStore.SetUserNameAsync(applicationUser, user.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(applicationUser, user.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, updateUser.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, updateUser.Email, CancellationToken.None);
 
                 var password = await GenerateRandomPasswordAsync();
-                var result = await _userManager.CreateAsync(applicationUser, password);
+                var result = await _userManager.CreateAsync(user, password);
 
                 if (result.Succeeded)
                 {
@@ -183,7 +183,7 @@ namespace Persistence.Repository_Implementations
                         var imageToSave = ConvertBase64ToFormFile(imagePath);
                         if (imageToSave != null)
                         {
-                            var imageSaved = await SaveBackOfficeUserImageAsync(user, imageToSave);
+                            var imageSaved = await UploadBackOfficeUserImageAsync(user, imageToSave);
                             if (!imageSaved)
                             {
                                 _appLogger.LogError("Image saving failed.");
@@ -197,124 +197,115 @@ namespace Persistence.Repository_Implementations
                         }
                     }
 
-                    var role = await _roleManager.FindByIdAsync(user.RoleId);
+                    var role = await _roleManager.FindByIdAsync(updateUser.RoleId);
                     if (role == null)
                     {
-                        _appLogger.LogError($"Role with ID {user.RoleId} does not exist.");
-                        return BaseResult<CustomResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
+                        _appLogger.LogError($"Role with ID {updateUser.RoleId} does not exist.");
+                        return BaseResult<CustomResponse>.Failure($"Role with ID {updateUser.RoleId} does not exist.");
                     }
 
 
                     var roleExists = await _roleManager.RoleExistsAsync(role.Name);
                     if (!roleExists)
                     {
-                        _appLogger.LogError($"Role {user.RoleId} does not exist.");
-                        return BaseResult<CustomResponse>.Failure($"Role {user.RoleId} does not exist.");
+                        _appLogger.LogError($"Role {updateUser.RoleId} does not exist.");
+                        return BaseResult<CustomResponse>.Failure($"Role {updateUser.RoleId} does not exist.");
                     }
 
 
 
 
-                    await _userManager.AddToRoleAsync(applicationUser, role.Name);
+                    await _userManager.AddToRoleAsync(user, role.Name);
 
 
 
-                    var userId = await _userManager.GetUserIdAsync(applicationUser);
-                    var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     string code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-                    var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={applicationUser.Id}&code={code}";
+                    var emailConfirmation = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/Identity/Account/ConfirmEmail?userId={user.Id}&code={code}";
 
-                    await _emailSender.VerificationEmail(applicationUser.Email, emailConfirmation);
-                    await _emailSender.PasswordGeneratorEmail(applicationUser.Email, password);
+                    await _emailSender.VerificationEmail(user.Email, emailConfirmation);
+                    await _emailSender.PasswordGeneratorEmail(user.Email, password);
 
-                    _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
+                    _appLogger.LogInformation($"User with ID {user.Id} register successfully.");
 
                     // Return success with the user Id
-                    return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
+                    return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(user.Id));
                 }
             }
             catch (Exception ex)
             {
-                _appLogger.LogError($"An unexpected error occurred while registering user with ID {applicationUser.Id}. Exception: {ex.Message}");
+                _appLogger.LogError($"An unexpected error occurred while registering user with ID {user.Id}. Exception: {ex.Message}");
                 return BaseResult<CustomResponse>.Failure($"An unexpected error occurred while registering user: {ex.Message}");
             }
 
             return BaseResult<CustomResponse>.Failure("User registration failed");
         }
 
-        public async Task<BaseResult<CustomResponse>> UpdateBackOfficeUserAsync(UpdateBackOfficeUserCommand user, string imagePath)
+        public async Task<BaseResult<CustomResponse>> UpdateBackOfficeUserAsync(UpdateBackOfficeUserCommand updateUser, string imagePath)
         {
-            var applicationUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-            if (applicationUser == null)
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == updateUser.Id);
+            if (user == null)
             {
-                throw new NotFoundException("User", user.Id);
+                throw new NotFoundException("User", updateUser.Id);
             }
 
-            applicationUser.FirstName = user.FirstName;
-            applicationUser.LastName = user.LastName;
-            applicationUser.Address = user.Address;
-            applicationUser.Email = user.Email;
-            applicationUser.PhoneNumber = user.PhoneNumber;
-            applicationUser.TaxRegistrationNumber = user.TaxRegistrationNumber;
-            applicationUser.NationalInsuranceScheme = user.NationalInsuranceScheme;
-            applicationUser.Gender = user.Gender;
-            applicationUser.UserName = user.Email;
-            applicationUser.DateOfBirth = user.DateOfBirth;
-            applicationUser.DateRegistered = user.DateRegistered;
+            UpdateBackOfficeUserProperties(user, updateUser);
+
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                var imageToSave = ConvertBase64ToFormFile(imagePath);
+                if (imageToSave != null)
+                {
+                    var imageSaved = await UploadBackOfficeUserImageAsync(user, imageToSave);
+                    if (!imageSaved)
+                    {
+                        _appLogger.LogError("Image saving failed.");
+                        return BaseResult<CustomResponse>.Failure("Image saving failed.");
+                    }
+                }
+                else
+                {
+                    _appLogger.LogError("Failed to convert image data.");
+                    return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
+                }
+            }
+
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                var errorMessage = $"Failed to update user: {string.Join(", ", updateResult.Errors.Select(e => e.Description))}";
+                _appLogger.LogError(errorMessage);
+                return BaseResult<CustomResponse>.Failure("Failed To Update User");
+            }
 
 
 
-
-            var role = await _roleManager.FindByIdAsync(user.RoleId);
+            var role = await _roleManager.FindByIdAsync(updateUser.RoleId);
             if (role == null)
             {
-                _appLogger.LogError($"Role with ID {user.RoleId} does not exist.");
-                return BaseResult<CustomResponse>.Failure($"Role with ID {user.RoleId} does not exist.");
+                _appLogger.LogError($"Role with ID {updateUser.RoleId} does not exist.");
+                return BaseResult<CustomResponse>.Failure($"Role with ID {updateUser.RoleId} does not exist.");
             }
-
 
             var roleExists = await _roleManager.RoleExistsAsync(role.Name);
             if (!roleExists)
             {
-                _appLogger.LogError($"Role {user.RoleId} does not exist.");
-                return BaseResult<CustomResponse>.Failure($"Role {user.RoleId} does not exist.");
+                _appLogger.LogError($"Role {updateUser.RoleId} does not exist.");
+                return BaseResult<CustomResponse>.Failure($"Role {updateUser.RoleId} does not exist.");
             }
 
+            await _userManager.AddToRoleAsync(user, role.Name);
 
-            var result = await _userManager.UpdateAsync(applicationUser);
+            _appLogger.LogInformation($"User with ID {user.Id} register successfully.");
 
-            if (result.Succeeded)
-            {
-                if (!string.IsNullOrEmpty(imagePath))
-                {
-                    var imageToSave = ConvertBase64ToFormFile(imagePath);
-                    if (imageToSave != null)
-                    {
-                        var imageSaved = await UpdateBackOfficeUserImageAsync(user, imageToSave);
-                        if (!imageSaved)
-                        {
-                            _appLogger.LogError("Image saving failed.");
-                            return BaseResult<CustomResponse>.Failure("Image saving failed.");
-                        }
-                    }
-                    else
-                    {
-                        _appLogger.LogError("Failed to convert image data.");
-                        return BaseResult<CustomResponse>.Failure("Failed to convert image data.");
-                    }
-                }
-
-                await _userManager.AddToRoleAsync(applicationUser, role.Name);
-
-                _appLogger.LogInformation($"User with ID {applicationUser.Id} register successfully.");
-
-                // Return success with the user Id
-                return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(applicationUser.Id));
-            }
+            // Return success with the user Id
+            return BaseResult<CustomResponse>.Success(new CustomResponse { Message = "User Register successfully " }, new Guid(user.Id));
 
             //await _userManager.AddToRoleAsync(applicationUser, applicationUser.Role);
 
-            return BaseResult<CustomResponse>.Failure("Failed To Update User");
+            ;
         }
 
         public async Task<Unit> MarkFormHasComplete(Guid? formId, string? appraiserId)
@@ -497,6 +488,21 @@ namespace Persistence.Repository_Implementations
             return clientUsers;
         }
 
+        private void UpdateBackOfficeUserProperties(ApplicationUser user, UpdateBackOfficeUserCommand updateUser)
+        {
+            user.FirstName = updateUser.FirstName;
+            user.LastName = updateUser.LastName;
+            user.Address = updateUser.Address;
+            user.Email = updateUser.Email;
+            user.PhoneNumber = updateUser.PhoneNumber;
+            user.TaxRegistrationNumber = updateUser.TaxRegistrationNumber;
+            user.NationalInsuranceScheme = updateUser.NationalInsuranceScheme;
+            user.Gender = updateUser.Gender;
+            user.UserName = updateUser.Email;
+            user.DateOfBirth = updateUser.DateOfBirth;
+            user.DateRegistered = updateUser.DateRegistered;
+        }
+
         private FormFile ConvertBase64ToFormFile(string base64ImageData)
         {
             try
@@ -522,7 +528,7 @@ namespace Persistence.Repository_Implementations
             }
         }
 
-        private async Task<bool> SaveBackOfficeUserImageAsync(CreateBackOfficeUserCommand user, IFormFile imageToSave)
+        private async Task<bool> UploadBackOfficeUserImageAsync(ApplicationUser user, IFormFile imageToSave)
         {
             try
             {
@@ -616,49 +622,6 @@ namespace Persistence.Repository_Implementations
 
             // Throw an exception if the user is not found
             throw new NotFoundException(nameof(DeleteAppUserCommand), userId);
-        }
-
-        private async Task<bool> UpdateBackOfficeUserImageAsync(UpdateBackOfficeUserCommand user, IFormFile imageToSave)
-        {
-            try
-            {
-                if (imageToSave == null || imageToSave.Length == 0)
-                {
-                    return true; // No image to save, return success
-                }
-
-                string webRootPath = _hostEnvironment.WebRootPath;
-                string uploads = Path.Combine(webRootPath, "images/employees");
-                string newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageToSave.FileName)}";
-                string newFilePath = Path.Combine(uploads, newFileName);
-
-                // Ensure the uploads directory exists
-                Directory.CreateDirectory(uploads);
-
-                // Delete old image if it exists
-                if (!string.IsNullOrEmpty(user.ImagePath))
-                {
-                    string oldImagePath = Path.Combine(webRootPath, user.ImagePath);
-                    if (File.Exists(oldImagePath))
-                    {
-                        File.Delete(oldImagePath);
-                    }
-                }
-
-                // Save the new image
-                using var fileStream = new FileStream(newFilePath, FileMode.Create);
-                await imageToSave.CopyToAsync(fileStream);
-
-                // Update the user's image path
-                user.ImagePath = Path.Combine("images/employees", newFileName);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _appLogger.LogError("Error saving user image. Exception: " + ex.Message);
-                return false;
-            }
         }
     }
 }
