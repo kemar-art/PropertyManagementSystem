@@ -15,9 +15,6 @@
     }
     else
     {
-
-
-
         <div class="container py-4 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-12">
@@ -27,7 +24,7 @@
                             <div class="stepper-container">
                                 <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
                                     <Items>
-                                        <Step Name="@FormStatus.StatusSubmitted" Color="@(selectedStep == FormStatus.StatusSubmitted ? Color.Success : Color.Secondary)">
+                                        <Step Name="@FormStatus.StatusSubmitted" Color="@(selectedStep == FormStatus.StatusSubmitted ? Color.Success : Color.Success)">
                                             <Marker>
                                                 <Icon Name="IconName.Send" />
                                             </Marker>
