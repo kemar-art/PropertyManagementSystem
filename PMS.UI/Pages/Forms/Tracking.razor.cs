@@ -89,7 +89,7 @@ namespace PMS.UI.Pages.Forms
         private Task OnSelectedStepChanged(string formStatus)
         {
             selectedStep = formStatus;
-
+            StateHasChanged(); // Trigger re-rendering when the step changes
             return Task.CompletedTask;
         }
 
@@ -98,6 +98,25 @@ namespace PMS.UI.Pages.Forms
             // Only allow navigation to the current step based on FormVM.Status
             return context.NextStepName == _trackingModel.Status;
         }
+
+        private bool IsStepCompleted(string stepName)
+        {
+            var stepsOrder = new List<string>
+            {
+                FormStatus.StatusSubmitted,
+                FormStatus.StatusAssigned,
+                FormStatus.StatusInProcess,
+                FormStatus.StatusApproved,
+                FormStatus.StatusCompleted
+            };
+
+            int currentStepIndex = stepsOrder.IndexOf(selectedStep);
+            int stepIndex = stepsOrder.IndexOf(stepName);
+
+            // Mark a step as completed if its index is less than or equal to the current step's index
+            return stepIndex <= currentStepIndex;
+        }
+
     }
 
 }
