@@ -19,7 +19,12 @@
             <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
                 <div class="col col-xl-12">
                     <div class="form-container">
-                        @if (!string.IsNullOrEmpty(_trackingModel.Status))
+
+                        @if (!string.IsNullOrEmpty(Message))
+                        {
+                            <h2 class="text-center text-danger pt-2"><strong>@Message</strong></h2>
+                        }
+                        else if (!string.IsNullOrEmpty(_trackingModel.Status))
                         {
                             <div class="stepper-container">
                                 <Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" Class="custom-stepper" NavigationAllowed="NavigationAllowed">
@@ -36,7 +41,7 @@
                                             </Marker>
                                             <Caption>Assigned</Caption>
                                         </Step>
-                                        <Step Completed="@IsStepCompleted(FormStatus.StatusInProcess)" Name="@FormStatus.StatusInProcess">
+                                        <Step Completed="@IsInProcessStepCompleted()" Name="@FormStatus.StatusInProcess">
                                             <Marker>
                                                 <Icon Name="IconName.SliderHorizontal" />
                                             </Marker>
@@ -51,26 +56,26 @@
                                     </Items>
                                     <Content>
                                         <StepPanel Name="@FormStatus.StatusSubmitted">
-                                            <!-- Content for step 1 -->
+                                            <!-- Content for Submitted -->
                                         </StepPanel>
                                         <StepPanel Name="@FormStatus.StatusAssigned">
-                                            <!-- Content for step 2 -->
+                                            <!-- Content for Assigned -->
                                         </StepPanel>
                                         <StepPanel Name="@FormStatus.StatusInProcess">
-                                            <!-- Content for step 3 -->
+                                            <!-- Content for In Process -->
                                         </StepPanel>
                                         <StepPanel Name="@FormStatus.StatusApproved">
-                                            <!-- Content for finish -->
+                                            <!-- Content for Approved -->
                                         </StepPanel>
                                     </Content>
                                 </Steps>
-
                             </div>
                         }
                         else
                         {
                             <h2 class="text-center text-danger pt-2"><strong>@Message</strong></h2>
                         }
+
                         <EditForm Model="@_trackingModel" OnValidSubmit="OnValidSubmit">
                             @if (string.IsNullOrEmpty(_trackingModel?.Status) && string.IsNullOrEmpty(Message))
                             {
@@ -86,6 +91,8 @@
                 </div>
             </div>
         </div>
+
+
     }
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
