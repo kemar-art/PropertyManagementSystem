@@ -1,0 +1,106 @@
+﻿@layout MudBlazorLayout
+@page "/admin/login/"
+@using PMS.UI.StaticDetails
+@using MudBlazor
+@* <h3>Register</h3> *@
+
+
+<div class="wrapper">
+    @if (IsLoading)
+    {
+        <div class="loading-overlay">
+            @*  <div class="spinner"></div> *@
+            <div id="preloader"></div>
+        </div>
+    }
+    else
+    {
+        <div class="container py-4 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+                <div class="col col-xl-6">
+                    <div class="form-container">
+                        @if (!string.IsNullOrEmpty(Message))
+                        {
+                            <div class="alert alert-danger">
+                                @Message
+                            </div>
+                        }
+                        @*  <MudGrid>
+                    <MudItem xs="12" sm="12">
+
+                    </MudItem>
+                    </MudGrid> *@
+
+                        <MudPaper Class="pa-4">
+                            <EditForm Model="@_loginModel" OnValidSubmit="OnValidSubmit">
+                                <DataAnnotationsValidator />
+
+                                <MudGrid>
+                                    <MudItem xs="12">
+                                        <MudText Class="text-center" Typo="Typo.h4">Authorized Users</MudText>
+                                    </MudItem>
+
+                                    <MudItem xs="12">
+                                        <MudTextField T="string" Label="Email" Variant="Variant.Outlined" @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" />
+                                    </MudItem>
+
+                                    <MudItem xs="12">
+                                        <MudTextField Label="Password" Variant="Variant.Outlined"
+                                                      @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"
+                                                      Adornment="Adornment.End" InputType="@_passwordInput"
+                                                      OnAdornmentClick="TogglePasswordVisibility"
+                                                      AdornmentIcon="@_passwordInputIcon" />
+                                    </MudItem>
+
+                                    <MudItem xs="12" Class="d-flex justify-space-between align-center">
+                                        <MudSwitch T="bool" Label="Remember me?" @bind-Value="_loginModel.RememberMe" Color="Color.Primary" Class="ml-n1" />
+                                        <MudLink Href="/admin/forget-password/">Forgot password?</MudLink>
+                                    </MudItem>
+
+                                    <MudItem xs="12" Class="d-flex justify-center">
+                                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Login</MudButton>
+                                    </MudItem>
+                                </MudGrid>
+                            </EditForm>
+                        </MudPaper>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+@* if (IsLoading)
+{
+    <div class="loading-overlay">
+         <div class="spinner"></div>
+        <div id="preloader"></div>
+    </div>
+}
+else
+{
+    <div class="login-portal">
+        <div class="login-container">
+            <div class="login-header">
+                <h4><strong>Authorized Users</strong></h4>
+            </div>
+            <div class="login-form">
+                <EditForm Model="@_loginModel" OnValidSubmit="OnValidSubmit">
+                    <div class="form-group">
+                        <input @bind="_loginModel.Email" class="input" placeholder="Email or Username" />
+                    </div>
+                    <div class="form-group">
+                        <input @bind="_loginModel.Password" class="input" type="password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="login-button">Login</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+ *@

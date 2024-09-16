@@ -1,4 +1,4 @@
-﻿@page "/logout"
+﻿@page "/admin/logout/"
 
 @using PMS.UI.Contracts.Repository_Interface
 @inject IAuthenticationService _AuthenticationService
@@ -9,6 +9,6 @@
     protected override async Task OnInitializedAsync()
     {
         await _AuthenticationService.Logout();
-        navManager.NavigateTo("/");
+        navManager.NavigateTo("/admin/login/");
     }
 }

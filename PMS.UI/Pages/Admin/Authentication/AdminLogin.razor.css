@@ -1,0 +1,50 @@
+﻿.shiny-dark-paper {
+    background-color: #333; /* Dark background */
+    color: #fff; /* White text color */
+   
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), 0 0 15px rgba(0, 0, 0, 0.5); /* Subtle glow */
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%); /* Shiny effect */
+    padding: 20px;
+}
+
+    .shiny-dark-paper:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 20px rgba(0, 0, 0, 0.7); /* Stronger glow on hover */
+    }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: black; /* Set background color to black */
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    margin-bottom: var(--footer-spacing); /* Space below the form-container */
+}
+
+
+/*@media (max-width: 767.98px) {*/ /* Mobile devices */
+    /*.pt-5 {
+        padding-top: 4.7em !important;*/ /* Adjust based on navbar height */
+    /*}
+}*/
+
+/*@media (min-width: 768px) {*/ /* Desktop devices */
+    /*.pt-5 {
+        padding-top: 7em !important;*/ /* Adjust based on navbar height */
+    /*}
+}*/

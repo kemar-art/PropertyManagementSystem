@@ -1,31 +1,26 @@
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.WebUtilities;
 using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.Auth;
 using System.Threading.Tasks;
 
-namespace PMS.UI.Pages
+namespace PMS.UI.Pages.Admin.Authentication
 {
-    public partial class Login
+    public partial class AdminLogin
     {
         public LoginVM _loginModel { get; set; }
         public string Message { get; set; } = string.Empty;
         private bool IsLoading { get; set; } = true;
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        public NavigationManager _NavigationManager { get; set; }
 
         [Inject]
         ISnackbar _Snackbar { get; set; }
-
-        //[Inject]
-        //private ILocalStorageService _localStorage { get; set; }
-
-        //[Inject]
-        //private ISessionStorageService _sessionStorage { get; set; }
 
         [Inject]
         private IAuthenticationService _AuthenticationService { get; set; }
@@ -37,23 +32,26 @@ namespace PMS.UI.Pages
             IsLoading = false;
         }
 
-        protected async Task HandleLogin()
+        protected async Task OnValidSubmit()
         {
-            IsLoading = true;
 
+            IsLoading = true;
             var isAuthenticated = await _AuthenticationService.IsAuthenticated(_loginModel);
             if (isAuthenticated.IsAuthenticate)
             {
+
                 if (isAuthenticated.Role == "Client")
                 {
                     // Navigate to the home page or any other page
-                    NavigationManager.NavigateTo("/");
+                    await _AuthenticationService.Logout();
+                    _Snackbar.Add("Not authorized to access admin portal.", Severity.Warning);
+                    _NavigationManager.NavigateTo("/login");
                 }
                 else
                 {
-                    NavigationManager.NavigateTo("/admin/dashboard/");
+                    _NavigationManager.NavigateTo("/admin/dashboard/");
                 }
-                
+
             }
             else
             {
@@ -82,5 +80,7 @@ namespace PMS.UI.Pages
                 _passwordInput = InputType.Text;
             }
         }
+
+
     }
 }

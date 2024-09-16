@@ -1,4 +1,9 @@
 
+.vr {
+    border-left: 3px solid white; /* Vertical line */
+    height: 24px; /* Adjust height as needed */
+}
+
 .logout-item {
     display: flex;
     align-items: center;
