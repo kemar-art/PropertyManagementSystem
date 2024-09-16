@@ -146,6 +146,7 @@ namespace PMS.UI.Pages.Forms
 
             // When the status is StatusSubmitForApproval or StatusReturnToAppraiser, gray out previous steps
             if (_trackingModel.Status == FormStatus.StatusSubmitForApproval ||
+                _trackingModel.Status == FormStatus.StatusApproved ||
                 _trackingModel.Status == FormStatus.StatusReturnToAppraiser)
             {
                 return stepIndex < stepsOrder.IndexOf(FormStatus.StatusInProcess);

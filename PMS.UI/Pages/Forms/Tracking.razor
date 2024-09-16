@@ -20,9 +20,9 @@
                 <div class="col col-xl-12">
                     <div class="form-container">
 
-                        @if (!string.IsNullOrEmpty(Message))
+                        @if (!string.IsNullOrEmpty(CancelledMessage))
                         {
-                            <h2 class="text-center text-danger pt-2"><strong>@Message</strong></h2>
+                            <h2 class="text-center text-danger pt-2"><strong>@CancelledMessage</strong></h2>
                         }
                         else if (!string.IsNullOrEmpty(_trackingModel.Status))
                         {
@@ -91,6 +91,7 @@
                 </div>
             </div>
         </div>
+
 
 
     }

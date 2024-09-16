@@ -3,22 +3,25 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #181818; /* Dark background */
+    background-color: #000000; /* Darkest black background */
 }
 
 .login-container {
     width: 100%;
     max-width: 400px;
-    background-color: #222; /* Dark container background */
-    border-radius: 10px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); /* Shinier glossy effect */
+    border-radius: 15px;
     padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.2); /* More intense shiny glow */
+    backdrop-filter: blur(15px) brightness(1.2); /* Stronger frosted glass effect */
     text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Extra shiny border */
 }
 
 .login-header h4 {
-    color: white; /* White text */
+    color: white;
     margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Brighter glow around text */
 }
 
 .form-group {
@@ -28,14 +31,15 @@
 .input {
     width: 100%;
     padding: 12px;
-    background-color: #333; /* Darker input background */
-    border: 1px solid #555;
+    background-color: rgba(255, 255, 255, 0.3); /* Brighter translucent input background */
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 5px;
     color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); /* Stronger glow around input */
 }
 
     .input::placeholder {
-        color: #aaa; /* Lighter placeholder */
+        color: #ddd;
     }
 
 .login-button {
@@ -46,11 +50,13 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.8); /* Brighter blue glow around button */
 }
 
     .login-button:hover {
         background-color: #0056b3;
+        box-shadow: 0 0 30px rgba(0, 123, 255, 1); /* Intense glow on hover */
     }
 
 @media only screen and (max-width: 768px) {
