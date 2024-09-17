@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.UserPassword.ForgetPassword
+namespace Application.Features.Commands.User.UserPassword.ForgetPassword.Admins
 {
-    public class ForgetPasswordRestCommand : IRequest<CustomResponse>
+    public class AdminForgetPasswordRestCommand : IRequest<CustomResponse>
     {
         public string Email { get; set; } = string.Empty;
     }

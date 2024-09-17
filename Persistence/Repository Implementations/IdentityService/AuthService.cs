@@ -274,6 +274,47 @@ namespace Persistence.Repository_Implementations
             };
         }
 
+        public async Task<CustomResponse> AdminForgetPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var role = await _userManager.IsInRoleAsync(user, Roles.Client);
+            // Find the user by their email
+            if (!role)
+            {
+                if (user == null)
+                {
+                    // Log that no user was found with the provided email
+                    _appLogger.LogWarning("ForgetPassword request for non-existing email: {Email}", email);
+
+                    return new CustomResponse
+                    {
+                        IsSuccess = false,
+                        Message = "A password reset link was sent to your email."
+                    };
+                }
+
+                // Generate a password reset token
+                var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+                // Construct the callback URL for resetting the password
+                var callbackUrl = $"{_clientAppUrl}/reset-password?userId={user.Id}&code={encodedToken}";
+
+                // Send the password reset email
+                await _emailSender.ExternalPasswordResetEmailAsync(user.Email, callbackUrl);
+
+                // Log the successful sending of the reset email
+                _appLogger.LogInformation("Password reset email sent to: {Email}", email);
+
+                return new CustomResponse
+                {
+                    IsSuccess = true,
+                    Message = "A password reset link was sent to your email."
+                };
+            }
+            throw new BadRequestException("The user is not authorize to use admin portal");
+        }
+
         public async Task<CustomResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
         {
             // Log the start of the password reset process

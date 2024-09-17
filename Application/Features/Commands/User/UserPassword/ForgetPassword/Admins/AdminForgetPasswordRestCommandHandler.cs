@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Commands.User.UserPassword.ForgetPassword
+namespace Application.Features.Commands.User.UserPassword.ForgetPassword.Admins
 {
-    public class ForgetPasswordRestCommandHandler : IRequestHandler<ForgetPasswordRestCommand, CustomResponse>
+    public class AdminForgetPasswordRestCommandHandler : IRequestHandler<AdminForgetPasswordRestCommand, CustomResponse>
     {
         private readonly IAuthService _authService;
 
-        public ForgetPasswordRestCommandHandler(IAuthService authService)
+        public AdminForgetPasswordRestCommandHandler(IAuthService authService)
         {
             _authService = authService;
         }
 
-        public async Task<CustomResponse> Handle(ForgetPasswordRestCommand request, CancellationToken cancellationToken)
+        public async Task<CustomResponse> Handle(AdminForgetPasswordRestCommand request, CancellationToken cancellationToken)
         {
             var findUserByEmail = await _authService.ForgetPassword(request.Email);
             return findUserByEmail;

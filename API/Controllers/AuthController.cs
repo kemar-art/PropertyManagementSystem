@@ -2,7 +2,8 @@
 using Application.Contracts.Identity;
 using Application.Features.Commands.User.ClientUsers.Register;
 using Application.Features.Commands.User.LoginUsers;
-using Application.Features.Commands.User.UserPassword.ForgetPassword;
+using Application.Features.Commands.User.UserPassword.ForgetPassword.Admins;
+using Application.Features.Commands.User.UserPassword.ForgetPassword.Clients;
 using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPasswordReset;
 using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Domain.Common;
@@ -63,10 +64,20 @@ namespace API.Controllers
 
         
         [HttpPost]
-        [Route("forgetpassword")]
+        [Route("client")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomResponse>> ForgetPassword(ForgetPasswordRestCommand email)
+        {
+            var response = await _mediator.Send(email);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CustomResponse>> AdminForgetPassword(AdminForgetPasswordRestCommand email)
         {
             var response = await _mediator.Send(email);
             return Ok(response);

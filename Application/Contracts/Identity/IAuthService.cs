@@ -19,6 +19,7 @@ namespace Application.Contracts.Identity
         Task<BaseResult<AuthResponse>> LogInUserAsync(LoginUserCommand user);
         Task<BaseResult<bool>> IsEmailRegisteredExist(string email);
         Task<CustomResponse> ForgetPassword(string email);
+        Task<CustomResponse> AdminForgetPassword(string email);
         Task<CustomResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword);
         Task<CustomResponse> LoginUserPasswordReset(LoginUserPasswordResetCommand resetPassword);
     }
