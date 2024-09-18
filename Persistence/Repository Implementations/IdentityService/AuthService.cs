@@ -6,6 +6,7 @@ using Application.Contracts.ILogging;
 using Application.Exceptions;
 using Application.Features.Commands.User.ClientUsers.Register;
 using Application.Features.Commands.User.LoginUsers;
+using Application.Features.Commands.User.UserPassword.ForgetPassword.Admins;
 using Application.Features.Commands.User.UserPassword.ResetPassword.LoginUserPasswordReset;
 using Application.Features.Commands.User.UserPassword.ResetPassword.NoneLoginUserPasswordReset;
 using Application.IdentityModels;
@@ -202,11 +203,11 @@ namespace Persistence.Repository_Implementations
             // Create the JWT token with the specified issuer, audience, claims, expiration, and signing credentials
             var jwtToken = new JwtSecurityToken
             (
-               issuer: _jwtSettings.Value.Issuer, 
-               audience: _jwtSettings.Value.Audience, 
+               issuer: _jwtSettings.Value.Issuer,
+               audience: _jwtSettings.Value.Audience,
                claims: claims, // Claims to include in the token
-               expires: DateTime.Now.AddMinutes(_jwtSettings.Value.DurationInMinutes), 
-               signingCredentials: signingCredentials 
+               expires: DateTime.Now.AddMinutes(_jwtSettings.Value.DurationInMinutes),
+               signingCredentials: signingCredentials
             );
 
             // Return the generated JWT token
@@ -276,44 +277,55 @@ namespace Persistence.Repository_Implementations
 
         public async Task<CustomResponse> AdminForgetPassword(string email)
         {
+            // Log the start of the password reset request
+            _appLogger.LogInformation("Received a request to reset password for email: {Email}", email);
+
+            // Attempt to find the user by email
             var user = await _userManager.FindByEmailAsync(email);
-            var role = await _userManager.IsInRoleAsync(user, Roles.Client);
-            // Find the user by their email
-            if (!role)
+            if (user == null)
             {
-                if (user == null)
-                {
-                    // Log that no user was found with the provided email
-                    _appLogger.LogWarning("ForgetPassword request for non-existing email: {Email}", email);
+                // Log that no user was found with the provided email
+                _appLogger.LogWarning("ForgetPassword email request for non-existing email: {Email}", email);
 
-                    return new CustomResponse
-                    {
-                        IsSuccess = false,
-                        Message = "A password reset link was sent to your email."
-                    };
-                }
-
-                // Generate a password reset token
-                var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
-
-                // Construct the callback URL for resetting the password
-                var callbackUrl = $"{_clientAppUrl}/reset-password?userId={user.Id}&code={encodedToken}";
-
-                // Send the password reset email
-                await _emailSender.ExternalPasswordResetEmailAsync(user.Email, callbackUrl);
-
-                // Log the successful sending of the reset email
-                _appLogger.LogInformation("Password reset email sent to: {Email}", email);
-
-                return new CustomResponse
-                {
-                    IsSuccess = true,
-                    Message = "A password reset link was sent to your email."
-                };
+                // Throw a 404 Not Found exception
+                throw new NotFoundException(nameof(AdminForgetPasswordRestCommand), email);
             }
-            throw new BadRequestException("The user is not authorize to use admin portal");
+
+            // Check if the user is in the Client role
+            var role = await _userManager.IsInRoleAsync(user, Roles.Client);
+            if (role)
+            {
+                // Log an unauthorized access attempt
+                _appLogger.LogWarning("Unauthorized password reset attempt for user: {Email}", email);
+
+                // Throw a 400 Bad Request exception
+                throw new BadRequestException("The user is not authorized to use the admin portal");
+            }
+
+            // Log the generation of the password reset token
+            _appLogger.LogInformation("Generating password reset token for user: {Email}", email);
+
+            // Generate a password reset token
+            var confirmationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+            // Construct the callback URL for resetting the password
+            var callbackUrl = $"{_clientAppUrl}/reset-password?userId={user.Id}&code={encodedToken}";
+
+            // Send the password reset email
+            await _emailSender.ExternalPasswordResetEmailAsync(user.Email, callbackUrl);
+
+            // Log the successful sending of the password reset email
+            _appLogger.LogInformation("Password reset email successfully sent to: {Email}", email);
+
+            // Return a successful response
+            return new CustomResponse
+            {
+                IsSuccess = true,
+                Message = "A password reset link was sent to your email."
+            };
         }
+
 
         public async Task<CustomResponse> NoneLoginResetPassword(NoneLoginUserPasswordResetCommand resetPassword)
         {

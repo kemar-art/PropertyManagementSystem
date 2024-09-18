@@ -13,6 +13,7 @@ namespace PMS.UI.Contracts.Repository_Interface
         Task<bool> IsRegister(RegisterVM registerVM);
         Task<bool> IsEmailRegisteredExist(string email);
         Task<CustomResponse> ForgetPassword(ForgetPassword passwordResetVM);
+        Task<CustomResponse> AdminForgetPassword(ForgetPassword passwordResetVM);
         Task<CustomResponse> PasswordReset(NoneLoginResetPassword noneLoginUser);
         Task<CustomResponse> UpdateResetPassword(LoginUserPasswordReset resetPassword);
         Task Logout();

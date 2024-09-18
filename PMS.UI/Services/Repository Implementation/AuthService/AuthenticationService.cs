@@ -28,7 +28,23 @@ namespace PMS.UI.Services.Repository_Implementation.AuthService
                 Email = passwordResetVM.Email,
             };
 
-            var response = await _client.ForgetpasswordAsync(extrnalPasswordRest);
+            var response = await _client.ClientAsync(extrnalPasswordRest);
+            if (response.IsSuccess)
+            {
+                return response;
+            }
+
+            return response;
+        }
+
+        public async Task<CustomResponse> AdminForgetPassword(ForgetPassword passwordResetVM)
+        {
+            AdminForgetPasswordRestCommand extrnalPasswordRest = new()
+            {
+                Email = passwordResetVM.Email,
+            };
+
+            var response = await _client.AdminAsync(extrnalPasswordRest);
             if (response.IsSuccess)
             {
                 return response;

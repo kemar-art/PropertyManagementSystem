@@ -76,6 +76,7 @@ namespace API.Controllers
         [HttpPost]
         [Route("admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomResponse>> AdminForgetPassword(AdminForgetPasswordRestCommand email)
         {

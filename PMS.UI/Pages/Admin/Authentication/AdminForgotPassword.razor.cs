@@ -5,6 +5,7 @@ using MudBlazor;
 using PMS.UI.Contracts.Repository_Interface;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.Auth;
+using PMS.UI.Services.Base;
 using System.Threading.Tasks;
 
 namespace PMS.UI.Pages.Admin.Authentication
@@ -38,24 +39,51 @@ namespace PMS.UI.Pages.Admin.Authentication
         {
             IsLoading = true;
 
-            var sendEmailToResetPassword = await _AuthenticationService.ForgetPassword(_forgetPasswordModel);
-            if (sendEmailToResetPassword.IsSuccess)
+            try
             {
-                _Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
-                _NavigationManager.NavigateTo("/forget-password");
+                // Attempt to call the API and expect a CustomResponse on success
+                var sendEmailToResetPassword = await _AuthenticationService.AdminForgetPassword(_forgetPasswordModel);
+
+                // Handle success response (CustomResponse)
+                if (sendEmailToResetPassword.IsSuccess)
+                {
+                    //_Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
+                    Message = sendEmailToResetPassword.Message;
+                    _NavigationManager.NavigateTo("/admin/forget-password/");
+                }
             }
-            else
+            catch (ApiException<ProblemDetails> ex) // Catch specific API exceptions (e.g., 404, 400)
             {
-                _Snackbar.Add(sendEmailToResetPassword.Message, Severity.Success);
-                _NavigationManager.NavigateTo("/forget-password");
+                // Handle the exception based on the status code and response message
+                if (ex.StatusCode == 404)
+                {
+                    _Snackbar.Add("Not authorized to access admin portal.", Severity.Warning);
+                }
+                else if (ex.StatusCode == 400)
+                {
+                    _Snackbar.Add("Not authorized to access admin portal.", Severity.Warning);
+                    _NavigationManager.NavigateTo("/forget-password");
+                }
+                else
+                {
+                    // Handle other exceptions (e.g., network errors, server errors)
+                    _Snackbar.Add("An unexpected error occurred. Please try again later.", Severity.Error);
+                    
+                }
+            }
+            catch (Exception)
+            {
+                // Handle generic exceptions (fallback)
+                _Snackbar.Add("An unexpected error occurred. Please try again later.", Severity.Error);
             }
 
             IsLoading = false;
         }
+
     }
 
 
-
+    
 }
 
 

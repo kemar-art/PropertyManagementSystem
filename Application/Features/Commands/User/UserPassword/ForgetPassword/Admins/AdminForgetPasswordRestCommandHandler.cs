@@ -20,7 +20,7 @@ namespace Application.Features.Commands.User.UserPassword.ForgetPassword.Admins
 
         public async Task<CustomResponse> Handle(AdminForgetPasswordRestCommand request, CancellationToken cancellationToken)
         {
-            var findUserByEmail = await _authService.ForgetPassword(request.Email);
+            var findUserByEmail = await _authService.AdminForgetPassword(request.Email);
             return findUserByEmail;
         }
     }
