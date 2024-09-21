@@ -1,5 +1,6 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Employee;
@@ -19,6 +20,9 @@ namespace PMS.UI.Pages.Admin.Employee
 
         [Inject]
         public SweetAlertService Swal { get; set; }
+
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
 
         [Inject]
         ISnackbar _Snackbar { get; set; }
@@ -90,6 +94,16 @@ namespace PMS.UI.Pages.Admin.Employee
                 }
 
 
+            }
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                //await OnInitializedAsync();
+                // Call the JS function to reload the vendor script
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
             }
         }
     }

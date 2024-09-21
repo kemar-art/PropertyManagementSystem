@@ -151,5 +151,15 @@ namespace PMS.UI.Pages.Admin.Clients
                 }
             }
         }
+
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    if (firstRender)
+        //    {
+        //        await OnInitializedAsync();
+        //        // Call the JS function to reload the vendor script
+        //        //await jSRuntime.InvokeVoidAsync("reloadVendorScript");
+        //    }
+        //}
     }
 }

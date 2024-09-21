@@ -8,6 +8,7 @@ using Blazorise.DeepCloner;
 using PMS.UI.Services.Base;
 using PMS.UI.Models.Employee;
 using PMS.UI.Contracts;
+using Microsoft.JSInterop;
 
 namespace PMS.UI.Pages.Admin.Employee
 {
@@ -46,6 +47,10 @@ namespace PMS.UI.Pages.Admin.Employee
         [Inject]
         ISnackbar _Snackbar { get; set; }
 
+        [Inject]
+        IJSRuntime _JSRuntime { get; set; }
+
+
         private ApplicationUserVM _originalProfileModel;
 
         IEnumerable<IdentityRole> _roles = [];
@@ -78,6 +83,14 @@ namespace PMS.UI.Pages.Admin.Employee
             _NavigationManager.NavigateTo("/admin/employee/");
         }
 
-        
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    if (firstRender)
+        //    {
+        //        await OnInitializedAsync();
+        //        // Call the JS function to reload the vendor script
+        //        //await _JSRuntime.InvokeVoidAsync("reloadVendorScript");
+        //    }
+        //}
     }
 }

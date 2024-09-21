@@ -1,5 +1,6 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Atuh;
 using PMS.UI.Models.DashBoard;
@@ -20,8 +21,6 @@ namespace PMS.UI.Pages.Admin.Dashboard
         public NavigationManager _NavigationManager { get; set; }
 
         public DashBoardVM DashboardVM { get; set; } = new();
-
-        private bool _isFirstRender = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,9 +51,19 @@ namespace PMS.UI.Pages.Admin.Dashboard
             }
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await OnInitializedAsync();
+                // Call the JS function to reload the vendor script
+                //await jSRuntime.InvokeVoidAsync("reloadVendorScript");
+            }
+        }
+
         //protected override async Task OnAfterRenderAsync(bool firstRender)
         //{
-            
+
         //}
     }
 

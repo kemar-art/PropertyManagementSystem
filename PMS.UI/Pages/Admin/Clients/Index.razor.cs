@@ -1,5 +1,6 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Models.Client;
@@ -19,6 +20,9 @@ namespace PMS.UI.Pages.Admin.Clients
 
         [Inject]
         ISnackbar _Snackbar { get; set; }
+
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
 
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
@@ -88,6 +92,15 @@ namespace PMS.UI.Pages.Admin.Clients
                 }
 
 
+            }
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // Call the JS function to reload the vendor script
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
             }
         }
     }

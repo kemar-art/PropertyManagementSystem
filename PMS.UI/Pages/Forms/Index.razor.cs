@@ -1,6 +1,7 @@
 using Application.Contracts.Repository_Interface;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
@@ -24,6 +25,9 @@ namespace PMS.UI.Pages.Forms
 
         [Inject]
         ISnackbar _Snackbar { get; set; }
+
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
 
         [Inject]
         ICheckBoxRepository _CheckBoxRepository { get; set; }
@@ -144,7 +148,16 @@ namespace PMS.UI.Pages.Forms
         }
 
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // Call the JS function to reload the vendor script
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
 
+            }
+
+        }
 
     }
 }

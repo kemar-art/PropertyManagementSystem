@@ -5,6 +5,7 @@ using PMS.UI.Models;
 using PMS.UI.StaticDetails;
 using Application.Contracts.Repository_Interface;
 using PMS.UI.Contracts;
+using Microsoft.JSInterop;
 
 namespace PMS.UI.Pages.Admin.Jobs
 {
@@ -18,6 +19,9 @@ namespace PMS.UI.Pages.Admin.Jobs
 
         [Inject]
         public SweetAlertService Swal { get; set; }
+
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
 
         [Inject]
         ICheckBoxRepository _CheckBoxRepository { get; set; }
@@ -139,6 +143,13 @@ namespace PMS.UI.Pages.Admin.Jobs
             }
         }
 
-
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // Call the JS function to reload the vendor script
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
+            }
+        }
     }
 }
