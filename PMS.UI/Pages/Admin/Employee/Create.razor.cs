@@ -2,6 +2,7 @@ using Application.Contracts.Repository_Interface;
 using Blazorise.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using MudBlazor;
 using PMS.UI.Contracts;
 using PMS.UI.Contracts.Repository_Interface;
@@ -43,6 +44,9 @@ namespace PMS.UI.Pages.Admin.Employee
 
         [Inject]
         ISnackbar _Snackbar { get; set; }
+
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
 
         public ApplicationUserVM _createModel { get; set; } = new();
 
@@ -145,15 +149,15 @@ namespace PMS.UI.Pages.Admin.Employee
             _NavigationManager.NavigateTo("/admin/employee/");
         }
 
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (firstRender)
-        //    {
-        //        await OnInitializedAsync();
-        //        // Call the JS function to reload the vendor script
-        //        //await jSRuntime.InvokeVoidAsync("reloadVendorScript");
-        //    }
-        //}
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                //await OnInitializedAsync();
+                // Call the JS function to reload the vendor script
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
+            }
+        }
     }
 
 

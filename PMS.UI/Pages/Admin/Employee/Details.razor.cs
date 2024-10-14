@@ -83,14 +83,14 @@ namespace PMS.UI.Pages.Admin.Employee
             _NavigationManager.NavigateTo("/admin/employee/");
         }
 
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (firstRender)
-        //    {
-        //        await OnInitializedAsync();
-        //        // Call the JS function to reload the vendor script
-        //        //await _JSRuntime.InvokeVoidAsync("reloadVendorScript");
-        //    }
-        //}
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                //await OnInitializedAsync();
+                // Call the JS function to reload the vendor script
+                await _JSRuntime.InvokeVoidAsync("reloadVendorScript");
+            }
+        }
     }
 }

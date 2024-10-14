@@ -20,6 +20,9 @@ namespace PMS.UI.Pages.Admin.Dashboard
         [Inject]
         public NavigationManager _NavigationManager { get; set; }
 
+        [Inject]
+        IJSRuntime jSRuntime { get; set; }
+
         public DashBoardVM DashboardVM { get; set; } = new();
 
         protected override async Task OnInitializedAsync()
@@ -55,9 +58,9 @@ namespace PMS.UI.Pages.Admin.Dashboard
         {
             if (firstRender)
             {
-                await OnInitializedAsync();
+                //await OnInitializedAsync();
                 // Call the JS function to reload the vendor script
-                //await jSRuntime.InvokeVoidAsync("reloadVendorScript");
+                await jSRuntime.InvokeVoidAsync("reloadVendorScript");
             }
         }
 
